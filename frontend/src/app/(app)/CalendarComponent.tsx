@@ -15,11 +15,6 @@ const CalendarComponent: React.FC = () => {
 async function registerForPushNotificationsAsync() {
     let token;
     console.log("Registering for push notifications...");
-
-    await Notifications.setNotificationChannelAsync('new_emails', {
-      name: 'E-mail notifications',
-      importance: Notifications.AndroidImportance.HIGH,
-    });
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     console.log("Permission status: " + status);
@@ -40,28 +35,16 @@ async function registerForPushNotificationsAsync() {
 
 const generateNotification = async () => {
     console.log('Generating notification....')
-// Request permissions (required for iOS)
-        await notifee.requestPermission()
-
-        // Create a channel (required for Android)
-        const channelId = await notifee.createChannel({
-          id: 'default',
-          name: 'Default Channel',
-        });
-
-        // Display a notification
-        await notifee.displayNotification({
-          title: 'Notification Title',
-          body: 'Main body content of the notification',
-          android: {
-            channelId,
-            smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-            // pressAction is needed if you want the notification to open the app when pressed
-            pressAction: {
-              id: 'default',
-            },
-          },
-        });
+    await registerForPushNotificationsAsync()
+  //show the notification to the user
+  Notifications.scheduleNotificationAsync({
+    //set the content of the notification
+    content: {
+      title: "Demo title",
+      body: "Demo body",
+    },
+    trigger: null,
+  });
 };
 //   useEffect(() => {
 //     async function requestPermissions() {
