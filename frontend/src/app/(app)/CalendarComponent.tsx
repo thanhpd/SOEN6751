@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from 'react';
+import * as Device from 'expo-device';
 import { View, Text, Button, Alert, FlatList, StyleSheet, Platform } from "react-native";
 import { Calendar, DateData } from "react-native-calendars";
 import * as Notifications from "expo-notifications";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Constants from 'expo-constants';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const CalendarComponent: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -11,50 +21,117 @@ const CalendarComponent: React.FC = () => {
   const [markedDates, setMarkedDates] = useState<{ [date: string]: { marked: boolean; dotColor: string } }>({});
   const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
 
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
+  const [notification, setNotification] = useState<Notifications.Notification | undefined>(
+     undefined
+   );
+       const notificationListener = useRef<Notifications.EventSubscription>();
+       const responseListener = useRef<Notifications.EventSubscription>();
 
-async function registerForPushNotificationsAsync() {
-    let token;
-    console.log("Registering for push notifications...");
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    console.log("Permission status: " + status);
+   useEffect(() => {
+     registerForPushNotificationsAsync().then(token => token && setExpoPushToken(token));
 
-    if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
+     if (Platform.OS === 'android') {
+       Notifications.getNotificationChannelsAsync().then(value => setChannels(value ?? []));
+     }
+     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+       setNotification(notification);
+     });
+
+     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+       console.log(response);
+     });
+
+     return () => {
+       notificationListener.current &&
+         Notifications.removeNotificationSubscription(notificationListener.current);
+       responseListener.current &&
+         Notifications.removeNotificationSubscription(responseListener.current);
+     };
+   }, []);
+
+
+    async function registerForPushNotificationsAsync() {
+      let token;
+
+      if (Platform.OS === 'android') {
+        await Notifications.setNotificationChannelAsync('myNotificationChannel', {
+          name: 'A channel is needed for the permissions prompt to appear',
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+        });
+      }
+
+      if (Device.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+          alert('Failed to get push token for push notification!');
+          return;
+        }
+        // Learn more about projectId:
+        // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+        // EAS projectId is used here.
+        try {
+          const projectId =
+            Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+          if (!projectId) {
+            throw new Error('Project ID not found');
+          }
+          token = (
+            await Notifications.getExpoPushTokenAsync({
+              projectId,
+            })
+          ).data;
+          console.log(token);
+        } catch (e) {
+          token = `${e}`;
+        }
+      } else {
+        alert('Must use physical device for Push Notifications');
+      }
+
+      return token;
     }
-    if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
+
+    async function schedulePushNotification() {
+        if (!selectedDate || !selectedTime) {
+          Alert.alert("Error", "Please select a date and time.");
+          return;
+        }
+        console.log(" Scheduling at " + selectedDate + " time: " + selectedTime);
+        //await sendLocalPush();
+        const targetTime = selectedTime;
+
+         await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: '📅 Reminder',
+                    body: "I'm so proud of myself!",
+                  },
+                  trigger: {
+                       type: SchedulableTriggerInputTypes.date,
+                        date: targetTime
+                        },
+              });
+
+         console.log('Notification sent');
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log("Notification Token: " + token);
 
-    return token;
-}
-
-const generateNotification = async () => {
-    console.log('Generating notification....')
-    await registerForPushNotificationsAsync()
-  //show the notification to the user
-  Notifications.scheduleNotificationAsync({
-    //set the content of the notification
-    content: {
-      title: "Demo title",
-      body: "Demo body",
-    },
-    trigger: null,
-  });
-};
-//   useEffect(() => {
-//     async function requestPermissions() {
-//       const { status } = await Notifications.getPermissionsAsync();
-//       if (status !== "granted") {
-//         await Notifications.requestPermissionsAsync();
-//       }
-//     }
-//     requestPermissions();
-//   }, []);
+    async function sendLocalPush() {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+            title: 'Look at that notification',
+            body: "I'm so proud of myself!",
+          },
+          trigger: null,
+      });
+    }
 
   const showPicker = () => {
     setShowTimePicker(true);
@@ -67,45 +144,45 @@ const generateNotification = async () => {
     }
   };
 
-  const scheduleNotification = async () => {
-    if (!selectedDate || !selectedTime) {
-      Alert.alert("Error", "Please select a date and time.");
-      return;
-    }
-
-    const now = new Date();
-    const selectedDateTime = new Date(selectedDate);
-    selectedDateTime.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0);
-
-    // Allow same-day reminders but ensure the time is in the future
-    if (selectedDateTime < now) {
-      Alert.alert("Error", "Reminder time must be in the future.");
-      return;
-    }
-
-    console.log("Scheduling notification for:", selectedDateTime.toLocaleString());
-
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "📅 Reminder",
-        body: `Event on ${selectedDate} at ${selectedTime.toLocaleTimeString()}`,
-        sound: "default",
-      },
-      trigger: {
-        date: selectedDateTime,
-      },
-    });
-
-    const newReminder = { date: selectedDate, time: selectedTime.toLocaleTimeString() };
-    setReminders((prev) => [...prev, newReminder]);
-
-    setMarkedDates((prev) => ({
-      ...prev,
-      [selectedDate]: { marked: true, dotColor: "blue" },
-    }));
-
-    Alert.alert("Reminder Set!", `Reminder for ${selectedDate} at ${selectedTime.toLocaleTimeString()}`);
-  };
+//   const scheduleNotification = async () => {
+//     if (!selectedDate || !selectedTime) {
+//       Alert.alert("Error", "Please select a date and time.");
+//       return;
+//     }
+//
+//     const now = new Date();
+//     const selectedDateTime = new Date(selectedDate);
+//     selectedDateTime.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0);
+//
+//     // Allow same-day reminders but ensure the time is in the future
+//     if (selectedDateTime < now) {
+//       Alert.alert("Error", "Reminder time must be in the future.");
+//       return;
+//     }
+//
+//     console.log("Scheduling notification for:", selectedDateTime.toLocaleString());
+//
+//     await Notifications.scheduleNotificationAsync({
+//       content: {
+//         title: "📅 Reminder",
+//         body: `Event on ${selectedDate} at ${selectedTime.toLocaleTimeString()}`,
+//         sound: "default",
+//       },
+//       trigger: {
+//         date: selectedDateTime,
+//       },
+//     });
+//
+//     const newReminder = { date: selectedDate, time: selectedTime.toLocaleTimeString() };
+//     setReminders((prev) => [...prev, newReminder]);
+//
+//     setMarkedDates((prev) => ({
+//       ...prev,
+//       [selectedDate]: { marked: true, dotColor: "blue" },
+//     }));
+//
+//     Alert.alert("Reminder Set!", `Reminder for ${selectedDate} at ${selectedTime.toLocaleTimeString()}`);
+//   };
 
   return (
     <View style={styles.container}>
@@ -141,7 +218,9 @@ const generateNotification = async () => {
 
       {/* Schedule Notification Button */}
       <View style={styles.buttonContainer}>
-        <Button title="Set Reminder" onPress={() => generateNotification()} />
+        <Button title="Set Reminder" onPress={async () => {
+                                                        await schedulePushNotification();
+                                                      }} />
       </View>
 
       {/* List of Reminders */}
