@@ -105,19 +105,19 @@ const CalendarComponent: React.FC = () => {
           Alert.alert("Error", "Please select a date and time.");
           return;
         }
-        console.log(" Scheduling at " + selectedDate + " time: " + selectedTime);
+        console.log(" Scheduling at " + selectedDate + " time: " + selectedTime + " curr: " + new Date());
         //await sendLocalPush();
         const targetTime = selectedTime;
 
          await Notifications.scheduleNotificationAsync({
                 content: {
                     title: '📅 Reminder',
-                    body: "I'm so proud of myself!",
+                    body: "Time to get ready for fitness",
                   },
                   trigger: {
-                       type: SchedulableTriggerInputTypes.date,
-                        date: targetTime
-                        },
+                       type: Notifications.SchedulableTriggerInputTypes.DATE,
+                           date: targetTime,
+                       },
               });
 
          console.log('Notification sent');
@@ -140,49 +140,10 @@ const CalendarComponent: React.FC = () => {
   const onTimeChange = (event: any, selected?: Date) => {
     setShowTimePicker(Platform.OS === "ios"); // Close picker on Android
     if (selected) {
+      console.log('Selected: ' + selected);
       setSelectedTime(selected);
     }
   };
-
-//   const scheduleNotification = async () => {
-//     if (!selectedDate || !selectedTime) {
-//       Alert.alert("Error", "Please select a date and time.");
-//       return;
-//     }
-//
-//     const now = new Date();
-//     const selectedDateTime = new Date(selectedDate);
-//     selectedDateTime.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0);
-//
-//     // Allow same-day reminders but ensure the time is in the future
-//     if (selectedDateTime < now) {
-//       Alert.alert("Error", "Reminder time must be in the future.");
-//       return;
-//     }
-//
-//     console.log("Scheduling notification for:", selectedDateTime.toLocaleString());
-//
-//     await Notifications.scheduleNotificationAsync({
-//       content: {
-//         title: "📅 Reminder",
-//         body: `Event on ${selectedDate} at ${selectedTime.toLocaleTimeString()}`,
-//         sound: "default",
-//       },
-//       trigger: {
-//         date: selectedDateTime,
-//       },
-//     });
-//
-//     const newReminder = { date: selectedDate, time: selectedTime.toLocaleTimeString() };
-//     setReminders((prev) => [...prev, newReminder]);
-//
-//     setMarkedDates((prev) => ({
-//       ...prev,
-//       [selectedDate]: { marked: true, dotColor: "blue" },
-//     }));
-//
-//     Alert.alert("Reminder Set!", `Reminder for ${selectedDate} at ${selectedTime.toLocaleTimeString()}`);
-//   };
 
   return (
     <View style={styles.container}>
