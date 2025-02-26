@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "emergency-response-test",
-    "slug": "emergency-response-test",
+    "name": "gym-app-client",
+    "slug": "gym-app-client",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

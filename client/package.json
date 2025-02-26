@@ -1,5 +1,5 @@
 {
-  "name": "emergency-response-test",
+  "name": "gym-app-client",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "format": "prettier --write '**/*.tsx'"
   },
   "jest": {
     "preset": "jest-expo"
@@ -18,7 +19,6 @@
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
-    "emergency-response-test": "file:",
     "expo": "~52.0.37",
     "expo-blur": "~14.0.3",
     "expo-constants": "~17.0.7",
@@ -31,7 +31,9 @@
     "expo-symbols": "~0.2.2",
     "expo-system-ui": "~4.0.8",
     "expo-web-browser": "~14.0.2",
+    "gym-app-client": "file:",
     "nativewind": "^4.1.23",
+    "prettier": "^3.5.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.7",
