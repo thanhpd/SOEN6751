@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "format": "prettier --write '**/*.tsx'"
+    "format": "prettier --write \"**/*.tsx\""
   },
   "jest": {
     "preset": "jest-expo"
