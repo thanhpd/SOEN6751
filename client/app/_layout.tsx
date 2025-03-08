@@ -63,7 +63,24 @@ export default function RootLayout() {
             </TouchableOpacity>
         ),
     }}  />
-                <Stack.Screen name="+not-found" />
+                <Stack.Screen name="+not-found" 
+                />
+
+                <Stack.Screen
+        name="training"
+        
+        options={{
+          title: 'Personal Training', // Set the title for the header
+          headerStyle: {
+            backgroundColor: '#3498db', // Set the background color of the header
+          },
+          headerTintColor: '#fff', // Set the color of the header text
+          headerTitleStyle: {
+            fontWeight: 'bold', // Make the title bold
+          },
+          headerBackTitle: 'Go Back',
+        }}
+      />
             </Stack>
             <StatusBar style="auto" />
         </ThemeProvider>

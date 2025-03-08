@@ -14,7 +14,7 @@ interface UserQRCodeModalProps {
 export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModalProps) {
   const [isVisible, setIsVisible] = useState(true); // Keep modal visible by default
   const modalPosition = useRef(new Animated.Value(400)).current; // Start off-screen position for modal
-  const pan = useRef(new Animated.ValueXY()).current; // Reference for pan gesture
+  const backgroundColorAnim = useRef(new Animated.Value(0)).current; // Background color animation state (0 to 1)
 
   useEffect(() => {
     // Animate modal sliding in when it becomes visible
@@ -23,18 +23,32 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
       duration: 300,
       useNativeDriver: true,
     }).start();
+
+    // Animate background color from transparent to semi-transparent black
+    Animated.timing(backgroundColorAnim, {
+      toValue: 1, // Transition to background color
+      duration: 300,
+      useNativeDriver: false, // We can't use native driver for backgroundColor
+    }).start();
   }, []);
 
   // Function to close the modal
   const closeModalHandler = () => {
     Animated.timing(modalPosition, {
       toValue: 400, // Slide it out
-      duration: 250,
+      duration: 300,
       useNativeDriver: true,
     }).start(() => {
       setIsVisible(false); // Once animation is complete, hide modal
       closeModal(); // Call parent component's closeModal to update visibility
     });
+
+    // Animate background color back to transparent
+    Animated.timing(backgroundColorAnim, {
+      toValue: 0, // Transition back to transparent
+      duration: 250,
+      useNativeDriver: false, // We can't use native driver for backgroundColor
+    }).start();
   };
 
   // PanResponder to handle drag gestures
@@ -46,6 +60,8 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
         // Only allow dragging down (dy >= 0)
         if (gestureState.dy > 0) {
           modalPosition.setValue(gestureState.dy); // Move the modal down based on drag
+          const backgroundOpacity = Math.min(1 - (gestureState.dy / 300), 1); // Inverse opacity scaling
+        backgroundColorAnim.setValue(backgroundOpacity); // Adjust background color opacity based on drag
         }
       },
       onPanResponderRelease: (_, gestureState) => {
@@ -63,9 +79,20 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
     })
   ).current;
 
+  // Interpolate background color animation
+  const backgroundColor = backgroundColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)'], // Transparent to semi-transparent black
+  });
+
   return (
     <Modal transparent visible={isVisible} animationType="none">
-      <View style={styles.modalBackground}>
+      <Animated.View
+        style={[
+          styles.modalBackground,
+          { backgroundColor: backgroundColor }, // Apply the background color animation
+        ]}
+      >
         <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={closeModalHandler} />
         <Animated.View
           style={[
@@ -83,10 +110,12 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
           {/* QR Code */}
           <QRCode value={`${userData.name},${userData.email},${userData.phone}`} size={150} />
 
-          
-         
+          {/* Close Button */}
+          <TouchableOpacity onPress={closeModalHandler} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
         </Animated.View>
-      </View>
+      </Animated.View>
     </Modal>
   );
 }
@@ -94,7 +123,6 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
 const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
   },
   overlay: {
@@ -102,10 +130,12 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
+    
+    borderRadius: 15,
+    padding: 30,
     alignItems: 'center',
+    marginBottom: 35,
+    marginHorizontal:10,
   },
   userName: {
     fontSize: 20,
