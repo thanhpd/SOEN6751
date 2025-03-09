@@ -11,41 +11,40 @@ const categories: Category[] = [
     { name: 'Fitness & Relaxation' },
     { name: 'Drop-In Recreation' },
     { name: 'Instructional Activities' },
-]
+];
+    
 
 const CategoryItem: React.FC<Category> = ({ name, isActive }) => (
-    <TouchableOpacity
-        className={`px-4 py-2 rounded-full mr-2 ${
-            isActive ? 'bg-purple-600' : 'bg-gray-100'
-        }`}
-    >
-        <Text
-            className={`${isActive ? 'text-white' : 'text-gray-700'} font-medium`}
-        >
-            {name}
-        </Text>
-    </TouchableOpacity>
+    // <TouchableOpacity
+    //     className={`px-4 py-2 rounded-full mr-2 ${
+    //         isActive ? 'bg-purple-600' : 'bg-gray-100'
+    //     }`}
+    // >
+    //     <Text
+    //         className={`${isActive ? 'text-white' : 'text-gray-700'} font-medium`}
+    //     >
+    //         {name}
+    //     </Text>
+    // </TouchableOpacity>
+    <Text>{name}</Text>
 )
 
 export const CategoryList: React.FC = () => {
     return (
         <View className="mb-6">
-            <Text className="text-xl font-bold mb-4 px-4">Categories</Text>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                className="px-4"
-            >
-                <View className="flex-row flex-wrap">
-                    {categories.map((category, index) => (
+            <View className="items-center">
+                <Text>Categories</Text>
+            </View>
+            <View className="flex-row flex-wrap justify-center">
+                {categories.map((category, index) => (
+                    <View key={index} style={{ marginHorizontal: 5 }}>
                         <CategoryItem
-                            key={index}
                             name={category.name}
                             isActive={category.isActive}
                         />
-                    ))}
-                </View>
-            </ScrollView>
+                    </View>
+                ))}
+            </View>
         </View>
     )
 }

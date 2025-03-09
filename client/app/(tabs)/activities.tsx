@@ -10,6 +10,7 @@ import React from 'react'
 import { View, FlatList, SafeAreaView, StatusBar } from 'react-native'
 import HeroBanner from '../../components/HeroBanner'
 import { ActivityList } from '@/components/ui/ActivityList'
+import { CategoryList } from '@/components/CategoryList'
 
 export default function Activities() {
     return (
@@ -17,6 +18,7 @@ export default function Activities() {
             <StatusBar />
             <View>
                 <HeroBanner />
+                <CategoryList/>
                 <ActivityList/>
             </View>
         </SafeAreaView>
