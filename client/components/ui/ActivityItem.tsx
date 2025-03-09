@@ -17,7 +17,13 @@ export const ActivityItem = ({ activity }: { activity: Activity }) => {
 
                     <View className="flex-1 pl-2 justify-between">
                         <View className="flex-1">
-                            <Text className="text-black text-lg font-bold" style={{ color: Colors.concordia.text, fontWeight: 'bold' }}>
+                            <Text
+                                className="text-black text-lg font-bold"
+                                style={{
+                                    color: Colors.concordia.text,
+                                    fontWeight: 'bold',
+                                }}
+                            >
                                 {activity.title}
                             </Text>
                             <Text className="text-black">
@@ -32,7 +38,13 @@ export const ActivityItem = ({ activity }: { activity: Activity }) => {
                             <Text className="text-black flex-1 p-2">
                                 {activity.location}
                             </Text>
-                            <Text className=" text-white text-center rounded-full px-3 py-1"style={{ backgroundColor: Colors.concordia['red-button'] }}>
+                            <Text
+                                className=" text-white text-center rounded-full px-3 py-1"
+                                style={{
+                                    backgroundColor:
+                                        Colors.concordia['red-button'],
+                                }}
+                            >
                                 {activity.price}
                             </Text>
                         </View>

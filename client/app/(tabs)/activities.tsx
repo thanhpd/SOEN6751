@@ -18,9 +18,9 @@ export default function Activities() {
             <StatusBar />
             <View>
                 <HeroBanner />
-                <CategoryList/>
-                <ActivityList/>
+                <CategoryList />
+                <ActivityList />
             </View>
         </SafeAreaView>
     )
-};
+}

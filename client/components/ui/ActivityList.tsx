@@ -1,48 +1,67 @@
 import { Activity } from '../../constants/types'
 import { ActivityItem } from '@/components/ui/ActivityItem'
 import React, { useState } from 'react'
-import { View, FlatList, SafeAreaView, StatusBar, Modal, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import ActivityDetailsPopup from './ActivityDetailsPopup';
+import {
+    View,
+    FlatList,
+    SafeAreaView,
+    StatusBar,
+    Modal,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+} from 'react-native'
+import ActivityDetailsPopup from './ActivityDetailsPopup'
 
 export const ActivityList = () => {
-    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
+        null
+    )
+    const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const handlePress = (activity: Activity) => {
-        setSelectedActivity(activity);
-        setModalVisible(true);
-    };
+        setSelectedActivity(activity)
+        setModalVisible(true)
+    }
 
     const handleClose = () => {
-        setSelectedActivity(null);
-        setModalVisible(false);
-    };
+        setSelectedActivity(null)
+        setModalVisible(false)
+    }
 
     return (
         <View>
-            <FlatList style={styles.list}
-            data={activityItems}
-            renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
-                <ActivityItem activity={item} />
-                </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
+            <FlatList
+                style={styles.list}
+                data={activityItems}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => handlePress(item)}
+                        activeOpacity={0.7}
+                    >
+                        <ActivityItem activity={item} />
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
             />
-         {modalVisible && selectedActivity && (
-             <ActivityDetailsPopup visible={modalVisible} activity={selectedActivity} handleClose={handleClose} handleBook={function (): void {
-                    throw new Error('Function not implemented.');
-                } } />
-         )}
-         </View>
-    );
-};
+            {modalVisible && selectedActivity && (
+                <ActivityDetailsPopup
+                    visible={modalVisible}
+                    activity={selectedActivity}
+                    handleClose={handleClose}
+                    handleBook={function (): void {
+                        throw new Error('Function not implemented.')
+                    }}
+                />
+            )}
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
     list: { flexGrow: 1 },
-
-});
+})
 const activityItems: Activity[] = [
     {
         title: 'Cardio Dance',
@@ -125,4 +144,4 @@ const activityItems: Activity[] = [
         days: 'Tuesday, Thursday',
         time: '12:00 PM – 1:00 PM',
     },
-];
+]

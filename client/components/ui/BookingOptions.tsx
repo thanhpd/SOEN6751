@@ -1,29 +1,71 @@
-import React from 'react';
-import { View } from 'react-native';
-import { Surface ,Text} from 'react-native-paper';
-import { Colors } from '@/constants/Colors';
-
+import * as React from 'react'
+import { Card, Button } from 'react-native-paper'
+import { View } from 'react-native'
+import { Colors } from '@/constants/Colors'
 const BookingOptions = () => {
-  return (
-    
-    <View className="grid grid-cols-2 gap-4">
-    <Surface className=" items-center justify-center" style={{ backgroundColor: Colors.boxPink.backgroundColor }} elevation={4}>
-      <Text variant="headlineSmall">In - Person Activities</Text>
-    </Surface>
-    <Surface className="items-center justify-center" style={{ backgroundColor: Colors.boxYellow.backgroundColor }} elevation={4}>
-      <Text variant="headlineSmall">Online Activities</Text>
-    </Surface>
-    <Surface className="items-center justify-center" style={{ backgroundColor: Colors.boxGray.backgroundColor }} elevation={4}>
-      <Text variant="headlineSmall">Personal Training</Text>
-    </Surface>
-    <Surface className="items-center justify-center" style={{ backgroundColor: Colors.boxPurple.backgroundColor }} elevation={4}>
-      <Text variant="headlineSmall">Nutrition Consultancy</Text>
-    </Surface>
-  </View>
-  
-  );
-};
-export default BookingOptions;
+    return (
+        <View
+            style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                padding: 5,
+            }}
+        >
+            <Button
+                mode="contained"
+                style={{ backgroundColor: Colors.boxPink.backgroundColor }}
+                labelStyle={{
+                    color: 'black',
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                    width: '100%',
+                }}
+                className="w-[48%] mb-2.5 py-2.5"
+            >
+                In - Person Activities
+            </Button>
+            <Button
+                mode="contained"
+                style={{ backgroundColor: Colors.boxYellow.backgroundColor }}
+                labelStyle={{
+                    color: 'black',
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                    width: '100%',
+                }}
+                className="w-[48%] mb-2.5 py-2.5"
+            >
+                Online Activities
+            </Button>
+            <Button
+                mode="contained"
+                style={{ backgroundColor: Colors.boxGray.backgroundColor }}
+                labelStyle={{
+                    color: 'black',
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                    width: '100%',
+                }}
+                className="w-[48%] mb-2.5 py-2.5"
+            >
+                Personal Training
+            </Button>
+            <Button
+                mode="contained"
+                style={{ backgroundColor: Colors.boxPurple.backgroundColor }}
+                labelStyle={{
+                    color: 'black',
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                    width: '100%',
+                }}
+                className="w-[48%] mb-2.5 py-2.5"
+            >
+                Nutrition Consultancy
+            </Button>
+        </View>
+    )
+}
 
-
-
+export default BookingOptions

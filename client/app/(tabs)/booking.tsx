@@ -10,28 +10,27 @@ export default function Booking() {
         <SafeAreaView>
             <StatusBar />
             <View style={styles.container}>
-                <BookingOptionsHeader/>
-                <BookingOptions/>
-                <UpcomingBookings/>
+                <BookingOptionsHeader />
+                <BookingOptions />
+                <UpcomingBookings />
             </View>
         </SafeAreaView>
     )
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-  },
-  header: {
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  subHeader: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    marginVertical: 10,
-  },
-});
+    container: {},
+    header: {
+        fontSize: 18,
+        fontWeight: '400',
+    },
+    subHeader: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    description: {
+        fontSize: 14,
+        color: '#666',
+        marginVertical: 10,
+    },
+})
