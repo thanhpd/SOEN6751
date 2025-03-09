@@ -1,17 +1,42 @@
-import React from 'react';
+import { Activity } from '@/constants/types';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import EventDetailsPopup from './EventDetailsPopup';
 
 const UpcomingBookings = () => {
+    const [selectedDay, setSelectedDay] = useState<any | null>(null);
+    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+    const handleDayPress = (day: any) => {
+        const activity : Activity = {
+            title: 'Cardio Dance',
+            instructor: 'Danielle Hubbard',
+            location: 'SGW – Le Gym – Studio C',
+            days: 'Monday, Wednesday, Friday',
+            time: '5:30 PM – 6:30 PM',
+            description: '',
+            price: ''
+        };
+        setSelectedDay(day);
+        setSelectedActivity(activity);
+        setModalVisible(true);
+    };
+
+    const handleClose = () => {
+        setSelectedDay(null);
+        setSelectedActivity(null);
+        setModalVisible(false);
+    };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Calendar</Text>
       <Text style={styles.subHeader}>View your upcoming bookings</Text>
 
       <Calendar
-        onDayPress={ (day : any) => {
-            console.log('selected day', day);
-          }}
+        onDayPress={handleDayPress}
         current={'2023-11-01'}
         markedDates={{
           '2023-11-03': { selected: true, selectedColor: '#F4D03F' },
@@ -39,6 +64,15 @@ const UpcomingBookings = () => {
           <Text style={styles.legendText}>Online</Text>
         </View>
       </View>
+
+      {modalVisible && selectedActivity && (
+             <EventDetailsPopup 
+                visible={modalVisible} 
+                activity={selectedActivity} 
+                handleClose={handleClose} 
+                month={new Date(selectedDay.dateString).toLocaleString('default', { month: 'long' })} 
+             />
+         )}
     </View>
   );
 };
