@@ -14,7 +14,7 @@ export const ActivityItem = ({ activity }: { activity: Activity }) => {
         <View style={{ flexDirection: 'row', padding: 10 }}>
             <Image
                 source={require('../../assets/images/hero.png')}
-                style={{ width: 100, height: 100 }}
+                style={{ width: 100, height: 100, borderRadius: 10 }}
             />
 
             <View
