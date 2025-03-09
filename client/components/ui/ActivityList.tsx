@@ -21,16 +21,18 @@ export const ActivityList = () => {
     return (
         <View>
             <FlatList style={styles.list}
-                data={activityItems}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => handlePress(item)}>
-                        <ActivityItem activity={item} />
-                    </TouchableOpacity>
-                )}
-                keyExtractor={(item, index) => index.toString()}
+            data={activityItems}
+            renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
+                <ActivityItem activity={item} />
+                </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => index.toString()}
             />
          {modalVisible && selectedActivity && (
-             <ActivityDetailsPopup visible={modalVisible} activity={selectedActivity} handleClose={handleClose} />
+             <ActivityDetailsPopup visible={modalVisible} activity={selectedActivity} handleClose={handleClose} handleBook={function (): void {
+                    throw new Error('Function not implemented.');
+                } } />
          )}
          </View>
     );
