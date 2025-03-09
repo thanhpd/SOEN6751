@@ -1,18 +1,46 @@
-import React from 'react'
-import { View, FlatList, SafeAreaView, StatusBar } from 'react-native'
 import { Activity } from '../../constants/types'
 import { ActivityItem } from '@/components/ui/ActivityItem'
+import React, { useState } from 'react'
+import { View, FlatList, SafeAreaView, StatusBar, Modal, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import ActivityDetailsPopup from './ActivityDetailsPopup';
 
 export const ActivityList = () => {
+    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+    const handlePress = (activity: Activity) => {
+        setSelectedActivity(activity);
+        setModalVisible(true);
+    };
+
+    const handleClose = () => {
+        setSelectedActivity(null);
+        setModalVisible(false);
+    };
+
     return (
-        <FlatList
-            data={activityItems}
-            renderItem={({ item }) => <ActivityItem activity={item} />}
-            keyExtractor={(item, index) => index.toString()}
-        />
-    )
+        <View>
+            <FlatList style={styles.list}
+                data={activityItems}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => handlePress(item)}>
+                        <ActivityItem activity={item} />
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
+         {modalVisible && selectedActivity && (
+             <ActivityDetailsPopup visible={modalVisible} activity={selectedActivity} handleClose={handleClose} />
+         )}
+         </View>
+    );
 };
 
+const styles = StyleSheet.create({
+    container: { flex: 1 },
+    list: { flexGrow: 1 },
+
+});
 const activityItems: Activity[] = [
     {
         title: 'Cardio Dance',
