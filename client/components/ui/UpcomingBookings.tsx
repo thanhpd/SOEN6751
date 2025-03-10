@@ -33,9 +33,13 @@ const UpcomingBookings = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.header}>Calendar</Text>
-            <Text style={styles.subHeader}>View your upcoming bookings</Text>
+        <View className="p-4 bg-white h-full">
+            <Text className="text-center text-2xl font-bold text-black">
+                Calendar
+            </Text>
+            <Text className="text-center text-base text-gray-600 ">
+                View your upcoming bookings
+            </Text>
 
             <Calendar
                 onDayPress={handleDayPress}
@@ -56,24 +60,14 @@ const UpcomingBookings = () => {
                 }}
             />
 
-            <View style={styles.legendContainer}>
-                <View style={styles.legendItem}>
-                    <View
-                        style={[
-                            styles.legendCircle,
-                            { backgroundColor: '#EC7063' },
-                        ]}
-                    />
-                    <Text style={styles.legendText}>In - Person</Text>
+            <View className="flex-row justify-center mt-4">
+                <View className="flex-row items-center mx-4">
+                    <View className="w-3 h-3 rounded-full bg-red-400 mr-2" />
+                    <Text className="text-black">In-Person</Text>
                 </View>
-                <View style={styles.legendItem}>
-                    <View
-                        style={[
-                            styles.legendCircle,
-                            { backgroundColor: '#F4D03F' },
-                        ]}
-                    />
-                    <Text style={styles.legendText}>Online</Text>
+                <View className="flex-row items-center mx-4">
+                    <View className="w-3 h-3 rounded-full bg-yellow-400 mr-2" />
+                    <Text className="text-black">Online</Text>
                 </View>
             </View>
 
@@ -91,43 +85,5 @@ const UpcomingBookings = () => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-        // padding: 20,
-        // backgroundColor: 'red',
-    },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    subHeader: {
-        fontSize: 16,
-        color: '#000',
-        marginBottom: 20,
-    },
-    legendContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 10,
-    },
-    legendItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 10,
-    },
-    legendCircle: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginRight: 5,
-    },
-    legendText: {
-        fontSize: 14,
-        color: '#000',
-    },
-})
 
 export default UpcomingBookings

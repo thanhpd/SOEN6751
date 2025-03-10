@@ -2,44 +2,40 @@ import * as React from 'react'
 import { Card, Button } from 'react-native-paper'
 import { View } from 'react-native'
 import { Colors } from '@/constants/Colors'
-import { router, useRouter } from "expo-router";
+import { router, useRouter } from 'expo-router'
 const BookingOptions = () => {
     return (
-        <View
-            style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'space-between',
-                padding: 5,
-            }}
-        >
+        <View className="flex-row flex-wrap justify-between p-1.5">
             <Button
                 mode="contained"
-                style={{ backgroundColor: Colors.boxPink.backgroundColor }}
+                style={{
+                    backgroundColor: Colors.boxPink.backgroundColor,
+                    marginBottom: 8,
+                }}
                 labelStyle={{
                     color: 'black',
                     textAlign: 'center',
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                className="w-[48%] mb-2.5 py-2.5"
-                onPress={() => {
-                    // Navigate to the activities screen/tab
-                    router.push("/activities");
-                }}
+                className="w-[48%] py-2"
+                onPress={() => router.push('/activities')}
             >
-                In - Person Activities
+                In-Person Activities
             </Button>
             <Button
                 mode="contained"
-                style={{ backgroundColor: Colors.boxYellow.backgroundColor }}
+                style={{
+                    backgroundColor: Colors.boxYellow.backgroundColor,
+                    marginBottom: 8,
+                }}
                 labelStyle={{
                     color: 'black',
                     textAlign: 'center',
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                className="w-[48%] mb-2.5 py-2.5"
+                className="w-[48%] py-2"
             >
                 Online Activities
             </Button>
@@ -52,7 +48,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                className="w-[48%] mb-2.5 py-2.5"
+                className="w-[48%] py-2"
             >
                 Personal Training
             </Button>
@@ -65,7 +61,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                className="w-[48%] mb-2.5 py-2.5"
+                className="w-[48%] py-2"
             >
                 Nutrition Consultancy
             </Button>

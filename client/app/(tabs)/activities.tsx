@@ -9,18 +9,18 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 export default function ActivitiesScreen() {
     return (
         <SafeAreaProvider>
-        <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <HeroBanner />
                 <CategoryList />
                 <ActivityList />
-        </SafeAreaView>
-      </SafeAreaProvider>
+            </SafeAreaView>
+        </SafeAreaProvider>
     )
-};
+}
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight || 0,
+        flex: 1,
+        marginTop: StatusBar.currentHeight || 0,
     },
-  });
+})

@@ -1,11 +1,7 @@
 import { Activity } from '../../constants/types'
 import { ActivityItem } from '@/components/ui/ActivityItem'
 import React, { useState } from 'react'
-import {
-    View,
-    FlatList,
-    TouchableOpacity,
-} from 'react-native'
+import { View, FlatList, TouchableOpacity } from 'react-native'
 import ActivityDetailsPopup from './ActivityDetailsPopup'
 
 export const ActivityList = () => {
