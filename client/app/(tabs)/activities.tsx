@@ -6,7 +6,7 @@ import { ActivityList } from '@/components/ui/ActivityList'
 import { CategoryList } from '@/components/CategoryList'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-export default function Activities() {
+export default function ActivitiesScreen() {
     return (
         <SafeAreaProvider>
         <SafeAreaView style={styles.container}>

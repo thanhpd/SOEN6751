@@ -1,11 +1,10 @@
 import React from 'react'
 import { View, SafeAreaView, StatusBar, StyleSheet } from 'react-native'
-import HeroBanner from '../../components/HeroBanner'
 import BookingOptions from '@/components/ui/BookingOptions'
 import BookingOptionsHeader from '@/components/ui/BookingOptionsHeader'
 import UpcomingBookings from '@/components/ui/UpcomingBookings'
 
-export default function Booking() {
+const Booking = () => {
     return (
         <SafeAreaView>
             <StatusBar />
@@ -34,3 +33,5 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
 })
+
+export default Booking
