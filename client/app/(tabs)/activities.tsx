@@ -1,26 +1,26 @@
 import { StyleSheet, Image, Text, Platform } from 'react-native'
-
-import { Collapsible } from '@/components/Collapsible'
-import { ExternalLink } from '@/components/ExternalLink'
-import ParallaxScrollView from '@/components/ParallaxScrollView'
-import { ThemedText } from '@/components/ThemedText'
-import { ThemedView } from '@/components/ThemedView'
-import { IconSymbol } from '@/components/ui/IconSymbol'
 import React from 'react'
-import { View, FlatList, SafeAreaView, StatusBar } from 'react-native'
+import { View, SafeAreaView, StatusBar } from 'react-native'
 import HeroBanner from '../../components/HeroBanner'
 import { ActivityList } from '@/components/ui/ActivityList'
 import { CategoryList } from '@/components/CategoryList'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export default function Activities() {
     return (
-        <SafeAreaView>
-            <StatusBar />
-            <View>
+        <SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
                 <HeroBanner />
                 <CategoryList />
                 <ActivityList />
-            </View>
         </SafeAreaView>
+      </SafeAreaProvider>
     )
-}
+};
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      marginTop: StatusBar.currentHeight || 0,
+    },
+  });

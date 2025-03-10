@@ -4,12 +4,7 @@ import React, { useState } from 'react'
 import {
     View,
     FlatList,
-    SafeAreaView,
-    StatusBar,
-    Modal,
-    Text,
     TouchableOpacity,
-    StyleSheet,
 } from 'react-native'
 import ActivityDetailsPopup from './ActivityDetailsPopup'
 
@@ -32,7 +27,6 @@ export const ActivityList = () => {
     return (
         <View>
             <FlatList
-                style={styles.list}
                 data={activityItems}
                 renderItem={({ item }) => (
                     <TouchableOpacity
@@ -58,10 +52,6 @@ export const ActivityList = () => {
     )
 }
 
-const styles = StyleSheet.create({
-    container: { flex: 1 },
-    list: { flexGrow: 1 },
-})
 const activityItems: Activity[] = [
     {
         title: 'Cardio Dance',
