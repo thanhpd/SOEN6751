@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Card, Button } from 'react-native-paper'
 import { View } from 'react-native'
 import { Colors } from '@/constants/Colors'
+import { router, useRouter } from "expo-router";
 const BookingOptions = () => {
     return (
         <View
@@ -22,6 +23,10 @@ const BookingOptions = () => {
                     width: '100%',
                 }}
                 className="w-[48%] mb-2.5 py-2.5"
+                onPress={() => {
+                    // Navigate to the activities screen/tab
+                    router.push("/activities");
+                }}
             >
                 In - Person Activities
             </Button>
