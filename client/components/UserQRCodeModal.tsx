@@ -60,7 +60,7 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
         // Only allow dragging down (dy >= 0)
         if (gestureState.dy > 0) {
           modalPosition.setValue(gestureState.dy); // Move the modal down based on drag
-          const backgroundOpacity = Math.min(1 - (gestureState.dy / 300), 1); // Inverse opacity scaling
+          const backgroundOpacity = Math.min(1 - (gestureState.dy / 150), 1); // Inverse opacity scaling
         backgroundColorAnim.setValue(backgroundOpacity); // Adjust background color opacity based on drag
         }
       },
@@ -73,6 +73,10 @@ export default function UserQRCodeModal({ userData, closeModal }: UserQRCodeModa
           Animated.spring(modalPosition, {
             toValue: 0,
             useNativeDriver: true,
+          }).start();
+          Animated.spring(backgroundColorAnim, {
+            toValue: 1,
+            useNativeDriver: false,
           }).start();
         }
       },

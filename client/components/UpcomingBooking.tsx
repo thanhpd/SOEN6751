@@ -28,7 +28,7 @@ export default function UpcomingBookingCard({ bookingData }: { bookingData: Book
       {/* The Card */}
       <View style={styles.card}>
         <View style={styles.cardContent}>
-          {/* <Image source={{ uri: image }} style={styles.cardImage} /> */}
+          {/* // <Image source={require('@/assets/images/linkedin1.jpg')} style={styles.cardImage} /> */}
           <View style={styles.cardTextContainer}>
             <Text style={styles.serviceName}>{serviceName}</Text>
             <Text style={styles.customerName}>{customerName}</Text>

@@ -9,7 +9,9 @@ import UpcomingBookingCard from '@/components/UpcomingBooking'
 import DaysOfWeek from '@/components/DaysofWeek'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
-import UserQRCodeModal from '@/components/UserQRCodeModal'
+import UserQRCodeModal from '@/components/UserQRCodeModal';
+
+import BookingCard from '@/components/BookingCard'
 
 export default function HomeScreen() {
   const upcomingBookings = [
@@ -21,7 +23,7 @@ export default function HomeScreen() {
       startTime: "10:00 AM",
       endTime: "11:00 AM",
       status: "Confirmed",
-      image: "https://example.com/images/haircut.jpg", // You can replace with your image path or URL
+      image: require('@/assets/images/linkedin1.jpg'), // You can replace with your image path or URL
     },
     {
       id: 2,
@@ -95,6 +97,13 @@ export default function HomeScreen() {
           <UpcomingBookingCard key={index} bookingData={booking} />
         ))}
       </View>
+
+
+      {/* <View style={styles.upcomingBookingsContainer}>
+        {upcomingBookings.map((booking, index) => (
+          <BookingCard key={index} bookingData={booking} />
+        ))}
+      </View> */}
 
       {/* QR Code Modal */}
       {isModalVisible && (
