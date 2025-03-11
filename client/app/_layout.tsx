@@ -21,6 +21,8 @@ export default function RootLayout() {
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Light.ttf'),
+        Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
+        Inter: require('../assets/fonts/Inter_18pt-Regular.ttf')
     })
 
     useEffect(() => {
