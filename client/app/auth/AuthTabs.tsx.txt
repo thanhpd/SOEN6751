@@ -19,7 +19,7 @@ const AuthTabs: React.FC<AuthTabsProps> = ({ activeTab, onTabChange }) => {
             />
             <Button
                 className={`w-36 h-[46px] font-bold text-sm leading-[18.2px] cursor-pointer rounded-[28px] z-10 flex items-center justify-center ${
-                    activeTab === 'login' ? 'text-[#98243C]' : 'text-black'
+                    activeTab === 'login' ? 'text-red' : 'text-black'
                 }`}
                 onPress={() => onTabChange('login')}
             >
@@ -27,7 +27,7 @@ const AuthTabs: React.FC<AuthTabsProps> = ({ activeTab, onTabChange }) => {
             </Button>
             <Button
                 className={`w-36 h-[46px] font-bold text-sm leading-[18.2px] cursor-pointer rounded-[28px] z-10 flex items-center justify-center ${
-                    activeTab === 'register' ? 'text-[#98243C]' : 'text-black'
+                    activeTab === 'register' ? 'text-red' : 'text-black'
                 }`}
                 onPress={() => onTabChange('register')}
             >

@@ -1,15 +1,21 @@
 import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
-import { useFonts } from 'expo-font'
-import { Redirect, Stack } from 'expo-router'
+import {
+    useFonts,
+    SpaceGrotesk_300Light,
+    SpaceGrotesk_400Regular,
+    SpaceGrotesk_500Medium,
+    SpaceGrotesk_600SemiBold,
+    SpaceGrotesk_700Bold,
+} from '@expo-google-fonts/space-grotesk'
+import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import { useEffect } from 'react'
 import 'react-native-reanimated'
 
-import { useColorScheme } from '@/hooks/useColorScheme'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { StyleSheet } from 'react-native'
-import { hydrateAuth, useAuth } from '@/lib'
+import { hydrateAuth } from '@/lib'
 
 import { NAV_THEME } from '@/lib/constants'
 
@@ -27,6 +33,11 @@ export default function RootLayout() {
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Light.ttf'),
+        SpaceGrotesk_300Light,
+        SpaceGrotesk_400Regular,
+        SpaceGrotesk_500Medium,
+        SpaceGrotesk_600SemiBold,
+        SpaceGrotesk_700Bold,
     })
 
     useEffect(() => {
@@ -42,7 +53,7 @@ export default function RootLayout() {
     return (
         <Providers>
             <Stack>
-                <Stack.Screen name="(app)" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}

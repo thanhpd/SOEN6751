@@ -1,24 +1,148 @@
-import * as React from 'react';
-import { TextInput, type TextInputProps } from 'react-native';
-import { cn } from '@/lib/utils';
+import * as React from 'react'
+import type {
+    Control,
+    FieldValues,
+    Path,
+    RegisterOptions,
+} from 'react-hook-form'
+import { useController } from 'react-hook-form'
+import type { TextInputProps } from 'react-native'
+import { Button, I18nManager, StyleSheet, View } from 'react-native'
+import { TextInput as NTextInput } from 'react-native'
+import { tv } from 'tailwind-variants'
+import { Text } from './text'
+import { EyeIcon } from '@/components/icons/EyeIcon'
 
-const Input = React.forwardRef<React.ElementRef<typeof TextInput>, TextInputProps>(
-  ({ className, placeholderClassName, ...props }, ref) => {
+const inputTv = tv({
+    slots: {
+        container: 'mb-2',
+        label: 'text-sm text-red leading-[1.3] font-default-700 mb-2',
+        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-[#F3F4F9] px-4 py-[15px] w-full text-sm text-[#262D33] leading-[1.6] font-default-400',
+    },
+
+    variants: {
+        focused: {
+            true: {
+                input: 'border-red',
+            },
+        },
+        error: {
+            true: {
+                input: 'border-red-600',
+                label: 'text-red-600',
+            },
+        },
+        disabled: {
+            true: {
+                input: 'bg-neutral-200',
+            },
+        },
+    },
+    defaultVariants: {
+        focused: false,
+        error: false,
+        disabled: false,
+    },
+})
+
+export interface NInputProps extends TextInputProps {
+    label?: string
+    disabled?: boolean
+    error?: string
+    showPasswordToggle?: boolean
+}
+
+type TRule<T extends FieldValues> =
+    | Omit<
+          RegisterOptions<T>,
+          'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+      >
+    | undefined
+
+export type RuleType<T extends FieldValues> = { [name in keyof T]: TRule<T> }
+export type InputControllerType<T extends FieldValues> = {
+    name: Path<T>
+    control: Control<T>
+    rules?: RuleType<T>
+}
+
+interface ControlledInputProps<T extends FieldValues>
+    extends NInputProps,
+        InputControllerType<T> {}
+
+export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
+    const { label, error, testID, showPasswordToggle, ...inputProps } = props
+    const [isFocussed, setIsFocussed] = React.useState(false)
+    const onBlur = React.useCallback(() => setIsFocussed(false), [])
+    const onFocus = React.useCallback(() => setIsFocussed(true), [])
+
+    const [showPassword, setShowPassword] = React.useState(false)
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const styles = React.useMemo(
+        () =>
+            inputTv({
+                error: Boolean(error),
+                focused: isFocussed,
+                disabled: Boolean(props.disabled),
+            }),
+        [error, isFocussed, props.disabled]
+    )
+
     return (
-      <TextInput
-        ref={ref}
-        className={cn(
-          'web:flex h-10 native:h-12 web:w-full rounded-md border border-input bg-background px-3 web:py-2 text-base lg:text-sm native:text-lg native:leading-[1.25] text-foreground placeholder:text-muted-foreground web:ring-offset-background file:border-0 file:bg-transparent file:font-medium web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2',
-          props.editable === false && 'opacity-50 web:cursor-not-allowed',
-          className
-        )}
-        placeholderClassName={cn('text-muted-foreground', placeholderClassName)}
-        {...props}
-      />
-    );
-  }
-);
+        <View className={styles.container()}>
+            {label && (
+                <Text
+                    testID={testID ? `${testID}-label` : undefined}
+                    className={styles.label()}
+                >
+                    {label}
+                </Text>
+            )}
+            <NTextInput
+                testID={testID}
+                ref={ref}
+                className={styles.input()}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                {...inputProps}
+                style={StyleSheet.flatten([
+                    { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
+                    { textAlign: I18nManager.isRTL ? 'right' : 'left' },
+                    inputProps.style,
+                ])}
+            />
+            {/* {showPasswordToggle && <View>test</View>} */}
+            {error && (
+                <Text
+                    testID={testID ? `${testID}-error` : undefined}
+                    className="text-xs text-red-600 mt-1 font-default-400"
+                >
+                    {error}
+                </Text>
+            )}
+        </View>
+    )
+})
 
-Input.displayName = 'Input';
+// only used with react-hook-form
+export function ControlledInput<T extends FieldValues>(
+    props: ControlledInputProps<T>
+) {
+    const { name, control, rules, children, ...inputProps } = props
 
-export { Input };
+    const { field, fieldState } = useController({ control, name, rules })
+    return (
+        <Input
+            ref={field.ref}
+            autoCapitalize="none"
+            onChangeText={field.onChange}
+            value={(field.value as string) || ''}
+            {...inputProps}
+            error={fieldState.error?.message}
+        />
+    )
+}

@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
       onSubmit={handleSubmit}
       className="border bg-white mt-[26px] px-6 py-[39px] rounded-[30px_30px_0_0] border-solid border-black max-sm:px-4 max-sm:py-[30px]"
     >
-      <h2 className="font-bold text-base text-[#98243C] leading-[20.8px] mb-1.5">
+      <h2 className="font-default-700 text-base text-red leading-[20.8px] mb-1.5">
         Login to Your Account
       </h2>
       <p className="font-normal text-xs text-[#9EA1AE] leading-[19.2px] mb-[35px]">
@@ -115,7 +115,7 @@ const LoginForm: React.FC = () => {
         </div>
         <button
           type="button"
-          className="font-medium text-xs text-[#98243C] leading-[15.6px] cursor-pointer"
+          className="font-default-500 text-xs text-red leading-[15.6px] cursor-pointer"
         >
           Forgot Password?
         </button>
@@ -123,7 +123,7 @@ const LoginForm: React.FC = () => {
 
       <button
         type="submit"
-        className="w-full text-white font-bold text-sm leading-[18.2px] cursor-pointer bg-[#98243C] px-0 py-[17px] rounded-[28px] border-[none]"
+        className="w-full text-white font-default-700 text-sm leading-[18.2px] cursor-pointer bg-red px-0 py-[17px] rounded-[28px] border-[none]"
       >
         Log In
       </button>
