@@ -52,8 +52,6 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-<<<<<<< Updated upstream
-=======
                 name="activities"
                 options={{
                     title: 'Activity',
@@ -64,7 +62,6 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
->>>>>>> Stashed changes
                 name="explore"
                 options={{
                     
