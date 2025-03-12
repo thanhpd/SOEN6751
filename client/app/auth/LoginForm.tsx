@@ -1,11 +1,10 @@
 import React from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/components/ui/input'
-import { Checkbox, ControlledCheckbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
+import { ControlledCheckbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 
 const LoginSchema = zod.object({
@@ -23,6 +22,7 @@ const LoginForm = () => {
         defaultValues: {
             email: '',
             password: '',
+            stayLoggedIn: false,
         },
     })
 
@@ -69,11 +69,11 @@ const LoginForm = () => {
                         </ControlledCheckbox>
                     </View>
                     <View>
-                        <Pressable>
+                        <TouchableOpacity>
                             <Text className="text-red text-xs font-default-500 leading-[1.3]">
                                 Forgot Password?
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

@@ -1,4 +1,5 @@
 import LoginForm from '@/app/auth/LoginForm'
+import RegisterForm from '@/app/auth/RegisterForm'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib'
 import clsx from 'clsx'
@@ -62,14 +63,14 @@ const AuthLayout: React.FC = () => {
                         ))}
                     </TabsList>
                 </View>
-                <TabsContent value="login" className="flex-1 h-full block">
-                    <View className="bg-white rounded-t-[30px] h-full py-10 px-6">
+                <TabsContent value="login" className="flex-1 block">
+                    <View className="bg-white rounded-t-[30px] py-10 px-6">
                         <LoginForm />
                     </View>
                 </TabsContent>
-                <TabsContent value="register">
-                    <View>
-                        <Text>Register</Text>
+                <TabsContent value="register" className="flex-1 block">
+                    <View className="bg-white rounded-t-[30px] py-10 px-6">
+                        <RegisterForm />
                     </View>
                 </TabsContent>
             </Tabs>

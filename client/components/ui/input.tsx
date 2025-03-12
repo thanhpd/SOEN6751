@@ -26,13 +26,13 @@ const inputTv = tv({
     slots: {
         container: 'mb-2',
         label: 'text-sm text-red leading-[1.3] font-default-700 mb-2',
-        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-[#F3F4F9] p-4 w-full text-sm text-[#262D33] leading-[1.6] font-default-400 h-[54px]',
+        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-white p-4 w-full text-sm text-[#262D33] leading-[1.6] font-default-400 h-[54px]',
     },
 
     variants: {
         focused: {
             true: {
-                input: 'border-red',
+                input: 'border-red bg-[#F3F4F9]',
             },
         },
         error: {
