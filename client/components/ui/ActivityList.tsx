@@ -53,7 +53,7 @@ const activityItems: Activity[] = [
         title: 'Cardio Dance',
         instructor: 'Danielle Hubbard',
         location: 'SGW – Le Gym – Studio C',
-        price: '$100',
+        price: '100',
         description:
             'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
         days: 'Monday, Wednesday, Friday',
@@ -63,7 +63,7 @@ const activityItems: Activity[] = [
         title: 'Zumba Fitness',
         instructor: 'Veronica Aguirre',
         location: 'SGW – Le Gym – Gymnasium',
-        price: '$55',
+        price: '55',
         description:
             'Zumba Fitness is a dance-based fitness class that incorporates Latin and international music. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
         days: 'Tuesday, Thursday',
@@ -73,7 +73,7 @@ const activityItems: Activity[] = [
         title: 'Total Body Fitness',
         instructor: 'Daphne Cunliffe',
         location: 'SGW – Le Gym – Gymnasium',
-        price: '$100',
+        price: '100',
         description:
             'Total Body Fitness is a full-body workout that incorporates strength training, cardio, and flexibility exercises. The class is designed to improve overall fitness and strength.',
         days: 'Monday, Wednesday, Friday',
@@ -83,7 +83,7 @@ const activityItems: Activity[] = [
         title: 'Hard Core',
         instructor: 'Vila Woo',
         location: 'SGW – Le Gym – Gymnasium',
-        price: '$100',
+        price: '100',
         description:
             'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
         days: 'Tuesday, Thursday',
@@ -94,7 +94,7 @@ const activityItems: Activity[] = [
         title: 'Cardio Dance',
         instructor: 'Danielle Hubbard',
         location: 'SGW – Le Gym – Studio C',
-        price: '$100',
+        price: '100',
         description:
             'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
         days: 'Monday, Wednesday, Friday',
@@ -104,7 +104,7 @@ const activityItems: Activity[] = [
         title: 'Zumba Fitness',
         instructor: 'Veronica Aguirre',
         location: 'SGW – Le Gym – Gymnasium',
-        price: '$55',
+        price: '55',
         description:
             'Zumba Fitness is a dance-based fitness class that incorporates Latin and international music. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
         days: 'Tuesday, Thursday',
@@ -114,7 +114,7 @@ const activityItems: Activity[] = [
         title: 'Total Body Fitness',
         instructor: 'Daphne Cunliffe',
         location: 'SGW – Le Gym – Gymnasium',
-        price: '$100',
+        price: '100',
         description:
             'Total Body Fitness is a full-body workout that incorporates strength training, cardio, and flexibility exercises. The class is designed to improve overall fitness and strength.',
         days: 'Monday, Wednesday, Friday',
@@ -124,7 +124,7 @@ const activityItems: Activity[] = [
         title: 'Hard Core',
         instructor: 'Vila Woo',
         location: 'SGW – Le Gym – Gymnasium',
-        price: '$100',
+        price: '100',
         description:
             'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
         days: 'Tuesday, Thursday',

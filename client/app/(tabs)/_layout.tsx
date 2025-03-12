@@ -1,7 +1,8 @@
 import { Tabs } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
-
+import Entypo from '@expo/vector-icons/Entypo';
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
@@ -51,9 +52,24 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
+<<<<<<< Updated upstream
+=======
+                name="activities"
+                options={{
+                    title: 'Activity',
+                    tabBarIcon: ({ color }) => (
+                        <Entypo name="location" size={24} color="black" />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+>>>>>>> Stashed changes
                 name="explore"
                 options={{
+                    
                     title: 'Explore',
+                    
                     tabBarIcon: ({ color }) => (
                         <IconSymbol
                             size={28}
@@ -63,6 +79,22 @@ export default function TabLayout() {
                     ),
                 }}
             />
+            <Tabs.Screen
+                name="booking"
+                options={{
+                    title: 'booking',
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol
+                            size={28}
+                            name="pencil.slash"
+                            color={color}
+                        />
+                    
+                    ),
+                }}
+            />
+
+
         </Tabs>
     )
 }

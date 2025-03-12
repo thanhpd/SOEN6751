@@ -3,10 +3,13 @@ import { View, Image } from 'react-native'
 import { Activity } from '../../constants/types'
 import { Card, Text } from 'react-native-paper'
 import { Colors } from '@/constants/Colors'
+import Entypo from '@expo/vector-icons/Entypo';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export const ActivityItem = ({ activity }: { activity: Activity }) => {
     return (
-        <Card>
+       
+<Card >
             <Card.Content>
                 <View className="flex-1 flex-row items-center">
                     <Image
@@ -32,19 +35,19 @@ export const ActivityItem = ({ activity }: { activity: Activity }) => {
                         </View>
 
                         <View className="flex-row items-center justify-end">
-                            <Image
-                                source={require('../../assets/images/location_icon.png')}
-                            />
+                        <Entypo name="location" size={24} color="black" />
                             <Text className="text-black flex-1 p-2">
                                 {activity.location}
                             </Text>
                             <Text
+                            
                                 className=" text-white text-center rounded-full px-3 py-1"
                                 style={{
                                     backgroundColor:
                                         Colors.concordia['red-button'],
                                 }}
                             >
+                                <FontAwesome className= "p-1"name="dollar" size={12} color="black" />
                                 {activity.price}
                             </Text>
                         </View>
@@ -52,5 +55,6 @@ export const ActivityItem = ({ activity }: { activity: Activity }) => {
                 </View>
             </Card.Content>
         </Card>
+   
     )
 }
