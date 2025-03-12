@@ -7,17 +7,26 @@ import type {
 } from 'react-hook-form'
 import { useController } from 'react-hook-form'
 import type { TextInputProps } from 'react-native'
-import { Button, I18nManager, StyleSheet, View } from 'react-native'
+import {
+    Button,
+    I18nManager,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 import { TextInput as NTextInput } from 'react-native'
 import { tv } from 'tailwind-variants'
 import { Text } from './text'
 import { EyeIcon } from '@/components/icons/EyeIcon'
+import clsx from 'clsx'
+import { cn } from '@/lib'
+import { EyeOffIcon } from '@/components/icons/EyeOffIcon'
 
 const inputTv = tv({
     slots: {
         container: 'mb-2',
         label: 'text-sm text-red leading-[1.3] font-default-700 mb-2',
-        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-[#F3F4F9] px-4 py-[15px] w-full text-sm text-[#262D33] leading-[1.6] font-default-400',
+        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-[#F3F4F9] p-4 w-full text-sm text-[#262D33] leading-[1.6] font-default-400 h-[54px]',
     },
 
     variants: {
@@ -71,7 +80,7 @@ interface ControlledInputProps<T extends FieldValues>
         InputControllerType<T> {}
 
 export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
-    const { label, error, testID, showPasswordToggle, ...inputProps } = props
+    const { label, error, testID, ...inputProps } = props
     const [isFocussed, setIsFocussed] = React.useState(false)
     const onBlur = React.useCallback(() => setIsFocussed(false), [])
     const onFocus = React.useCallback(() => setIsFocussed(true), [])
@@ -102,20 +111,58 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
                     {label}
                 </Text>
             )}
-            <NTextInput
-                testID={testID}
-                ref={ref}
-                className={styles.input()}
-                onBlur={onBlur}
-                onFocus={onFocus}
-                {...inputProps}
-                style={StyleSheet.flatten([
-                    { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
-                    { textAlign: I18nManager.isRTL ? 'right' : 'left' },
-                    inputProps.style,
-                ])}
-            />
-            {/* {showPasswordToggle && <View>test</View>} */}
+            {inputProps.secureTextEntry ? (
+                <View
+                    className={cn(
+                        styles.input(),
+                        'flex flex-row items-center space-between px-0 py-0 gap-0'
+                    )}
+                >
+                    <NTextInput
+                        testID={testID}
+                        ref={ref}
+                        onBlur={onBlur}
+                        onFocus={onFocus}
+                        {...inputProps}
+                        className={clsx(
+                            inputProps.className,
+                            'h-full flex-1 text-default-400 pl-4 text-sm text-[#262D33] leading-[1.6] font-default-400'
+                        )}
+                        style={StyleSheet.flatten([
+                            {
+                                writingDirection: I18nManager.isRTL
+                                    ? 'rtl'
+                                    : 'ltr',
+                            },
+                            { textAlign: I18nManager.isRTL ? 'right' : 'left' },
+                            inputProps.style,
+                        ])}
+                        secureTextEntry={
+                            inputProps.secureTextEntry && !showPassword
+                        }
+                    />
+                    <TouchableOpacity
+                        className="ml-5 p-3 mr-1 flex-shrink-0"
+                        onPress={togglePasswordVisibility}
+                    >
+                        {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                <NTextInput
+                    testID={testID}
+                    ref={ref}
+                    className={styles.input()}
+                    onBlur={onBlur}
+                    onFocus={onFocus}
+                    {...inputProps}
+                    style={StyleSheet.flatten([
+                        { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
+                        { textAlign: I18nManager.isRTL ? 'right' : 'left' },
+                        inputProps.style,
+                    ])}
+                />
+            )}
             {error && (
                 <Text
                     testID={testID ? `${testID}-error` : undefined}

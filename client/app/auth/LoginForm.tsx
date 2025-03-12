@@ -31,56 +31,63 @@ const LoginForm = () => {
     }
 
     return (
-        <View>
-            <Text className="font-default-700 text-red text-base leading-[1.3] mb-[6px]">
-                Login to Your Account
-            </Text>
-            <Text className="text-xs leading-[1.6] text-[#9EA1AE] font-default-400">
-                Make sure that you already have an account
-            </Text>
-            <View className="flex flex-col gap-4 mt-8">
-                <ControlledInput
-                    control={control}
-                    name="email"
-                    label="Email Address"
-                    placeholder="Enter your email"
-                    autoCorrect={false}
-                    keyboardType="email-address"
-                />
-                <ControlledInput
-                    control={control}
-                    name="password"
-                    label="Password"
-                    placeholder="Enter your password"
-                    textContentType="password"
-                    secureTextEntry={true}
-                    autoCorrect={false}
-                />
-            </View>
-            <View className="flex flex-row justify-between items-center mt-[14px] w-full">
-                <View className="flex-row gap-3 items-center">
-                    <ControlledCheckbox name="stayLoggedIn" control={control}>
-                        <Text className="text-[#090D20] text-xs leading-[1.6]">
-                            Stay logged in
-                        </Text>
-                    </ControlledCheckbox>
+        <View className="flex flex-col relative h-full justify-between">
+            <View>
+                <Text className="font-default-700 text-red text-base leading-[1.3] mb-[6px]">
+                    Login to Your Account
+                </Text>
+                <Text className="text-xs leading-[1.6] text-[#9EA1AE] font-default-400">
+                    Make sure that you already have an account
+                </Text>
+                <View className="flex flex-col gap-4 mt-8">
+                    <ControlledInput
+                        control={control}
+                        name="email"
+                        label="Email Address"
+                        placeholder="Enter your email"
+                        autoCorrect={false}
+                        keyboardType="email-address"
+                    />
+                    <ControlledInput
+                        control={control}
+                        name="password"
+                        label="Password"
+                        placeholder="Enter your password"
+                        autoCorrect={false}
+                        secureTextEntry
+                    />
                 </View>
-                <View>
-                    <Pressable>
-                        <Text className="text-red text-xs font-default-500 leading-[1.3]">
-                            Forgot Password?
-                        </Text>
-                    </Pressable>
+                <View className="flex flex-row justify-between items-center mt-[14px] w-full">
+                    <View className="flex-row gap-3 items-center">
+                        <ControlledCheckbox
+                            name="stayLoggedIn"
+                            control={control}
+                        >
+                            <Text className="text-[#090D20] text-xs leading-[1.6]">
+                                Stay logged in
+                            </Text>
+                        </ControlledCheckbox>
+                    </View>
+                    <View>
+                        <Pressable>
+                            <Text className="text-red text-xs font-default-500 leading-[1.3]">
+                                Forgot Password?
+                            </Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
-            <Button
-                className="bg-red rounded-[28px] mt-10"
-                onPress={() => {
-                    handleSubmit(onSubmit)()
-                }}
-            >
-                <Text className="text-white font-default-700">Log In</Text>
-            </Button>
+
+            <View>
+                <Button
+                    className="bg-red rounded-[28px] w-full"
+                    onPress={() => {
+                        handleSubmit(onSubmit)()
+                    }}
+                >
+                    <Text className="text-white font-default-700">Log In</Text>
+                </Button>
+            </View>
         </View>
     )
 }
