@@ -25,24 +25,15 @@ export default function HomeScreen() {
       status: "Confirmed",
       image: require('@/assets/images/linkedin1.jpg'), // You can replace with your image path or URL
     },
-    {
-      id: 2,
-      serviceName: "Massage Therapy",
-      customerName: "Jane Smith",
-      bookingDate: "March 6, 2025",
-      startTime: "12:00 PM",
-      endTime: "1:00 PM",
-      status: "Pending",
-      image: "https://example.com/images/massage.jpg", // You can replace with your image path or URL
-    },
+   
   ];
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Dummy user data (replace with real data)
   const userData = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
+    name: 'Younes Nouri',
+    email: '40304974',
     phone: '+1234567890',
   }
 
@@ -92,6 +83,9 @@ export default function HomeScreen() {
 
       <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
       {/* Upcoming Bookings */}
+
+
+
       <View style={styles.upcomingBookingsContainer}>
         {upcomingBookings.map((booking, index) => (
           <UpcomingBookingCard key={index} bookingData={booking} />
@@ -120,6 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 0,
+     //paddingBottom: 100,
   },
 
   welcomeBox: {

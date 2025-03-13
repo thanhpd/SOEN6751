@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import { FontAwesome5 } from '@expo/vector-icons';
+
 const { width } = Dimensions.get('window'); // Get screen width
 
 interface TrainerCardProps {
@@ -16,8 +18,21 @@ const TrainerCard: React.FC<TrainerCardProps> = ({ profilePic, name, certificati
       <Image source={{ uri: profilePic }} style={styles.profilePic} />
       <View style={styles.details}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.certification}>Certification: {certification}</Text>
-        <Text style={styles.education}>Education: {education}</Text>
+        <View style={styles.container}>
+          <Text style={styles.containerText}>See More</Text>    
+          </View>
+        
+        {/* Certification */}
+        <View style={styles.infoRow}>
+          <FontAwesome5 name="certificate" size={14} color="#555" style={styles.icon} />
+          <Text style={styles.infoText}>{certification}</Text>
+        </View>
+
+        {/* Education */}
+        <View style={styles.infoRow}>
+          <FontAwesome5 name="graduation-cap" size={14} color="#555" style={styles.icon} />
+          <Text style={styles.infoText}>{education}</Text>
+        </View>
       </View>
     </View>
   );
@@ -48,14 +63,37 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: Colors.light.concordiaColor,
   },
-  certification: {
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  icon: {
+    marginRight: 8,
+  },
+  infoText: {
     fontSize: 14,
     color: '#555',
   },
-  education: {
-    fontSize: 14,
-    color: '#555',
+
+  container: {
+    position: 'absolute' ,
+    top: 0, // Align to the top of the card
+    right: 0, // Align to the right of the card
+    padding:1,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:Colors.light.fadedconcordiaColor,
+    height: 20,
+    width: 70,  
   },
+
+  containerText:{
+    fontWeight: 'bold',
+    fontSize: 11,
+    color: Colors.light.concordiaColor,
+  }
 });
 
 export default TrainerCard;

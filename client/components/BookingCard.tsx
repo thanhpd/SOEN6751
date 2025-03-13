@@ -31,17 +31,17 @@ export default function BookingCard({ bookingData }: { bookingData: BookingData 
              {/* Date, Time, Location Icons */}
         {/* <View style={styles.row}> */}
           <View style={styles.infoContainer}>
-            <FontAwesome5 name="calendar-alt" size={16} color="#333" />
+            <FontAwesome5 name="calendar-alt" size={15} color="#333" />
             <Text style={styles.infoText}>{bookingDate}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <FontAwesome5 name="clock" size={16} color="#333" />
+            <FontAwesome5 name="clock" size={14} color="#333" />
             <Text style={styles.infoText}>{startTime} - {endTime}</Text>
           </View>
-          <View style={styles.infoContainer}>
+          {/* <View style={styles.infoContainer}>
             <FontAwesome5 name="map-marker-alt" size={16} color="#333" />
             <Text style={styles.infoText}>{location}</Text>
-          </View>
+          </View> */}
         </View>
           </View>
         {/* </View> */}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   serviceName: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 2,
   },
   infoText: {
     fontSize: 12,

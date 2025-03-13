@@ -1,15 +1,16 @@
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import TrainerCard from '@/components/TrainerCard';
+import TrainerCard2 from '@/components/TrainerCardSwipe';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
 export default function PersonalTrainingPage() {
   const cards = [
-    { id: '1', title: '1 session - 55$', path: 'in-person' },
-    { id: '2', title: '5 sessions - 250$', path: 'online' },
-    { id: '3', title: '10 sessions - 475$', path: 'training' },
-    { id: '4', title: '20 session - 900$', path: 'nutrition' },
+    { id: '1', title: '1 session',price:'49', path: 'in-person' },
+    { id: '2', title: '5 sessions', price:'55',path: 'online' },
+    { id: '3', title: '10 sessions ',price:'150', path: 'training' },
+    { id: '4', title: '20 session ',price:'55', path: 'nutrition' },
   ];
 
   return (
@@ -20,6 +21,9 @@ export default function PersonalTrainingPage() {
       <View style={styles.cardContainer}>
         {cards.map((item) => (
           <TouchableOpacity key={item.id} style={styles.card}>
+            <View style={styles.price}>
+              <Text style={styles.priceText}>${item.price}</Text>
+               </View>
             <Text style={styles.cardText}>{item.title}</Text>
           </TouchableOpacity>
         ))}
@@ -29,18 +33,19 @@ export default function PersonalTrainingPage() {
       <Text style = {styles.title}>Meet Our Trainers</Text>
       <View style={styles.trainerContainer}>
         <TrainerCard
-          profilePic="@/assets/images/linkedin1.jpg" // Replace with actual URL or local file
+          profilePic="https://randomuser.me/api/portraits/men/1.jpg" // Replace with actual URL or local file
           name="Jane Smith"
-          certification="Certified Strength and Conditioning Specialist (CSCS)"
+          certification="Certified Strength and Conditioning "
           education="Master's in Kinesiology"
         />
         <TrainerCard
-          profilePic="https://example.com/profile2.jpg" // Replace with actual URL or local file
+          profilePic="https://randomuser.me/api/portraits/women/2.jpg" // Replace with actual URL or local file
           name="John Doe"
           certification="Certified Personal Trainer (CPT)"
           education="Bachelor's in Exercise Science"
         />
       </View>
+      
     </ScrollView>
   );
 }
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     color: 'white',
-    fontSize: 10,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   trainerContainer: {
@@ -78,5 +83,30 @@ const styles = StyleSheet.create({
   title : {
     fontSize: 20,
     margin: 10,
-  }   
+  } ,  
+
+  price :{
+
+    position: 'absolute',
+    top: 10, // Align to the top of the card
+    right: 10, // Align to the right of the card 
+    padding: 0,
+     // Add a semi-transparent background color
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 25,
+    width: 25,
+
+    backgroundColor:'#c0392b',
+    color: 'black', 
+    fontWeight: 'bold', // Make the text bold   
+    fontSize: 10, // Decrease the font size   
+  },
+
+  priceText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 8,
+  },
 });

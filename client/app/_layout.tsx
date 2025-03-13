@@ -55,7 +55,7 @@ export default function RootLayout() {
         headerRight: () => (
             <TouchableOpacity onPress={() => console.log('QR Code Pressed')}>
                 <Ionicons
-                    name="qr-code-outline"
+                    name="notifications"
                     size={28}
                     color="#333"
                     style={{ marginRight: 15 }}
