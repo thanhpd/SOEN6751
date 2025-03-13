@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
 
-const UpcomingBookings = () => {
+const CalendarComponent = () => {
     const [selectedDay, setSelectedDay] = useState<any | null>(null)
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
         null
@@ -33,8 +33,8 @@ const UpcomingBookings = () => {
     }
 
     return (
-        <View className="p-4 bg-white h-full">
-            <Text className="text-center text-2xl font-bold text-black">
+        <View className="p-1 bg-white h-full">
+            <Text className="text-center text-xl font-bold text-black">
                 Calendar
             </Text>
             <Text className="text-center text-base text-gray-600 ">
@@ -86,4 +86,4 @@ const UpcomingBookings = () => {
     )
 }
 
-export default UpcomingBookings
+export default CalendarComponent

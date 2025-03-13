@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-import OnlineTrainer from '../assets/images/undraw_personal-trainer_bqkg.png'; // Import PNG
+
 
 const { width } = Dimensions.get('window');
 
-export default function OnlinePage() {
+export default function NutritionConsultancy() {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.cardText}>Online Training</Text>
+        <Text style={styles.cardText}>Nutrition Consultancy</Text>
         {/* Use the Image component to display the PNG */}
-        <Image source={OnlineTrainer} style={styles.image} />
+        <Image source={require('../assets/images/undraw_personal-trainer_bqkg.svg')} style={styles.image} />
       </View>
     </View>
   );

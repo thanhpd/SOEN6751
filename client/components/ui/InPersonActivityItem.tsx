@@ -6,16 +6,24 @@ import { Colors } from '@/constants/Colors'
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-export const ActivityItem = ({ activity }: { activity: Activity }) => {
+export const InPersonActivityItem = ({ activity }: { activity: Activity }) => {
+    // Create a mapping for image sources
+const imageMapping = {
+    'cardio.png': require('../../assets/images/cardio.png'),
+    'zumba.png': require('../../assets/images/zumba.png'),
+    'aero.png': require('../../assets/images/aero.png'),
+    'exercise_classes.png': require('../../assets/images/exercise_classes.png'),
+};
+    const activityImage = activity.image ? imageMapping[activity.image.split('/').pop() as keyof typeof imageMapping] : null;
     return (
        
 <Card >
             <Card.Content>
                 <View className="flex-1 flex-row items-center">
-                    <Image
-                        source={require('../../assets/images/hero.png')}
+                    
+                <Image source={activityImage}
                         className="w-24 h-24 rounded-lg"
-                        style={{ backgroundColor: Colors.concordia.background }}
+
                     />
 
                     <View className="flex-1 pl-2 justify-between">
@@ -35,7 +43,7 @@ export const ActivityItem = ({ activity }: { activity: Activity }) => {
                         </View>
 
                         <View className="flex-row items-center justify-end">
-                        <Entypo name="location" size={24} color="black" />
+                        <Entypo name="location" size={20} color="black" />
                             <Text className="text-black flex-1 p-2">
                                 {activity.location}
                             </Text>

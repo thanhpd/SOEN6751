@@ -6,7 +6,7 @@ export interface Activity {
     price: string;
     time: string;
     days: string;
-    imageUrl?: string;
+    image?: string;
   }
   
   export interface Category {

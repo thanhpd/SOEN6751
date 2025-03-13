@@ -3,6 +3,7 @@ import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Foundation from '@expo/vector-icons/Foundation';
 import AntDesign from '@expo/vector-icons/AntDesign';
 interface ActivityDetailsPopupProps {
     visible: boolean
@@ -53,7 +54,7 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                            <FontAwesome name="dollar" size={15} color="black" />
+                            <Foundation name="dollar" size={24} color="black" />
                                 <Text className="ml-2 font-bold">
                                     {activity.price}
                                 </Text>
@@ -76,7 +77,7 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                             {/* Close Button */}
                             <TouchableOpacity
                                 onPress={handleClose}
-                                className="bg-white p-3 rounded-lg border border-gray-300"
+                                className="bg-white px-10 p-3 rounded-lg border border-gray-300"
                             >
                                 <Text className="text-center text-gray-600">
                                     Close
@@ -85,7 +86,7 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                             {/* Book Button */}
                             <TouchableOpacity
                                 onPress={handleBook}
-                                className="bg-blue-600 p-3 rounded-lg "
+                                className="bg-blue-600 px-10 py-3 rounded-lg "
                                 style={{
                                     backgroundColor:
                                         Colors.concordia.background,

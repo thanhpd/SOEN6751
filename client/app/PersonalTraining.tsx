@@ -4,7 +4,7 @@ import TrainerCard from '@/components/TrainerCard';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
-export default function PersonalTrainingPage() {
+export default function PersonalTraining() {
   const cards = [
     { id: '1', title: '1 session - 55$', path: 'in-person' },
     { id: '2', title: '5 sessions - 250$', path: 'online' },
