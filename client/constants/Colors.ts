@@ -28,4 +28,21 @@ export const Colors = {
     concordiaColor : '#93243a',
     fadedconcordiaColor : 'rgba(147, 36, 58, 0.3)',
   },
+  concordia: {
+    text: '#98243C',
+    background: '#98243C',
+    'red-button': 'rgba(152, 36, 60, 0.29)',
+  },
+  boxPink: {
+    backgroundColor: '#F8D7DA',
+  },
+  boxYellow: {
+    backgroundColor: '#FCE5B1',
+  },
+  boxGray: {
+    backgroundColor: '#B0B6BD',
+  },
+  boxPurple: {
+    backgroundColor: '#B5A3E5',
+  },
 };
