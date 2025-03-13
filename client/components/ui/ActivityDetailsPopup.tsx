@@ -1,10 +1,10 @@
 import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
-import Entypo from '@expo/vector-icons/Entypo';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Foundation from '@expo/vector-icons/Foundation';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
+import Foundation from '@expo/vector-icons/Foundation'
+import AntDesign from '@expo/vector-icons/AntDesign'
 interface ActivityDetailsPopupProps {
     visible: boolean
     activity: {
@@ -48,25 +48,41 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                         <Text>Description: {activity.description}</Text>
                         <View className="my-2">
                             <View className="flex-row items-center">
-                            <Entypo name="location" size={15} color="black" />
+                                <Entypo
+                                    name="location"
+                                    size={15}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activity.location}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                            <Foundation name="dollar" size={24} color="black" />
+                                <Foundation
+                                    name="dollar"
+                                    size={24}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activity.price}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                            <FontAwesome name="calendar" size={15} color="black" />
+                                <FontAwesome
+                                    name="calendar"
+                                    size={15}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activity.days}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                            <AntDesign name="clockcircleo" size={15} color="black" />
+                                <AntDesign
+                                    name="clockcircleo"
+                                    size={15}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activity.time}
                                 </Text>

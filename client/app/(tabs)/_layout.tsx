@@ -1,15 +1,16 @@
 import { Tabs } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
-import Entypo from '@expo/vector-icons/Entypo';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import Entypo from '@expo/vector-icons/Entypo'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
 
-export default function TabLayout() {    const colorScheme = useColorScheme()
+export default function TabLayout() {
+    const colorScheme = useColorScheme()
 
     return (
         <Tabs
@@ -27,7 +28,6 @@ export default function TabLayout() {    const colorScheme = useColorScheme()
                 }),
             }}
         >
-            
             <Tabs.Screen
                 name="index"
                 options={{
@@ -37,34 +37,31 @@ export default function TabLayout() {    const colorScheme = useColorScheme()
                     ),
                 }}
             />
-      
-
-          
 
             <Tabs.Screen
                 name="explore"
                 options={{
-                    
                     title: 'Explore',
-                    
+
                     tabBarIcon: ({ color }) => (
                         <Entypo name="v-card" size={28} color="black" />
                     ),
                 }}
             />
-        
+
             <Tabs.Screen
                 name="booking"
                 options={{
                     title: 'booking',
                     tabBarIcon: ({ color }) => (
-                        <Ionicons name="calendar-clear" size={28} color="black" />
-                    
+                        <Ionicons
+                            name="calendar-clear"
+                            size={28}
+                            color="black"
+                        />
                     ),
                 }}
             />
-
-
         </Tabs>
     )
 }

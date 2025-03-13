@@ -8,14 +8,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export default function InPersonActivity() {
     return (
-
-            <View style={{ flex: 1 }}>
-                <HeroBanner />
-                <CategoryList />
-                <InPersonActivityList />
-            </View>
-
+        <View style={{ flex: 1 }}>
+            <HeroBanner />
+            <CategoryList />
+            <InPersonActivityList />
+        </View>
     )
 }
-
-

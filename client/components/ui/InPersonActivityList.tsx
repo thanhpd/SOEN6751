@@ -23,26 +23,26 @@ export const InPersonActivityList = () => {
     return (
         <View style={{ flex: 1 }}>
             <FlatList
-            data={activityItems}
-            renderItem={({ item }) => (
-                <TouchableOpacity
-                onPress={() => handlePress(item)}
-                activeOpacity={0.7}
-                >
-                <InPersonActivityItem activity={item} />
-                </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
+                data={activityItems}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => handlePress(item)}
+                        activeOpacity={0.7}
+                    >
+                        <InPersonActivityItem activity={item} />
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
             />
             {modalVisible && selectedActivity && (
-            <ActivityDetailsPopup
-                visible={modalVisible}
-                activity={selectedActivity}
-                handleClose={handleClose}
-                handleBook={function (): void {
-                throw new Error('Function not implemented.')
-                }}
-            />
+                <ActivityDetailsPopup
+                    visible={modalVisible}
+                    activity={selectedActivity}
+                    handleClose={handleClose}
+                    handleBook={function (): void {
+                        throw new Error('Function not implemented.')
+                    }}
+                />
             )}
         </View>
     )
@@ -93,6 +93,4 @@ const activityItems: Activity[] = [
         time: '12:00 PM – 1:00 PM',
         image: '../../assets/images/exercise_classes.png',
     },
-
-    
 ]

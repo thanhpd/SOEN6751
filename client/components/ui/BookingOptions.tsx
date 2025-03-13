@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { router, useRouter } from 'expo-router'
 const BookingOptions = () => {
-    const router = useRouter();
+    const router = useRouter()
     return (
         <View className="flex-row flex-wrap justify-between">
             <Button
