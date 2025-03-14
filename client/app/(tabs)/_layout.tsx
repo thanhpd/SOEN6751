@@ -1,4 +1,4 @@
-import { Redirect, Tabs } from 'expo-router'
+import { Tabs } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
@@ -8,16 +8,9 @@ import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { useAuth } from '@/lib'
 
 export default function TabLayout() {
     const colorScheme = useColorScheme()
-    const status = useAuth.use.status()
-    if (status === 'signOut') {
-        return <Redirect href="/auth/AuthLayout" />
-    }
-
-    return <Redirect href="/auth/AuthLayout" />
 
     return (
         <Tabs

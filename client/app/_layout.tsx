@@ -1,4 +1,9 @@
-import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
+import {
+    DarkTheme,
+    DefaultTheme,
+    ThemeProvider,
+} from '@react-navigation/native'
+import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
@@ -6,24 +11,14 @@ import { useEffect } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
-import { useFonts } from 'expo-font'
 
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { StyleSheet } from 'react-native'
-import { hydrateAuth } from '@/lib'
+import { useColorScheme } from '@/hooks/useColorScheme'
 
-import { NAV_THEME } from '@/lib/constants'
-
-const LIGHT_THEME: Theme = {
-    ...DefaultTheme,
-    colors: NAV_THEME.light,
-}
-
-hydrateAuth()
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
+    const colorScheme = useColorScheme()
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
@@ -43,7 +38,9 @@ export default function RootLayout() {
     }
 
     return (
-        <Providers>
+        <ThemeProvider
+            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
             <Stack>
                 <Stack.Screen name="(tabs)" options={{
         headerShown: true,
@@ -70,10 +67,6 @@ export default function RootLayout() {
     }}  />
                 <Stack.Screen name="+not-found" 
                 />
-                <Stack.Screen
-                    name="auth/AuthLayout"
-                    options={{ headerShown: false }}
-                />
                 <Stack.Screen name="+not-found" />
 
                 <Stack.Screen
@@ -92,14 +85,6 @@ export default function RootLayout() {
                 />
             </Stack>
             <StatusBar style="auto" />
-        </Providers>
-    )
-}
-
-function Providers({ children }: { children: React.ReactNode }) {
-    return (
-        <GestureHandlerRootView className="flex-1">
-            <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
-        </GestureHandlerRootView>
+        </ThemeProvider>
     )
 }
