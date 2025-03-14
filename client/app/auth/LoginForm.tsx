@@ -33,7 +33,7 @@ const LoginForm = () => {
     return (
         <View className="flex flex-col relative h-full justify-between">
             <View>
-                <Text className="font-default-700 text-red text-base leading-[1.3] mb-[6px]">
+                <Text className="font-bold text-red text-base leading-[1.3] mb-[6px]">
                     Login to Your Account
                 </Text>
                 <Text className="text-xs leading-[1.6] text-[#9EA1AE] font-default-400">
@@ -57,7 +57,7 @@ const LoginForm = () => {
                         secureTextEntry
                     />
                 </View>
-                <View className="flex flex-row justify-between items-center mt-[14px] w-full">
+                <View className="flex flex-row justify-between items-center mt-[14px]">
                     <View className="flex-row gap-3 items-center">
                         <ControlledCheckbox
                             name="stayLoggedIn"
@@ -70,7 +70,7 @@ const LoginForm = () => {
                     </View>
                     <View>
                         <TouchableOpacity>
-                            <Text className="text-red text-xs font-default-500 leading-[1.3]">
+                            <Text className="text-red text-xs font-medium leading-[1.3]">
                                 Forgot Password?
                             </Text>
                         </TouchableOpacity>
@@ -85,7 +85,7 @@ const LoginForm = () => {
                         handleSubmit(onSubmit)()
                     }}
                 >
-                    <Text className="text-white font-default-700">Log In</Text>
+                    <Text className="text-white font-bold">Log In</Text>
                 </Button>
             </View>
         </View>

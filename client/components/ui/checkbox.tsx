@@ -51,7 +51,7 @@ export function ControlledCheckbox<T extends FieldValues>(
     const { field } = useController({ name, control })
 
     return (
-        <View className="flex-row items-center justify-between gap-2">
+        <View className="flex flex-row items-center gap-2">
             <Checkbox
                 {...checkboxProps}
                 ref={field.ref}

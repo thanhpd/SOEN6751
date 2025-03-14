@@ -8,35 +8,6 @@ module.exports = {
     presets: [require('nativewind/preset')],
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['SpaceGrotesk_400Regular', 'Roboto', 'sans-serif'],
-                system: platformSelect({
-                    ios: 'SpaceGrotesk_400Regular',
-                    android: 'SpaceGrotesk_400Regular',
-                    default: 'SpaceGrotesk_400Regular',
-                }),
-                'default-300': [
-                    'SpaceGrotesk_300Light',
-                    'Roboto',
-                    'sans-serif',
-                ],
-                'default-400': [
-                    'SpaceGrotesk_400Regular',
-                    'Roboto',
-                    'sans-serif',
-                ],
-                'default-500': [
-                    'SpaceGrotesk_500Medium',
-                    'Roboto',
-                    'sans-serif',
-                ],
-                'default-600': [
-                    'SpaceGrotesk_600SemiBold',
-                    'Roboto',
-                    'sans-serif',
-                ],
-                'default-700': ['SpaceGrotesk_700Bold', 'Roboto', 'sans-serif'],
-            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',

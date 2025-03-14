@@ -50,7 +50,7 @@ const TableFooter = React.forwardRef<
     <TablePrimitive.Footer
         ref={ref}
         className={cn(
-            'bg-muted/50 font-default-500 [&>tr]:last:border-b-0',
+            'bg-muted/50 font-medium [&>tr]:last:border-b-0',
             className
         )}
         {...props}
@@ -81,7 +81,7 @@ const TableHead = React.forwardRef<
         <TablePrimitive.Head
             ref={ref}
             className={cn(
-                'h-12 px-4 text-left justify-center font-default-500 [&:has([role=checkbox])]:pr-0',
+                'h-12 px-4 text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
                 className
             )}
             {...props}

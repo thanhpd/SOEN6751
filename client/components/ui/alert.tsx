@@ -74,7 +74,7 @@ const AlertTitle = React.forwardRef<
     <Text
         ref={ref}
         className={cn(
-            'pl-7 mb-1 font-default-500 text-base leading-none tracking-tight text-foreground',
+            'pl-7 mb-1 font-medium text-base leading-none tracking-tight text-foreground',
             className
         )}
         {...props}

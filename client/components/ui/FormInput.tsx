@@ -21,7 +21,7 @@ const FormInput: React.FC<FormInputProps> = ({
 
     return (
         <div className="mb-4">
-            <label className="font-default-700 text-sm text-red leading-[18.2px] mb-2 block">
+            <label className="font-bold text-sm text-red leading-[18.2px] mb-2 block">
                 {label}
             </label>
             <div className="flex items-center bg-[#F3F4F9] px-4 py-[15px] rounded-[28px] border-[1.5px] border-solid border-red">

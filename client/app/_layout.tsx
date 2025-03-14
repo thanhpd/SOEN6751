@@ -1,17 +1,10 @@
 import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
-import {
-    useFonts,
-    SpaceGrotesk_300Light,
-    SpaceGrotesk_400Regular,
-    SpaceGrotesk_500Medium,
-    SpaceGrotesk_600SemiBold,
-    SpaceGrotesk_700Bold,
-} from '@expo-google-fonts/space-grotesk'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import { useEffect } from 'react'
 import 'react-native-reanimated'
+import { useFonts } from 'expo-font'
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { StyleSheet } from 'react-native'
@@ -33,11 +26,6 @@ export default function RootLayout() {
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Light.ttf'),
-        SpaceGrotesk_300Light,
-        SpaceGrotesk_400Regular,
-        SpaceGrotesk_500Medium,
-        SpaceGrotesk_600SemiBold,
-        SpaceGrotesk_700Bold,
     })
 
     useEffect(() => {
@@ -67,14 +55,8 @@ export default function RootLayout() {
 
 function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <GestureHandlerRootView style={styles.container}>
+        <GestureHandlerRootView className="flex-1">
             <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
         </GestureHandlerRootView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-})

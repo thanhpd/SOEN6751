@@ -81,7 +81,7 @@ const AccordionTrigger = React.forwardRef<
     }))
 
     return (
-        <TextClassContext.Provider value="native:text-lg font-default-500 web:group-hover:underline">
+        <TextClassContext.Provider value="native:text-lg font-medium web:group-hover:underline">
             <AccordionPrimitive.Header className="flex">
                 <AccordionPrimitive.Trigger ref={ref} {...props} asChild>
                     <Trigger

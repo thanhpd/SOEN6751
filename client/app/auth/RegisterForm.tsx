@@ -44,7 +44,7 @@ const RegisterForm = () => {
     return (
         <View className="flex flex-col relative justify-between h-full">
             <View>
-                <Text className="font-default-700 text-red text-base leading-[1.3] mb-[6px]">
+                <Text className="font-bold text-red text-base leading-[1.3] mb-[6px]">
                     Create Your Account
                 </Text>
                 <Text className="text-xs leading-[1.6] text-[#9EA1AE] font-default-400">
@@ -86,7 +86,7 @@ const RegisterForm = () => {
                             >
                                 terms and conditions
                             </Text>{' '}
-                            by creating an account
+                            by creating {'\n'}an account
                         </Text>
                     </ControlledCheckbox>
                 </View>
@@ -99,9 +99,7 @@ const RegisterForm = () => {
                         handleSubmit(onSubmit)()
                     }}
                 >
-                    <Text className="text-white font-default-700">
-                        Create Account
-                    </Text>
+                    <Text className="text-white font-bold">Create Account</Text>
                 </Button>
             </View>
         </View>
