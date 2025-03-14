@@ -42,37 +42,30 @@ export default function RootLayout() {
             value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
             <Stack>
-                <Stack.Screen
-                    name="(tabs)"
-                    options={{
-                        headerShown: true,
-                        headerTitle: () => <></>,
-                        headerStyle: { backgroundColor: '#f8f9fa' },
-                        headerTintColor: '#333',
-                        headerLeft: () => (
-                            <Image
-                                source={require('@/assets/images/le_gym.png')} // Change to your logo path
-                                style={{
-                                    width: 90,
-                                    height: 40,
-                                    marginLeft: 15,
-                                }}
-                                resizeMode="contain"
-                            />
-                        ),
-                        headerRight: () => (
-                            <TouchableOpacity
-                                onPress={() => console.log('QR Code Pressed')}
-                            >
-                                <Ionicons
-                                    name="notifications-outline"
-                                    size={28}
-                                    color="#333"
-                                    style={{ marginRight: 15 }}
-                                />
-                            </TouchableOpacity>
-                        ),
-                    }}
+                <Stack.Screen name="(tabs)" options={{
+        headerShown: true,
+        headerTitle: () => <></>,
+        headerStyle: { backgroundColor: '#f8f9fa' },
+        headerTintColor: '#333',
+        headerLeft: () => (
+            <Image
+                source={require('@/assets/images/le_gym.png')} // Change to your logo path
+                style={{ width: 90, height: 40, marginLeft: 15 }}
+                resizeMode="contain"
+            />
+        ),
+        headerRight: () => (
+            <TouchableOpacity onPress={() => console.log('QR Code Pressed')}>
+                <Ionicons
+                    name="notifications"
+                    size={28}
+                    color="#333"
+                    style={{ marginRight: 15 }}
+                />
+            </TouchableOpacity>
+        ),
+    }}  />
+                <Stack.Screen name="+not-found" 
                 />
                 <Stack.Screen name="+not-found" />
 
