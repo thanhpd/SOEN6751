@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, View } from "react-native";
 import ProfileHeader from "@/components/ProfileHeader";
 import WeeklyActivity from "@/components/WeeklyActivity";
-// import SettingsSection from "./SettingsSection";
+import SettingsSection from "@/components/SettingsSection";
 // import MoreOptionsSection from "./MoreOptionsSection";
 
 const Profile: React.FC = () => {
@@ -20,9 +20,9 @@ const Profile: React.FC = () => {
 
       <WeeklyActivity />
 
-      {/* <SettingsSection />
+      <SettingsSection />
 
-      <MoreOptionsSection /> */}
+      {/* <MoreOptionsSection /> */}
     </ScrollView>
   );
 };
