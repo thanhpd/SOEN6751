@@ -1,6 +1,10 @@
 import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
+import Entypo from '@expo/vector-icons/Entypo'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
+import Foundation from '@expo/vector-icons/Foundation'
+import AntDesign from '@expo/vector-icons/AntDesign'
 interface ActivityDetailsPopupProps {
     visible: boolean
     activity: {
@@ -44,36 +48,40 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                         <Text>Description: {activity.description}</Text>
                         <View className="my-2">
                             <View className="flex-row items-center">
-                                <Image
-                                    source={require('../../assets/images/location_icon.png')}
-                                    className="w-5 h-5"
+                                <Entypo
+                                    name="location"
+                                    size={15}
+                                    color="black"
                                 />
                                 <Text className="ml-2 font-bold">
                                     {activity.location}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                                <Image
-                                    source={require('../../assets/images/Dollar Coin.png')}
-                                    className="w-5 h-5"
+                                <Foundation
+                                    name="dollar"
+                                    size={24}
+                                    color="black"
                                 />
                                 <Text className="ml-2 font-bold">
                                     {activity.price}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                                <Image
-                                    source={require('../../assets/images/Wednesday.png')}
-                                    className="w-5 h-5"
+                                <FontAwesome
+                                    name="calendar"
+                                    size={15}
+                                    color="black"
                                 />
                                 <Text className="ml-2 font-bold">
                                     {activity.days}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                                <Image
-                                    source={require('../../assets/images/Clock.png')}
-                                    className="w-5 h-5"
+                                <AntDesign
+                                    name="clockcircleo"
+                                    size={15}
+                                    color="black"
                                 />
                                 <Text className="ml-2 font-bold">
                                     {activity.time}
@@ -85,7 +93,7 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                             {/* Close Button */}
                             <TouchableOpacity
                                 onPress={handleClose}
-                                className="bg-white p-3 rounded-lg border border-gray-300"
+                                className="bg-white px-10 p-3 rounded-lg border border-gray-300"
                             >
                                 <Text className="text-center text-gray-600">
                                     Close
@@ -94,7 +102,7 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                             {/* Book Button */}
                             <TouchableOpacity
                                 onPress={handleBook}
-                                className="bg-blue-600 p-3 rounded-lg "
+                                className="bg-blue-600 px-10 py-3 rounded-lg "
                                 style={{
                                     backgroundColor:
                                         Colors.concordia.background,

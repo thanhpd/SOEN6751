@@ -4,8 +4,9 @@ import { View } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { router, useRouter } from 'expo-router'
 const BookingOptions = () => {
+    const router = useRouter()
     return (
-        <View className="flex-row flex-wrap justify-between p-1.5">
+        <View className="flex-row flex-wrap justify-between">
             <Button
                 mode="contained"
                 style={{
@@ -19,7 +20,7 @@ const BookingOptions = () => {
                     width: '100%',
                 }}
                 className="w-[48%] py-2"
-                onPress={() => router.push('/activities')}
+                onPress={() => router.push('/InPersonActivity' as any)}
             >
                 In-Person Activities
             </Button>
@@ -36,6 +37,7 @@ const BookingOptions = () => {
                     width: '100%',
                 }}
                 className="w-[48%] py-2"
+                onPress={() => router.push('/OnlineActivity' as any)}
             >
                 Online Activities
             </Button>
@@ -49,6 +51,7 @@ const BookingOptions = () => {
                     width: '100%',
                 }}
                 className="w-[48%] py-2"
+                onPress={() => router.push('/PersonalTraining' as any)}
             >
                 Personal Training
             </Button>
@@ -62,6 +65,7 @@ const BookingOptions = () => {
                     width: '100%',
                 }}
                 className="w-[48%] py-2"
+                onPress={() => router.push('/NutritionConsultancy' as any)}
             >
                 Nutrition Consultancy
             </Button>

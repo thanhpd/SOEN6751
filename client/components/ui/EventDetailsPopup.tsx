@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
+import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
 
 interface EventDetailsPopupProps {
     visible: boolean
@@ -13,13 +14,14 @@ interface EventDetailsPopupProps {
     }
     month: string
     handleClose: () => void
+    handleCancelBooking: () => void
 }
 
 const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     visible,
-    month,
     activity,
     handleClose,
+    handleCancelBooking,
 }) => {
     return (
         <Modal
@@ -32,16 +34,9 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                 <View className="w-4/5 bg-white p-4 rounded-lg">
                     {/* Header */}
                     <View className="flex-row justify-between items-center mb-2">
-                        <View className="flex-row items-center">
-                            <TouchableOpacity
-                                onPress={handleClose}
-                                className="mr-2"
-                            >
-                                <Text className="text-2xl font-bold">←</Text>
-                            </TouchableOpacity>
-                            <Text className="text-lg">{month}</Text>
-                        </View>
-                        <Text className="text-lg font-bold">Event Details</Text>
+                        <Text className="text-lg font-bold text-center w-full">
+                            Event Details
+                        </Text>
                     </View>
 
                     {/* Event Details */}
@@ -50,27 +45,46 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                     </Text>
                     <Text className="mb-1">{activity.instructor}</Text>
                     <View className="flex-row items-center">
-                        <Image
-                            source={require('../../assets/images/location_icon.png')}
-                            className="w-5 h-5"
-                        />
+                        <Entypo name="location" size={15} color="black" />
                         <Text className="ml-2 font-bold">
                             {activity.location}
                         </Text>
                     </View>
                     <View className="flex-row items-center">
-                        <Image
-                            source={require('../../assets/images/Wednesday.png')}
-                            className="w-5 h-5"
-                        />
+                        <FontAwesome name="calendar" size={15} color="black" />
                         <Text className="ml-2 font-bold">{activity.days}</Text>
                     </View>
                     <View className="flex-row items-center">
-                        <Image
-                            source={require('../../assets/images/Clock.png')}
-                            className="w-5 h-5"
+                        <AntDesign
+                            name="clockcircleo"
+                            size={15}
+                            color="black"
                         />
                         <Text className="ml-2 font-bold">{activity.time}</Text>
+                    </View>
+
+                    <View className="flex-row justify-between mt-2">
+                        {/* Close Button */}
+                        <TouchableOpacity
+                            onPress={handleClose}
+                            className="bg-white  px-10 py-3 rounded-lg border border-gray-300"
+                        >
+                            <Text className="text-center text-gray-600">
+                                Close
+                            </Text>
+                        </TouchableOpacity>
+                        {/* Book Button */}
+                        <TouchableOpacity
+                            onPress={handleCancelBooking}
+                            className="bg-blue-600 p-3 rounded-lg "
+                            style={{
+                                backgroundColor: Colors.concordia.background,
+                            }}
+                        >
+                            <Text className="text-center text-white">
+                                Cancel Booking
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
