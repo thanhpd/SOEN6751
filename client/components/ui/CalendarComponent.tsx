@@ -79,8 +79,9 @@ const CalendarComponent = () => {
                     month={new Date(selectedDay.dateString).toLocaleString(
                         'default',
                         { month: 'long' }
-                    )}
-                />
+                    )} handleCancelBooking={function (): void {
+                        throw new Error('Function not implemented.')
+                    } }                />
             )}
         </View>
     )

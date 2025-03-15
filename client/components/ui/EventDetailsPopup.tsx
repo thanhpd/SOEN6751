@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
+import CancelBookingWarning from './CancelBookingWarning'
 
 interface EventDetailsPopupProps {
     visible: boolean
@@ -23,6 +24,8 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     handleClose,
     handleCancelBooking,
 }) => {
+    const [showCancelWarning, setShowCancelWarning] = React.useState(false)
+
     return (
         <Modal
             animationType="slide"
@@ -75,7 +78,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                         </TouchableOpacity>
                         {/* Book Button */}
                         <TouchableOpacity
-                            onPress={handleCancelBooking}
+                            onPress={() => setShowCancelWarning(true)}
                             className="bg-blue-600 p-3 rounded-lg "
                             style={{
                                 backgroundColor: Colors.concordia.background,
@@ -85,6 +88,13 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                                 Cancel Booking
                             </Text>
                         </TouchableOpacity>
+                        {showCancelWarning && (
+                            <CancelBookingWarning
+                                visible={showCancelWarning}
+                                handleClose={() => setShowCancelWarning(false)}
+                                handleConfirm={handleCancelBooking}
+                            />
+                        )}
                     </View>
                 </View>
             </View>
