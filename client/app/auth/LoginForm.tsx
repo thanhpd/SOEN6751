@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/components/primitives/input'
 import { ControlledCheckbox } from '@/components/primitives/checkbox'
 import { Button } from '@/components/primitives/button'
+import { setCurrentLoggingInUser } from '@/app/auth/authSlice'
+import { useAppDispatch } from '@/store'
 
 const LoginSchema = zod.object({
     email: zod.string().email(),
@@ -16,6 +18,7 @@ const LoginSchema = zod.object({
 type TLoginSchema = zod.infer<typeof LoginSchema>
 
 const LoginForm = () => {
+    const dispatch = useAppDispatch()
     const { handleSubmit, control } = useForm<TLoginSchema>({
         mode: 'onChange',
         resolver: zodResolver(LoginSchema),
@@ -27,7 +30,21 @@ const LoginForm = () => {
     })
 
     const onSubmit = (data: TLoginSchema) => {
-        console.log(data)
+        // console.log(data)
+        // console.log({
+        //     email: data.email,
+        //     name: 'User',
+        //     avatarUrl: '',
+        //     stayLoggedIn: !!data.stayLoggedIn,
+        // })
+        dispatch(
+            setCurrentLoggingInUser({
+                email: data.email,
+                name: 'User',
+                avatarUrl: '',
+                stayLoggedIn: !!data.stayLoggedIn,
+            })
+        )
     }
 
     return (

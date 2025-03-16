@@ -9,6 +9,7 @@ import {
     TabsTrigger,
 } from '@/components/primitives/tabs'
 import { cn } from '@/lib'
+import { useAppSelector } from '@/store'
 import { PortalHost } from '@rn-primitives/portal'
 import clsx from 'clsx'
 import React, { useState } from 'react'
@@ -27,6 +28,11 @@ const tabs = [
 ]
 
 const AuthLayout: React.FC = () => {
+    const userToken = useAppSelector(state => state.auth.userToken)
+    const currentLoggingInUser = useAppSelector(
+        state => state.auth.currentLoggingInUser
+    )
+
     const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
 
     const handleTabChange = (tab: string) => {
@@ -79,8 +85,10 @@ const AuthLayout: React.FC = () => {
                         >
                             <View className="bg-white rounded-t-[30px] py-10 px-6">
                                 <LoginForm />
+                                {currentLoggingInUser && (
+                                    <LoginOTPForm user={currentLoggingInUser} />
+                                )}
                                 {/* <ResetPasswordForm /> */}
-                                {/* <LoginOTPForm /> */}
                             </View>
                         </TabsContent>
                         <TabsContent value="register" className="flex-1">

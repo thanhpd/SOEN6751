@@ -10,6 +10,9 @@ import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
 import { ControlledInputOTP, InputOTP } from '@/components/ui/InputOTP'
 import ProfilePictureIcon from '@/components/icons/ProfilePictureIcon'
 import InfoIcon from '@/components/icons/InfoIcon'
+import { setCurrentLoggingInUser, signIn } from '@/app/auth/authSlice'
+import { useAppDispatch } from '@/store'
+import * as SecureStore from 'expo-secure-store'
 
 const LoginOTPSchema = zod.object({
     otpCode: zod.string().length(6),
@@ -17,7 +20,17 @@ const LoginOTPSchema = zod.object({
 
 type TLoginSchema = zod.infer<typeof LoginOTPSchema>
 
-const LoginOTPForm = () => {
+type Props = {
+    user: {
+        email: string
+        name: string
+        avatarUrl: string
+    }
+}
+
+const LoginOTPForm = ({ user }: Props) => {
+    const dispatch = useAppDispatch()
+
     const { handleSubmit, control } = useForm<TLoginSchema>({
         mode: 'onChange',
         resolver: zodResolver(LoginOTPSchema),
@@ -26,8 +39,12 @@ const LoginOTPForm = () => {
         },
     })
 
-    const onSubmit = (data: TLoginSchema) => {
-        console.log(data)
+    const onSubmit = async (data: TLoginSchema) => {
+        // console.log(data)
+        const token = 'dummy-token'
+
+        dispatch(signIn(token))
+        await SecureStore.setItemAsync('userToken', token)
     }
 
     return (
@@ -37,7 +54,12 @@ const LoginOTPForm = () => {
                     <View className="h-full flex flex-col justify-between relative">
                         <View className="flex flex-col gap-6">
                             <View className="flex flex-row items-center gap-3 mb-[6px]">
-                                <TouchableOpacity className="h-full">
+                                <TouchableOpacity
+                                    className="h-full"
+                                    onPress={() => {
+                                        dispatch(setCurrentLoggingInUser(null))
+                                    }}
+                                >
                                     <ArrowLeftIcon />
                                 </TouchableOpacity>
                                 <Text className="font-bold text-red text-base">
@@ -49,10 +71,10 @@ const LoginOTPForm = () => {
                                     <ProfilePictureIcon />
                                 </View>
                                 <Text className="font-bold text-base leading-[1.3] text-[#090D20]">
-                                    Mahim
+                                    {user.name}
                                 </Text>
                                 <Text className="font-default-400 text-[#9EA1AE] text-xs leading-[1.6]">
-                                    mahim@gmail.com
+                                    {user.email}
                                 </Text>
                             </View>
                             <View className="p-4 bg-[rgba(152,36,60,0.29)] rounded-[24px] flex flex-row items-center gap-3">
@@ -62,7 +84,7 @@ const LoginOTPForm = () => {
                                     to your email. Please kindly check
                                 </Text>
                             </View>
-                            <View className="flex flex-col gap-4 mt-8">
+                            <View className="flex flex-col gap-4">
                                 <ControlledInputOTP
                                     name="otpCode"
                                     control={control}

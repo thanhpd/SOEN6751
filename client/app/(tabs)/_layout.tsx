@@ -7,12 +7,13 @@ import { HapticTab } from '@/components/HapticTab'
 import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import { useAuth } from '@/lib'
+import { useAppSelector } from '@/store'
 
 export default function TabLayout() {
     const colorScheme = useColorScheme()
-    const status = useAuth.use.status()
-    if (status === 'signOut') {
+    const userToken = useAppSelector(state => state.auth.userToken)
+
+    if (!userToken) {
         return <Redirect href="/auth/AuthLayout" />
     }
 

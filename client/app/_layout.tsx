@@ -2,24 +2,25 @@ import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { StyleSheet } from 'react-native'
-import { hydrateAuth } from '@/lib'
 
 import { NAV_THEME } from '@/lib/constants'
+import { store } from '../store'
+import { Provider } from 'react-redux'
+import AuthWrapper from '@/app/auth/AuthWrapper'
+import SignOutButton from '@/components/ui/SignOutButton'
 
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
     colors: NAV_THEME.light,
 }
 
-hydrateAuth()
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
@@ -42,6 +43,7 @@ export default function RootLayout() {
 
     return (
         <Providers>
+            <AuthWrapper />
             <Stack>
                 <Stack.Screen
                     name="(tabs)"
@@ -62,16 +64,21 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-                            <TouchableOpacity
-                                onPress={() => console.log('QR Code Pressed')}
-                            >
-                                <Ionicons
-                                    name="notifications-outline"
-                                    size={28}
-                                    color="#333"
-                                    style={{ marginRight: 15 }}
-                                />
-                            </TouchableOpacity>
+                            <>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        console.log('QR Code Pressed')
+                                    }
+                                >
+                                    <Ionicons
+                                        name="notifications-outline"
+                                        size={28}
+                                        color="#333"
+                                        style={{ marginRight: 15 }}
+                                    />
+                                </TouchableOpacity>
+                                <SignOutButton />
+                            </>
                         ),
                     }}
                 />
@@ -91,7 +98,6 @@ export default function RootLayout() {
                         headerBackTitle: 'Go Back',
                     }}
                 />
-
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}
@@ -105,7 +111,9 @@ export default function RootLayout() {
 function Providers({ children }: { children: React.ReactNode }) {
     return (
         <GestureHandlerRootView className="flex-1">
-            <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
+            <Provider store={store}>
+                <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
+            </Provider>
         </GestureHandlerRootView>
     )
 }
