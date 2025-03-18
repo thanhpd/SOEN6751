@@ -8,6 +8,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
+import ModalScreen from '../qrmodal'
 
 export default function TabLayout() {
     const colorScheme = useColorScheme()
@@ -31,17 +32,19 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
+                    
                     title: 'Home',
                     tabBarIcon: ({ color }) => (
                         <Entypo name="home" size={28} color="black" />
                     ),
+                    
                 }}
             />
 
             <Tabs.Screen
-                name="explore"
+                name="membership"
                 options={{
-                    title: 'Explore',
+                    title: 'Membership',
 
                     tabBarIcon: ({ color }) => (
                         <Entypo name="v-card" size={28} color="black" />
@@ -51,6 +54,7 @@ export default function TabLayout() {
 
             <Tabs.Screen
                 name="booking"
+                
                 options={{
                     title: 'booking',
                     tabBarIcon: ({ color }) => (
@@ -62,6 +66,10 @@ export default function TabLayout() {
                     ),
                 }}
             />
+
+
+
+
         </Tabs>
     )
 }

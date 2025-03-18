@@ -17,11 +17,8 @@ export default function BookingCard({ bookingData }: { bookingData: BookingData 
   const { serviceName, customerName, bookingDate, startTime, endTime, status, location, image } = bookingData;
 
   return (
-    <View style={styles.cardContainer}>
-      {/* Vertical line (outside the card) */}
+    
       
-
-      {/* The Card */}
       <View style={styles.card}>
         <View style={styles.cardContent}>
           <Image source={require('@/assets/images/linkedin1.jpg')} style={styles.cardImage} />
@@ -49,39 +46,32 @@ export default function BookingCard({ bookingData }: { bookingData: BookingData 
        
 
         {/* Cancel Button */}
-        <TouchableOpacity style={styles.cancelButton}>
+        {/* <TouchableOpacity style={styles.cancelButton}>
           <Text style={styles.cancelButtonText}>Cancel</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
-    </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: 'row', // Align the card and the vertical line horizontally
-    marginVertical: 15,
-    paddingLeft: 40, // Space between the vertical line and card
+    
+     // Space between the vertical line and card
   },
-  verticalLine: {
-    width: 3,
-    backgroundColor: 'rgba(42, 157, 143, 1)', // Your desired color for the line
-    marginRight: 0, // Space between the line and the card
-    height: '70%', // Make the line extend vertically
-    borderRadius: 15, // Rounded corners
-    position: 'absolute', // Position the line relative to the parent
-    marginTop: 15, // Adjust the line's position
-  },
+ 
   card: {
     backgroundColor: 'rgba(42, 157, 143, 0.3)',
     borderRadius: 10,
     padding: 10,
-    width: '90%', // Adjust width to fit your design
+     // Adjust width to fit your design
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     elevation: 3,
+    height: 100,
   },
   cardContent: {
     flexDirection: 'row',

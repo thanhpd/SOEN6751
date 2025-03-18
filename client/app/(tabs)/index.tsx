@@ -17,6 +17,7 @@ import DaysOfWeek from '@/components/DaysofWeek'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import UserQRCodeModal from '@/components/UserQRCodeModal'
+import BookingCard2 from '@/components/BookingCard2'
 
 import BookingCard from '@/components/BookingCard'
 
@@ -98,21 +99,27 @@ export default function HomeScreen() {
                 </View>
             </ThemedView>
 
+<ThemedText style={styles.today}>Today </ThemedText>
+                    <ThemedText style={styles.date}>Thursday 16, May 2025 </ThemedText>
             <DaysOfWeek />
 
             <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
             {/* Upcoming Bookings */}
-            <View style={styles.upcomingBookingsContainer}>
+
+
+            {/* <View style={styles.upcomingBookingsContainer}>
                 {upcomingBookings.map((booking, index) => (
                     <UpcomingBookingCard key={index} bookingData={booking} />
                 ))}
-            </View>
+            </View> */}
 
-            {/* <View style={styles.upcomingBookingsContainer}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.upcomingBookingsContainer}>
         {upcomingBookings.map((booking, index) => (
-          <BookingCard key={index} bookingData={booking} />
+          <View style={[styles.bookingCardContainer, { marginLeft: index === 0 ? 10 : 0 }]}>
+          <BookingCard2 key={index} bookingData={booking}  />
+          </View>
         ))}
-      </View> */}
+      </ScrollView>
 
             {/* QR Code Modal */}
             {isModalVisible && (
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 30, // Increased padding for a bigger box
+        padding: 20, // Increased padding for a bigger box
         borderRadius: 10,
         shadowColor: '#000',
         shadowOpacity: 0.1,
@@ -178,8 +185,8 @@ const styles = StyleSheet.create({
         color: '#FF5733',
     },
     picture: {
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
         borderRadius: 20, // Makes it circular
         borderWidth: 2, // Optional: Adds a border
         borderColor: '#93243a', // Concordia color border
@@ -200,12 +207,18 @@ const styles = StyleSheet.create({
 
     upcomingBookingsContainer: {
         marginTop: 20,
+        borderRadius: 10,
+        
+        
+    },
+    bookingCardContainer: {
+      marginRight: 20, 
     },
 
     titles: {
         marginLeft: 20,
         marginTop: 20,
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#333',
     },
@@ -215,4 +228,22 @@ const styles = StyleSheet.create({
         right: 1,
         top: 10,
     },
+
+    date :{
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: Colors.light.concordiaColor,
+      marginLeft: 20,
+
+    },
+
+    today :{
+      fontSize: 17,
+      
+      color: '#888',
+      marginLeft: 20,
+      marginBottom: 5,
+
+
+    }
 })

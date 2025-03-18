@@ -1,46 +1,59 @@
-import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { Category } from '../constants/types'
-import { Colors } from '@/constants/Colors'
-const categories: Category[] = [
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Colors } from '@/constants/Colors';
+
+const initialCategories = [
     { name: 'All Activities' },
-    { name: 'Aerobics', isActive: true },
+    { name: 'Aerobics' },
     { name: 'Dance' },
     { name: 'Spinning' },
     { name: 'Martial Arts' },
     { name: 'Fitness & Relaxation' },
     { name: 'Drop-In Recreation' },
     { name: 'Instructional Activities' },
-]
-
-const CategoryItem: React.FC<Category> = ({ name, isActive }) => (
-    <Text className={` ${isActive ? '' : ' text-black'}`}>{name}</Text>
-)
+];
 
 export const CategoryList: React.FC = () => {
+    const [activeIndex, setActiveIndex] = useState<number | null>(1); // Default selected index (Aerobics)
+
+    const toggleCategory = (index: number) => {
+        setActiveIndex(index);
+    };
+
     return (
-        <View className="mb-1">
-            <View className="items-center">
-                <Text className="text-black text-2xl font-bold">
-                    Categories
-                </Text>
-                <View className="flex-row flex-wrap justify-center mt-4">
-                    {categories.map((category, index) => (
-                        <View key={index} className="mx-2 my-1">
-                            <TouchableOpacity
-                                onPress={() =>
-                                    console.log(`${category.name} clicked`)
-                                }
+        <View className="mb-1" style = {{ marginBottom : 15}}  >
+            <Text className="text-black text-2xl font-bold text" style = {{ marginLeft : 25}} >Categories</Text>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}  className="mt-4">
+
+                
+                {initialCategories.map((category, index) => {
+                    const isActive = index === activeIndex;
+                    return (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => toggleCategory(index)}
+                            style={{
+                                paddingHorizontal: 16,
+                                paddingVertical: 10,
+                                marginHorizontal: 6,
+                                borderRadius: 20,
+                                backgroundColor: isActive ? Colors.light.concordiaColor : Colors.light.fadedconcordiaColor,
+                                marginLeft: index === 0 ? 23 : 6,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontWeight: '600',
+                                    color: isActive ? 'white' : 'black',
+                                }}
                             >
-                                <CategoryItem
-                                    name={category.name}
-                                    isActive={category.isActive}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ))}
-                </View>
-            </View>
+                                {category.name}
+                            </Text>
+                        </TouchableOpacity>
+                    );
+                })}
+            </ScrollView>
         </View>
-    )
-}
+    );
+};

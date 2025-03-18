@@ -4,19 +4,23 @@ import {
     ThemeProvider,
 } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
-import { Stack } from 'expo-router'
+import { Link, Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import { useEffect } from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { useEffect, useState } from 'react'
+import { Image, TouchableOpacity, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 
 import { useColorScheme } from '@/hooks/useColorScheme'
+import UserQRCodeModal from '@/components/UserQRCodeModal'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
 export default function RootLayout() {
     const colorScheme = useColorScheme()
     const [loaded] = useFonts({
@@ -24,6 +28,7 @@ export default function RootLayout() {
         Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Light.ttf'),
     })
+    
 
     useEffect(() => {
         if (loaded) {
@@ -34,6 +39,8 @@ export default function RootLayout() {
     if (!loaded) {
         return null
     }
+
+    
 
     return (
         <ThemeProvider
@@ -59,8 +66,9 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
+                            <Link href="/notifications" asChild>
                             <TouchableOpacity
-                                onPress={() => console.log('QR Code Pressed')}
+                                onPress={() => console.log('Notifications  Pressed')}
                             >
                                 <Ionicons
                                     name="notifications-outline"
@@ -69,10 +77,23 @@ export default function RootLayout() {
                                     style={{ marginRight: 15 }}
                                 />
                             </TouchableOpacity>
+                            </Link>
                         ),
                     }}
                 />
                 <Stack.Screen name="+not-found" />
+
+                
+                <Stack.Screen
+        name="qrmodal"
+        options={{
+          presentation: 'transparentModal',
+          animation: 'fade',
+          headerShown: false,
+        }}
+      />
+                    
+                   
 
                 <Stack.Screen
                     name="training"
@@ -86,6 +107,7 @@ export default function RootLayout() {
                             fontWeight: 'bold', // Make the title bold
                         },
                         headerBackTitle: 'Go Back',
+                        
                     }}
                 />
             </Stack>

@@ -41,12 +41,15 @@ const TrainerCard: React.FC<TrainerCardProps> = ({ profilePic, name, certificati
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row', // To display the image and text side by side
-    backgroundColor: '#f8f8f8',
+    backgroundColor: 'white',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
     width: width - 40, // Take most of the screen width
     alignItems: 'center',
+    shadowColor: 'transparent',
+    elevation: 0,
+    
   },
   profilePic: {
     width: 70,
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   infoText: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#555',
   },
 

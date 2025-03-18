@@ -1,29 +1,31 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-import OnlineTrainer from '../assets/images/undraw_personal-trainer_bqkg.png'; // Import PNG
-
+ import HeroBanner from '@/components/HeroBanner';
+import SearchBar from '@/components/SearchBar';
+import { InPersonActivityList } from '@/components/ui/InPersonActivityList';
 
 const { width } = Dimensions.get('window');
 
 export default function OnlinePage() {
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.cardText}>Online Training</Text>
-        {/* Use the Image component to display the PNG */}
-        <Image source={OnlineTrainer} style={styles.image} />
-        
-      </View>
+     <HeroBanner title="Online Workouts Spring 2025"
+        description="Stay fit and healthy from home."
+        date="From April 10 to June 30"
+        image={require('../assets/images/online.png')}
+/>
+
+<SearchBar/>
+<InPersonActivityList/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    
     backgroundColor: '#f5f5f5',
+    flex: 1,
   },
   card: {
     flexDirection: 'row',
