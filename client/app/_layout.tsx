@@ -15,6 +15,7 @@ import { store } from '../store'
 import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
 import SignOutButton from '@/components/ui/SignOutButton'
+import ToastManager, { Toast } from 'toastify-react-native'
 
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
@@ -66,9 +67,10 @@ export default function RootLayout() {
                         headerRight: () => (
                             <>
                                 <TouchableOpacity
-                                    onPress={() =>
+                                    onPress={() => {
                                         console.log('QR Code Pressed')
-                                    }
+                                        Toast.success('Login successful')
+                                    }}
                                 >
                                     <Ionicons
                                         name="notifications-outline"
@@ -104,6 +106,21 @@ export default function RootLayout() {
                 />
             </Stack>
             <StatusBar style="auto" />
+            <ToastManager
+                showCloseIcon={false}
+                showProgressBar={false}
+                animationStyle="upInUpOut"
+                style={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.9) !important',
+                    padding: 0,
+                    borderRadius: 24,
+                }}
+                textStyle={{
+                    color: '#fff',
+                    fontSize: 16,
+                    padding: 0,
+                }}
+            />
         </Providers>
     )
 }

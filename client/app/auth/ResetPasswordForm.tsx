@@ -1,13 +1,11 @@
 import React from 'react'
-import { Pressable, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/components/primitives/input'
 import { Button } from '@/components/primitives/button'
-import { FullWindowOverlay } from 'react-native-screens'
 import { Portal } from '@rn-primitives/portal'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
 
 const ResetPasswordSchema = zod
@@ -20,9 +18,14 @@ const ResetPasswordSchema = zod
         path: ['confirmPassword'],
     })
 
-type TResetPasswordSchema = zod.infer<typeof ResetPasswordSchema>
+export type TResetPasswordSchema = zod.infer<typeof ResetPasswordSchema>
 
-const ResetPasswordForm = () => {
+type Props = {
+    onGoBack: () => void
+    onSuccess: (form: TResetPasswordSchema) => void
+}
+
+const ResetPasswordForm = ({ onGoBack, onSuccess }: Props) => {
     const { handleSubmit, control } = useForm<TResetPasswordSchema>({
         mode: 'onChange',
         resolver: zodResolver(ResetPasswordSchema),
@@ -33,17 +36,25 @@ const ResetPasswordForm = () => {
     })
 
     const onSubmit = (data: TResetPasswordSchema) => {
-        console.log(data)
+        onSuccess(data)
     }
 
     return (
         <Portal name="reset-password-form">
-            <SafeAreaView className="z-10 w-[87%] h-3/4 mx-auto">
-                <View className=" bg-white rounded-t-[30px] py-10 px-6 z-10 h-full">
+            <View
+                className="z-10 w-[87%] h-3/4 mx-auto"
+                style={{
+                    marginBottom: 20,
+                }}
+            >
+                <View className=" bg-white rounded-[30px] py-10 px-6 z-10 h-full">
                     <View className="h-full flex flex-col justify-between">
                         <View>
                             <View className="flex flex-row items-center gap-3 mb-[6px]">
-                                <TouchableOpacity className="items-center h-full">
+                                <TouchableOpacity
+                                    className="items-center h-full"
+                                    onPress={onGoBack}
+                                >
                                     <ArrowLeftIcon />
                                 </TouchableOpacity>
                                 <Text className="font-bold text-red text-base">
@@ -84,7 +95,7 @@ const ResetPasswordForm = () => {
                         </View>
                     </View>
                 </View>
-            </SafeAreaView>
+            </View>
             <View className="absolute top-0 bottom-0 left-0 right-0 bg-black/40" />
         </Portal>
     )

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, View } from 'react-native'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/components/primitives/input'
 import { ControlledCheckbox } from '@/components/primitives/checkbox'
 import { Button } from '@/components/primitives/button'
+import { Toast } from 'toastify-react-native'
 
 const RegisterSchema = zod
     .object({
@@ -25,7 +26,11 @@ const RegisterSchema = zod
 
 type TRegisterSchema = zod.infer<typeof RegisterSchema>
 
-const RegisterForm = () => {
+type Props = {
+    onRegisterSucceed: () => void
+}
+
+const RegisterForm = ({ onRegisterSucceed }: Props) => {
     const { handleSubmit, control } = useForm<TRegisterSchema>({
         mode: 'onChange',
         resolver: zodResolver(RegisterSchema),
@@ -39,6 +44,8 @@ const RegisterForm = () => {
 
     const onSubmit = (data: TRegisterSchema) => {
         console.log(data)
+        Toast.success('Account created successfully, please login')
+        onRegisterSucceed()
     }
 
     return (

@@ -1,7 +1,7 @@
 import LoginForm from '@/app/auth/LoginForm'
 import LoginOTPForm from '@/app/auth/LoginOTPForm'
 import RegisterForm from '@/app/auth/RegisterForm'
-import ResetPasswordForm from '@/app/auth/ResetPasswordForm'
+import ResetPasswordManager from '@/app/auth/ResetPasswordManager'
 import {
     Tabs,
     TabsContent,
@@ -14,6 +14,7 @@ import { PortalHost } from '@rn-primitives/portal'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const tabs = [
@@ -34,14 +35,22 @@ const AuthLayout: React.FC = () => {
     )
 
     const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
-
+    const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false)
     const handleTabChange = (tab: string) => {
         setActiveTab(tab as 'login' | 'register')
     }
 
     return (
-        <View className="flex flex-1 flex-col relative bg-red">
-            <SafeAreaView className="flex flex-col flex-1 justify-center items-center">
+        <SafeAreaView className="flex flex-grow flex-col relative bg-red h-full">
+            <ScrollView
+                className="flex"
+                contentContainerStyle={{
+                    flex: 1,
+                    marginBottom: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
                 <Tabs
                     value={activeTab}
                     onValueChange={handleTabChange}
@@ -78,29 +87,46 @@ const AuthLayout: React.FC = () => {
                             ))}
                         </TabsList>
                     </View>
-                    <View className="flex-1 bg-white rounded-t-[30px]">
+                    <View className="flex flex-col flex-1 bg-white rounded-[30px]">
                         <TabsContent
                             value="login"
                             className="flex-1 relative z-10"
                         >
-                            <View className="bg-white rounded-t-[30px] py-10 px-6">
-                                <LoginForm />
+                            <View className="bg-white rounded-[30px] py-10 px-6">
+                                {!isResetPasswordOpen &&
+                                    !currentLoggingInUser && (
+                                        <LoginForm
+                                            onClickForgotPassword={() => {
+                                                setIsResetPasswordOpen(true)
+                                            }}
+                                        />
+                                    )}
                                 {currentLoggingInUser && (
                                     <LoginOTPForm user={currentLoggingInUser} />
                                 )}
-                                {/* <ResetPasswordForm /> */}
+                                {isResetPasswordOpen && (
+                                    <ResetPasswordManager
+                                        onClose={() => {
+                                            setIsResetPasswordOpen(false)
+                                        }}
+                                    />
+                                )}
                             </View>
                         </TabsContent>
                         <TabsContent value="register" className="flex-1">
-                            <View className="bg-white rounded-t-[30px] py-10 px-6">
-                                <RegisterForm />
+                            <View className="bg-white rounded-[30px] py-10 px-6">
+                                <RegisterForm
+                                    onRegisterSucceed={() => {
+                                        setActiveTab('login')
+                                    }}
+                                />
                             </View>
                         </TabsContent>
                     </View>
                 </Tabs>
-            </SafeAreaView>
+            </ScrollView>
             <PortalHost />
-        </View>
+        </SafeAreaView>
     )
 }
 

@@ -17,7 +17,11 @@ const LoginSchema = zod.object({
 
 type TLoginSchema = zod.infer<typeof LoginSchema>
 
-const LoginForm = () => {
+type Props = {
+    onClickForgotPassword: () => void
+}
+
+const LoginForm = ({ onClickForgotPassword }: Props) => {
     const dispatch = useAppDispatch()
     const { handleSubmit, control } = useForm<TLoginSchema>({
         mode: 'onChange',
@@ -86,7 +90,7 @@ const LoginForm = () => {
                         </ControlledCheckbox>
                     </View>
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={onClickForgotPassword}>
                             <Text className="text-red text-xs font-medium leading-[1.3]">
                                 Forgot Password?
                             </Text>

@@ -9,16 +9,13 @@ import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
 import { ControlledInputOTP } from '@/components/ui/InputOTP'
 import ProfilePictureIcon from '@/components/icons/ProfilePictureIcon'
 import InfoIcon from '@/components/icons/InfoIcon'
-import { setCurrentLoggingInUser, signIn } from '@/app/auth/authSlice'
 import { useAppDispatch } from '@/store'
-import * as SecureStore from 'expo-secure-store'
-import { Toast } from 'toastify-react-native'
 
-const LoginOTPSchema = zod.object({
+const ResetPasswordOTPSchema = zod.object({
     otpCode: zod.string().length(6),
 })
 
-type TLoginSchema = zod.infer<typeof LoginOTPSchema>
+export type TResetPasswordOTPSchema = zod.infer<typeof ResetPasswordOTPSchema>
 
 type Props = {
     user: {
@@ -26,26 +23,23 @@ type Props = {
         name: string
         avatarUrl: string
     }
+    onGoBack: () => void
+    onSuccess: (form: TResetPasswordOTPSchema) => void
 }
 
-const LoginOTPForm = ({ user }: Props) => {
+const ResetPasswordOTPForm = ({ user, onGoBack, onSuccess }: Props) => {
     const dispatch = useAppDispatch()
 
-    const { handleSubmit, control } = useForm<TLoginSchema>({
+    const { handleSubmit, control } = useForm<TResetPasswordOTPSchema>({
         mode: 'onChange',
-        resolver: zodResolver(LoginOTPSchema),
+        resolver: zodResolver(ResetPasswordOTPSchema),
         defaultValues: {
             otpCode: '',
         },
     })
 
-    const onSubmit = async (data: TLoginSchema) => {
-        // console.log(data)
-        const token = 'dummy-token'
-
-        Toast.success('Login successful')
-        dispatch(signIn(token))
-        await SecureStore.setItemAsync('userToken', token)
+    const onSubmit = async (data: TResetPasswordOTPSchema) => {
+        onSuccess(data)
     }
 
     return (
@@ -62,9 +56,7 @@ const LoginOTPForm = ({ user }: Props) => {
                             <View className="flex flex-row items-center gap-3 mb-[6px]">
                                 <TouchableOpacity
                                     className="h-full"
-                                    onPress={() => {
-                                        dispatch(setCurrentLoggingInUser(null))
-                                    }}
+                                    onPress={onGoBack}
                                 >
                                     <ArrowLeftIcon />
                                 </TouchableOpacity>
@@ -118,4 +110,4 @@ const LoginOTPForm = ({ user }: Props) => {
     )
 }
 
-export default LoginOTPForm
+export default ResetPasswordOTPForm
