@@ -124,6 +124,21 @@ export default function RootLayout() {
                         
                     }}
                 />
+
+                <Stack.Screen
+                    name="payment"
+                    options={{
+                        title: 'My Order',
+                        headerStyle: {
+                            backgroundColor: '#3498db', // Set the background color of the header
+                        },
+                        headerTintColor: '#fff', // Set the color of the header text
+                        headerTitleStyle: {
+                            fontWeight: 'bold', // Make the title bold
+                        },
+                        headerBackTitle: 'Go Back',
+                    }}
+                />
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}
