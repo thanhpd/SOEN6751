@@ -1,34 +1,29 @@
-import { Activity } from '@/constants/types'
+import { Activity, CalendarEvent } from '@/constants/types'
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
+import useCalendarStore from '@/stores/CalendarStore'
 
 const CalendarComponent = () => {
-    const [selectedDay, setSelectedDay] = useState<any | null>(null)
-    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
+    const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
         null
     )
     const [modalVisible, setModalVisible] = useState<boolean>(false)
+    const { events } = useCalendarStore()
 
-    const handleDayPress = (day: any) => {
-        const activity: Activity = {
-            title: 'Cardio Dance',
-            instructor: 'Danielle Hubbard',
-            location: 'SGW – Le Gym – Studio C',
-            days: 'Monday, Wednesday, Friday',
-            time: '5:30 PM – 6:30 PM',
-            description: '',
-            price: '',
+    const handleDayPress = (day: { dateString: string }) => {
+        const selectedDay: string = day.dateString
+        const event = events.find(event => event.date === selectedDay)
+
+        if (event) {
+            setSelectedEvent(event ?? null)
+            setModalVisible(true)
         }
-        setSelectedDay(day)
-        setSelectedActivity(activity)
-        setModalVisible(true)
     }
 
     const handleClose = () => {
-        setSelectedDay(null)
-        setSelectedActivity(null)
+        setSelectedEvent(null)
         setModalVisible(false)
     }
 
@@ -43,13 +38,15 @@ const CalendarComponent = () => {
 
             <Calendar
                 onDayPress={handleDayPress}
-                current={'2023-11-01'}
-                markedDates={{
-                    '2023-11-03': { selected: true, selectedColor: '#F4D03F' },
-                    '2023-11-07': { selected: true, selectedColor: '#EC7063' },
-                    '2023-11-18': { selected: true, selectedColor: '#F4D03F' },
-                    '2023-11-23': { selected: true, selectedColor: '#EC7063' },
-                }}
+                current={'2025-03-20'}
+                markedDates={events.reduce((acc: any, event: any) => {
+                    acc[event.date] = {
+                        selected: event.selected,
+                        selectedColor: event.selectedColor,
+                        activity: event.activity,
+                    }
+                    return acc
+                }, {})}
                 theme={{
                     calendarBackground: '#fff',
                     textSectionTitleColor: '#000',
@@ -71,15 +68,11 @@ const CalendarComponent = () => {
                 </View>
             </View>
 
-            {modalVisible && selectedActivity && (
+            {modalVisible && selectedEvent && (
                 <EventDetailsPopup
                     visible={modalVisible}
-                    activity={selectedActivity}
-                    handleClose={handleClose}
-                    month={new Date(selectedDay.dateString).toLocaleString(
-                        'default',
-                        { month: 'long' }
-                    )}
+                    event={selectedEvent}
+                    close={handleClose}
                 />
             )}
         </View>
