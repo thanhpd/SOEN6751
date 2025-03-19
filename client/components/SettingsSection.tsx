@@ -65,6 +65,39 @@ const SettingsSection: React.FC = () => {
                     </View>
                     <ToggleButton />
                 </View>
+
+                {/* Horizontal line divider within the same View */}
+                <View className="flex-row items-center justify-between mb-2">
+                    <View
+                        style={{
+                            flex: 1,
+                            height: 1,
+                            backgroundColor: '#EDEFF1',
+                            marginLeft: 40
+                        }}
+                    />
+                </View>
+
+                <View
+                    className="flex-row items-center justify-between"
+                    onTouchEnd={() => console.log("payment pressed")}
+                >
+                    <View className="flex-row items-center space-x-3">
+                        <View className="w-10 h-10 items-center justify-center">
+                            <Image
+                                source={require('../assets/images/payment-icon.svg')}
+                                style={{ width: 24, height: 24 }}
+                            />
+                        </View>
+                        <Text className="text-base font-medium ml-2">
+                            Payment
+                        </Text>
+                    </View>
+                    <Image
+                        source={require('../assets/images/chevron.forward.svg')}
+                        style={{ width: 7, height: 12 }}
+                    />
+                </View>
             </View>
         </View>
     )
