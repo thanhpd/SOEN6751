@@ -14,6 +14,7 @@ export default function PersonalTrainingPage() {
     { id: '4', title: '20  ',price:'55', path: 'nutrition' },
   ];
 
+  
   return (
     <ScrollView style={styles.container}>
       <Text style = {styles.title}>Personal Training Packages</Text>
@@ -38,13 +39,13 @@ export default function PersonalTrainingPage() {
       <Text style = {styles.title}>Meet Our Trainers</Text>
       <View style={styles.trainerContainer}>
         <TrainerCard
-          profilePic="https://randomuser.me/api/portraits/men/1.jpg" // Replace with actual URL or local file
+          profilePic={require('@/assets/images/trainer.png')} // Replace with actual URL or local file
           name="Jane Smith"
           certification="Certified Strength and Conditioning "
           education="Master's in Kinesiology"
         />
         <TrainerCard
-          profilePic="https://randomuser.me/api/portraits/women/2.jpg" // Replace with actual URL or local file
+          profilePic={require('@/assets/images/trainer1.png')} // Replace with actual URL or local file
           name="John Doe"
           certification="Certified Personal Trainer (CPT)"
           education="Bachelor's in Exercise Science"
@@ -86,8 +87,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title : {
-    fontSize: 20,
+    fontSize: 17,
     margin: 10,
+    fontWeight :'bold',
   } ,  
 
   price :{

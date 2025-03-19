@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 const { width } = Dimensions.get('window'); // Get screen width
 
 interface TrainerCardProps {
-    profilePic: string // URL or local path to the profile picture
+    profilePic: number // URL or local path to the profile picture
     name: string
     certification: string
     education: string
@@ -15,7 +15,7 @@ interface TrainerCardProps {
 const TrainerCard: React.FC<TrainerCardProps> = ({ profilePic, name, certification, education }) => {
   return (
     <View style={styles.card}>
-      <Image source={{ uri: profilePic }} style={styles.profilePic} />
+      <Image source={ profilePic } style={styles.profilePic} />
       <View style={styles.details}>
         <Text style={styles.name}>{name}</Text>
         <View style={styles.container}>
