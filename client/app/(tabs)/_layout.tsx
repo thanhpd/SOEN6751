@@ -11,6 +11,7 @@ import { useColorScheme } from '@/hooks/useColorScheme'
 
 
 import { useAppSelector } from '@/store'
+import { IconSymbol } from '@/components/ui/IconSymbol'
 
 
 export default function TabLayout() {
@@ -50,7 +51,21 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-                name="membership"
+                name="profile"
+                options={{
+                    title: 'Profile',
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol
+                            size={28}
+                            name="person.fill"
+                            color={color}
+                        />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+                name="explore"
                 options={{
                     title: 'Membership',
 

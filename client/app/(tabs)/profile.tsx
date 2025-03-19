@@ -1,57 +1,28 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
-import { CustomButton } from '@/components/CustomButton'
-import { DotsIndicator } from '@/components/DotsIndicator'
+import { ScrollView, View } from 'react-native'
+import ProfileHeader from '@/components/ProfileHeader'
+import WeeklyActivity from '@/components/WeeklyActivity'
+import SettingsSection from '@/components/SettingsSection'
+// import MoreOptionsSection from "./MoreOptionsSection";
 
-export default function EmergencyResponse() {
+const Profile: React.FC = () => {
     return (
-        <View
-            className="flex-1 p-6 items-center justify-center"
-            style={{ backgroundColor: '#E4AEAE' }}
-        >
-            <Text
-                style={{
-                    fontFamily: 'Mirza',
-                    fontSize: 40,
-                    fontWeight: 400,
-                    marginTop: 57,
-                    textAlign: 'center',
+        <ScrollView className="flex-1 bg-gray-50">
+            <ProfileHeader
+                name="Mahim Rahman"
+                email="mahim@gmail.com"
+                avatar="https://cdn.builder.io/api/v1/image/assets/TEMP/9f59753e6c945de3eae836cbfd7d48d387c27c44dd67926552a5a077f4146122?placeholderIfAbsent=true&apiKey=650a6d7feb6041edbb7dcb01545c3ece"
+                streak={102}
+                onEditPress={() => {
+                    console.log('Edit Profile button pressed')
                 }}
-            >
-                Emergency Response
-            </Text>
-
-            <Image
-                source={{
-                    uri: 'https://cdn.builder.io/api/v1/image/assets/TEMP/ad8d1f39b71e173ff0e3de65c4012d022561b12c',
-                }}
-                style={{ width: 232, height: 232, marginBottom: 24 }}
-                resizeMode="contain"
-                accessible={true}
-                accessibilityLabel="Emergency Response Icon"
             />
 
-            <Text
-                style={{
-                    fontFamily: 'Mirza',
-                    fontSize: 17,
-                    textAlign: 'center',
-                    marginBottom: 100,
-                    paddingHorizontal: 16,
-                }}
-            >
-                In case of an emergency, simply press the emergency button and
-                rest assured that help is on the way!
-            </Text>
+            <WeeklyActivity />
 
-            <DotsIndicator totalDots={4} activeDot={3} />
-
-            <CustomButton
-                onPress={() => {
-                    console.log('Emergency button pressed')
-                }}
-                title="GOT IT!"
-            />
-        </View>
+            <SettingsSection />
+        </ScrollView>
     )
 }
+
+export default Profile
