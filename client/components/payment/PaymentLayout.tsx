@@ -4,3 +4,5 @@ import { View } from 'react-native'
 const PaymentLayout = () => {
     return <View></View>
 }
+
+export default PaymentLayout
