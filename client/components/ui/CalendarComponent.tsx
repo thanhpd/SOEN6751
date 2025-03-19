@@ -1,4 +1,4 @@
-import { Activity } from '@/constants/types'
+import { Activity, CalendarEvent } from '@/constants/types'
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Calendar } from 'react-native-calendars'
@@ -6,24 +6,24 @@ import EventDetailsPopup from './EventDetailsPopup'
 import useCalendarStore from '@/stores/CalendarStore'
 
 const CalendarComponent = () => {
-    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
+    const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
         null
     )
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore();
+    const { events } = useCalendarStore();
     
     const handleDayPress = (day: { dateString: string }) => {
         const selectedDay:string = day.dateString;
-        const activity = events.find((event) => event.date === selectedDay)?.activity;
+        const event = events.find((event) => event.date === selectedDay);
 
-        if (activity) {
-            setSelectedActivity(activity ?? null)
+        if (event) {
+            setSelectedEvent(event ?? null)
             setModalVisible(true)
         }
     }
 
     const handleClose = () => {
-        setSelectedActivity(null)
+        setSelectedEvent(null)
         setModalVisible(false)
     }
 
@@ -68,14 +68,11 @@ const CalendarComponent = () => {
                 </View>
             </View>
 
-            {modalVisible && selectedActivity && (
+            {modalVisible && selectedEvent && (
                 <EventDetailsPopup
                     visible={modalVisible}
-                    activity={selectedActivity}
-                    handleClose={handleClose}
-                    handleCancelBooking={function (): void {
-                        throw new Error('Function not implemented.')
-                    } }                />
+                    event={selectedEvent}
+                    close={handleClose}/>
             )}
         </View>
     )

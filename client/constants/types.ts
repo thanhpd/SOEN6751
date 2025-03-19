@@ -15,3 +15,12 @@ export interface Activity {
     isActive?: boolean;
   }
   
+  export interface CalendarEvent {
+    id: string;
+    title: string;
+    date: string; // Date of the event, can be adjusted based on your needs    
+    selected: boolean, 
+    selectedColor: string,
+    activity?: Activity;
+  }
+  

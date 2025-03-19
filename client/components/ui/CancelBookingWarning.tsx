@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
+import useCalendarStore from '@/stores/CalendarStore'
 
 interface CancelBookingWarningsProps {
     visible: boolean
@@ -11,12 +12,9 @@ interface CancelBookingWarningsProps {
 const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
     visible,
     handleClose,
+    handleConfirm,
 }) => {
-    const handleConfirm = () => {
-        // Add your confirmation logic here
-        console.log('Booking cancelled');
-        handleClose();
-    }
+
     return (
         <Modal
             animationType="slide"

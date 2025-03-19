@@ -1,23 +1,15 @@
-import { Activity } from '@/constants/types';
+import { Activity, CalendarEvent } from '@/constants/types';
 import {create} from 'zustand';
 
-interface Event {
-  id: string;
-  title: string;
-  date: string; // Date of the event, can be adjusted based on your needs    
-  selected: boolean, 
-  selectedColor: string,
-  activity?: Activity;
-}
 
 interface CalendarState {
-  events: Event[];
-  addEvent: (event: Event) => void;
+  events: CalendarEvent[];
+  addEvent: (event: CalendarEvent) => void;
   removeEvent: (eventId: string) => void;
   clearEvents: () => void;
 }
 
-const defaultBookedEvents: Event[] = [
+const defaultBookedEvents: CalendarEvent[] = [
   {
     id: '2025-03-03',
     title: 'Cardio Dance',
