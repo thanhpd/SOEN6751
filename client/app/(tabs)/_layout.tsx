@@ -1,17 +1,25 @@
-import { Tabs } from 'expo-router'
+import { Redirect, Tabs } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { HapticTab } from '@/components/HapticTab'
-import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
-import ModalScreen from '../qrmodal'
+
+
+
+import { useAppSelector } from '@/store'
+
 
 export default function TabLayout() {
     const colorScheme = useColorScheme()
+    const userToken = useAppSelector(state => state.auth.userToken)
+
+    if (!userToken) {
+        return <Redirect href="/auth/AuthLayout" />
+    }
 
     return (
         <Tabs
