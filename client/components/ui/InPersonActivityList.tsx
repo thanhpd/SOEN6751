@@ -3,11 +3,13 @@ import { InPersonActivityItem } from '@/components/ui/InPersonActivityItem'
 import React, { useState } from 'react'
 import { View, FlatList, TouchableOpacity } from 'react-native'
 import ActivityDetailsPopup from './ActivityDetailsPopup'
+import useCalendarStore from '@/stores/CalendarStore'
 
 export const InPersonActivityList = () => {
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
         null
     )
+    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore();
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const handlePress = (activity: Activity) => {
@@ -19,6 +21,42 @@ export const InPersonActivityList = () => {
         setSelectedActivity(null)
         setModalVisible(false)
     }
+
+    const handleBook = (activity: Activity) => {
+        // find days to book
+        const days = activity.days.split(',').map((day) => day.trim());
+        console.log('Days:', days);
+        days.forEach((day) => { 
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+
+            // Find the next date matching the day
+            const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].findIndex(
+                (d) => d.toLowerCase() === day.toLowerCase()
+            );
+
+            let nextDate = new Date(today);
+            nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7));
+
+            if (nextDate.getMonth() !== currentMonth) {
+                nextDate.setDate(nextDate.getDate() + 7); // Ensure it's in the current month
+            }
+
+            const formattedDate = nextDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            console.log('Formatted Date:', formattedDate + " day: " + day);
+            // addEvent({
+            //     id: activity.title,
+            //     title: activity.title,
+            //     date: '2023-11-03',
+            //     selected: true,
+            //     selectedColor: '#F4D03F',
+            //     activity: activity
+            // });
+        });
+
+        handleClose()
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -39,9 +77,7 @@ export const InPersonActivityList = () => {
                     visible={modalVisible}
                     activity={selectedActivity}
                     handleClose={handleClose}
-                    handleBook={function (): void {
-                        throw new Error('Function not implemented.')
-                    }}
+                    handleBook={() => handleBook(selectedActivity)}
                 />
             )}
         </View>

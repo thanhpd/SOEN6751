@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
+import useCalendarStore from '@/stores/CalendarStore'
 
 const CalendarComponent = () => {
     const [selectedDay, setSelectedDay] = useState<any | null>(null)
@@ -10,7 +11,8 @@ const CalendarComponent = () => {
         null
     )
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-
+    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore();
+    
     const handleDayPress = (day: any) => {
         const activity: Activity = {
             title: 'Cardio Dance',
@@ -45,10 +47,58 @@ const CalendarComponent = () => {
                 onDayPress={handleDayPress}
                 current={'2023-11-01'}
                 markedDates={{
-                    '2023-11-03': { selected: true, selectedColor: '#F4D03F' },
-                    '2023-11-07': { selected: true, selectedColor: '#EC7063' },
-                    '2023-11-18': { selected: true, selectedColor: '#F4D03F' },
-                    '2023-11-23': { selected: true, selectedColor: '#EC7063' },
+                    '2023-11-03': { 
+                        selected: true, 
+                        selectedColor: '#F4D03F', 
+                        activity: {
+                            title: 'Yoga Class',
+                            instructor: 'Alice Johnson',
+                            location: 'Downtown Studio',
+                            days: 'Friday',
+                            time: '6:00 PM – 7:00 PM',
+                            description: 'A relaxing yoga session.',
+                            price: '$15',
+                        }
+                    },
+                    '2023-11-07': { 
+                        selected: true, 
+                        selectedColor: '#EC7063', 
+                        activity: {
+                            title: 'Cooking Workshop',
+                            instructor: 'Chef Gordon',
+                            location: 'Community Center',
+                            days: 'Tuesday',
+                            time: '4:00 PM - 6:00 PM',
+                            description: 'Learn to cook delicious meals.',
+                            price: '$25',
+                        }
+                    },
+                    '2023-11-18': { 
+                        selected: true, 
+                        selectedColor: '#F4D03F', 
+                        activity: {
+                            title: 'Art Class',
+                            instructor: 'Emily Clark',
+                            location: 'Art Studio',
+                            days: 'Saturday',
+                            time: '2:00 PM - 4:00 PM',
+                            description: 'Explore your creativity with painting.',
+                            price: '$20',
+                        }
+                    },
+                    '2023-11-23': { 
+                        selected: true, 
+                        selectedColor: '#EC7063', 
+                        activity: {
+                            title: 'Dance Workshop',
+                            instructor: 'Michael Brown',
+                            location: 'Dance Hall',
+                            days: 'Thursday',
+                            time: '5:00 PM - 6:30 PM',
+                            description: 'Learn new dance moves.',
+                            price: '$18',
+                        }
+                    },
                 }}
                 theme={{
                     calendarBackground: '#fff',
