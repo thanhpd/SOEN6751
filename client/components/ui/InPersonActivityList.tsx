@@ -25,7 +25,7 @@ export const InPersonActivityList = () => {
     const handleBook = (activity: Activity) => {
         // find days to book
         const days = activity.days.split(',').map((day) => day.trim());
-        console.log('Days:', days);
+
         days.forEach((day) => { 
             const today = new Date();
             const currentMonth = today.getMonth();
@@ -40,19 +40,20 @@ export const InPersonActivityList = () => {
             nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7));
 
             if (nextDate.getMonth() !== currentMonth) {
-                nextDate.setDate(nextDate.getDate() + 7); // Ensure it's in the current month
+                nextDate.setDate(nextDate.getDate() + 7);
             }
 
             const formattedDate = nextDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-            console.log('Formatted Date:', formattedDate + " day: " + day);
-            // addEvent({
-            //     id: activity.title,
-            //     title: activity.title,
-            //     date: '2023-11-03',
-            //     selected: true,
-            //     selectedColor: '#F4D03F',
-            //     activity: activity
-            // });
+            //console.log('Formatted Date:', formattedDate + " day: " + day);
+            const highlightcolor = activity.inPerson ?  '#EC7063':'#F4D03F';
+            addEvent({
+                id: formattedDate,
+                title: activity.title,
+                date: formattedDate,
+                selected: true,
+                selectedColor: highlightcolor, 
+                activity: activity
+            });
         });
 
         handleClose()
@@ -95,6 +96,7 @@ const activityItems: Activity[] = [
         days: 'Monday, Wednesday, Friday',
         time: '5:30 PM – 6:30 PM',
         image: '../../assets/images/cardio.png',
+        inPerson: true
     },
     {
         title: 'Zumba Fitness',
@@ -106,6 +108,7 @@ const activityItems: Activity[] = [
         days: 'Tuesday, Thursday',
         time: '5:30 PM – 6:30 PM',
         image: '../../assets/images/zumba.png',
+        inPerson: false
     },
     {
         title: 'Total Body Fitness',
@@ -117,6 +120,7 @@ const activityItems: Activity[] = [
         days: 'Monday, Wednesday, Friday',
         time: '12:00 PM – 1:00 PM',
         image: '../../assets/images/aero.png',
+        inPerson: false
     },
     {
         title: 'Hard Core',
@@ -125,8 +129,9 @@ const activityItems: Activity[] = [
         price: '100',
         description:
             'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
-        days: 'Tuesday, Thursday',
+        days: 'Saturday, Sunday',
         time: '12:00 PM – 1:00 PM',
         image: '../../assets/images/exercise_classes.png',
+        inPerson: true
     },
 ]

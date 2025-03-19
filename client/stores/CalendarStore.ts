@@ -19,11 +19,11 @@ interface CalendarState {
 
 const defaultBookedEvents: Event[] = [
   {
-    id: 'event-1',
+    id: '2025-03-03',
     title: 'Cardio Dance',
-    date: '2023-11-03',
+    date: '2025-03-03',
     selected: true, 
-    selectedColor: '#F4D03F',
+    selectedColor: '#EC7063',
       activity: {
       title: 'Cardio Dance',
       instructor: 'Danielle Hubbard',
@@ -34,14 +34,15 @@ const defaultBookedEvents: Event[] = [
       days: 'Monday, Wednesday, Friday',
       time: '5:30 PM - 6:30 PM',
       image: '../../assets/images/cardio.png',
+      inPerson: true
     }
   },
 {
-  id: 'event-2',
+  id: '2025-03-25',
   title: 'Zumba Fitness',
-  date: '2023-11-07',
+  date: '2025-03-25',
   selected: true, 
-  selectedColor: '#EC7063', 
+  selectedColor: '#F4D03F',
   activity: {
       title: 'Cooking Workshop',
       instructor: 'Chef Gordon',
@@ -50,6 +51,7 @@ const defaultBookedEvents: Event[] = [
       time: '4:00 PM - 6:00 PM',
       description: 'Learn to cook delicious meals.',
       price: '$25',
+      inPerson: false
   }
 }];
 

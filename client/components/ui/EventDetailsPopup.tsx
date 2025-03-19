@@ -13,7 +13,6 @@ interface EventDetailsPopupProps {
         days: string
         time: string
     }
-    month: string
     handleClose: () => void
     handleCancelBooking: () => void
 }

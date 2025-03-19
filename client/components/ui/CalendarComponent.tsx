@@ -6,30 +6,23 @@ import EventDetailsPopup from './EventDetailsPopup'
 import useCalendarStore from '@/stores/CalendarStore'
 
 const CalendarComponent = () => {
-    const [selectedDay, setSelectedDay] = useState<any | null>(null)
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
         null
     )
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const { events, addEvent, removeEvent, clearEvents } = useCalendarStore();
     
-    const handleDayPress = (day: any) => {
-        const activity: Activity = {
-            title: 'Cardio Dance',
-            instructor: 'Danielle Hubbard',
-            location: 'SGW – Le Gym – Studio C',
-            days: 'Monday, Wednesday, Friday',
-            time: '5:30 PM – 6:30 PM',
-            description: '',
-            price: '',
+    const handleDayPress = (day: { dateString: string }) => {
+        const selectedDay:string = day.dateString;
+        const activity = events.find((event) => event.date === selectedDay)?.activity;
+
+        if (activity) {
+            setSelectedActivity(activity ?? null)
+            setModalVisible(true)
         }
-        setSelectedDay(day)
-        setSelectedActivity(activity)
-        setModalVisible(true)
     }
 
     const handleClose = () => {
-        setSelectedDay(null)
         setSelectedActivity(null)
         setModalVisible(false)
     }
@@ -45,61 +38,15 @@ const CalendarComponent = () => {
 
             <Calendar
                 onDayPress={handleDayPress}
-                current={'2023-11-01'}
-                markedDates={{
-                    '2023-11-03': { 
-                        selected: true, 
-                        selectedColor: '#F4D03F', 
-                        activity: {
-                            title: 'Yoga Class',
-                            instructor: 'Alice Johnson',
-                            location: 'Downtown Studio',
-                            days: 'Friday',
-                            time: '6:00 PM – 7:00 PM',
-                            description: 'A relaxing yoga session.',
-                            price: '$15',
-                        }
-                    },
-                    '2023-11-07': { 
-                        selected: true, 
-                        selectedColor: '#EC7063', 
-                        activity: {
-                            title: 'Cooking Workshop',
-                            instructor: 'Chef Gordon',
-                            location: 'Community Center',
-                            days: 'Tuesday',
-                            time: '4:00 PM - 6:00 PM',
-                            description: 'Learn to cook delicious meals.',
-                            price: '$25',
-                        }
-                    },
-                    '2023-11-18': { 
-                        selected: true, 
-                        selectedColor: '#F4D03F', 
-                        activity: {
-                            title: 'Art Class',
-                            instructor: 'Emily Clark',
-                            location: 'Art Studio',
-                            days: 'Saturday',
-                            time: '2:00 PM - 4:00 PM',
-                            description: 'Explore your creativity with painting.',
-                            price: '$20',
-                        }
-                    },
-                    '2023-11-23': { 
-                        selected: true, 
-                        selectedColor: '#EC7063', 
-                        activity: {
-                            title: 'Dance Workshop',
-                            instructor: 'Michael Brown',
-                            location: 'Dance Hall',
-                            days: 'Thursday',
-                            time: '5:00 PM - 6:30 PM',
-                            description: 'Learn new dance moves.',
-                            price: '$18',
-                        }
-                    },
-                }}
+                current={'2025-03-20'}
+                markedDates={events.reduce((acc: any, event: any) => {
+                    acc[event.date] = {
+                        selected: event.selected,
+                        selectedColor: event.selectedColor,
+                        activity: event.activity,
+                      };
+                    return acc
+                }, {})}
                 theme={{
                     calendarBackground: '#fff',
                     textSectionTitleColor: '#000',
@@ -126,10 +73,7 @@ const CalendarComponent = () => {
                     visible={modalVisible}
                     activity={selectedActivity}
                     handleClose={handleClose}
-                    month={new Date(selectedDay.dateString).toLocaleString(
-                        'default',
-                        { month: 'long' }
-                    )} handleCancelBooking={function (): void {
+                    handleCancelBooking={function (): void {
                         throw new Error('Function not implemented.')
                     } }                />
             )}
