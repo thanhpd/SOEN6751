@@ -24,7 +24,7 @@ export default function RootLayout() {
         Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Light.ttf'),
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
-        Inter: require('../assets/fonts/Inter_18pt-Regular.ttf')
+        Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
 
     useEffect(() => {
