@@ -16,11 +16,19 @@ export const InPersonActivityItem = ({ activity }: { activity: Activity }) => {
     }
     const activityImage = activity.image
         ? imageMapping[
-              activity.image.split('/').pop() as keyof typeof imageMapping
-          ]
+        activity.image.split('/').pop() as keyof typeof imageMapping
+        ]
         : null
     return (
-        <Card>
+        <Card style={{
+            
+            elevation: 0, // Removes shadow on Android
+            shadowColor: 'transparent', // Removes shadow on iOS
+            shadowOffset: { width: 0, height: 0 }, // Ensures no shadow offset
+            shadowOpacity: 0, // No shadow visibility
+            shadowRadius: 0, // No shadow blur
+            borderWidth: 0, // Removes any border
+        }}>
             <Card.Content>
                 <View className="flex-1 flex-row items-center">
                     <Image
@@ -30,6 +38,8 @@ export const InPersonActivityItem = ({ activity }: { activity: Activity }) => {
 
                     <View className="flex-1 pl-2 justify-between">
                         <View className="flex-1">
+
+                        <View className="flex-row items-center justify-between">
                             <Text
                                 className="text-black text-lg font-bold"
                                 style={{
@@ -39,6 +49,27 @@ export const InPersonActivityItem = ({ activity }: { activity: Activity }) => {
                             >
                                 {activity.title}
                             </Text>
+
+                            <Text
+                                className=" text-white text-center rounded-full px-3 py-1"
+                                style={{
+                                    backgroundColor:
+                                        Colors.concordia['red-button'],
+                                        color: Colors.light.concordiaColor,
+                                        fontWeight: 'bold',
+
+                                }}
+                            >
+                                <FontAwesome
+                                    className="p-1"
+                                    name="dollar"
+                                    size={12}
+                                    color={Colors.light.concordiaColor}
+                                />
+                                {activity.price}
+                            </Text>
+                            </View>
+
                             <Text className="text-black">
                                 {activity.instructor}
                             </Text>
@@ -49,21 +80,7 @@ export const InPersonActivityItem = ({ activity }: { activity: Activity }) => {
                             <Text className="text-black flex-1 p-2">
                                 {activity.location}
                             </Text>
-                            <Text
-                                className=" text-white text-center rounded-full px-3 py-1"
-                                style={{
-                                    backgroundColor:
-                                        Colors.concordia['red-button'],
-                                }}
-                            >
-                                <FontAwesome
-                                    className="p-1"
-                                    name="dollar"
-                                    size={12}
-                                    color="black"
-                                />
-                                {activity.price}
-                            </Text>
+                            
                         </View>
                     </View>
                 </View>

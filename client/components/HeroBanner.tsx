@@ -1,34 +1,61 @@
-import React from 'react'
-import { View, Image, Text } from 'react-native'
-import { Card } from 'react-native-paper'
-import { Colors } from '@/constants/Colors'
+import React from 'react';
+import { View, Image, Text } from 'react-native';
+import { Card } from 'react-native-paper';
+import { Colors } from '@/constants/Colors';
 
-export default function HeroBanner() {
-    return (
-        <View className="p-2">
-            <Card>
-                <View
-                    className="flex-row rounded-lg"
-                    style={{ backgroundColor: Colors.concordia.background }}
-                >
-                    <View className="flex-1 p-4">
-                        <Text className="text-white text-2xl font-bold">
-                            In - Person Activities Winter 2025
-                        </Text>
-                        <Text className="text-white text-s">
-                            Get inspired and moving at the same time.
-                        </Text>
-                        <View style={{ height: 8 }} />
-                        <Text className="text-white text-l">
-                            From Jan. 13 to April 6
-                        </Text>
-                    </View>
-                    <Image
-                        source={require('../assets/images/hero.png')}
-                        className="rounded-tr-2xl rounded-br-2xl"
-                    />
-                </View>
-            </Card>
+interface HeroBannerProps {
+  title: string;
+  description: string;
+  date: string;
+  image: any; // Image source
+}
+
+export default function HeroBanner({ title, description, date, image }: HeroBannerProps) {
+  return (
+    <View style={{ padding: 16, marginHorizontal: 10, marginBottom: 0 }}>
+      <Card style={{ borderRadius: 12, overflow: 'hidden' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            borderRadius: 12,
+            backgroundColor: Colors.concordia.background,
+            alignItems: 'center',
+          }}
+        >
+          {/* Text Section */}
+          <View style={{ flex: 1, padding: 16 }}>
+            <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>{title}</Text>
+            <Text style={{ color: 'white', fontSize: 10, marginTop: 4 }}>{description}</Text>
+            <View style={{ height: 8 }} />
+            <Text style={{ color: 'white', fontSize: 12 }}>{date}</Text>
+          </View>
+
+          {/* Image Section with Overlay */}
+          <View style={{ position: 'relative' }}>
+            <Image
+              source={image}
+              style={{
+                width: 140,
+                height: 120,
+                resizeMode: 'cover',
+                borderRadius: 8, // Match card shape if needed
+              }}
+            />
+            {/* Overlay */}
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(192, 57, 43, 0.6)', // Semi-transparent red
+                borderRadius: 8, // Match image border radius
+              }}
+            />
+          </View>
         </View>
-    )
+      </Card>
+    </View>
+  );
 }

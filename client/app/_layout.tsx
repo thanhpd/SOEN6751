@@ -1,15 +1,19 @@
+
+import { Link, Stack } from 'expo-router'
 import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
-import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
+
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
+
+import { useColorScheme } from '@/hooks/useColorScheme'
 import { NAV_THEME } from '@/lib/constants'
 import { store } from '../store'
 import { Provider } from 'react-redux'
@@ -22,9 +26,13 @@ const LIGHT_THEME: Theme = {
     colors: NAV_THEME.light,
 }
 
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
 export default function RootLayout() {
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -33,6 +41,7 @@ export default function RootLayout() {
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
+    
 
     useEffect(() => {
         if (loaded) {
@@ -43,6 +52,8 @@ export default function RootLayout() {
     if (!loaded) {
         return null
     }
+
+    
 
     return (
         <Providers>
@@ -67,26 +78,36 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-                            <>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        console.log('QR Code Pressed')
-                                        Toast.success('Login successful')
-                                    }}
-                                >
-                                    <Ionicons
-                                        name="notifications-outline"
-                                        size={28}
-                                        color="#333"
-                                        style={{ marginRight: 15 }}
-                                    />
-                                </TouchableOpacity>
-                                <SignOutButton />
-                            </>
+
+                            <Link href="/notifications" asChild>
+                            <TouchableOpacity
+                                onPress={() => console.log('Notifications  Pressed')}
+                            >
+                                <Ionicons
+                                    name="notifications-outline"
+                                    size={28}
+                                    color="#333"
+                                    style={{ marginRight: 15 }}
+                                />
+                            </TouchableOpacity>
+                            </Link>
+
                         ),
                     }}
                 />
                 <Stack.Screen name="+not-found" />
+
+                
+                <Stack.Screen
+        name="qrmodal"
+        options={{
+          presentation: 'transparentModal',
+          animation: 'fade',
+          headerShown: false,
+        }}
+      />
+                    
+                   
 
                 <Stack.Screen
                     name="training"
@@ -100,6 +121,7 @@ export default function RootLayout() {
                             fontWeight: 'bold', // Make the title bold
                         },
                         headerBackTitle: 'Go Back',
+                        
                     }}
                 />
                 <Stack.Screen
