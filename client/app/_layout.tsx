@@ -7,13 +7,13 @@ import { useFonts } from 'expo-font'
 import { Link, Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import { useEffect, useState } from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
+import { useEffect } from 'react'
+import { Image, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 
 import { useColorScheme } from '@/hooks/useColorScheme'
-import UserQRCodeModal from '@/components/UserQRCodeModal'
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()

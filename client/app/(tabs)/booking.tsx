@@ -1,7 +1,9 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions, ImageBackground,ScrollView } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import CalendarComponent from '@/components/ui/CalendarComponent';
+
 
 const { width } = Dimensions.get('window'); // Get screen width
 
@@ -70,7 +72,7 @@ export default function BookingPage() {
     );
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <FlatList
                 data={cards}
                 renderItem={renderItem}
@@ -78,15 +80,15 @@ export default function BookingPage() {
                 numColumns={2}
                 contentContainerStyle={styles.listContainer}
             />
-        </View>
+            <CalendarComponent />
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        
         padding: 20,
     },
     listContainer: {

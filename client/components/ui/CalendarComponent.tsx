@@ -33,14 +33,16 @@ const CalendarComponent = () => {
     }
 
     return (
-        <View className="p-1 bg-white h-full">
-            <Text className="text-center text-xl font-bold text-black">
-                Calendar
-            </Text>
-            <Text className="text-center text-base text-gray-600 ">
-                View your upcoming bookings
-            </Text>
+        <View className="p-1 bg-white">
+        <Text className="text-center text-xl font-bold text-black">
+            Calendar
+        </Text>
+        <Text className="text-center text-base text-gray-600">
+            View your upcoming bookings
+        </Text>
 
+        {/* Set a fixed height for the calendar */}
+        <View style={{ height: 280, width :340, }}> 
             <Calendar
                 onDayPress={handleDayPress}
                 current={'2023-11-01'}
@@ -59,30 +61,32 @@ const CalendarComponent = () => {
                     arrowColor: '#000',
                 }}
             />
-
-            <View className="flex-row justify-center mt-4">
-                <View className="flex-row items-center mx-4">
-                    <View className="w-3 h-3 rounded-full bg-red-400 mr-2" />
-                    <Text className="text-black">In-Person</Text>
-                </View>
-                <View className="flex-row items-center mx-4">
-                    <View className="w-3 h-3 rounded-full bg-yellow-400 mr-2" />
-                    <Text className="text-black">Online</Text>
-                </View>
-            </View>
-
-            {modalVisible && selectedActivity && (
-                <EventDetailsPopup
-                    visible={modalVisible}
-                    activity={selectedActivity}
-                    handleClose={handleClose}
-                    month={new Date(selectedDay.dateString).toLocaleString(
-                        'default',
-                        { month: 'long' }
-                    )}
-                />
-            )}
         </View>
+
+        {/* Legend */}
+        <View className="flex-row justify-center mt-4">
+            <View className="flex-row items-center mx-4">
+                <View className="w-3 h-3 rounded-full bg-red-400 mr-2" />
+                <Text className="text-black">In-Person</Text>
+            </View>
+            <View className="flex-row items-center mx-4">
+                <View className="w-3 h-3 rounded-full bg-yellow-400 mr-2" />
+                <Text className="text-black">Online</Text>
+            </View>
+        </View>
+
+        {modalVisible && selectedActivity && (
+            <EventDetailsPopup
+                visible={modalVisible}
+                activity={selectedActivity}
+                handleClose={handleClose}
+                month={new Date(selectedDay.dateString).toLocaleString(
+                    'default',
+                    { month: 'long' }
+                )}
+            />
+        )}
+    </View>
     )
 }
 
