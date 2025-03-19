@@ -2,27 +2,38 @@ import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
+import CancelBookingWarning from './CancelBookingWarning'
+import useCalendarStore from '@/stores/CalendarStore'
+import { CalendarEvent } from '@/constants/types'
 
 interface EventDetailsPopupProps {
     visible: boolean
-    activity: {
-        title: string
-        instructor: string
-        location: string
-        days: string
-        time: string
-    }
-    month: string
-    handleClose: () => void
-    handleCancelBooking: () => void
+    event: CalendarEvent
+    close: () => void
 }
 
 const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     visible,
-    activity,
-    handleClose,
-    handleCancelBooking,
+    event,
+    close: handleClose,
 }) => {
+    const [showCancelWarning, setShowCancelWarning] = React.useState(false)
+    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore()
+    const activity = event.activity ?? {
+        title: '',
+        instructor: '',
+        location: '',
+        days: '',
+        time: '',
+    }
+
+    const handleCancelBooking = () => {
+        const eventToCancel = events.find(e => e.id === event?.id)
+        if (eventToCancel) {
+            removeEvent(eventToCancel.id)
+            handleClose()
+        }
+    }
     return (
         <Modal
             animationType="slide"
@@ -75,7 +86,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                         </TouchableOpacity>
                         {/* Book Button */}
                         <TouchableOpacity
-                            onPress={handleCancelBooking}
+                            onPress={() => setShowCancelWarning(true)}
                             className="bg-blue-600 p-3 rounded-lg "
                             style={{
                                 backgroundColor: Colors.concordia.background,
@@ -85,6 +96,13 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                                 Cancel Booking
                             </Text>
                         </TouchableOpacity>
+                        {showCancelWarning && (
+                            <CancelBookingWarning
+                                visible={showCancelWarning}
+                                handleClose={() => setShowCancelWarning(false)}
+                                handleConfirm={handleCancelBooking}
+                            />
+                        )}
                     </View>
                 </View>
             </View>
