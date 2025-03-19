@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import { Image } from 'expo-image'
+import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
 
 const SettingsSection: React.FC = () => {
+    const router = useRouter() // Use Expo Router for navigation
     return (
         <View className="mt-2 bg-white">
             <View className="p-4">
@@ -46,7 +48,7 @@ const SettingsSection: React.FC = () => {
                             flex: 1,
                             height: 1,
                             backgroundColor: '#EDEFF1',
-                            marginLeft: 40
+                            marginLeft: 40,
                         }}
                     />
                 </View>
@@ -73,14 +75,14 @@ const SettingsSection: React.FC = () => {
                             flex: 1,
                             height: 1,
                             backgroundColor: '#EDEFF1',
-                            marginLeft: 40
+                            marginLeft: 40,
                         }}
                     />
                 </View>
 
                 <View
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log("payment pressed")}
+                    onTouchEnd={() => console.log('payment pressed')}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -103,9 +105,13 @@ const SettingsSection: React.FC = () => {
                     <Text className="text-lg font-semibold">More</Text>
                 </View>
 
-                <View
+                {/* FAQ Option */}
+                <Pressable
+                    onPress={() => {
+                        console.log('FAQ pressed')
+                        router.push('/FaqScreen') // Navigate to FaqScreen
+                    }}
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log("faq pressed")}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -114,15 +120,13 @@ const SettingsSection: React.FC = () => {
                                 style={{ width: 24, height: 24 }}
                             />
                         </View>
-                        <Text className="text-base font-medium ml-2">
-                            FAQ
-                        </Text>
+                        <Text className="text-base font-medium ml-2">FAQ</Text>
                     </View>
                     <Image
                         source={require('../assets/images/chevron.forward.svg')}
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
-                </View>
+                </Pressable>
 
                 {/* Horizontal line divider within the same View */}
                 <View className="flex-row items-center justify-between mb-2">
@@ -131,14 +135,14 @@ const SettingsSection: React.FC = () => {
                             flex: 1,
                             height: 1,
                             backgroundColor: '#EDEFF1',
-                            marginLeft: 40
+                            marginLeft: 40,
                         }}
                     />
                 </View>
 
                 <View
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log("t&c pressed")}
+                    onTouchEnd={() => console.log('t&c pressed')}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -164,14 +168,14 @@ const SettingsSection: React.FC = () => {
                             flex: 1,
                             height: 1,
                             backgroundColor: '#EDEFF1',
-                            marginLeft: 40
+                            marginLeft: 40,
                         }}
                     />
                 </View>
 
                 <View
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log("contact us pressed")}
+                    onTouchEnd={() => console.log('contact us pressed')}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -197,14 +201,14 @@ const SettingsSection: React.FC = () => {
                             flex: 1,
                             height: 1,
                             backgroundColor: '#EDEFF1',
-                            marginLeft: 40
+                            marginLeft: 40,
                         }}
                     />
                 </View>
 
                 <View
                     className="flex-row items-center justify-between"
-                    onTouchEnd={() => console.log("log out pressed")}
+                    onTouchEnd={() => console.log('log out pressed')}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">

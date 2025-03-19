@@ -22,7 +22,6 @@ const Profile: React.FC = () => {
 
       <SettingsSection />
 
-      {/* <MoreOptionsSection /> */}
     </ScrollView>
   );
 };
