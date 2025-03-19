@@ -10,11 +10,11 @@ const CalendarComponent = () => {
         null
     )
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-    const { events } = useCalendarStore();
-    
+    const { events } = useCalendarStore()
+
     const handleDayPress = (day: { dateString: string }) => {
-        const selectedDay:string = day.dateString;
-        const event = events.find((event) => event.date === selectedDay);
+        const selectedDay: string = day.dateString
+        const event = events.find(event => event.date === selectedDay)
 
         if (event) {
             setSelectedEvent(event ?? null)
@@ -44,7 +44,7 @@ const CalendarComponent = () => {
                         selected: event.selected,
                         selectedColor: event.selectedColor,
                         activity: event.activity,
-                      };
+                    }
                     return acc
                 }, {})}
                 theme={{
@@ -72,7 +72,8 @@ const CalendarComponent = () => {
                 <EventDetailsPopup
                     visible={modalVisible}
                     event={selectedEvent}
-                    close={handleClose}/>
+                    close={handleClose}
+                />
             )}
         </View>
     )

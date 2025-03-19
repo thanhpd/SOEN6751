@@ -9,7 +9,7 @@ export const InPersonActivityList = () => {
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
         null
     )
-    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore();
+    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore()
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const handlePress = (activity: Activity) => {
@@ -24,40 +24,48 @@ export const InPersonActivityList = () => {
 
     const handleBook = (activity: Activity) => {
         // find days to book
-        const days = activity.days.split(',').map((day) => day.trim());
+        const days = activity.days.split(',').map(day => day.trim())
 
-        days.forEach((day) => { 
-            const today = new Date();
-            const currentMonth = today.getMonth();
-            const currentYear = today.getFullYear();
+        days.forEach(day => {
+            const today = new Date()
+            const currentMonth = today.getMonth()
+            const currentYear = today.getFullYear()
 
             // Find the next date matching the day
-            const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].findIndex(
-                (d) => d.toLowerCase() === day.toLowerCase()
-            );
+            const dayIndex = [
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+            ].findIndex(d => d.toLowerCase() === day.toLowerCase())
 
-            let nextDate = new Date(today);
-            nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7));
+            let nextDate = new Date(today)
+            nextDate.setDate(
+                today.getDate() + ((7 + dayIndex - today.getDay()) % 7)
+            )
 
             if (nextDate.getMonth() !== currentMonth) {
-                nextDate.setDate(nextDate.getDate() + 7);
+                nextDate.setDate(nextDate.getDate() + 7)
             }
 
-            const formattedDate = nextDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            const formattedDate = nextDate.toISOString().split('T')[0] // Format as YYYY-MM-DD
             //console.log('Formatted Date:', formattedDate + " day: " + day);
-            const highlightcolor = activity.inPerson ?  '#EC7063':'#F4D03F';
+            const highlightcolor = activity.inPerson ? '#EC7063' : '#F4D03F'
             addEvent({
                 id: formattedDate,
                 title: activity.title,
                 date: formattedDate,
                 selected: true,
-                selectedColor: highlightcolor, 
-                activity: activity
-            });
-        });
+                selectedColor: highlightcolor,
+                activity: activity,
+            })
+        })
 
         handleClose()
-    };
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -96,7 +104,7 @@ const activityItems: Activity[] = [
         days: 'Monday, Wednesday, Friday',
         time: '5:30 PM – 6:30 PM',
         image: '../../assets/images/cardio.png',
-        inPerson: true
+        inPerson: true,
     },
     {
         title: 'Zumba Fitness',
@@ -108,7 +116,7 @@ const activityItems: Activity[] = [
         days: 'Tuesday, Thursday',
         time: '5:30 PM – 6:30 PM',
         image: '../../assets/images/zumba.png',
-        inPerson: false
+        inPerson: false,
     },
     {
         title: 'Total Body Fitness',
@@ -120,7 +128,7 @@ const activityItems: Activity[] = [
         days: 'Monday, Wednesday, Friday',
         time: '12:00 PM – 1:00 PM',
         image: '../../assets/images/aero.png',
-        inPerson: false
+        inPerson: false,
     },
     {
         title: 'Hard Core',
@@ -132,6 +140,6 @@ const activityItems: Activity[] = [
         days: 'Saturday, Sunday',
         time: '12:00 PM – 1:00 PM',
         image: '../../assets/images/exercise_classes.png',
-        inPerson: true
+        inPerson: true,
     },
 ]

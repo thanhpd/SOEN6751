@@ -14,7 +14,6 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
     handleClose,
     handleConfirm,
 }) => {
-
     return (
         <Modal
             animationType="slide"
@@ -23,16 +22,16 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
             onRequestClose={handleClose}
         >
             <View className="flex-1 justify-center items-center bg-black/50">
-                            <View className="w-4/5 bg-white p-4 rounded-lg">
+                <View className="w-4/5 bg-white p-4 rounded-lg">
                     <View className="flex-row items-center">
-                    
-                        <Text className="text-xl font-bold mb-1"
-                        style={{
-                            
-                            color: Colors.concordia.text, // Assuming Colors.concordia.text is the desired text color
-                        }}
+                        <Text
+                            className="text-xl font-bold mb-1"
+                            style={{
+                                color: Colors.concordia.text, // Assuming Colors.concordia.text is the desired text color
+                            }}
                         >
-                            Are you sure you want to cancel your booking?</Text>
+                            Are you sure you want to cancel your booking?
+                        </Text>
                     </View>
 
                     <View className="flex-row justify-between mt-2">
@@ -53,13 +52,11 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
                                 backgroundColor: Colors.concordia.background,
                             }}
                         >
-                            <Text className="text-center text-white">
-                                Yes
-                            </Text>
+                            <Text className="text-center text-white">Yes</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                </View>
+            </View>
         </Modal>
     )
 }

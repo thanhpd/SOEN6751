@@ -8,7 +8,7 @@ import { CalendarEvent } from '@/constants/types'
 
 interface EventDetailsPopupProps {
     visible: boolean
-    event: CalendarEvent,
+    event: CalendarEvent
     close: () => void
 }
 
@@ -18,14 +18,20 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     close: handleClose,
 }) => {
     const [showCancelWarning, setShowCancelWarning] = React.useState(false)
-    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore();
-    const activity = event.activity ?? { title: '', instructor: '', location: '', days: '', time: '' };
+    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore()
+    const activity = event.activity ?? {
+        title: '',
+        instructor: '',
+        location: '',
+        days: '',
+        time: '',
+    }
 
     const handleCancelBooking = () => {
-        const eventToCancel = events.find((e) => e.id === event?.id);
+        const eventToCancel = events.find(e => e.id === event?.id)
         if (eventToCancel) {
-            removeEvent(eventToCancel.id);
-            handleClose();
+            removeEvent(eventToCancel.id)
+            handleClose()
         }
     }
     return (
