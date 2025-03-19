@@ -1,6 +1,6 @@
-import { Activity, CalendarEvent } from '@/constants/types'
+import { CalendarEvent } from '@/constants/types'
 import React, { useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
 import useCalendarStore from '@/stores/CalendarStore'
@@ -37,7 +37,7 @@ const CalendarComponent = () => {
         </Text>
 
         {/* Set a fixed height for the calendar */}
-        <View style={{ height: 280, width :340, }}> 
+        <View style={{ height: 280, width :340, }}>
             <Calendar
                 onDayPress={handleDayPress}
                 current={'2025-03-20'}
@@ -72,17 +72,13 @@ const CalendarComponent = () => {
             </View>
         </View>
 
-        {modalVisible && selectedActivity && (
-            <EventDetailsPopup
-                visible={modalVisible}
-                activity={selectedActivity}
-                handleClose={handleClose}
-                month={new Date(selectedDay.dateString).toLocaleString(
-                    'default',
-                    { month: 'long' }
-                )}
-            />
-        )}
+        {modalVisible && selectedEvent && (
+                <EventDetailsPopup
+                    visible={modalVisible}
+                    event={selectedEvent}
+                    close={handleClose}
+                />
+            )}
     </View>
     )
 }
