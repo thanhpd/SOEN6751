@@ -49,7 +49,7 @@ const CalendarComponent = () => {
             </Text>
 
             {/* Set a fixed height for the calendar */}
-            <View style={{ height: 280, width: 340 }}>
+            <View className="h-50 w-50">
                 <Calendar
                     onDayPress={handleDayPress}
                     current={'2025-03-20'}
