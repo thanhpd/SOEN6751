@@ -3,11 +3,11 @@ import { View, Text } from "react-native";
 
 const YAxisLabels = () => (
   <View className="w-12 justify-between items-end pr-2">
-    <Text className="text-gray-600 text-sm">200+</Text>
-    <Text className="text-gray-600 text-sm">150</Text>
-    <Text className="text-gray-600 text-sm">100</Text>
-    <Text className="text-gray-600 text-sm">50</Text>
-    <Text className="text-gray-600 text-sm">00</Text>
+    <Text className="text-[#767676] font-bold text-sm">200+</Text>
+    <Text className="text-[#767676] font-bold text-sm">150</Text>
+    <Text className="text-[#767676] font-bold text-sm">100</Text>
+    <Text className="text-[#767676] font-bold text-sm">50</Text>
+    <Text className="text-[#767676] font-bold text-sm">00</Text>
   </View>
 );
 
@@ -25,7 +25,7 @@ const XAxisLabels = () => (
       "9 pm",
       "10 pm",
     ].map((time) => (
-      <Text key={time} className="text-gray-600 text-xs transform -rotate-45">
+      <Text key={time} className="text-[#767676] font-bold text-xs transform -rotate-45">
         {time}
       </Text>
     ))}
@@ -34,16 +34,16 @@ const XAxisLabels = () => (
 
 const GraphBars = () => {
   const bars = [
-    { height: 80, color: "bg-green-200" },
-    { height: 120, color: "bg-yellow-200" },
-    { height: 180, color: "bg-red-200" },
-    { height: 140, color: "bg-yellow-200" },
-    { height: 90, color: "bg-green-200" },
-    { height: 160, color: "bg-red-200" },
-    { height: 130, color: "bg-yellow-200" },
-    { height: 70, color: "bg-green-200" },
-    { height: 110, color: "bg-yellow-200" },
-    { height: 60, color: "bg-green-200" },
+    { height: 80, color: "bg-[#34C759]" },
+    { height: 120, color: "bg-[#FF6600]" },
+    { height: 180, color: "bg-[#D32C2F]" },
+    { height: 140, color: "bg-[#FF6600]" },
+    { height: 90, color: "bg-[#34C759]" },
+    { height: 160, color: "bg-[#D32C2F]" },
+    { height: 130, color: "bg-[#FF6600]" },
+    { height: 70, color: "bg-[#34C759]" },
+    { height: 110, color: "bg-[#FF6600]" },
+    { height: 60, color: "bg-[#34C759]" },
   ];
 
   return (
