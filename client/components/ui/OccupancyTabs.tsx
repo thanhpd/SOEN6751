@@ -1,50 +1,79 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 interface OccupancyTabsProps {
-  activeTab: "realtime" | "historical";
-  onTabChange: (tab: "realtime" | "historical") => void;
+    activeTab: 'realtime' | 'historical'
+    onTabChange: (tab: 'realtime' | 'historical') => void
 }
 
 export const OccupancyTabs: React.FC<OccupancyTabsProps> = ({
-  activeTab,
-  onTabChange,
+    activeTab,
+    onTabChange,
 }) => {
-  return (
-    <View className="flex-row bg-gray-100 rounded-lg p-1">
-      <TouchableOpacity
-        onPress={() => onTabChange("realtime")}
-        className={`flex-1 py-2 px-4 rounded-md ${
-          activeTab === "realtime" ? "bg-white shadow" : ""
-        }`}
-      >
-        <Text
-          className={`text-center ${
-            activeTab === "realtime"
-              ? "text-blue-600 font-medium"
-              : "text-gray-600"
-          }`}
-        >
-          Real Time Stats
-        </Text>
-      </TouchableOpacity>
+    const tabs = [
+        { value: 'realtime', title: 'Real Time Stats' },
+        { value: 'historical', title: 'Historical Stats' },
+    ]
 
-      <TouchableOpacity
-        onPress={() => onTabChange("historical")}
-        className={`flex-1 py-2 px-4 rounded-md ${
-          activeTab === "historical" ? "bg-white shadow" : ""
-        }`}
-      >
-        <Text
-          className={`text-center ${
-            activeTab === "historical"
-              ? "text-blue-600 font-medium"
-              : "text-gray-600"
-          }`}
-        >
-          Historical Stats
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+    return (
+        <View style={styles.tabsList}>
+            {tabs.map(tab => (
+                <TouchableOpacity
+                    key={tab.value}
+                    onPress={() =>
+                        onTabChange(tab.value as 'realtime' | 'historical')
+                    }
+                    style={[
+                        styles.tabTrigger,
+                        activeTab === tab.value && styles.activeTab,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.tabText,
+                            activeTab === tab.value
+                                ? styles.activeTabText
+                                : styles.inactiveTabText,
+                        ]}
+                    >
+                        {tab.title}
+                    </Text>
+                </TouchableOpacity>
+            ))}
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    tabsList: {
+        flexDirection: 'row',
+        width: '100%',
+        marginTop: 14,
+        backgroundColor: '#D9D9D9',
+        borderRadius: 28,
+        height: 54,
+        alignItems: 'center',
+    },
+    tabTrigger: {
+        flex: 1,
+        height: 48,
+        backgroundColor: '#D9D9D9',
+        borderRadius: 28,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    activeTab: {
+        backgroundColor: 'red', // Highlight color for the active tab
+    },
+    tabText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        lineHeight: 18,
+    },
+    activeTabText: {
+        color: '#D9D9D9', // Text color for the active tab
+    },
+    inactiveTabText: {
+        color: '#6E7781', // Text color for inactive tabs
+    },
+})

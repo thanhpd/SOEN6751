@@ -59,7 +59,7 @@ const GraphBars = () => {
   );
 };
 
-export const OccupancyGraph: React.FC = () => {
+export const HistoricalGraph: React.FC = () => {
   return (
     <View className="mt-6">
       <View className="flex-row">
