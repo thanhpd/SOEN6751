@@ -21,24 +21,27 @@ export default function BookingCard2({ bookingData }: { bookingData: BookingData
       {/* Image Above */}
       <Image source={require('@/assets/images/cycling-equipment-healthy-fit-fitness.jpg')} style={styles.cardImage} />
       <View style={styles.tag}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 12}}>Weekly</Text>
-          </View>
-      
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 12 }}>Weekly</Text>
+      </View>
+
       {/* Details Below */}
       <View style={styles.cardTextContainer}>
-        
-        <Text style={styles.serviceName}>{serviceName}</Text>
-        <Text style={styles.customerName}>{customerName}</Text>
 
-        <View style={styles.infoContainer}>
+        <Text style={styles.serviceName}>{serviceName}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.customerName}>{customerName}</Text>
+
+          {/* <Text style={styles.infoText}>{startTime} - {endTime}</Text> */}
+        </View>
+        {/* <View style={styles.infoContainer}>
           <FontAwesome5 name="calendar-alt" size={15} color="#333" />
           <Text style={styles.infoText}>{bookingDate}</Text>
-        </View>
+        </View> */}
 
-        <View style={styles.infoContainer}>
+        {/* <View style={styles.infoContainer}>
           <FontAwesome5 name="clock" size={14} color="#333" />
           <Text style={styles.infoText}>{startTime} - {endTime}</Text>
-        </View>
+        </View> */}
 
         {/* Optional: Location */}
         {/* <View style={styles.infoContainer}>
@@ -92,10 +95,10 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 3, // Adjust margin between icons and text
+    marginVertical: 0, // Adjust margin between icons and text
   },
   infoText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#555',
     marginLeft: 5,
   },
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  tag :{
+  tag: {
     position: 'absolute',
     top: 20,
     right: 0,

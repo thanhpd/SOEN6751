@@ -13,6 +13,14 @@ import { setCurrentLoggingInUser, signIn } from '@/app/auth/authSlice'
 import { useAppDispatch } from '@/store'
 import * as SecureStore from 'expo-secure-store'
 import { Toast } from 'toastify-react-native'
+import { ControlledInput } from '@/components/primitives/input'
+import {
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    TouchableWithoutFeedback,
+    Keyboard,
+} from 'react-native'
 
 const LoginOTPSchema = zod.object({
     otpCode: zod.string().length(6),
@@ -91,9 +99,10 @@ const LoginOTPForm = ({ user }: Props) => {
                                 </Text>
                             </View>
                             <View className="flex flex-col gap-4">
-                                <ControlledInputOTP
+                                <ControlledInput
                                     name="otpCode"
                                     control={control}
+                                    
                                 />
                             </View>
                         </View>

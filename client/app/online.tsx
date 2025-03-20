@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
  import HeroBanner from '@/components/HeroBanner';
 import SearchBar from '@/components/SearchBar';
-import { InPersonActivityList } from '@/components/ui/InPersonActivityList';
+import { OnlineActivityList } from '@/components/ui/OnlineActivityList';
 
 const { width } = Dimensions.get('window');
 
@@ -16,7 +16,7 @@ export default function OnlinePage() {
 />
 
 <SearchBar/>
-<InPersonActivityList/>
+<OnlineActivityList/>
     </View>
   );
 }

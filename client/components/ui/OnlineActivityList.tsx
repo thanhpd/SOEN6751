@@ -1,0 +1,145 @@
+import { Activity } from '../../constants/types'
+import { InPersonActivityItem } from '@/components/ui/InPersonActivityItem'
+import React, { useState } from 'react'
+import { View, FlatList, TouchableOpacity } from 'react-native'
+import ActivityDetailsPopup from './ActivityDetailsPopup'
+import useCalendarStore from '@/stores/CalendarStore'
+
+export const OnlineActivityList = () => {
+    const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
+        null
+    )
+    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore()
+    const [modalVisible, setModalVisible] = useState<boolean>(false)
+
+    const handlePress = (activity: Activity) => {
+        setSelectedActivity(activity)
+        setModalVisible(true)
+    }
+
+    const handleClose = () => {
+        setSelectedActivity(null)
+        setModalVisible(false)
+    }
+
+    const handleBook = (activity: Activity) => {
+        // find days to book
+        const days = activity.days.split(',').map(day => day.trim())
+
+        days.forEach(day => {
+            const today = new Date()
+            const currentMonth = today.getMonth()
+            const currentYear = today.getFullYear()
+
+            // Find the next date matching the day
+            const dayIndex = [
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+            ].findIndex(d => d.toLowerCase() === day.toLowerCase())
+
+            let nextDate = new Date(today)
+            nextDate.setDate(
+                today.getDate() + ((7 + dayIndex - today.getDay()) % 7)
+            )
+
+            if (nextDate.getMonth() !== currentMonth) {
+                nextDate.setDate(nextDate.getDate() + 7)
+            }
+
+            const formattedDate = nextDate.toISOString().split('T')[0] // Format as YYYY-MM-DD
+            //console.log('Formatted Date:', formattedDate + " day: " + day);
+            const highlightcolor = activity.inPerson ? '#EC7063' : '#F4D03F'
+            addEvent({
+                id: formattedDate,
+                title: activity.title,
+                date: formattedDate,
+                selected: true,
+                selectedColor: highlightcolor,
+                activity: activity,
+            })
+        })
+
+        handleClose()
+    }
+
+    return (
+        <View style={{ flex: 1 }}>
+            <FlatList
+                data={activityItems}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => handlePress(item)}
+                        activeOpacity={0.7}
+                    >
+                        <InPersonActivityItem activity={item} />
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
+            {modalVisible && selectedActivity && (
+                <ActivityDetailsPopup
+                    visible={modalVisible}
+                    activity={selectedActivity}
+                    handleClose={handleClose}
+                    handleBook={() => handleBook(selectedActivity)}
+                />
+            )}
+        </View>
+    )
+}
+
+const activityItems: Activity[] = [
+    {
+        title: 'Lengthen',
+        instructor: 'Vila Woo',
+        location: 'Online',
+        price: '100',
+        description:
+            'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
+        days: 'Monday, Wednesday, Friday',
+        time: '5:30 PM – 6:30 PM',
+        image: '../../assets/images/cardio.png',
+        inPerson: true,
+    },
+    {
+        title: 'Yoga at Noon',
+        instructor: 'Veronica Aguirre',
+        location: 'Online',
+        price: '55',
+        description:
+            'Zumba Fitness is a dance-based fitness class that incorporates Latin and international music. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
+        days: 'Tuesday, Thursday',
+        time: '5:30 PM – 6:30 PM',
+        image: '../../assets/images/zumba.png',
+        inPerson: false,
+    },
+    {
+        title: 'Zumba Toning',
+        instructor: 'Daphne Cunliffe',
+        location: 'Online',
+        price: '100',
+        description:
+            'Total Body Fitness is a full-body workout that incorporates strength training, cardio, and flexibility exercises. The class is designed to improve overall fitness and strength.',
+        days: 'Monday, Wednesday, Friday',
+        time: '12:00 PM – 1:00 PM',
+        image: '../../assets/images/aero.png',
+        inPerson: false,
+    },
+    {
+        title: 'Meditation',
+        instructor: 'Vila Woo',
+        location: 'Online',
+        price: '100',
+        description:
+            'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
+        days: 'Saturday, Sunday',
+        time: '12:00 PM – 1:00 PM',
+        image: '../../assets/images/exercise_classes.png',
+        inPerson: true,
+    },
+]

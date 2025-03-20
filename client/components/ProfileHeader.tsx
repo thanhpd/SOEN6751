@@ -17,35 +17,31 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     onEditPress,
 }) => {
     return (
-        <View className="p-6 bg-white">
+        <View className="p-4 bg-white">
             <View className="items-center">
                 <Image
                     source={{ uri: avatar }}
-                    className="w-24 h-24 rounded-full"
+                    className="w-20 h-20 rounded-full"
                 />
-                <View className="mt-4">
-                    <Text
-                        className="text-xl font-bold text-center"
-                        style={{
-                            fontFamily: 'Roboto',
-                            fontWeight: 'bold',
-                            color: '#98243C',
-                        }}
-                    >
-                        {name}
-                    </Text>
-                </View>
-                <View className="mt-1">
-                    <Text
-                        className="text-gray-600 text-center"
-                        style={{ fontFamily: 'Roboto', color: '#ABABAB' }}
-                    >
-                        {email}
-                    </Text>
-                </View>
+                <Text
+                    className="text-lg font-bold text-center mt-2"
+                    style={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        color: '#98243C',
+                    }}
+                >
+                    {name}
+                </Text>
+                <Text
+                    className="text-gray-600 text-center mt-0.5"
+                    style={{ fontFamily: 'Roboto', color: '#ABABAB' }}
+                >
+                    {email}
+                </Text>
                 <Pressable
                     onPress={onEditPress}
-                    className="mt-4 px-6 py-2 rounded-full"
+                    className="mt-3 px-5 py-1.5 rounded-full"
                     style={{ backgroundColor: '#98243C' }}
                 >
                     <Text
@@ -55,23 +51,23 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                         Edit Profile
                     </Text>
                 </Pressable>
-                <View className="mt-6 items-center">
+                <View className="mt-4 items-center">
                     <Text
-                        className="text-7xl font-bold"
+                        className="text-6xl font-bold"
                         style={{
                             fontFamily: 'Roboto',
                             fontWeight: 'bold',
                             color: '#FFC107',
                             textShadowColor: '#FF6600',
-                            textShadowOffset: { width: 3, height: 3 },
-                            textShadowRadius: 3,
+                            textShadowOffset: { width: 2, height: 2 },
+                            textShadowRadius: 2,
                             textAlign: 'center',
                         }}
                     >
                         {streak}
                     </Text>
                     <Text
-                        className="text-gray-600 mt-1"
+                        className="text-gray-600 mt-0.5"
                         style={{
                             fontFamily: 'Roboto',
                             fontWeight: 'bold',

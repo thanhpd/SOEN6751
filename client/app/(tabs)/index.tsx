@@ -5,6 +5,7 @@ import {
     View,
     ScrollView,
     TouchableOpacity,
+    Text
 } from 'react-native'
 import { HelloWave } from '@/components/HelloWave'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -18,6 +19,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import UserQRCodeModal from '@/components/UserQRCodeModal'
 import BookingCard2 from '@/components/BookingCard2'
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 import BookingCard from '@/components/BookingCard'
 
@@ -27,7 +30,7 @@ export default function HomeScreen() {
             id: 1,
             serviceName: 'Personal training',
             customerName: 'John Doe',
-            bookingDate: 'March 6, 2025',
+            bookingDate: '2025-03-21',
             startTime: '10:00 AM',
             endTime: '11:00 AM',
             status: 'Confirmed',
@@ -37,7 +40,17 @@ export default function HomeScreen() {
             id: 2,
             serviceName: 'Massage Therapy',
             customerName: 'Jane Smith',
-            bookingDate: 'March 6, 2025',
+            bookingDate: '2025-03-23',
+            startTime: '12:00 PM',
+            endTime: '1:00 PM',
+            status: 'Pending',
+            image: 'https://example.com/images/massage.jpg', // You can replace with your image path or URL
+        },
+        {
+            id: 3,
+            serviceName: 'Massage Therapy',
+            customerName: 'Jane Smith',
+            bookingDate: '2025-03-25',
             startTime: '12:00 PM',
             endTime: '1:00 PM',
             status: 'Pending',
@@ -49,14 +62,38 @@ export default function HomeScreen() {
 
     // Dummy user data (replace with real data)
     const userData = {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+        name: 'Younes Nouri',
+        email: 'y_nouri@concordia.ca',
         phone: '+1234567890',
     }
 
     // Toggle modal visibility
     const openModal = () => setIsModalVisible(true)
     const closeModal = () => setIsModalVisible(false)
+
+    const [selectedDate, setSelectedDate] = useState(() => {
+        const today = new Date()
+        return today.toISOString().split('T')[0] // Format: 'YYYY-MM-DD'
+    })
+
+    const today = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',  // Full weekday name (e.g., "Thursday")
+        day: 'numeric',  // Day of the month (e.g., "16")
+        month: 'long',    // Full month name (e.g., "May")
+        year: 'numeric'   // Year (e.g., "2025")
+    });
+
+
+    const filteredBookings = upcomingBookings.filter((booking) => {
+        const bookingDate = new Date(booking.bookingDate);
+        const bookingDateFormatted = bookingDate.toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
+
+        // Return only bookings that match the selected date
+        return bookingDateFormatted === selectedDate;
+    });
+
+
+
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -99,10 +136,20 @@ export default function HomeScreen() {
                 </View>
             </ThemedView>
 
-<ThemedText style={styles.today}>Today </ThemedText>
-                    <ThemedText style={styles.date}>Thursday 16, May 2025 </ThemedText>
-            <DaysOfWeek />
 
+            <View></View>
+            <ThemedText style={styles.today}>Today </ThemedText>
+            <ThemedText style={styles.date}>{today}</ThemedText>
+
+
+
+            <DaysOfWeek
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                upcomingBookings={upcomingBookings}
+            />
+
+<View style ={{backgroundColor :'black', borderTopLeftRadius: 35, borderTopRightRadius: 35,height: 320,}}>
             <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
             {/* Upcoming Bookings */}
 
@@ -114,12 +161,34 @@ export default function HomeScreen() {
             </View> */}
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.upcomingBookingsContainer}>
-        {upcomingBookings.map((booking, index) => (
-          <View style={[styles.bookingCardContainer, { marginLeft: index === 0 ? 10 : 0 }]}>
-          <BookingCard2 key={index} bookingData={booking}  />
-          </View>
-        ))}
-      </ScrollView>
+                {filteredBookings.length > 0 ? (
+                    filteredBookings.map((booking, index) => (
+                        <View
+                            style={[
+                                styles.bookingCardContainer,
+                                { marginLeft: index === 0 ? 10 : 0 },
+                            ]}
+                            key={booking.id} // Always use a unique key for each item in the list
+                        >
+                            <BookingCard2 bookingData={booking} />
+                        </View>
+                    ))
+                ) : (
+                    // If no bookings for the selected date, display the message
+                    <View style={styles.noBookingsMessageContainer}>
+                        <Text style={styles.noBookingsMessageText}>
+                            You have no upcoming bookings on {selectedDate}
+                        </Text>
+                    </View>
+                )}
+            </ScrollView>
+
+            <TouchableOpacity style={styles.calendar}>
+                <Text style={styles.calendarText}>View full calendar</Text>
+                <Icon name="chevron-right" size={8} color="black" />
+            </TouchableOpacity>
+            </View>
+
 
             {/* QR Code Modal */}
             {isModalVisible && (
@@ -139,7 +208,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.light.fadedconcordiaColor,
         padding: 20, // Increased padding for a bigger box
         borderRadius: 10,
         shadowColor: '#000',
@@ -151,6 +220,7 @@ const styles = StyleSheet.create({
         marginTop: 30, // Added margin to the top
         marginRight: 15, // Added margin to the right
         marginLeft: 15, // Added margin to the left
+
     },
     leftContainer: {
         flexDirection: 'column',
@@ -208,19 +278,22 @@ const styles = StyleSheet.create({
     upcomingBookingsContainer: {
         marginTop: 20,
         borderRadius: 10,
-        
-        
+
+        maxHeight: 220,
+
+
+
     },
     bookingCardContainer: {
-      marginRight: 20, 
+        marginRight: 20,
     },
 
     titles: {
         marginLeft: 20,
-        marginTop: 20,
-        fontSize: 20,
+        marginTop: 5,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: '#333',
+        color: 'white',
     },
 
     qrCodeContainer: {
@@ -229,21 +302,64 @@ const styles = StyleSheet.create({
         top: 10,
     },
 
-    date :{
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: Colors.light.concordiaColor,
-      marginLeft: 20,
+    date: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.light.concordiaColor,
+        marginLeft: 20,
 
     },
 
-    today :{
-      fontSize: 17,
-      
-      color: '#888',
-      marginLeft: 20,
-      marginBottom: 5,
+    today: {
+        fontSize: 17,
+
+        color: '#888',
+        marginLeft: 20,
+        marginBottom: 5,
 
 
-    }
+    },
+
+
+    noBookingsMessageContainer: {
+        width: 230,  // Adjust based on the expected width of a booking card
+        height: 150, // Adjust to match the height of the booking card
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.light.fadedconcordiaColor, // Optional: to make it visually consistent
+        borderRadius: 10, // Optional: to make it look like a card
+        marginLeft: 20, // Optional: to match spacing with other cards
+        padding: 10,
+        marginTop: 15,
+    },
+    noBookingsMessageText: {
+        fontSize: 17,
+        color: 'black', // Or any color you prefer
+        textAlign: 'center',
+    },
+
+    calendar: {
+        borderRadius: 20,
+        backgroundColor: Colors.light.concordiaColor,
+        width: 120,
+        justifyContent: 'flex-start',
+        
+        paddingHorizontal: 10,
+        marginLeft: 250,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical :5,
+        gap: 5,
+        marginBottom: 10,
+
+    },
+
+    calendarText: {
+
+        color: 'white',
+        fontSize: 10,
+        fontWeight: 'bold',
+
+
+    },
 })

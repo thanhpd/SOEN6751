@@ -49,7 +49,7 @@ export default function HeroBanner({ title, description, date, image }: HeroBann
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: 'rgba(192, 57, 43, 0.6)', // Semi-transparent red
+                 // Semi-transparent red
                 borderRadius: 8, // Match image border radius
               }}
             />

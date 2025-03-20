@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import React, { useState, useRef, useEffect } from 'react'
 import {
     View,
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         marginTop: 15,
-        backgroundColor: '#e74c3c',
+        backgroundColor:    Colors.light.concordiaColor,
         paddingVertical: 10,
         paddingHorizontal: 30,
         borderRadius: 10,

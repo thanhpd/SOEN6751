@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions, Modal, Button, ScrollView } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
@@ -10,63 +10,64 @@ const { width } = Dimensions.get('window'); // Get screen width
 const cards = [
     { 
         id: '1', 
-        title: 'Weekly Membership ', 
-        price : '$35/week',
-        path: 'InPersonActivity', 
-        bgColor: '#3498db', // Blue
-        icon: 'person-running', 
-        iconSize: 18, // Unique icon size
-        circleColor: '#2980b9' // Darker blue
+        title: 'Weekly Membership', 
+        price: '$35/week',
+        duration: 7, // 7 days
+        bgColor: '#3498db',
+        circleColor: '#2980b9'
     },
     { 
         id: '2', 
         title: 'Monthly Membership', 
-        price : '$50/month',
-        path: 'online', 
-        bgColor: '#27ae60', // Green
-        icon: 'laptop', 
-        iconSize: 15, // Unique icon size
-        circleColor: '#1e8449' // Darker green
+        price: '$50/month',
+        duration: 30, // 30 days
+        bgColor: '#27ae60',
+        circleColor: '#1e8449'
     },
     { 
         id: '3', 
         title: 'Quarterly Membership', 
-        price : '$110/4 months',
-        path: 'training', 
-        bgColor: '#e67e22', // Orange
-        icon: 'dumbbell', 
-        iconSize: 15, // Unique icon size
-        circleColor: '#d35400' // Darker orange
+        price: '$110/4 months',
+        duration: 120, // 120 days
+        bgColor: '#e67e22',
+        circleColor: '#d35400'
     },
     { 
         id: '4', 
         title: 'Yearly Membership', 
-        price : '$275/year',
-        path: 'nutrition', 
-        bgColor: '#c0392b', // Red
-        icon: 'apple-whole', 
-        iconSize: 16, // Unique icon size
-        circleColor: '#922b21' // Darker red
+        price: '$275/year',
+        duration: 365, // 365 days
+        bgColor: '#c0392b',
+        circleColor: '#922b21'
     },
 ];
-
 export default function MmeberhipPage() {
 
-    const router = useRouter(); // Use Expo Router for navigation
+    const getFutureDate = (days: number) => {
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        return date.toDateString(); // Convert to readable format
+    };
 
-   
+    const [currentMembership, setCurrentMembership] = useState({
+        title: 'Weekly Membership',
+        expiryDate: getFutureDate(7),
+    });
 
-    const [selectedMembership, setSelectedMembership] = useState<{ title: string; path: string } | null>(null);
+    const [selectedMembership, setSelectedMembership] = useState<{ title: string; duration: number } | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
 
-    const handlePress = (item: { title: string; path: string }) => {
+    const handlePress = (item: { title: string; duration: number }) => {
         setSelectedMembership(item);
         setModalVisible(true);
     };
 
     const confirmPurchase = () => {
         if (selectedMembership) {
-            router.push(selectedMembership.path as any);
+            setCurrentMembership({
+                title: selectedMembership.title,
+                expiryDate: getFutureDate(selectedMembership.duration),
+            });
         }
         setModalVisible(false);
     };
@@ -104,8 +105,8 @@ export default function MmeberhipPage() {
             
 
             <View style={styles.membership}>
-                <Text style={styles.cardText}>Weekly Membership</Text>
-                <Text style={styles.cardPrice}> Your Membership is valid until 15th May 2025</Text>
+                <Text style={styles.cardText}>{currentMembership.title}</Text>
+                <Text style={styles.cardPrice}> Your Membership is valid until {currentMembership.expiryDate}</Text>
                 </View>
             <Text style = {styles.title}>Membership Packages</Text>
             

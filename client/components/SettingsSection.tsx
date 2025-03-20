@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, Touchable, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
@@ -106,10 +106,10 @@ const SettingsSection: React.FC = () => {
                 </View>
 
                 {/* FAQ Option */}
-                <Pressable
+                <TouchableOpacity
                     onPress={() => {
                         console.log('FAQ pressed')
-                        router.push('/FaqScreen') // Navigate to FaqScreen
+                        router.push('/faq') // Navigate to FaqScreen
                     }}
                     className="flex-row items-center justify-between mb-1"
                 >
@@ -126,7 +126,7 @@ const SettingsSection: React.FC = () => {
                         source={require('../assets/images/chevron.forward.svg')}
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
-                </Pressable>
+                </TouchableOpacity>
 
                 {/* Horizontal line divider within the same View */}
                 <View className="flex-row items-center justify-between mb-2">
@@ -140,9 +140,10 @@ const SettingsSection: React.FC = () => {
                     />
                 </View>
 
-                <View
+                
+                <TouchableOpacity
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log('t&c pressed')}
+                    onPress={() => router.push('/terms')}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -159,7 +160,8 @@ const SettingsSection: React.FC = () => {
                         source={require('../assets/images/chevron.forward.svg')}
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
-                </View>
+                </TouchableOpacity>
+                
 
                 {/* Horizontal line divider within the same View */}
                 <View className="flex-row items-center justify-between mb-2">
@@ -173,9 +175,9 @@ const SettingsSection: React.FC = () => {
                     />
                 </View>
 
-                <View
+                <TouchableOpacity
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log('contact us pressed')}
+                    onPress={() => router.push('/contact')}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -192,7 +194,7 @@ const SettingsSection: React.FC = () => {
                         source={require('../assets/images/chevron.forward.svg')}
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
-                </View>
+                </TouchableOpacity>
 
                 {/* Horizontal line divider within the same View */}
                 <View className="flex-row items-center justify-between mb-2">

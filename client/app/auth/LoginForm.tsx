@@ -68,6 +68,7 @@ const LoginForm = ({ onClickForgotPassword }: Props) => {
                         placeholder="Enter your email"
                         autoCorrect={false}
                         keyboardType="email-address"
+                        style ={{justifyContent: 'center', alignContent :'center'}}
                     />
                     <ControlledInput
                         control={control}

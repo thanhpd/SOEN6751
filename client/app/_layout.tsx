@@ -3,7 +3,7 @@ import { Link, Stack } from 'expo-router'
 import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
@@ -20,6 +20,7 @@ import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
 import SignOutButton from '@/components/ui/SignOutButton'
 import ToastManager, { Toast } from 'toastify-react-native'
+import Splash from './splash'
 
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
@@ -42,15 +43,20 @@ export default function RootLayout() {
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
     
+    const [appReady, setAppReady] = useState(false);
 
     useEffect(() => {
-        if (loaded) {
-            SplashScreen.hideAsync()
+        async function prepareApp() {
+            await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated loading time
+            setAppReady(true);
+            await SplashScreen.hideAsync(); // Hide splash screen
         }
-    }, [loaded])
 
-    if (!loaded) {
-        return null
+        prepareApp();
+    }, []);
+
+    if (!appReady) {
+        return <Splash />; // Show your custom splash screen
     }
 
     

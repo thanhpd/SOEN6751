@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import TrainerCard from '@/components/TrainerCard'
+import HeroBanner from '@/components/HeroBanner'
 
 const { width } = Dimensions.get('window') // Get screen width
 
@@ -21,6 +22,7 @@ export default function PersonalTraining() {
 
     return (
         <ScrollView style={styles.container}>
+            
             <Text style={styles.title}>Personal Training Packages</Text>
 
             {/* Card Section */}

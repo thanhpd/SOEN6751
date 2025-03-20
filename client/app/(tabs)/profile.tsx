@@ -7,7 +7,7 @@ import SettingsSection from '@/components/SettingsSection'
 
 const Profile: React.FC = () => {
     return (
-        <ScrollView className="flex-1 bg-gray-50">
+        <ScrollView className="flex-1 bg-gray-50" style = {{marginBottom : 100,}}>
             <ProfileHeader
                 name="Mahim Rahman"
                 email="mahim@gmail.com"
