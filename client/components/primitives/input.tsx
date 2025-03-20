@@ -46,6 +46,11 @@ const inputTv = tv({
                 input: 'bg-neutral-200',
             },
         },
+        readOnly: {
+            true: {
+                input: 'text-[#9EA1AE] bg-[rgba(228,228,228,0.60)]',
+            },
+        },
     },
     defaultVariants: {
         focused: false,
@@ -97,6 +102,7 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
                 error: Boolean(error),
                 focused: isFocussed,
                 disabled: Boolean(props.disabled),
+                readOnly: Boolean(props.readOnly),
             }),
         [error, isFocussed, props.disabled]
     )

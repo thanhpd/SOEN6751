@@ -21,9 +21,7 @@
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
-
     "@react-navigation/stack": "^7.1.2",
-
     "@reduxjs/toolkit": "^2.6.1",
     "@rn-primitives/alert-dialog": "^1.1.0",
     "@rn-primitives/avatar": "^1.1.0",
@@ -42,7 +40,6 @@
     "@rn-primitives/types": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-
     "expo": "~52.0.37",
     "expo-app-loading": "^2.1.1",
     "expo-blur": "~14.0.3",
@@ -50,6 +47,7 @@
     "expo-font": "~13.0.4",
     "expo-haptics": "~14.0.1",
     "expo-image": "~2.0.6",
+    "expo-image-picker": "~16.0.6",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.17",
     "expo-secure-store": "^14.0.1",
