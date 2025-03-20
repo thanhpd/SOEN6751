@@ -53,25 +53,26 @@ const styles = StyleSheet.create({
         borderRadius: 28,
         height: 54,
         alignItems: 'center',
+        paddingHorizontal: 2, // Add padding to create spacing on the sides
     },
     tabTrigger: {
         flex: 1,
-        height: 48,
+        height: 45,
         backgroundColor: '#D9D9D9',
-        borderRadius: 28,
+        borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: 2, // Add margin to create spacing between tabs
     },
     activeTab: {
-        backgroundColor: 'red', // Highlight color for the active tab
+        backgroundColor: '#98243C', // Highlight color for the active tab
     },
     tabText: {
         fontSize: 14,
-        fontWeight: 'bold',
         lineHeight: 18,
     },
     activeTabText: {
-        color: '#D9D9D9', // Text color for the active tab
+        color: '#FFFFFF', // Text color for the active tab
     },
     inactiveTabText: {
         color: '#6E7781', // Text color for inactive tabs
