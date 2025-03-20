@@ -1,12 +1,13 @@
 import CardBackground from '@/components/payment/CardBackground'
 import LogoMastercard from '@/components/payment/images/LogoMastercard'
 import LogoVisa from '@/components/payment/images/LogoVisa'
+import { TCardSchema } from '@/components/payment/schema'
 import { TPaymentCard } from '@/components/payment/types'
 import React from 'react'
 import { Text, View } from 'react-native'
 
 type TPaymentCardProps = {
-    card: TPaymentCard
+    card: TCardSchema
 }
 
 const PaymentCard = ({ card }: TPaymentCardProps) => {
@@ -34,7 +35,7 @@ const PaymentCard = ({ card }: TPaymentCardProps) => {
                             className="text-base font-medium"
                             style={{ width: '50%' }}
                         >
-                            **** {card.last4Digits}
+                            **** {card.cardNumber.slice(-4)}
                         </Text>
                         <Text className="text-base font-medium">
                             {card.cardExpiration}

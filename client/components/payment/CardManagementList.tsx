@@ -1,66 +1,51 @@
 import PaymentCard from '@/components/payment/PaymentCard'
-import { TPaymentCard } from '@/components/payment/types'
+import { TCardSchema } from '@/components/payment/schema'
 import { Button } from '@/components/primitives/button'
 import React, { useState } from 'react'
-import { Alert, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { Modal, Pressable, Text, View } from 'react-native'
 
-const seedCards: TPaymentCard[] = [
-    {
-        id: '1',
-        last4Digits: '3455',
-        cardHolder: 'John Bonds',
-        cardExpiration: '12/28',
-        cardBrand: 'mastercard',
-    },
-    {
-        id: '2',
-        last4Digits: '7688',
-        cardHolder: 'Jane Smith',
-        cardExpiration: '11/29',
-        cardBrand: 'visa',
-    },
-    {
-        id: '3',
-        last4Digits: '1234',
-        cardHolder: 'Sarah Johnson',
-        cardExpiration: '10/27',
-        cardBrand: 'visa',
-    },
-    {
-        id: '4',
-        last4Digits: '5678',
-        cardHolder: 'Michael Brown',
-        cardExpiration: '09/26',
-        cardBrand: 'mastercard',
-    },
-    {
-        id: '5',
-        last4Digits: '9012',
-        cardHolder: 'Emily Davis',
-        cardExpiration: '08/25',
-        cardBrand: 'mastercard',
-    },
+const exampleCardData: TCardSchema = {
+    cardNumber: '1234567890123456',
+    cardHolder: 'John Doe',
+    cardExpiration: '12/25',
+    cardBrand: 'mastercard',
+    cvv: '123',
+    billingFullName: 'John Doe',
+    billingStreetAddress: '123 Main St',
+    billingProvince: 'QC',
+    billingCity: 'Montreal',
+    billingPostalCode: 'H3Z2Y7',
+}
+
+const exampleCards: TCardSchema[] = [
+    { ...exampleCardData, cardNumber: '1234567890123456' },
+    { ...exampleCardData, cardNumber: '1234567890123457' },
+    { ...exampleCardData, cardNumber: '1234567890123458' },
+    { ...exampleCardData, cardNumber: '1234567890123459' },
+    { ...exampleCardData, cardNumber: '1234567890123460' },
 ]
 
 const CardManagementList = () => {
-    const [cards, setCards] = useState<TPaymentCard[]>([...seedCards])
+    const [cards, setCards] = useState<TCardSchema[]>([...exampleCards])
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null)
 
-    const handleDeleteCard = (id: string) => {
-        setCards(cards => cards.filter(card => card.id !== id))
+    const handleDeleteCard = (cardNumber: string) => {
+        setCards(cards => cards.filter(card => card.cardNumber !== cardNumber))
     }
 
     return (
-        <View className="flex flex-col gap-[30px]">
+        <View className="flex flex-col gap-[30px] pb-10">
             {cards.map(card => (
-                <React.Fragment key={card.id}>
-                    <View key={card.id} className="flex-col gap-2 mx-auto">
+                <React.Fragment key={card.cardNumber}>
+                    <View
+                        key={card.cardNumber}
+                        className="flex-col gap-2 mx-auto"
+                    >
                         <PaymentCard card={card} />
                         <Button
                             className="rounded-2xl bg-red"
                             size="sm"
-                            onPress={() => setSelectedCardId(card.id)}
+                            onPress={() => setSelectedCardId(card.cardNumber)}
                         >
                             <Text className="text-white font-medium">
                                 Delete Card
@@ -69,7 +54,7 @@ const CardManagementList = () => {
                     </View>
                     <Modal
                         animationType="fade"
-                        visible={selectedCardId === card.id}
+                        visible={selectedCardId === card.cardNumber}
                         transparent={true}
                     >
                         <View className="flex-1 justify-center items-center bg-black/50">
@@ -92,7 +77,7 @@ const CardManagementList = () => {
                                     <Pressable
                                         className="bg-red rounded-[30px] h-[34px] w-[130px] items-center justify-center"
                                         onPress={() => {
-                                            handleDeleteCard(card.id)
+                                            handleDeleteCard(card.cardNumber)
                                             setSelectedCardId(null)
                                         }}
                                     >

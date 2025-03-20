@@ -8,7 +8,7 @@ import {
 } from '@/components/primitives/tabs'
 import clsx from 'clsx'
 import React, { useState } from 'react'
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const Payment = () => {

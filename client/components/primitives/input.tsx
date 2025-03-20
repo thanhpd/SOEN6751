@@ -130,7 +130,7 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
                         onBlur={onBlur}
                         onFocus={onFocus}
                         {...inputProps}
-                        className={clsx(
+                        className={cn(
                             inputProps.className,
                             'h-full flex-1 font-default-400 pl-4 text-sm text-[#262D33] leading-[1.6] font-default-400'
                         )}
