@@ -9,6 +9,7 @@ export const GymOccupancy: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'realtime' | 'historical'>(
         'realtime'
     )
+    const barData = [30, 80, 120, 160, 50, 200, 90]; // Dynamic occupancy data
 
     return (
         <View className="p-4 bg-white rounded-lg">
@@ -25,7 +26,7 @@ export const GymOccupancy: React.FC = () => {
         <RealTimeGraph />
       ) : (
         <View className="mt-6">
-          <HistoricalGraph />
+          <HistoricalGraph data={barData}/>
           <OccupancyLegend />
         </View>
       )}

@@ -1,74 +1,72 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React from 'react'
+import { View, Text, Dimensions } from 'react-native'
+import { BarChart } from 'react-native-chart-kit'
 
-const YAxisLabels = () => (
-  <View className="w-12 justify-between items-end pr-2">
-    <Text className="text-[#767676] font-bold text-sm">200+</Text>
-    <Text className="text-[#767676] font-bold text-sm">150</Text>
-    <Text className="text-[#767676] font-bold text-sm">100</Text>
-    <Text className="text-[#767676] font-bold text-sm">50</Text>
-    <Text className="text-[#767676] font-bold text-sm">00</Text>
-  </View>
-);
+interface HistoricalGraphProps {
+    data: number[] // Array of occupancy values
+}
 
-const XAxisLabels = () => (
-  <View className="flex-row justify-between mt-2">
-    {[
-      "7 am",
-      "9 am",
-      "11 am",
-      "1 pm",
-      "3 pm",
-      "5 pm",
-      "7 pm",
-      "8 pm",
-      "9 pm",
-      "10 pm",
-    ].map((time) => (
-      <Text key={time} className="text-[#767676] font-bold text-xs transform -rotate-45">
-        {time}
-      </Text>
-    ))}
-  </View>
-);
+export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
+    const screenWidth = Dimensions.get('window').width
 
-const GraphBars = () => {
-  const bars = [
-    { height: 80, color: "bg-[#34C759]" },
-    { height: 120, color: "bg-[#FF6600]" },
-    { height: 180, color: "bg-[#D32C2F]" },
-    { height: 140, color: "bg-[#FF6600]" },
-    { height: 90, color: "bg-[#34C759]" },
-    { height: 160, color: "bg-[#D32C2F]" },
-    { height: 130, color: "bg-[#FF6600]" },
-    { height: 70, color: "bg-[#34C759]" },
-    { height: 110, color: "bg-[#FF6600]" },
-    { height: 60, color: "bg-[#34C759]" },
-  ];
+    // Define thresholds and colors based on the legend
+    const getBarColor = (value: number): string => {
+        if (value <= 50) return '#34C759' // Normal
+        if (value <= 150) return '#FF6600' // Moderate
+        return '#D32C2F' // Crowded
+    }
 
-  return (
-    <View className="flex-row justify-between items-end h-40">
-      {bars.map((bar, index) => (
-        <View
-          key={index}
-          style={{ height: bar.height }}
-          className={`w-6 rounded-t-md ${bar.color}`}
-        />
-      ))}
-    </View>
-  );
-};
+    // Generate colors for the bars dynamically
+    const barColors = data.map(value => getBarColor(value))
 
-export const HistoricalGraph: React.FC = () => {
-  return (
-    <View className="mt-6">
-      <View className="flex-row">
-        <YAxisLabels />
-        <View className="flex-1">
-          <GraphBars />
-          <XAxisLabels />
+    return (
+        <View className="mt-6">
+            <Text className="text-center text-lg font-bold mb-4">
+                Historical Gym Occupancy
+            </Text>
+            <BarChart
+                data={{
+                    labels: [
+                        '7 am',
+                        '9 am',
+                        '11 am',
+                        '1 pm',
+                        '3 pm',
+                        '5 pm',
+                        '7 pm',
+                    ], // X-axis labels
+                    datasets: [
+                        {
+                            data: data, // Heights of the bars
+                        },
+                    ],
+                }}
+                width={screenWidth - 32} // Adjust width dynamically
+                height={220} // Set a fixed height
+                yAxisLabel="" // Optional: Add a prefix to Y-axis values
+                yAxisSuffix="%" // Optional: Add a suffix to Y-axis values
+                chartConfig={{
+                    backgroundColor: '#ffffff',
+                    backgroundGradientFrom: '#ffffff',
+                    backgroundGradientTo: '#ffffff',
+                    decimalPlaces: 0, // No decimal places
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    barPercentage: 0.5,
+                    propsForBackgroundLines: {
+                        strokeWidth: 1,
+                        stroke: '#e3e3e3',
+                        strokeDasharray: '0',
+                    },
+                }}
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16,
+                }}
+                fromZero // Start Y-axis from zero
+                showBarTops={false}
+                withInnerLines={true}
+            />
         </View>
-      </View>
-    </View>
-  );
-};
+    )
+}
