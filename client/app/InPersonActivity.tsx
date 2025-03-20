@@ -10,8 +10,6 @@ import BookingCard from '@/components/BookingCard'
 import SearchBar from '@/components/SearchBar'
 import { InPersonActivityItem } from '@/components/ui/InPersonActivityItem'
 
-   
-
 export default function InPersonActivity() {
     const upcomingBookings = [
         {
@@ -35,32 +33,29 @@ export default function InPersonActivity() {
             image: 'https://example.com/images/massage.jpg', // You can replace with your image path or URL
         },
     ]
-    
+
     return (
         <View style={{ flex: 1 }}>
-            <HeroBanner 
-            title="In-Person Activities Winter 2025"
-        description="Get inspired and moving at the same time."
-        date="From April 10 to June 30"
-        image={require('../assets/images/hero.png')} />
+            <HeroBanner
+                title="In-Person Activities Winter 2025"
+                description="Get inspired and moving at the same time."
+                date="From April 10 to June 30"
+                image={require('../assets/images/hero.png')}
+            />
             <SearchBar />
             <CategoryList />
-            
-                      <InPersonActivityList />
-                      
+
+            <InPersonActivityList />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-
     upcomingBookingsContainer: {
         marginTop: 20,
         borderRadius: 10,
-        
-        
     },
     bookingCardContainer: {
-      marginRight: 20, 
+        marginRight: 20,
     },
 })

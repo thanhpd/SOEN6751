@@ -1,22 +1,37 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import React from 'react'
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
 
 // Define the types for notifications
 interface Notification {
-    id: number;
-    message: string;
-    date: string;
-    details: string;
+    id: number
+    message: string
+    date: string
+    details: string
 }
 
 const NotificationPage = () => {
     // Sample notifications data
     const notifications: Notification[] = [
-        { id: 1, message: 'Personal Training', date: '2 days ago', details: 'Your booking is confirmed for tomorrow at 10 AM.' },
-        { id: 2, message: 'Zumba Class', date: '3 days ago', details: 'Congrats on reaching ' },
-        { id: 3, message: 'Crossfit Session', date: '1 week ago', details: 'Your order #1234 has been shipped via Express Courier.' },
-    ];
+        {
+            id: 1,
+            message: 'Personal Training',
+            date: '2 days ago',
+            details: 'Your booking is confirmed for tomorrow at 10 AM.',
+        },
+        {
+            id: 2,
+            message: 'Zumba Class',
+            date: '3 days ago',
+            details: 'Congrats on reaching ',
+        },
+        {
+            id: 3,
+            message: 'Crossfit Session',
+            date: '1 week ago',
+            details: 'Your order #1234 has been shipped via Express Courier.',
+        },
+    ]
 
     return (
         <View style={styles.container}>
@@ -28,44 +43,45 @@ const NotificationPage = () => {
             {/* Notification page content, taking up half the screen */}
             <View style={styles.notificationContainer}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {notifications.map((notification) => (
-
+                    {notifications.map(notification => (
                         <View>
+                            <View
+                                key={notification.id}
+                                style={styles.notificationBox}
+                            >
+                                <Ionicons
+                                    name="notifications-outline"
+                                    size={28}
+                                    color="#333"
+                                    style={{ marginRight: 15 }}
+                                />
 
-                        <View key={notification.id} style={styles.notificationBox}>
-
-                            <Ionicons
-                                name="notifications-outline"
-                                size={28}
-                                color="#333"
-                                style={{ marginRight: 15 }}
-                            />
-
-                            
-
-                           <View style={styles.headerColumn}>
-                                <Text style={styles.message}>{notification.message}</Text>
-                                <Text style={styles.details}>{notification.details}</Text>
-                            
+                                <View style={styles.headerColumn}>
+                                    <Text style={styles.message}>
+                                        {notification.message}
+                                    </Text>
+                                    <Text style={styles.details}>
+                                        {notification.details}
+                                    </Text>
                                 </View>
 
-                                <Text style={styles.date}>{notification.date}</Text>
-                            
-                            
-                        </View>
+                                <Text style={styles.date}>
+                                    {notification.date}
+                                </Text>
+                            </View>
 
-                        <View style ={styles.details}> 
-                        <Text> </Text>
-                    </View>
-                    </View>
+                            <View style={styles.details}>
+                                <Text> </Text>
+                            </View>
+                        </View>
                     ))}
                 </ScrollView>
             </View>
         </View>
-    );
-};
+    )
+}
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container: {
@@ -109,7 +125,7 @@ const styles = StyleSheet.create({
     },
     headerColumn: {
         flexDirection: 'column',
-         // Place message and date on opposite ends
+        // Place message and date on opposite ends
         marginBottom: 5, // Space between the message/date and the details
     },
     message: {
@@ -120,16 +136,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#888',
         position: 'absolute',
-        right: 10,  
+        right: 10,
         top: 10,
-        
     },
     details: {
         fontSize: 14,
-    color: '#333',
-    marginTop: 5, // Add space above details
-       paddingRight: 120, // Add padding to the right
+        color: '#333',
+        marginTop: 5, // Add space above details
+        paddingRight: 120, // Add padding to the right
     },
-});
+})
 
-export default NotificationPage;
+export default NotificationPage

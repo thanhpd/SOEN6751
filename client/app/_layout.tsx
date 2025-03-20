@@ -1,4 +1,3 @@
-
 import { Link, Stack } from 'expo-router'
 import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
 import * as SplashScreen from 'expo-splash-screen'
@@ -11,7 +10,6 @@ import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-
 
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { NAV_THEME } from '@/lib/constants'
@@ -26,13 +24,12 @@ const LIGHT_THEME: Theme = {
     colors: NAV_THEME.light,
 }
 
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
 export const unstable_settings = {
-  initialRouteName: 'index',
-};
+    initialRouteName: 'index',
+}
 export default function RootLayout() {
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -41,7 +38,6 @@ export default function RootLayout() {
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
-    
 
     useEffect(() => {
         if (loaded) {
@@ -52,8 +48,6 @@ export default function RootLayout() {
     if (!loaded) {
         return null
     }
-
-    
 
     return (
         <Providers>
@@ -78,36 +72,33 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-
                             <Link href="/notifications" asChild>
-                            <TouchableOpacity
-                                onPress={() => console.log('Notifications  Pressed')}
-                            >
-                                <Ionicons
-                                    name="notifications-outline"
-                                    size={28}
-                                    color="#333"
-                                    style={{ marginRight: 15 }}
-                                />
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        console.log('Notifications  Pressed')
+                                    }
+                                >
+                                    <Ionicons
+                                        name="notifications-outline"
+                                        size={28}
+                                        color="#333"
+                                        style={{ marginRight: 15 }}
+                                    />
+                                </TouchableOpacity>
                             </Link>
-
                         ),
                     }}
                 />
                 <Stack.Screen name="+not-found" />
 
-                
                 <Stack.Screen
-        name="qrmodal"
-        options={{
-          presentation: 'transparentModal',
-          animation: 'fade',
-          headerShown: false,
-        }}
-      />
-                    
-                   
+                    name="qrmodal"
+                    options={{
+                        presentation: 'transparentModal',
+                        animation: 'fade',
+                        headerShown: false,
+                    }}
+                />
 
                 <Stack.Screen
                     name="training"
@@ -121,7 +112,6 @@ export default function RootLayout() {
                             fontWeight: 'bold', // Make the title bold
                         },
                         headerBackTitle: 'Go Back',
-                        
                     }}
                 />
                 <Stack.Screen

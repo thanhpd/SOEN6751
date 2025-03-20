@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { Colors } from '@/constants/Colors'
 
 const initialCategories = [
     { name: 'All Activities' },
@@ -11,24 +11,31 @@ const initialCategories = [
     { name: 'Fitness & Relaxation' },
     { name: 'Drop-In Recreation' },
     { name: 'Instructional Activities' },
-];
+]
 
 export const CategoryList: React.FC = () => {
-    const [activeIndex, setActiveIndex] = useState<number | null>(1); // Default selected index (Aerobics)
+    const [activeIndex, setActiveIndex] = useState<number | null>(1) // Default selected index (Aerobics)
 
     const toggleCategory = (index: number) => {
-        setActiveIndex(index);
-    };
+        setActiveIndex(index)
+    }
 
     return (
-        <View className="mb-1" style = {{ marginBottom : 15}}  >
-            <Text className="text-black text-2xl font-bold text" style = {{ marginLeft : 25}} >Categories</Text>
+        <View className="mb-1" style={{ marginBottom: 15 }}>
+            <Text
+                className="text-black text-2xl font-bold text"
+                style={{ marginLeft: 25 }}
+            >
+                Categories
+            </Text>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}  className="mt-4">
-
-                
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                className="mt-4"
+            >
                 {initialCategories.map((category, index) => {
-                    const isActive = index === activeIndex;
+                    const isActive = index === activeIndex
                     return (
                         <TouchableOpacity
                             key={index}
@@ -38,7 +45,9 @@ export const CategoryList: React.FC = () => {
                                 paddingVertical: 10,
                                 marginHorizontal: 6,
                                 borderRadius: 20,
-                                backgroundColor: isActive ? Colors.light.concordiaColor : Colors.light.fadedconcordiaColor,
+                                backgroundColor: isActive
+                                    ? Colors.light.concordiaColor
+                                    : Colors.light.fadedconcordiaColor,
                                 marginLeft: index === 0 ? 23 : 6,
                             }}
                         >
@@ -51,9 +60,9 @@ export const CategoryList: React.FC = () => {
                                 {category.name}
                             </Text>
                         </TouchableOpacity>
-                    );
+                    )
                 })}
             </ScrollView>
         </View>
-    );
-};
+    )
+}

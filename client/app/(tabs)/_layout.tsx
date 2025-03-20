@@ -8,11 +8,8 @@ import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
 
-
-
 import { useAppSelector } from '@/store'
 import { IconSymbol } from '@/components/ui/IconSymbol'
-
 
 export default function TabLayout() {
     const colorScheme = useColorScheme()
@@ -41,12 +38,10 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    
                     title: 'Home',
                     tabBarIcon: ({ color }) => (
                         <Entypo name="home" size={28} color="black" />
                     ),
-                    
                 }}
             />
 
@@ -77,7 +72,6 @@ export default function TabLayout() {
 
             <Tabs.Screen
                 name="booking"
-                
                 options={{
                     title: 'booking',
                     tabBarIcon: ({ color }) => (
@@ -89,10 +83,6 @@ export default function TabLayout() {
                     ),
                 }}
             />
-
-
-
-
         </Tabs>
     )
 }
