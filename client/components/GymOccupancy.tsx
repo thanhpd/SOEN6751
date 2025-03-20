@@ -13,7 +13,7 @@ export const GymOccupancy: React.FC = () => {
     return (
         <View className="p-4 bg-white rounded-lg">
             <Text
-                className="text-2xl font-bold mb-4"
+                className="text-2xl font-bold mb-4 text-center"
                 style={{ color: '#98243C' }}
             >
                 Gym Occupancy
