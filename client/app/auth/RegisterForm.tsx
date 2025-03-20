@@ -7,6 +7,7 @@ import { ControlledInput } from '@/components/primitives/input'
 import { ControlledCheckbox } from '@/components/primitives/checkbox'
 import { Button } from '@/components/primitives/button'
 import { Toast } from 'toastify-react-native'
+import { router } from 'expo-router'
 
 const RegisterSchema = zod
     .object({
@@ -88,7 +89,7 @@ const RegisterForm = ({ onRegisterSucceed }: Props) => {
                             <Text
                                 className="text-red text-xs font-default-400 leading-[1.6]"
                                 onPress={() => {
-                                    console.log('Terms and Conditions')
+                                    router.push('/terms')
                                 }}
                             >
                                 terms and conditions

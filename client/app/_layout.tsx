@@ -28,9 +28,6 @@ export const unstable_settings = {
 }
 export default function RootLayout() {
     const [loaded] = useFonts({
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-        Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
-        Poppins: require('../assets/fonts/Poppins-Light.ttf'),
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
@@ -114,16 +111,12 @@ export default function RootLayout() {
                 <Stack.Screen
                     name="payment"
                     options={{
-                        title: 'My Order',
-                        headerStyle: {
-                            backgroundColor: '#3498db', // Set the background color of the header
-                        },
-                        headerTintColor: '#fff', // Set the color of the header text
-                        headerTitleStyle: {
-                            fontWeight: 'bold', // Make the title bold
-                        },
-                        headerBackTitle: 'Go Back',
+                        title: 'Payment Details',
                     }}
+                />
+                <Stack.Screen
+                    name="terms"
+                    options={{ title: 'Terms and Conditions' }}
                 />
                 <Stack.Screen
                     name="auth/AuthLayout"

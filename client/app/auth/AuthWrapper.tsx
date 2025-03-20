@@ -1,13 +1,14 @@
 import React, { PropsWithChildren } from 'react'
-import { useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/store'
 import * as SecureStore from 'expo-secure-store'
 import { restoreToken } from '@/app/auth/authSlice'
-import { Redirect } from 'expo-router'
+import { useRouter } from 'expo-router'
 
 const AuthWrapper = ({ children }: PropsWithChildren) => {
+    const router = useRouter()
+    const dispatch = useAppDispatch()
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const userToken = useAppSelector(state => state.auth.userToken)
-    // console.log({ isAuthLoading, userToken })
 
     React.useEffect(() => {
         // Fetch the token from storage then navigate to our appropriate place
@@ -32,13 +33,17 @@ const AuthWrapper = ({ children }: PropsWithChildren) => {
         bootstrapAsync()
     }, [])
 
-    if (isAuthLoading) return null
+    React.useEffect(() => {
+        if (!isAuthLoading) {
+            if (userToken) {
+                router.replace('/(tabs)')
+            } else {
+                router.replace('/auth/AuthLayout')
+            }
+        }
+    }, [userToken])
 
-    return userToken ? (
-        <Redirect href="/(tabs)" />
-    ) : (
-        <Redirect href="/auth/AuthLayout" />
-    )
+    return null
 }
 
 export default AuthWrapper
