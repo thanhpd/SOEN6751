@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image ,ScrollView} from 'react-native';
 import HeroBanner from '@/components/HeroBanner';
 import SearchBar from '@/components/SearchBar';
-import { InPersonActivityList } from '@/components/ui/InPersonActivityList';
+import { InPersonActivityList } from '@/components/ui/ActivityList';
 import { Colors } from '@/constants/Colors';
 import { Button } from 'react-native-paper';
 

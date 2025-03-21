@@ -51,13 +51,19 @@ export default function BookingPage() {
 
     const handlePress = (path: string) => {
         router.push(path as any);
+        
+            console.log('Button Pressed:', path);
+        
     };
 
     const renderItem = ({ item }: { item: { path: string; id: string; title: string; image: any; bgColor: string; icon: string; iconSize: number } }) => (
         <TouchableOpacity 
             style={{ width: (width / 2) - 20, height: (width / 2) -100 }} 
             className="m-2 rounded-lg overflow-hidden" 
-            onPress={() => handlePress(item.path)}
+            onPress={() => handlePress(item.path)
+                
+            }
+            
         >
             <ImageBackground source={item.image} className="flex-1 justify-center items-center w-full h-full" imageStyle={{ borderRadius: 10 }}>
             {/* Semi-transparent colored overlay */}

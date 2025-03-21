@@ -7,7 +7,7 @@ export interface Activity {
     time: string;
     days: string;
     image?: string;
-    inPerson?: boolean
+    type?: string
   }
   
   export interface Category {

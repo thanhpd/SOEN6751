@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
  import HeroBanner from '@/components/HeroBanner';
 import SearchBar from '@/components/SearchBar';
-import { InPersonActivityList } from '@/components/ui/InPersonActivityList';
+import { InPersonActivityList } from '@/components/ui/ActivityList';
 
 const { width } = Dimensions.get('window');
 
