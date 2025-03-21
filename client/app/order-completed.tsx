@@ -1,8 +1,8 @@
+import PaymentCompleted from '@/components/payment/PaymentCompleted'
 import React from 'react'
-import { Text } from 'react-native'
 
 const OrderCompleted = () => {
-    return <Text>OrderCompleted</Text>
+    return <PaymentCompleted />
 }
 
 export default OrderCompleted

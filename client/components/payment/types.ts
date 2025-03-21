@@ -1,3 +1,5 @@
+import { TCardSchema } from '@/components/payment/schema'
+
 export type TProduct = {
     id: string
     name: string
@@ -12,12 +14,5 @@ export type TOrder = {
     total: number
     discount: number
     taxes: number
-}
-
-export type TPaymentCard = {
-    id: string
-    last4Digits: string
-    cardHolder: string
-    cardExpiration: string
-    cardBrand: 'mastercard' | 'visa'
+    paymentMethod?: TCardSchema
 }

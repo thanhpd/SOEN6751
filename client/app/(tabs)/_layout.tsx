@@ -83,20 +83,6 @@ export default function TabLayout() {
                     ),
                 }}
             />
-
-            <Tabs.Screen
-                name="payment"
-                options={{
-                    title: 'Payment',
-                    tabBarIcon: ({ color }) => (
-                        <Ionicons
-                            name="calendar-clear"
-                            size={28}
-                            color="black"
-                        />
-                    ),
-                }}
-            />
         </Tabs>
     )
 }

@@ -115,6 +115,14 @@ export default function RootLayout() {
                         title: 'My Order',
                     }}
                 />
+
+                <Stack.Screen
+                    name="order-payment"
+                    options={{
+                        title: 'Payment Details',
+                    }}
+                />
+
                 <Stack.Screen
                     name="payment-manager"
                     options={{

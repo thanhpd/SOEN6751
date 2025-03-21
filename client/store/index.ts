@@ -8,11 +8,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import currentUserIdSliceReducers from './currentUserId'
 import tmpUserSliceReducers from './tmpUser'
 import paymentMethodDBSliceReducers from './paymentMethodDB'
+import currentOrderSliceReducers from './currentOrder'
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    blacklist: ['currentUserId', 'tmpUser'],
+    blacklist: ['currentUserId', 'tmpUser', 'currentOrder'],
 }
 
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     currentUserId: currentUserIdSliceReducers,
     tmpUser: tmpUserSliceReducers,
     paymentMethodDB: paymentMethodDBSliceReducers,
+    currentOrder: currentOrderSliceReducers,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

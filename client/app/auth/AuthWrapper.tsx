@@ -5,7 +5,6 @@ import { useRouter } from 'expo-router'
 import { memberships } from '@/data/seed/membership'
 import { setDBMemberships } from '@/store/membershipDB'
 import { setCurrentUserId } from '@/store/currentUserId'
-import { useAuth } from '@/hooks/useAuth'
 import { setDBAccounts } from '@/store/accountDB'
 import { accounts } from '@/data/seed/account'
 
@@ -18,7 +17,6 @@ const AuthWrapper = ({ children }: PropsWithChildren) => {
 
     React.useEffect(() => {
         setTimeout(() => {
-            console.log({ membershipDB, accountDB })
             if (membershipDB.ids.length === 0) {
                 dispatch(setDBMemberships(memberships))
             }

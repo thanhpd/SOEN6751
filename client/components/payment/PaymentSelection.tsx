@@ -2,11 +2,12 @@ import CardCarousel from '@/components/payment/CardCarousel'
 import { CardSchema, TCardSchema } from '@/components/payment/schema'
 import SubmitButton from '@/components/payment/SubmitButton'
 import { ControlledInput } from '@/components/primitives/input'
+import { Label } from '@/components/primitives/label'
 import { useAppSelector } from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { Text, View } from 'react-native'
+import { Text, View, Switch } from 'react-native'
 
 type PaymentSelectionProps = {
     onMethodSubmit?: (data: TCardSchema) => void
@@ -41,32 +42,35 @@ const PaymentSelection = ({
             })
     }, [paymentMethodDB, userId])
 
-    const { control, handleSubmit, reset, watch } = useForm<TCardSchema>({
-        mode: 'onChange',
-        resolver: zodResolver(CardSchema),
-        defaultValues: paymentMethods.length
-            ? paymentMethods[0]
-            : {
-                  id: '-1',
-                  userId: userId ?? '',
-                  billingCity: '',
-                  billingFullName: '',
-                  billingPostalCode: '',
-                  billingProvince: '',
-                  billingStreetAddress: '',
-                  cardBrand:
-                      Math.floor(Math.random() * 10) > 4
-                          ? 'mastercard'
-                          : 'visa',
-                  cardExpiration: '',
-                  cardHolder: '',
-                  cvv: '',
-                  cardNumber: '',
-              },
-    })
+    const { control, handleSubmit, reset, watch, setValue } =
+        useForm<TCardSchema>({
+            mode: 'onChange',
+            resolver: zodResolver(CardSchema),
+            defaultValues: paymentMethods.length
+                ? paymentMethods[0]
+                : {
+                      id: '-1',
+                      saveCard: false,
+                      userId: userId ?? '',
+                      billingCity: '',
+                      billingFullName: '',
+                      billingPostalCode: '',
+                      billingProvince: '',
+                      billingStreetAddress: '',
+                      cardBrand:
+                          Math.floor(Math.random() * 10) > 4
+                              ? 'mastercard'
+                              : 'visa',
+                      cardExpiration: '',
+                      cardHolder: '',
+                      cvv: '',
+                      cardNumber: '',
+                  },
+        })
 
-    const currentCardId = watch('id')
+    const [currentCardId, saveCard] = watch(['id', 'saveCard'])
     const isCurrentCardSaved = currentCardId !== '-1'
+    const isNewCard = currentCardId === '-1'
 
     const onSubmit = (data: TCardSchema) => {
         onMethodSubmit?.(data)
@@ -90,6 +94,7 @@ const PaymentSelection = ({
                         placeholder="Card number"
                         autoCorrect={false}
                         keyboardType="numeric"
+                        readOnly={isCurrentCardSaved}
                         disabled={isCurrentCardSaved}
                         maskMode={isCurrentCardSaved ? 'card' : undefined}
                     />
@@ -99,6 +104,7 @@ const PaymentSelection = ({
                         label="Name"
                         placeholder="Card holder name"
                         autoCorrect={false}
+                        readOnly={isCurrentCardSaved}
                         disabled={isCurrentCardSaved}
                     />
                     <View className="flex flex-row gap-3">
@@ -109,6 +115,7 @@ const PaymentSelection = ({
                                 label="Expiration Date"
                                 placeholder="MM/YY"
                                 autoCorrect={false}
+                                readOnly={isCurrentCardSaved}
                                 disabled={isCurrentCardSaved}
                             />
                         </View>
@@ -120,6 +127,7 @@ const PaymentSelection = ({
                                 placeholder="CVV"
                                 autoCorrect={false}
                                 keyboardType="numeric"
+                                readOnly={isCurrentCardSaved}
                                 disabled={isCurrentCardSaved}
                                 maskMode={
                                     isCurrentCardSaved ? 'cvv' : undefined
@@ -168,6 +176,31 @@ const PaymentSelection = ({
                         placeholder="Postal code"
                         autoCorrect={false}
                     />
+                    {mode === 'order' && isNewCard && (
+                        <View className="flex flex-row items-center gap-2">
+                            <Switch
+                                value={watch('saveCard') || false}
+                                onValueChange={value => {
+                                    setValue('saveCard', value)
+                                }}
+                                nativeID="saved-card"
+                                trackColor={{
+                                    false: 'rgba(152, 36, 60, 0.29)',
+                                    true: 'rgba(152, 36, 60, 0.6)',
+                                }}
+                                thumbColor={
+                                    saveCard ? 'rgba(152, 36, 60, 1)' : '#fff'
+                                }
+                            />
+                            <Label
+                                nativeID="save-card"
+                                onPress={() => setValue('saveCard', !saveCard)}
+                                className="text-sm font-normal"
+                            >
+                                Save Card information
+                            </Label>
+                        </View>
+                    )}
                 </View>
                 <View className="mt-[40px]">
                     <SubmitButton

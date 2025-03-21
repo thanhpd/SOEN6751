@@ -15,8 +15,6 @@ export function useAuth() {
     const accountDB = useAppSelector(state => state.accountDB)
     const membershipDB = useAppSelector(state => state.membershipDB)
 
-    console.log({ accountDB, membershipDB, currentUserId })
-
     const authenticate = useCallback(
         (data: TLoginSchema) => {
             const account = Object.values(accountDB.entities).find(
