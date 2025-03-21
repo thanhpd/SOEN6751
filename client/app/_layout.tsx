@@ -10,10 +10,11 @@ import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { NAV_THEME } from '@/lib/constants'
-import { store } from '../store'
+import { persistor, store } from '../store'
 import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
 import ToastManager, { Toast } from 'toastify-react-native'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
@@ -109,9 +110,21 @@ export default function RootLayout() {
                 />
 
                 <Stack.Screen
+                    name="order"
+                    options={{
+                        title: 'My Order',
+                    }}
+                />
+                <Stack.Screen
                     name="payment"
                     options={{
                         title: 'Payment Details',
+                    }}
+                />
+                <Stack.Screen
+                    name="payment-completed"
+                    options={{
+                        headerTitle: '',
                     }}
                 />
                 <Stack.Screen
@@ -154,6 +167,11 @@ function Providers({ children }: { children: React.ReactNode }) {
     return (
         <GestureHandlerRootView className="flex-1">
             <Provider store={store}>
+                {/* <PersistGate loading={null} persistor={persistor}>
+                    <ThemeProvider value={LIGHT_THEME}>
+                        {children}
+                    </ThemeProvider>
+                </PersistGate> */}
                 <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
             </Provider>
         </GestureHandlerRootView>

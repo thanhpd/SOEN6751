@@ -27,7 +27,7 @@ const AuthWrapper = ({ children }: PropsWithChildren) => {
             // This will switch to the App screen or Auth screen and this loading
             // screen will be unmounted and thrown away.
             // console.log('Restoring token:', userToken)
-            dispatch(restoreToken(userToken))
+            // dispatch(restoreToken(userToken))
         }
 
         bootstrapAsync()

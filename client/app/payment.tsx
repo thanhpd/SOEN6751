@@ -1,4 +1,5 @@
 import CardManagementList from '@/components/payment/CardManagementList'
+import PaymentCompleted from '@/components/payment/PaymentCompleted'
 import PaymentSelection from '@/components/payment/PaymentSelection'
 import {
     Tabs,
@@ -16,7 +17,8 @@ const Payment = () => {
 
     return (
         <>
-            <Tabs
+            <PaymentCompleted />
+            {/* <Tabs
                 value={selectedTab}
                 onValueChange={value =>
                     setSelectedTab(value as 'select' | 'saved')
@@ -55,7 +57,7 @@ const Payment = () => {
                         <CardManagementList />
                     </TabsContent>
                 </ScrollView>
-            </Tabs>
+            </Tabs> */}
         </>
     )
 }

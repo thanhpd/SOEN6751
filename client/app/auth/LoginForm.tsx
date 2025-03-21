@@ -34,13 +34,6 @@ const LoginForm = ({ onClickForgotPassword }: Props) => {
     })
 
     const onSubmit = (data: TLoginSchema) => {
-        // console.log(data)
-        // console.log({
-        //     email: data.email,
-        //     name: 'User',
-        //     avatarUrl: '',
-        //     stayLoggedIn: !!data.stayLoggedIn,
-        // })
         dispatch(
             setCurrentLoggingInUser({
                 email: data.email,

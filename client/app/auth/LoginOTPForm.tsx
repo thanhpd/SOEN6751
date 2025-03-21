@@ -40,7 +40,7 @@ const LoginOTPForm = ({ user }: Props) => {
     })
 
     const onSubmit = async (data: TLoginSchema) => {
-        // console.log(data)
+        // TODO: Implement login logic
         const token = 'dummy-token'
 
         Toast.success('Login successful')

@@ -13,7 +13,7 @@ const buttonVariants = cva(
                 destructive:
                     'bg-destructive web:hover:opacity-90 active:opacity-90',
                 outline:
-                    'border border-input bg-background web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
+                    'border border-red bg-background web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent rounded-[15px] min-w-[200px] h-[60px]',
                 secondary:
                     'bg-secondary web:hover:opacity-80 active:opacity-80',
                 ghost: 'web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
