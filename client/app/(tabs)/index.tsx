@@ -5,6 +5,7 @@ import {
     View,
     ScrollView,
     TouchableOpacity,
+    Pressable,
 } from 'react-native'
 import { HelloWave } from '@/components/HelloWave'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -20,6 +21,8 @@ import UserQRCodeModal from '@/components/UserQRCodeModal'
 import BookingCard2 from '@/components/BookingCard2'
 
 import BookingCard from '@/components/BookingCard'
+import { router } from 'expo-router'
+import { Text } from 'react-native'
 
 export default function HomeScreen() {
     const upcomingBookings = [
@@ -99,13 +102,12 @@ export default function HomeScreen() {
                 </View>
             </ThemedView>
 
-<ThemedText style={styles.today}>Today </ThemedText>
-                    <ThemedText style={styles.date}>Thursday 16, May 2025 </ThemedText>
+            <ThemedText style={styles.today}>Today </ThemedText>
+            <ThemedText style={styles.date}>Thursday 16, May 2025 </ThemedText>
             <DaysOfWeek />
 
             <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
             {/* Upcoming Bookings */}
-
 
             {/* <View style={styles.upcomingBookingsContainer}>
                 {upcomingBookings.map((booking, index) => (
@@ -113,13 +115,29 @@ export default function HomeScreen() {
                 ))}
             </View> */}
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.upcomingBookingsContainer}>
-        {upcomingBookings.map((booking, index) => (
-          <View style={[styles.bookingCardContainer, { marginLeft: index === 0 ? 10 : 0 }]}>
-          <BookingCard2 key={index} bookingData={booking}  />
-          </View>
-        ))}
-      </ScrollView>
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.upcomingBookingsContainer}
+            >
+                {upcomingBookings.map((booking, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.bookingCardContainer,
+                            { marginLeft: index === 0 ? 10 : 0 },
+                        ]}
+                    >
+                        <BookingCard2 key={index} bookingData={booking} />
+                    </View>
+                ))}
+            </ScrollView>
+
+            <View>
+                <Pressable onPress={() => router.push('/order-review')}>
+                    <Text>Test Order</Text>
+                </Pressable>
+            </View>
 
             {/* QR Code Modal */}
             {isModalVisible && (
@@ -208,11 +226,9 @@ const styles = StyleSheet.create({
     upcomingBookingsContainer: {
         marginTop: 20,
         borderRadius: 10,
-        
-        
     },
     bookingCardContainer: {
-      marginRight: 20, 
+        marginRight: 20,
     },
 
     titles: {
@@ -229,21 +245,18 @@ const styles = StyleSheet.create({
         top: 10,
     },
 
-    date :{
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: Colors.light.concordiaColor,
-      marginLeft: 20,
-
+    date: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: Colors.light.concordiaColor,
+        marginLeft: 20,
     },
 
-    today :{
-      fontSize: 17,
-      
-      color: '#888',
-      marginLeft: 20,
-      marginBottom: 5,
+    today: {
+        fontSize: 17,
 
-
-    }
+        color: '#888',
+        marginLeft: 20,
+        marginBottom: 5,
+    },
 })
