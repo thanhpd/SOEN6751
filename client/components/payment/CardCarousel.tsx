@@ -1,3 +1,4 @@
+import CardBackground2 from '@/components/payment/images/CardBackground2'
 import PaymentCard from '@/components/payment/PaymentCard'
 import { TCardSchema } from '@/components/payment/schema'
 import * as React from 'react'
@@ -12,9 +13,10 @@ const width = Dimensions.get('window').width
 
 type CardCarouselProps = {
     data: TCardSchema[]
+    onCardSelect?: (card: TCardSchema) => void
 }
 
-function CardCarousel({ data }: CardCarouselProps) {
+function CardCarousel({ data, onCardSelect }: CardCarouselProps) {
     const ref = React.useRef<ICarouselInstance>(null)
     const progress = useSharedValue<number>(0)
 
@@ -37,7 +39,11 @@ function CardCarousel({ data }: CardCarouselProps) {
                 height={width / 2}
                 data={data}
                 onProgressChange={progress}
+                onSnapToItem={index => {
+                    onCardSelect?.(data[index])
+                }}
                 snapEnabled
+                loop={false}
                 renderItem={({ index }) => (
                     <View
                         style={{
@@ -46,7 +52,16 @@ function CardCarousel({ data }: CardCarouselProps) {
                             alignItems: 'center',
                         }}
                     >
-                        <PaymentCard card={data[index]} />
+                        {data[index].id !== '-1' ? (
+                            <PaymentCard card={data[index]} />
+                        ) : (
+                            <View
+                                className="relative"
+                                style={{ width: 350, height: 205 }}
+                            >
+                                <CardBackground2 width={350} height={205} />
+                            </View>
+                        )}
                     </View>
                 )}
                 mode="parallax"

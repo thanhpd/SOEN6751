@@ -1,8 +1,7 @@
-import CardBackground from '@/components/payment/CardBackground'
+import CardBackground from '@/components/payment/images/CardBackground'
 import LogoMastercard from '@/components/payment/images/LogoMastercard'
 import LogoVisa from '@/components/payment/images/LogoVisa'
 import { TCardSchema } from '@/components/payment/schema'
-import { TPaymentCard } from '@/components/payment/types'
 import React from 'react'
 import { Text, View } from 'react-native'
 

@@ -82,9 +82,29 @@ export type InputControllerType<T extends FieldValues> = {
 
 interface ControlledInputProps<T extends FieldValues>
     extends NInputProps,
-        InputControllerType<T> {}
+        InputControllerType<T> {
+    maskMode?: 'card' | 'cvv'
+}
 
-export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
+function maskInput(value?: string, maskMode?: 'card' | 'cvv') {
+    if (!value) return value
+
+    if (maskMode === 'card') {
+        // Keep last 4 digits visible
+        const last4Digits = value.slice(-4)
+        const maskedValue = value.slice(0, -4).replace(/\d/g, '*')
+        return maskedValue + last4Digits
+    }
+    if (maskMode === 'cvv') {
+        return value.replace(/\d/g, '*')
+    }
+    return value
+}
+
+export const Input = React.forwardRef<
+    NTextInput,
+    NInputProps & { maskMode?: 'card' | 'cvv' }
+>((props, ref) => {
     const { label, error, testID, ...inputProps } = props
     const [isFocussed, setIsFocussed] = React.useState(false)
     const onBlur = React.useCallback(() => setIsFocussed(false), [])
@@ -193,7 +213,10 @@ export function ControlledInput<T extends FieldValues>(
             ref={field.ref}
             autoCapitalize="none"
             onChangeText={field.onChange}
-            value={(field.value as string) || ''}
+            value={maskInput(
+                (field.value || '') as string,
+                inputProps.maskMode
+            )}
             {...inputProps}
             error={fieldState.error?.message}
         />

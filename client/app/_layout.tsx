@@ -110,19 +110,19 @@ export default function RootLayout() {
                 />
 
                 <Stack.Screen
-                    name="order"
+                    name="order-review"
                     options={{
                         title: 'My Order',
                     }}
                 />
                 <Stack.Screen
-                    name="payment"
+                    name="payment-manager"
                     options={{
                         title: 'Payment Details',
                     }}
                 />
                 <Stack.Screen
-                    name="payment-completed"
+                    name="order-completed"
                     options={{
                         headerTitle: '',
                     }}

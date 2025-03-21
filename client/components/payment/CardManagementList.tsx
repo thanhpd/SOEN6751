@@ -1,41 +1,37 @@
 import PaymentCard from '@/components/payment/PaymentCard'
 import { TCardSchema } from '@/components/payment/schema'
 import { Button } from '@/components/primitives/button'
-import React, { useState } from 'react'
+import { useAppSelector, useAppDispatch } from '@/store'
+import { deleteDBPaymentMethod } from '@/store/paymentMethodDB'
+import React, { useMemo, useState } from 'react'
 import { Modal, Pressable, Text, View } from 'react-native'
 
-const exampleCardData: TCardSchema = {
-    cardNumber: '1234567890123456',
-    cardHolder: 'John Doe',
-    cardExpiration: '12/25',
-    cardBrand: 'mastercard',
-    cvv: '123',
-    billingFullName: 'John Doe',
-    billingStreetAddress: '123 Main St',
-    billingProvince: 'QC',
-    billingCity: 'Montreal',
-    billingPostalCode: 'H3Z2Y7',
-}
-
-const exampleCards: TCardSchema[] = [
-    { ...exampleCardData, cardNumber: '1234567890123456' },
-    { ...exampleCardData, cardNumber: '1234567890123457' },
-    { ...exampleCardData, cardNumber: '1234567890123458' },
-    { ...exampleCardData, cardNumber: '1234567890123459' },
-    { ...exampleCardData, cardNumber: '1234567890123460' },
-]
-
 const CardManagementList = () => {
-    const [cards, setCards] = useState<TCardSchema[]>([...exampleCards])
+    const dispatch = useAppDispatch()
+    const paymentMethodDB = useAppSelector(state => state.paymentMethodDB)
+    const userId = useAppSelector(state => state.currentUserId)
+
+    const paymentMethods = useMemo(() => {
+        return paymentMethodDB.ids
+            .map(id => paymentMethodDB.entities[id])
+            .filter(card => card.userId === userId)
+    }, [paymentMethodDB, userId])
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null)
 
-    const handleDeleteCard = (cardNumber: string) => {
-        setCards(cards => cards.filter(card => card.cardNumber !== cardNumber))
+    const handleDeleteCard = (card: TCardSchema) => {
+        dispatch(deleteDBPaymentMethod(card.id))
     }
 
     return (
         <View className="flex flex-col gap-[30px] pb-10">
-            {cards.map(card => (
+            {paymentMethods.length === 0 && (
+                <View className="flex-1 justify-center items-center">
+                    <Text className="text-lg font-bold text-center">
+                        There are no cards saved.
+                    </Text>
+                </View>
+            )}
+            {paymentMethods.map(card => (
                 <React.Fragment key={card.cardNumber}>
                     <View
                         key={card.cardNumber}
@@ -77,7 +73,7 @@ const CardManagementList = () => {
                                     <Pressable
                                         className="bg-red rounded-[30px] h-[34px] w-[130px] items-center justify-center"
                                         onPress={() => {
-                                            handleDeleteCard(card.cardNumber)
+                                            handleDeleteCard(card)
                                             setSelectedCardId(null)
                                         }}
                                     >

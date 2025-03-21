@@ -7,6 +7,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import currentUserIdSliceReducers from './currentUserId'
 import tmpUserSliceReducers from './tmpUser'
+import paymentMethodDBSliceReducers from './paymentMethodDB'
 
 const persistConfig = {
     key: 'root',
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     membershipDB: membershipDBSliceReducers,
     currentUserId: currentUserIdSliceReducers,
     tmpUser: tmpUserSliceReducers,
+    paymentMethodDB: paymentMethodDBSliceReducers,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

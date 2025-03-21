@@ -1,47 +1,86 @@
 import CardCarousel from '@/components/payment/CardCarousel'
 import { CardSchema, TCardSchema } from '@/components/payment/schema'
-import { Button } from '@/components/primitives/button'
+import SubmitButton from '@/components/payment/SubmitButton'
 import { ControlledInput } from '@/components/primitives/input'
+import { useAppSelector } from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Text, View } from 'react-native'
 
-const exampleCardData: TCardSchema = {
-    cardNumber: '1234567890123456',
-    cardHolder: 'John Doe',
-    cardExpiration: '12/25',
-    cardBrand: 'mastercard',
-    cvv: '123',
-    billingFullName: 'John Doe',
-    billingStreetAddress: '123 Main St',
-    billingProvince: 'QC',
-    billingCity: 'Montreal',
-    billingPostalCode: 'H3Z2Y7',
+type PaymentSelectionProps = {
+    onMethodSubmit?: (data: TCardSchema) => void
+    mode?: 'order' | 'management'
 }
 
-const exampleCards: TCardSchema[] = [
-    { ...exampleCardData, cardNumber: '1234567890123456' },
-    { ...exampleCardData, cardNumber: '1234567890123457' },
-    { ...exampleCardData, cardNumber: '1234567890123458' },
-    { ...exampleCardData, cardNumber: '1234567890123459' },
-    { ...exampleCardData, cardNumber: '1234567890123460' },
-]
+const PaymentSelection = ({
+    onMethodSubmit,
+    mode = 'order',
+}: PaymentSelectionProps) => {
+    const paymentMethodDB = useAppSelector(state => state.paymentMethodDB)
+    const userId = useAppSelector(state => state.currentUserId)
 
-const PaymentSelection = () => {
-    const { control, handleSubmit } = useForm<TCardSchema>({
+    const paymentMethods = useMemo(() => {
+        return paymentMethodDB.ids
+            .map(id => paymentMethodDB.entities[id])
+            .filter(card => card.userId === userId)
+            .concat({
+                id: '-1',
+                userId: userId ?? '',
+                billingCity: '',
+                billingFullName: '',
+                billingPostalCode: '',
+                billingProvince: '',
+                billingStreetAddress: '',
+                cardBrand:
+                    Math.floor(Math.random() * 10) > 4 ? 'mastercard' : 'visa',
+                cardExpiration: '',
+                cardHolder: '',
+                cvv: '',
+                cardNumber: '',
+            })
+    }, [paymentMethodDB, userId])
+
+    const { control, handleSubmit, reset, watch } = useForm<TCardSchema>({
         mode: 'onChange',
         resolver: zodResolver(CardSchema),
-        defaultValues: exampleCardData,
+        defaultValues: paymentMethods.length
+            ? paymentMethods[0]
+            : {
+                  id: '-1',
+                  userId: userId ?? '',
+                  billingCity: '',
+                  billingFullName: '',
+                  billingPostalCode: '',
+                  billingProvince: '',
+                  billingStreetAddress: '',
+                  cardBrand:
+                      Math.floor(Math.random() * 10) > 4
+                          ? 'mastercard'
+                          : 'visa',
+                  cardExpiration: '',
+                  cardHolder: '',
+                  cvv: '',
+                  cardNumber: '',
+              },
     })
 
+    const currentCardId = watch('id')
+    const isCurrentCardSaved = currentCardId !== '-1'
+
     const onSubmit = (data: TCardSchema) => {
-        console.log(data)
+        onMethodSubmit?.(data)
     }
 
     return (
         <View className="flex flex-col gap-4 pb-[40px]">
-            <CardCarousel data={exampleCards} />
+            <CardCarousel
+                data={paymentMethods}
+                onCardSelect={card => {
+                    console.log({ selectedCard: card })
+                    reset(card)
+                }}
+            />
             <View className="w-[85%] mx-auto">
                 <View className="flex flex-col gap-2">
                     <ControlledInput
@@ -50,6 +89,9 @@ const PaymentSelection = () => {
                         label="Card Number"
                         placeholder="Card number"
                         autoCorrect={false}
+                        keyboardType="numeric"
+                        disabled={isCurrentCardSaved}
+                        maskMode={isCurrentCardSaved ? 'card' : undefined}
                     />
                     <ControlledInput
                         control={control}
@@ -57,8 +99,9 @@ const PaymentSelection = () => {
                         label="Name"
                         placeholder="Card holder name"
                         autoCorrect={false}
+                        disabled={isCurrentCardSaved}
                     />
-                    <View className="flex flex-row gap-3 items-center">
+                    <View className="flex flex-row gap-3">
                         <View className="flex-grow-1 flex-[60%] w-[60%]">
                             <ControlledInput
                                 control={control}
@@ -66,6 +109,7 @@ const PaymentSelection = () => {
                                 label="Expiration Date"
                                 placeholder="MM/YY"
                                 autoCorrect={false}
+                                disabled={isCurrentCardSaved}
                             />
                         </View>
                         <View className="flex-grow-1 flex-[40%] w-[40%]">
@@ -75,6 +119,11 @@ const PaymentSelection = () => {
                                 label="CVV"
                                 placeholder="CVV"
                                 autoCorrect={false}
+                                keyboardType="numeric"
+                                disabled={isCurrentCardSaved}
+                                maskMode={
+                                    isCurrentCardSaved ? 'cvv' : undefined
+                                }
                             />
                         </View>
                     </View>
@@ -121,15 +170,11 @@ const PaymentSelection = () => {
                     />
                 </View>
                 <View className="mt-[40px]">
-                    <Button
-                        size="lg"
-                        className="bg-red rounded-[28px] w-full"
-                        onPress={() => handleSubmit(onSubmit)()}
-                    >
-                        <Text className="text-white text-base font-bold">
-                            Update
-                        </Text>
-                    </Button>
+                    <SubmitButton
+                        mode={mode}
+                        onSubmit={() => handleSubmit(onSubmit)()}
+                        control={control}
+                    />
                 </View>
             </View>
         </View>

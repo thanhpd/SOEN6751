@@ -85,7 +85,7 @@ const SettingsSection: React.FC = () => {
                 <View
                     className="flex-row items-center justify-between mb-1"
                     onTouchEnd={() => {
-                        router.push('/payment')
+                        router.push('/payment-manager')
                     }}
                 >
                     <View className="flex-row items-center space-x-3">

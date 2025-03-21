@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 export const CardSchema = z.object({
+    id: z.string(),
+    userId: z.string(),
     cardNumber: z.string().length(16),
     cardHolder: z.string().min(2),
     cardExpiration: z.string().length(5),
