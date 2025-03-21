@@ -24,7 +24,7 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
     const normalizedData = data.map(value => (value > 200 ? 200 : value))
 
     return (
-        <View>
+        <View className='items-center'>
             <BarChart
                 data={{
                     //labels: ['7 am', '10 am', '1 pm', '4 pm', '7 pm', '10 pm'], // X-axis labels
@@ -74,7 +74,7 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
                     marginVertical: 8,
                     borderRadius: 16,
                     paddingRight: 35,
-                    paddingLeft: 17,
+                    paddingLeft: 60,
                 }}
                 fromZero // Start Y-axis from zero
                 yAxisInterval={50} // Set Y-axis intervals to 50
@@ -103,7 +103,7 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
                             fontWeight: 'bold',
                             color: '#767676',
                             textAlign: 'right',
-                            marginRight: 8,
+                            marginLeft: -10,
                         }}
                     >
                         {label}
