@@ -28,14 +28,23 @@ const CalendarComponent = () => {
     }
 
     const markedDates = events.reduce((acc: any, event: any) => {
-        acc[event.date] = {
-            dots: [
-                {
-                    color: event.selectedColor || 'blue',
-                    key: event.activity || 'default',
-                },
-            ],
+        if (!acc[event.date]) {
+            acc[event.date] = { dots: [] };
         }
+        if (!acc[event.date].dots.some((dot: any) => dot.key === (event.activity || `default-${event.date}-${acc[event.date].dots.length}`))) {
+            acc[event.date].dots.push({
+            color: event.selectedColor || 'blue',
+            key: event.activity || `default-${event.date}-${acc[event.date].dots.length}`,
+            });
+        }
+        // acc[event.date] = {
+        //     dots: [
+        //         {
+        //             color: event.selectedColor || 'blue',
+        //             key: event.activity || 'default',
+        //         },
+        //     ],
+        // }
         return acc
     }, {})
 
