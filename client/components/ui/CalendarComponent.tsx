@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
-import useCalendarStore from '@/stores/CalendarStore'
+import useCalendarStore from '@/store/CalendarStore'
 import { Colors } from '@/constants/Colors'
 interface Notification {
     id: number;

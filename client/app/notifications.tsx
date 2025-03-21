@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import useCalendarStore from '@/stores/CalendarStore';
+import useCalendarStore from '@/store/CalendarStore';
 
 const NotificationPage = () => {
     const { notifications } = useCalendarStore();

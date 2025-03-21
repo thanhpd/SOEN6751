@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
-import useCalendarStore from '@/stores/CalendarStore'
+import useCalendarStore from '@/store/CalendarStore'
 
 interface CancelBookingWarningsProps {
     visible: boolean

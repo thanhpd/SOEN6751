@@ -3,7 +3,7 @@ import { InPersonActivityItem } from '@/components/ui/InPersonActivityItem'
 import React, { useState } from 'react'
 import { View, FlatList, TouchableOpacity } from 'react-native'
 import ActivityDetailsPopup from './ActivityDetailsPopup'
-import useCalendarStore from '@/stores/CalendarStore'
+import useCalendarStore from '@/store/CalendarStore'
 import { useRoute } from '@react-navigation/native';
 
 export const InPersonActivityList = () => {

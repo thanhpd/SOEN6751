@@ -1,15 +1,61 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image ,ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import HeroBanner from '@/components/HeroBanner';
-import SearchBar from '@/components/SearchBar';
-import { InPersonActivityList } from '@/components/ui/ActivityList';
 import { Colors } from '@/constants/Colors';
-import { Button } from 'react-native-paper';
-
+import BookingModal from '@/components/BookingSlotModal';
+import BookingTimeModal from '@/components/BookingTimeModal';
+import useCalendarStore from '@/store/CalendarStore'
 
 const { width } = Dimensions.get('window');
 
 export default function OnlinePage() {
+
+    const { addEvent} = useCalendarStore()
+
+
+
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible2, setModalVisible2] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedTime, setSelectedTime] = useState("")
+
+    const handleConfirm = (date: Date) => {
+        setSelectedDate(date);
+        setModalVisible(false);
+    
+        // Introduce a delay before opening the second modal
+        setTimeout(() => {
+            setModalVisible2(true);
+        }, 500);  // Delay in milliseconds (1000ms = 1 second)
+    };
+
+
+    const handleConfirm2 = (time: string) => {
+        setSelectedTime(time);
+        
+        setModalVisible2(false);
+        
+        addEvent({
+            id: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
+            title: 'Nutrition Consultancy',
+            date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
+
+            selected: true,
+            selectedColor: 'green',
+            activity: {
+                title: 'Nutrition Consultancy',
+                instructor: 'Jenny Cheung',
+                location: 'Online',
+                days: 'Tuesday',
+                time: selectedTime,
+                description: 'Learn to diet Properly.',
+                price: '$90',
+                inPerson: false
+            }
+        })
+    };
+
+
     return (
         <View style={styles.container}>
             <HeroBanner title="Nutrition Consultancy Spring 2025"
@@ -29,9 +75,22 @@ export default function OnlinePage() {
                     <Text style={styles.cardText}>Tues. and Thurs. - 4-7 p.m</Text>
                     <Text style={styles.cardText}>Saturdays - 9-11 a.m</Text>
                     <Text style={styles.cardText}>Each Session $90</Text>
-                    <View style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
                         <Text style={styles.cardText2}>Register Now</Text>
-                    </View>
+                    </TouchableOpacity>
+
+                    <BookingModal
+                        isVisible={isModalVisible}
+                        onClose={() => setModalVisible(false)}
+                        onConfirm={handleConfirm}
+                    />
+
+                    <BookingTimeModal 
+                    modalVisible={isModalVisible2}
+                    onClose={() => setModalVisible2(false)}
+                    onConfirm={handleConfirm2}
+                    date={selectedDate || new Date()}/>
+                    
 
 
 
@@ -42,31 +101,31 @@ export default function OnlinePage() {
                 </View>
             </View>
 
-            <Text style = {styles.title}>Diet Tips</Text>
+            <Text style={styles.title}>Diet Tips</Text>
 
-            <View style ={styles.tipsContainer}  >
+            <View style={styles.tipsContainer}  >
 
-<View style ={styles.tips}>
+                <View style={styles.tips}>
 
-<Image style={styles.image} source={require('../assets/images/tip.png')}></Image>
-<Text style={styles.tipText}>Switch up your morning routine with this simple combo you can prepare the night before 
-    Greek or plain yogurt, fruit and muesli. A combo that's easy to pack, 
-     delivers on texture and is nutritious..</Text>
-
-
-
-</View>
-
-<View style ={styles.tips}>
-
-<Image style={styles.image} source={require('../assets/images/tip2.png')}></Image>
-<Text style={styles.tipText}>Research suggests that eating patterns similar 
-    to the Mediterranean diet (rich in fruits, vegetables, nuts and whole-grains 
-    and low in red meat and processed food) can support a positive mood.</Text>
+                    <Image style={styles.image} source={require('../assets/images/tip.png')}></Image>
+                    <Text style={styles.tipText}>Switch up your morning routine with this simple combo you can prepare the night before
+                        Greek or plain yogurt, fruit and muesli. A combo that's easy to pack,
+                        delivers on texture and is nutritious..</Text>
 
 
 
-</View>
+                </View>
+
+                <View style={styles.tips}>
+
+                    <Image style={styles.image} source={require('../assets/images/tip2.png')}></Image>
+                    <Text style={styles.tipText}>Research suggests that eating patterns similar
+                        to the Mediterranean diet (rich in fruits, vegetables, nuts and whole-grains
+                        and low in red meat and processed food) can support a positive mood.</Text>
+
+
+
+                </View>
 
 
             </View>
@@ -92,7 +151,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
         width: width - 40,
-        marginBottom:20,
+        marginBottom: 20,
 
 
     },
@@ -164,27 +223,27 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 
-    tips :{
-     
+    tips: {
+
         flexDirection: 'column',
         alignItems: 'flex-start',
-        
-marginRight :10,
-flex :1,
+
+        marginRight: 10,
+        flex: 1,
     },
 
-    tipsContainer :{
+    tipsContainer: {
 
-        alignItems : 'center',
-        justifyContent : 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
         marginLeft: 30,
-        
+
         gap: 10,
     },
 
-    tipText :{
+    tipText: {
 
-        fontSize :10,
+        fontSize: 10,
     },
 });
