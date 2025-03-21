@@ -13,9 +13,9 @@ import { IconSymbol } from '@/components/ui/IconSymbol'
 
 export default function TabLayout() {
     const colorScheme = useColorScheme()
-    const userToken = useAppSelector(state => state.auth.userToken)
+    const currentUserId = useAppSelector(state => state.currentUserId)
 
-    if (!userToken) {
+    if (!currentUserId) {
         return <Redirect href="/auth/AuthLayout" />
     }
 

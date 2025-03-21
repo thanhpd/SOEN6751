@@ -3,13 +3,11 @@ import { View, Text, Pressable } from 'react-native'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
-import { signOut } from '@/app/auth/authSlice'
-import { useAppDispatch } from '@/store'
-import { Toast } from 'toastify-react-native'
+import { useSignOut } from '@/hooks/useSignOut'
 
 const SettingsSection: React.FC = () => {
     const router = useRouter() // Use Expo Router for navigation
-    const dispatch = useAppDispatch()
+    const signOut = useSignOut()
     return (
         <View className="mt-2 bg-white">
             <View className="p-4">
@@ -214,10 +212,7 @@ const SettingsSection: React.FC = () => {
 
                 <View
                     className="flex-row items-center justify-between"
-                    onTouchEnd={() => {
-                        Toast.success('Logged out successfully')
-                        dispatch(signOut())
-                    }}
+                    onTouchEnd={signOut}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">

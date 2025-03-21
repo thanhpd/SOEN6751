@@ -9,29 +9,32 @@ import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
 import { ControlledInputOTP } from '@/components/ui/InputOTP'
 import ProfilePictureIcon from '@/components/icons/ProfilePictureIcon'
 import InfoIcon from '@/components/icons/InfoIcon'
-import { setCurrentLoggingInUser, signIn } from '@/app/auth/authSlice'
 import { useAppDispatch } from '@/store'
 import * as SecureStore from 'expo-secure-store'
 import { Toast } from 'toastify-react-native'
+import { setCurrentUserId } from '@/store/currentUserId'
+import { Account, Membership } from '@/constants/types'
+import { setTmpUser } from '@/store/tmpUser'
+import ProfilePicker from '@/components/ui/ProfilePicker'
 
 const LoginOTPSchema = zod.object({
     otpCode: zod.string().length(6),
 })
 
-type TLoginSchema = zod.infer<typeof LoginOTPSchema>
+type TLoginOTPSchema = zod.infer<typeof LoginOTPSchema>
 
 type Props = {
-    user: {
-        email: string
-        name: string
-        avatarUrl: string
-    }
+    user: Omit<Account, 'password'> &
+        Membership & {
+            stayLoggedIn?: boolean
+        }
 }
 
 const LoginOTPForm = ({ user }: Props) => {
     const dispatch = useAppDispatch()
+    console.log({ tmpUser: user })
 
-    const { handleSubmit, control } = useForm<TLoginSchema>({
+    const { handleSubmit, control } = useForm<TLoginOTPSchema>({
         mode: 'onChange',
         resolver: zodResolver(LoginOTPSchema),
         defaultValues: {
@@ -39,13 +42,17 @@ const LoginOTPForm = ({ user }: Props) => {
         },
     })
 
-    const onSubmit = async (data: TLoginSchema) => {
+    const onSubmit = async (data: TLoginOTPSchema) => {
         // TODO: Implement login logic
-        const token = 'dummy-token'
 
+        console.log(user)
+
+        if (user.stayLoggedIn) {
+            await SecureStore.setItemAsync('userId', user.id)
+        }
+        dispatch(setCurrentUserId(user.id))
         Toast.success('Login successful')
-        dispatch(signIn(token))
-        await SecureStore.setItemAsync('userToken', token)
+        dispatch(setTmpUser(null))
     }
 
     return (
@@ -63,7 +70,7 @@ const LoginOTPForm = ({ user }: Props) => {
                                 <TouchableOpacity
                                     className="h-full"
                                     onPress={() => {
-                                        dispatch(setCurrentLoggingInUser(null))
+                                        dispatch(setTmpUser(null))
                                     }}
                                 >
                                     <ArrowLeftIcon />
@@ -74,10 +81,14 @@ const LoginOTPForm = ({ user }: Props) => {
                             </View>
                             <View className="flex flex-col items-center">
                                 <View className="mb-4">
-                                    <ProfilePictureIcon />
+                                    {user.avatar ? (
+                                        <ProfilePicker value={user.avatar} />
+                                    ) : (
+                                        <ProfilePictureIcon />
+                                    )}
                                 </View>
                                 <Text className="font-bold text-base leading-[1.3] text-[#090D20]">
-                                    {user.name}
+                                    {user.firstName} {user.lastName}
                                 </Text>
                                 <Text className="font-default-400 text-[#9EA1AE] text-xs leading-[1.6]">
                                     {user.email}

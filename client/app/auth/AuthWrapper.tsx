@@ -1,23 +1,41 @@
 import React, { PropsWithChildren } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store'
 import * as SecureStore from 'expo-secure-store'
-import { restoreToken } from '@/app/auth/authSlice'
 import { useRouter } from 'expo-router'
+import { memberships } from '@/data/seed/membership'
+import { setDBMemberships } from '@/store/membershipDB'
+import { setCurrentUserId } from '@/store/currentUserId'
+import { useAuth } from '@/hooks/useAuth'
+import { setDBAccounts } from '@/store/accountDB'
+import { accounts } from '@/data/seed/account'
 
 const AuthWrapper = ({ children }: PropsWithChildren) => {
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const isAuthLoading = useAppSelector(state => state.auth.isLoading)
-    const userToken = useAppSelector(state => state.auth.userToken)
+    const membershipDB = useAppSelector(state => state.membershipDB)
+    const accountDB = useAppSelector(state => state.accountDB)
+    const currentUserId = useAppSelector(state => state.currentUserId)
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            console.log({ membershipDB, accountDB })
+            if (membershipDB.ids.length === 0) {
+                dispatch(setDBMemberships(memberships))
+            }
+            if (accountDB.ids.length === 0) {
+                dispatch(setDBAccounts(accounts))
+            }
+        }, 0)
+    }, [])
 
     React.useEffect(() => {
         // Fetch the token from storage then navigate to our appropriate place
         const bootstrapAsync = async () => {
-            let userToken
+            let userId
 
             try {
                 // Restore token stored in `SecureStore` or any other encrypted storage
-                userToken = await SecureStore.getItemAsync('userToken')
+                userId = await SecureStore.getItemAsync('userId')
             } catch (e) {
                 // Restoring token failed
             }
@@ -26,22 +44,25 @@ const AuthWrapper = ({ children }: PropsWithChildren) => {
 
             // This will switch to the App screen or Auth screen and this loading
             // screen will be unmounted and thrown away.
-            // console.log('Restoring token:', userToken)
-            // dispatch(restoreToken(userToken))
+            if (userId) {
+                dispatch(setCurrentUserId(userId))
+            }
         }
 
         bootstrapAsync()
     }, [])
 
     React.useEffect(() => {
-        if (!isAuthLoading) {
-            if (userToken) {
+        if (currentUserId) {
+            setTimeout(() => {
                 router.replace('/(tabs)')
-            } else {
+            }, 0)
+        } else {
+            setTimeout(() => {
                 router.replace('/auth/AuthLayout')
-            }
+            }, 0)
         }
-    }, [userToken])
+    }, [currentUserId])
 
     return null
 }

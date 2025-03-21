@@ -7,53 +7,53 @@ import { ControlledInput } from '@/components/primitives/input'
 import { Button } from '@/components/primitives/button'
 import { ScrollView } from 'react-native-gesture-handler'
 import ProfilePicker from '@/components/ui/ProfilePicker'
-
-const UserDetailsSchema = zod
-    .object({
-        firstName: zod.string().min(1),
-        lastName: zod.string().min(1),
-        email: zod.string().email(),
-        avatar: zod.string().url(),
-        newPassword: zod.string().min(2),
-        confirmPassword: zod.string().min(2),
-    })
-    .refine(data => data.newPassword === data.confirmPassword, {
-        message: 'Passwords do not match',
-        path: ['confirmPassword'],
-    })
-
-type TUserDetailsSchema = zod.infer<typeof UserDetailsSchema>
+import { useAuth } from '@/hooks/useAuth'
+import { UserDetailsSchema, TUserDetailsSchema } from '@/app/auth/schema'
+import { Toast } from 'toastify-react-native'
+import { router } from 'expo-router'
 
 type Props = {
     onSubmit: (data: TUserDetailsSchema) => void
 }
 
 const ProfileDetails = () => {
-    const { handleSubmit, control } = useForm<TUserDetailsSchema>({
+    const { currentUser, updatePassword } = useAuth()
+
+    console.log(currentUser)
+
+    const { handleSubmit, control, setValue } = useForm<TUserDetailsSchema>({
         mode: 'onChange',
         resolver: zodResolver(UserDetailsSchema),
         defaultValues: {
-            firstName: 'Mahim',
-            lastName: 'Rahman',
-            email: 'mahim@gmail.com',
-            avatar: '',
+            firstName: currentUser?.firstName || '',
+            lastName: currentUser?.lastName || '',
+            email: currentUser?.email || '',
+            avatar: currentUser?.avatar || '',
             newPassword: '',
             confirmPassword: '',
         },
     })
 
     const onSubmit = (data: TUserDetailsSchema) => {
-        console.log(data)
+        updatePassword(data)
+        Toast.success('Profile details updated successfully')
+        router.back()
     }
 
     return (
         <ScrollView contentContainerClassName="pb-10 pt-5">
             <View className="flex flex-col items-center justify-center mb-5">
-                <ProfilePicker className="mb-3" />
+                <ProfilePicker
+                    className="mb-3"
+                    value={currentUser?.avatar}
+                    onImageChange={img => {
+                        setValue('avatar', img)
+                    }}
+                />
                 <Text className="text-[#98243C] text-base font-bold">
-                    Mahim
+                    {currentUser?.firstName} {currentUser?.lastName}
                 </Text>
-                <Text className="text-[#ABABAB]">mahim@gmail.com</Text>
+                <Text className="text-[#ABABAB]">{currentUser?.email}</Text>
             </View>
             <View className="w-[85%] mx-auto rounded-t-6 bg-white shadow-lg shadow-black p-5 flex flex-col gap-1">
                 <ControlledInput

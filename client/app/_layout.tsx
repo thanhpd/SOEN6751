@@ -167,12 +167,11 @@ function Providers({ children }: { children: React.ReactNode }) {
     return (
         <GestureHandlerRootView className="flex-1">
             <Provider store={store}>
-                {/* <PersistGate loading={null} persistor={persistor}>
+                <PersistGate loading={null} persistor={persistor}>
                     <ThemeProvider value={LIGHT_THEME}>
                         {children}
                     </ThemeProvider>
-                </PersistGate> */}
-                <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
+                </PersistGate>
             </Provider>
         </GestureHandlerRootView>
     )

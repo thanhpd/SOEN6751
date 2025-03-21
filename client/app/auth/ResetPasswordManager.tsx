@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import ResetPasswordEmailForm from './ResetPasswordEmailForm'
 import ResetPasswordOTPForm from './ResetPasswordOTPForm'
 import ResetPasswordForm from './ResetPasswordForm'
-
+import { BaseAccount } from '@/constants/types'
+import { Toast } from 'toastify-react-native'
 type TResetPasswordManagerStep = 'email' | 'otp' | 'password'
 
 type TResetPasswordManagerProps = {
@@ -12,40 +13,32 @@ type TResetPasswordManagerProps = {
 const ResetPasswordManager = ({ onClose }: TResetPasswordManagerProps) => {
     const [step, setStep] = useState<TResetPasswordManagerStep>('email')
 
-    const [currentEmail, setCurrentEmail] = useState<string | null>(null)
-
-    const currentUser = useMemo(
-        () => ({
-            email: currentEmail || '',
-            name: 'John Doe',
-            avatarUrl: 'https://via.placeholder.com/150',
-        }),
-        [currentEmail]
-    )
+    const [currentUser, setCurrentUser] = useState<BaseAccount | null>(null)
 
     return (
         <>
             {step === 'email' && (
                 <ResetPasswordEmailForm
                     onGoBack={onClose}
-                    onSuccess={form => {
-                        setCurrentEmail(form.email)
+                    onSuccess={data => {
+                        setCurrentUser(data || null)
                         setStep('otp')
                     }}
                 />
             )}
             {step === 'otp' && (
                 <ResetPasswordOTPForm
-                    user={currentUser}
+                    user={currentUser as BaseAccount}
                     onGoBack={() => setStep('email')}
                     onSuccess={() => setStep('password')}
                 />
             )}
             {step === 'password' && (
                 <ResetPasswordForm
+                    user={currentUser as BaseAccount}
                     onGoBack={() => setStep('otp')}
                     onSuccess={() => {
-                        // Display toast?
+                        Toast.success('Password reset successfully')
                         onClose()
                     }}
                 />

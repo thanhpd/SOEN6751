@@ -38,6 +38,7 @@ export interface Membership {
 export interface Account {
     id: string
     membershipId: string
+    email: string
     password: string
     avatar: string
     qrCode: string
@@ -45,3 +46,12 @@ export interface Account {
     gamificationToggle: boolean
     gamificationProgress: number
 }
+
+export interface BaseAccount {
+    id: string
+    email: string
+    name: string
+    avatar: string
+}
+
+export type CurrentUser = BaseAccount & Omit<Membership, 'password'>

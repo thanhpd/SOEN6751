@@ -1,23 +1,30 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import authSliceReducers from '@/app/auth/authSlice'
+import accountDBSliceReducers from './accountDB'
+import membershipDBSliceReducers from './membershipDB'
 import { persistStore, persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import currentUserIdSliceReducers from './currentUserId'
+import tmpUserSliceReducers from './tmpUser'
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
+    blacklist: ['currentUserId', 'tmpUser'],
 }
 
 const rootReducer = combineReducers({
-    auth: authSliceReducers,
+    accountDB: accountDBSliceReducers,
+    membershipDB: membershipDBSliceReducers,
+    currentUserId: currentUserIdSliceReducers,
+    tmpUser: tmpUserSliceReducers,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,

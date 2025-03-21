@@ -1,14 +1,13 @@
-import { signOut } from '@/app/auth/authSlice'
-import { useAppDispatch } from '@/store'
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
+import { useSignOut } from '@/hooks/useSignOut'
 
 const SignOutButton = () => {
-    const dispatch = useAppDispatch()
+    const signOut = useSignOut()
 
     return (
-        <TouchableOpacity onPress={() => dispatch(signOut())}>
+        <TouchableOpacity onPress={signOut}>
             <Ionicons
                 name="exit-outline"
                 size={28}
