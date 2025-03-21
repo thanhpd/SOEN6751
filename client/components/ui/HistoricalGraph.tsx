@@ -28,11 +28,22 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
             <BarChart
                 data={{
                     //labels: ['7 am', '10 am', '1 pm', '4 pm', '7 pm', '10 pm'], // X-axis labels
-                    labels: ['10 am', '', '', '1 pm', '', '', '4 pm', '', '', '7 pm'], // X-axis labels
+                    labels: [
+                        '10 am',
+                        '',
+                        '',
+                        '1 pm',
+                        '',
+                        '',
+                        '4 pm',
+                        '',
+                        '',
+                        '7 pm',
+                    ], // X-axis labels
                     datasets: [
                         {
                             data: normalizedData, // Heights of the bars
-                            colors: barColors // Colors of the bars
+                            colors: barColors, // Colors of the bars
                         },
                     ],
                 }}
@@ -57,7 +68,7 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
                         strokeDasharray: '0',
                     },
                     barRadius: 2.76,
-                    horizontalOffset: 10
+                    horizontalOffset: 10,
                 }}
                 style={{
                     marginVertical: 8,
