@@ -9,6 +9,30 @@ interface CalendarState {
   clearEvents: () => void;
 }
 
+interface Notification {
+  id: number;
+  message: string;
+  date: string;
+  details: string;
+}
+
+interface Event {
+  id: string;
+  title: string;
+  date: string;
+  selected: boolean;
+  selectedColor: string;
+  activity: any;
+}
+
+interface CalendarStore {
+  events: Event[];
+  notifications: Notification[];
+  addEvent: (event: Event) => void;
+  addNotification: (message: string, details: string) => void;
+}
+
+
 const defaultBookedEvents: CalendarEvent[] = [
   {
     id: '2025-03-03',
@@ -26,7 +50,7 @@ const defaultBookedEvents: CalendarEvent[] = [
       days: 'Monday, Wednesday, Friday',
       time: '5:30 PM - 6:30 PM',
       image: '../../assets/images/cardio.png',
-      inPerson: true
+      type: 'InPersonActivity',
     }
   },
 {
@@ -43,18 +67,23 @@ const defaultBookedEvents: CalendarEvent[] = [
       time: '4:00 PM - 6:00 PM',
       description: 'Learn to cook delicious meals.',
       price: '$25',
-      inPerson: false
+      type: 'InPersonActivity',
   }
 }];
 
-const useCalendarStore = create<CalendarState>((set) => ({
-  events: defaultBookedEvents,
+const useCalendarStore = create<CalendarStore>((set) => ({
+  events: [],
+  notifications: [],
   addEvent: (event) => set((state) => ({ events: [...state.events, event] })),
-  removeEvent: (eventId) =>
-  set((state) => ({
-    events: state.events.filter((event) => event.id !== eventId),
-  })),
-  clearEvents: () => set({ events: [] }),
+  addNotification: (message, details) => {
+      const newNotification: Notification = {
+          id: Date.now(),
+          message,
+          date: new Date().toDateString(),
+          details,
+      };
+      set((state) => ({ notifications: [newNotification, ...state.notifications] }));
+  },
 }));
 
 export default useCalendarStore;

@@ -5,9 +5,15 @@ import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
 import useCalendarStore from '@/stores/CalendarStore'
 import { Colors } from '@/constants/Colors'
+interface Notification {
+    id: number;
+    message: string;
+    date: string;
+    details: string;
+}
 
 const CalendarComponent = () => {
-    const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
+    const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[]>([])
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [noEventModalVisible, setNoEventModalVisible] = useState<boolean>(false)
     const { events } = useCalendarStore()
@@ -18,7 +24,7 @@ const CalendarComponent = () => {
     
         if (eventList.length > 0) {
             console.log('Activities for selected day:', eventList)
-            setSelectedEvent(eventList[0] ?? null)
+            setSelectedEvents(eventList)
             setModalVisible(true)
         } else {
             console.log('No events for selected day')
@@ -27,7 +33,7 @@ const CalendarComponent = () => {
     }
 
     const handleClose = () => {
-        setSelectedEvent(null)
+        setSelectedEvents([])
         setModalVisible(false)
     }
 
@@ -36,17 +42,24 @@ const CalendarComponent = () => {
     }
 
     const markedDates = events.reduce((acc: any, event: any) => {
-        if (!acc[event.date]) {
-            acc[event.date] = { dots: [] };
-        }
-        if (!acc[event.date].dots.some((dot: any) => dot.key === (event.activity || `default-${event.date}-${acc[event.date].dots.length}`))) {
-            acc[event.date].dots.push({
-                color: event.selectedColor || 'blue',
-                key: event.activity || `default-${event.date}-${acc[event.date].dots.length}`,
-            });
-        }
-        return acc
-    }, {})
+    if (!acc[event.date]) {
+        acc[event.date] = { dots: [] };
+    }
+
+    // Check if the event already exists in the marked dots
+    const isDuplicate = acc[event.date].dots.some(
+        (dot: any) => dot.key === event.activity
+    );
+
+    if (!isDuplicate) {
+        acc[event.date].dots.push({
+            color: event.selectedColor || 'blue',
+            key: event.activity || `default-${event.date}-${acc[event.date].dots.length}`,
+        });
+    }
+
+    return acc;
+}, {});
 
     return (
         <View className="p-1 bg-white">
@@ -81,10 +94,10 @@ const CalendarComponent = () => {
                 </View>
             </View>
 
-            {modalVisible && selectedEvent && (
+            {modalVisible && selectedEvents.length > 0 && (
                 <EventDetailsPopup
                     visible={modalVisible}
-                    event={selectedEvent}
+                    // event={selectedEvents[0]}
                     close={handleClose}
                 />
             )}

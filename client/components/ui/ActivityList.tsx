@@ -5,11 +5,10 @@ import { View, FlatList, TouchableOpacity } from 'react-native'
 import ActivityDetailsPopup from './ActivityDetailsPopup'
 import useCalendarStore from '@/stores/CalendarStore'
 import { useRoute } from '@react-navigation/native';
-import InPersonActivity from '@/app/InPersonActivity'
 
 export const InPersonActivityList = () => {
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
-    const { addEvent } = useCalendarStore()
+  
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const route = useRoute();
@@ -28,16 +27,21 @@ export const InPersonActivityList = () => {
         setModalVisible(false);
     };
 
+    const addEvent = useCalendarStore((state) => state.addEvent);
+    const addNotification = useCalendarStore((state) => state.addNotification);
+    
+
     const handleBook = (activity: Activity) => {
+    
         const days = activity.days.split(',').map(day => day.trim());
         days.forEach(day => {
             const today = new Date();
             const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
                 .findIndex(d => d.toLowerCase() === day.toLowerCase());
-
+    
             let nextDate = new Date(today);
             nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7));
-
+    
             const formattedDate = nextDate.toISOString().split('T')[0];
             const highlightColor = activity.type === 'InPersonActivity' ? '#EC7063' : '#F4D03F';
             
@@ -49,10 +53,17 @@ export const InPersonActivityList = () => {
                 selectedColor: highlightColor,
                 activity: activity,
             });
+    
+            // **Add Notification**
+            addNotification(
+                `${activity.title}`,
+                `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
+            );
         });
-
+    
         handleClose();
     };
+    
 
     return (
         <View style={{ flex: 1 }}>
@@ -130,7 +141,7 @@ const activityItems: Activity[] = [
     {
         title: 'Cardio Dance-Online',
         instructor: 'Danielle Hubbard',
-        location: 'SGW – Le Gym – Studio C',
+        location: 'Online',
         price: '100',
         description:
             'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
@@ -142,7 +153,7 @@ const activityItems: Activity[] = [
     {
         title: 'Zumba Fitness-Online',
         instructor: 'Veronica Aguirre',
-        location: 'SGW – Le Gym – Gymnasium',
+        location: 'Online',
         price: '55',
         description:
             'Zumba Fitness is a dance-based fitness class that incorporates Latin and international music. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
@@ -154,7 +165,7 @@ const activityItems: Activity[] = [
     {
         title: 'Total Body Fitness-Online',
         instructor: 'Daphne Cunliffe',
-        location: 'SGW – Le Gym – Gymnasium',
+        location: 'Online',
         price: '100',
         description:
             'Total Body Fitness is a full-body workout that incorporates strength training, cardio, and flexibility exercises. The class is designed to improve overall fitness and strength.',
@@ -166,7 +177,7 @@ const activityItems: Activity[] = [
     {
         title: 'Hard Core-Online',
         instructor: 'Vila Woo',
-        location: 'SGW – Le Gym – Gymnasium',
+        location: 'Online',
         price: '100',
         description:
             'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
