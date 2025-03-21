@@ -7,6 +7,8 @@ import { Button } from '@/components/primitives/button'
 import { Portal } from '@rn-primitives/portal'
 import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
 import { ControlledInput } from '@/components/primitives/input'
+import { useForgetPassword } from '@/hooks/useForgetPassword'
+import { BaseAccount } from '@/constants/types'
 
 const ResetPasswordEmailSchema = zod.object({
     email: zod.string().email(),
@@ -18,20 +20,27 @@ export type TResetPasswordEmailSchema = zod.infer<
 
 type Props = {
     onGoBack: () => void
-    onSuccess: (form: TResetPasswordEmailSchema) => void
+    onSuccess: (data: BaseAccount) => void
 }
 
 const ResetPasswordEmailForm = ({ onGoBack, onSuccess }: Props) => {
-    const { handleSubmit, control } = useForm<TResetPasswordEmailSchema>({
-        mode: 'onChange',
-        resolver: zodResolver(ResetPasswordEmailSchema),
-        defaultValues: {
-            email: '',
-        },
-    })
+    const { checkEmailToForget } = useForgetPassword()
+    const { handleSubmit, control, setError } =
+        useForm<TResetPasswordEmailSchema>({
+            mode: 'onChange',
+            resolver: zodResolver(ResetPasswordEmailSchema),
+            defaultValues: {
+                email: '',
+            },
+        })
 
     const onSubmit = (data: TResetPasswordEmailSchema) => {
-        onSuccess(data)
+        const response = checkEmailToForget(data.email)
+        if (response.success) {
+            onSuccess(response.user as BaseAccount)
+        } else {
+            setError('email', { message: response.message })
+        }
     }
 
     return (

@@ -1,27 +1,24 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/components/primitives/input'
 import { ControlledCheckbox } from '@/components/primitives/checkbox'
 import { Button } from '@/components/primitives/button'
-import { setCurrentLoggingInUser } from '@/app/auth/authSlice'
 import { useAppDispatch } from '@/store'
-
-const LoginSchema = zod.object({
-    email: zod.string().email(),
-    password: zod.string().min(2),
-    stayLoggedIn: zod.boolean().optional(),
-})
-
-type TLoginSchema = zod.infer<typeof LoginSchema>
+import { LoginSchema, TLoginSchema } from '@/app/auth/schema'
+import { useAuth } from '@/hooks/useAuth'
+import { Toast } from 'toastify-react-native'
+import { setCurrentUserId } from '@/store/currentUserId'
+import * as SecureStore from 'expo-secure-store'
+import { setTmpUser } from '@/store/tmpUser'
 
 type Props = {
     onClickForgotPassword: () => void
 }
 
 const LoginForm = ({ onClickForgotPassword }: Props) => {
+    const { authenticate } = useAuth()
     const dispatch = useAppDispatch()
     const { handleSubmit, control } = useForm<TLoginSchema>({
         mode: 'onChange',
@@ -33,22 +30,15 @@ const LoginForm = ({ onClickForgotPassword }: Props) => {
         },
     })
 
-    const onSubmit = (data: TLoginSchema) => {
-        // console.log(data)
-        // console.log({
-        //     email: data.email,
-        //     name: 'User',
-        //     avatarUrl: '',
-        //     stayLoggedIn: !!data.stayLoggedIn,
-        // })
-        dispatch(
-            setCurrentLoggingInUser({
-                email: data.email,
-                name: 'User',
-                avatarUrl: '',
-                stayLoggedIn: !!data.stayLoggedIn,
-            })
-        )
+    const onSubmit = async (data: TLoginSchema) => {
+        const res = authenticate(data)
+
+        if (res.success) {
+            const { ...account } = res.user
+            dispatch(setTmpUser(account))
+        } else {
+            Toast.error('Invalid email or password, please try again')
+        }
     }
 
     return (

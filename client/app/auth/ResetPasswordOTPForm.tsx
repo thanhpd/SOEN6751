@@ -7,9 +7,9 @@ import { Button } from '@/components/primitives/button'
 import { Portal } from '@rn-primitives/portal'
 import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
 import { ControlledInputOTP } from '@/components/ui/InputOTP'
-import ProfilePictureIcon from '@/components/icons/ProfilePictureIcon'
 import InfoIcon from '@/components/icons/InfoIcon'
-import { useAppDispatch } from '@/store'
+import { BaseAccount } from '@/constants/types'
+import ProfilePicker from '@/components/ui/ProfilePicker'
 
 const ResetPasswordOTPSchema = zod.object({
     otpCode: zod.string().length(6),
@@ -18,18 +18,12 @@ const ResetPasswordOTPSchema = zod.object({
 export type TResetPasswordOTPSchema = zod.infer<typeof ResetPasswordOTPSchema>
 
 type Props = {
-    user: {
-        email: string
-        name: string
-        avatarUrl: string
-    }
+    user: BaseAccount
     onGoBack: () => void
     onSuccess: (form: TResetPasswordOTPSchema) => void
 }
 
 const ResetPasswordOTPForm = ({ user, onGoBack, onSuccess }: Props) => {
-    const dispatch = useAppDispatch()
-
     const { handleSubmit, control } = useForm<TResetPasswordOTPSchema>({
         mode: 'onChange',
         resolver: zodResolver(ResetPasswordOTPSchema),
@@ -66,7 +60,7 @@ const ResetPasswordOTPForm = ({ user, onGoBack, onSuccess }: Props) => {
                             </View>
                             <View className="flex flex-col items-center">
                                 <View className="mb-4">
-                                    <ProfilePictureIcon />
+                                    <ProfilePicker value={user.avatar} />
                                 </View>
                                 <Text className="font-bold text-base leading-[1.3] text-[#090D20]">
                                     {user.name}

@@ -1,37 +1,22 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/components/primitives/input'
 import { ControlledCheckbox } from '@/components/primitives/checkbox'
 import { Button } from '@/components/primitives/button'
 import { Toast } from 'toastify-react-native'
-
-const RegisterSchema = zod
-    .object({
-        email: zod.string().email(),
-        password: zod.string().min(2),
-        confirmPassword: zod.string().min(2),
-        acceptedTerms: zod.boolean(),
-    })
-    .refine(data => data.password === data.confirmPassword, {
-        message: 'Passwords do not match',
-        path: ['confirmPassword'],
-    })
-    .refine(data => data.acceptedTerms, {
-        message: 'You must accept the terms and conditions',
-        path: ['acceptedTerms'],
-    })
-
-type TRegisterSchema = zod.infer<typeof RegisterSchema>
+import { router } from 'expo-router'
+import { TRegisterSchema, RegisterSchema } from '@/app/auth/schema'
+import { useAuth } from '@/hooks/useAuth'
 
 type Props = {
     onRegisterSucceed: () => void
 }
 
 const RegisterForm = ({ onRegisterSucceed }: Props) => {
-    const { handleSubmit, control } = useForm<TRegisterSchema>({
+    const { register } = useAuth()
+    const { handleSubmit, control, setError } = useForm<TRegisterSchema>({
         mode: 'onChange',
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
@@ -42,10 +27,15 @@ const RegisterForm = ({ onRegisterSucceed }: Props) => {
         },
     })
 
-    const onSubmit = (data: TRegisterSchema) => {
+    const onSubmit = async (data: TRegisterSchema) => {
         console.log(data)
-        Toast.success('Account created successfully, please login')
-        onRegisterSucceed()
+        const res = await register(data)
+        if (res.account) {
+            Toast.success('Account created successfully, please login')
+            onRegisterSucceed()
+        } else {
+            setError(res.field as 'email', { message: res.message })
+        }
     }
 
     return (
@@ -88,7 +78,7 @@ const RegisterForm = ({ onRegisterSucceed }: Props) => {
                             <Text
                                 className="text-red text-xs font-default-400 leading-[1.6]"
                                 onPress={() => {
-                                    console.log('Terms and Conditions')
+                                    router.push('/terms')
                                 }}
                             >
                                 terms and conditions
