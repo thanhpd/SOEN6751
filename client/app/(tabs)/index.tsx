@@ -149,7 +149,7 @@ export default function HomeScreen() {
                 upcomingBookings={upcomingBookings}
             />
 
-<View style ={{backgroundColor :'black', borderTopLeftRadius: 35, borderTopRightRadius: 35,height: 320,}}>
+{/* <View style ={{backgroundColor :'black', borderTopLeftRadius: 25, borderTopRightRadius: 25}}> */}
             <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
             {/* Upcoming Bookings */}
 
@@ -187,7 +187,7 @@ export default function HomeScreen() {
                 <Text style={styles.calendarText}>View full calendar</Text>
                 <Icon name="chevron-right" size={8} color="black" />
             </TouchableOpacity>
-            </View>
+            {/* </View> */}
 
 
             {/* QR Code Modal */}

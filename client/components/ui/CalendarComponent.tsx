@@ -12,6 +12,9 @@ const CalendarComponent = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const { events } = useCalendarStore()
 
+    console.log("Current events in store:", events);
+
+
     const handleDayPress = (day: { dateString: string }) => {
         const selectedDay: string = day.dateString
         const event = events.find(event => event.date === selectedDay)
