@@ -2,11 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
  import HeroBanner from '@/components/HeroBanner';
 import SearchBar from '@/components/SearchBar';
+import { ActivityList } from '@/components/ui/ActivityList';
+import useActivityStore from '@/store/ActivityStore';
 import { OnlineActivityList } from '@/components/ui/OnlineActivityList';
 
 const { width } = Dimensions.get('window');
 
 export default function OnlinePage() {
+  const { activities } = useActivityStore();
   return (
     <View style={styles.container}>
      <HeroBanner title="Online Workouts Spring 2025"
@@ -16,7 +19,7 @@ export default function OnlinePage() {
 />
 
 <SearchBar/>
-<OnlineActivityList/>
+<ActivityList activities={activities.filter(item=> item.type === 'Online')}/>
     </View>
   );
 }

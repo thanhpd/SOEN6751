@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, ScrollView, Touchable, TouchableOpacity } from 'react-native';
 import HeroBanner from '@/components/HeroBanner';
-import SearchBar from '@/components/SearchBar';
-import { InPersonActivityList } from '@/components/ui/InPersonActivityList';
 import { Colors } from '@/constants/Colors';
 import { Button } from 'react-native-paper';
 import BookingModal from '@/components/BookingSlotModal';
@@ -53,7 +51,7 @@ export default function OnlinePage() {
         const customOrder = {
             id: '2',
             product: {
-                id: '2',
+                id: '4',
                 name: 'Nutrition Consultancy',
                 price: 90.0,
                 image: 'https://via.placeholder.com/150',
@@ -63,7 +61,7 @@ export default function OnlinePage() {
                 date : selectedDate ? selectedDate.toISOString().split('T')[0] : '',
                 time : time,
                 type : 'Nutrition',
-                color: 'green',
+                
                 Instructor: 'Jenny Cheung',
                 location : 'Online',
                 description : 'Learn to diet Properly.'

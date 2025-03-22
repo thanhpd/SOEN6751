@@ -51,90 +51,43 @@ export default function BookingPage() {
 
     const handlePress = (path: string) => {
         router.push(path as any);
+        
+            console.log('Button Pressed:', path);
+        
     };
 
     const renderItem = ({ item }: { item: { path: string; id: string; title: string; image: any; bgColor: string; icon: string; iconSize: number } }) => (
-        <TouchableOpacity style={styles.card} onPress={() => handlePress(item.path)}>
-            <ImageBackground source={item.image} style={styles.backgroundImage} imageStyle={{ borderRadius: 10 }}>
-                {/* Semi-transparent colored overlay */}
-                <View style={[styles.overlay, { backgroundColor: item.bgColor }]} />
+        <TouchableOpacity 
+            style={{ width: (width / 2) - 20, height: (width / 2) -100 }} 
+            className="m-2 rounded-lg overflow-hidden" 
+            onPress={() => handlePress(item.path)
+                
+            }
+            
+        >
+            <ImageBackground source={item.image} className="flex-1 justify-center items-center w-full h-full" imageStyle={{ borderRadius: 10 }}>
+            {/* Semi-transparent colored overlay */}
+            <View style={{ backgroundColor: item.bgColor }} className="absolute inset-0 rounded-lg" />
 
-                {/* Card Content */}
-                <View style={styles.cardTextContainer}>
-                <Text style={styles.cardText}>{item.title}</Text>
-                </View>
-                {/* Circular icon container */}
-                <View style={styles.iconContainer}>
-                    <FontAwesome6 name={item.icon} size={item.iconSize} color="white" />
-                </View>
+            {/* Card Content */}
+            <View className="p-2">
+                <Text className="text-white text-lg font-bold text-center">{item.title}</Text>
+            </View>
+            {/* Circular icon container */}
+            <View className="absolute top-2 right-2 rounded-full p-1 justify-center items-center h-8 w-8" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}>
+                <FontAwesome6 name={item.icon} size={item.iconSize} color="white" />
+            </View>
             </ImageBackground>
         </TouchableOpacity>
     );
 
     return (
-        <ScrollView style={styles.container}>
-            <FlatList
-                data={cards}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                numColumns={2}
-                contentContainerStyle={styles.listContainer}
-            />
-            <CalendarComponent />
-        </ScrollView>
+        <FlatList
+            data={cards}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            ListFooterComponent={<CalendarComponent />}
+        />
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        
-        padding: 20,
-    },
-    listContainer: {
-        alignItems: 'center',
-    },
-    card: {
-        margin: 10,
-        borderRadius: 10,
-        overflow: 'hidden', // Ensures rounded corners
-        height: 120,
-        width: (width / 2) - 40, 
-        
-    },
-    backgroundImage: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
-    overlay: {
-        ...StyleSheet.absoluteFillObject, // Covers the entire card
-        borderRadius: 10,
-    },
-    cardText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        
-        
-    },
-    iconContainer: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        borderRadius: 15,
-        padding: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 30,
-        width: 30,
-        backgroundColor: 'rgba(255,255,255,0.3)', // Transparent icon background
-    },
-
-    cardTextContainer :{
-        padding : 10,
-    }
-});

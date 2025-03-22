@@ -1,20 +1,75 @@
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import TrainerCard from '@/components/TrainerCard';
+import { v4 as uuidv4 } from 'uuid';
+import useCalendarStore from '@/store/CalendarStore';
+import React, { useState } from 'react';
 import TrainerCard2 from '@/components/TrainerCardSwipe';
 import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/Colors';
 import HeroBanner from '@/components/HeroBanner';
+import BookingModal from '@/components/BookingSlotModal';
+import BookingTimeModal from '@/components/BookingTimeModal';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
 export default function PersonalTrainingPage() {
   const cards = [
-    { id: '1', title: '1 ', price: '49', path: 'in-person', bgColor: '#3498db', circleColor: '#2980b9', buttonColor: '#2980b9' }, // Blue
-    { id: '2', title: '5 ', price: '55', path: 'online', bgColor: '#27ae60', circleColor: '#1e8449', buttonColor: '#1e8449' }, // Green
-    { id: '3', title: '10', price: '150', path: 'training', bgColor: '#e67e22', circleColor: '#d35400', buttonColor: '#d35400' }, // Orange
-    { id: '4', title: '20', price: '55', path: 'nutrition', bgColor: '#c0392b', circleColor: '#922b21', buttonColor: '#922b21' }, // Red
-  ];
+    { id: '1', title: '1',price: '55$', time: '5:30 PM - 6:30 PM', sessions: 1 },
+    { id: '2', title: '5 ',price: '250$', time: '5:30 PM - 6:30 PM', sessions: 5 },
+    { id: '3', title: '10',price: '475$', time: '5:30 PM - 6:30 PM', sessions: 10 },
+    { id: '4', title: '20', price: '900$',time: '5:30 PM - 6:30 PM', sessions: 20 },
+];
+  const { addEvent } = useCalendarStore();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState('12:00 PM - 1:00 PM');
+  const [selectedSessions, setSelectedSessions] = useState(0);
+
+  const handleConfirm = (date: Date) => {
+      setSelectedDate(date);
+      setModalVisible(false);
+
+      setTimeout(() => {
+          setModalVisible2(true);
+      }, 500);
+  };
+
+  const handleConfirm2 = (time: string, sessions: number) => {
+      setSelectedTime(time);
+      setModalVisible2(false);
+
+      if (!selectedDate) return;
+
+      const events = [];
+      let currentDate = new Date(selectedDate);
+
+      for (let i = 0; i < sessions; i++) {
+          events.push({
+              id: uuidv4(),
+              title: 'Personal Training',
+              date: currentDate.toISOString().split('T')[0],
+              selected: true,
+              selectedColor: '#EC7063', // Example color
+              user_id: 'default_user', // Replace with actual user ID if available
+              activity: {
+                  title: 'Personal Training',
+                  instructor: 'Jane Smith',
+                  location: 'Concordia Gym',
+                  days: currentDate.toLocaleDateString('en-US', { weekday: 'long' }),
+                  time: selectedTime,
+                  description: 'Learn to diet Properly.',
+                  price: 90,
+                  type: 'Personal' as 'Personal',
+              }
+          });
+
+          currentDate.setDate(currentDate.getDate() + 7);
+      }
+
+      events.forEach(event => addEvent(event));
+  };
   
   return (
     <ScrollView style={styles.container}>
@@ -24,22 +79,37 @@ export default function PersonalTrainingPage() {
                                   image={require('../assets/images/training.jpg')}
                               />
       <Text style = {styles.title}>Personal Training Packages</Text>
-
-      {/* Card Section */}
       <View style={styles.cardContainer}>
-  {cards.map((item) => (
-    <TouchableOpacity key={item.id} style={[styles.card, { backgroundColor: item.bgColor }]}>
-      <View style={[styles.price, { backgroundColor: item.circleColor }]}>
-        <Text style={styles.priceText}>${item.price}</Text>
+        {cards.map((item) => (
+          <TouchableOpacity key={item.id} style={styles.card} onPress={() => {
+                                    console.log('Selected sessions on press:', item.sessions);
+                                    setModalVisible(true);
+                                    setSelectedSessions(item.sessions);
+                                }}>
+            <View style={styles.price}>
+              <Text style={styles.priceText}>${item.price}</Text>
+               </View>
+            <Text style={styles.number}>{item.title}</Text>
+            <Text style={styles.session}> {item.id === '1' ? "Session" : "Sessions" }</Text>
+            <View style ={styles.booking}>
+            <Text style={styles.cardText}>Book Now</Text>
+            </View>
+          </TouchableOpacity>
+          
+          
+        ))}
+        <BookingModal
+                        isVisible={isModalVisible}
+                        onClose={() => setModalVisible(false)}
+                        onConfirm={handleConfirm}
+                    />
+
+                    <BookingTimeModal 
+                    modalVisible={isModalVisible2}
+                    onClose={() => setModalVisible2(false)}
+                    onConfirm={(selectedDate) => handleConfirm2(selectedDate, selectedSessions)}
+                    date={selectedDate || new Date()}/>
       </View>
-      <Text style={styles.number}>{item.title}</Text>
-      <Text style={styles.session}>{item.id === '1' ? "Session" : "Sessions"}</Text>
-      <View style={[styles.booking, { backgroundColor: item.buttonColor }]}>
-        <Text style={styles.cardText}>Book Now</Text>
-      </View>
-    </TouchableOpacity>
-  ))}
-</View>
 
       {/* Trainer Card Section */}
       <Text style = {styles.title}>Meet Our Trainers</Text>

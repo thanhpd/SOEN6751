@@ -5,7 +5,6 @@ export type TProduct = {
     name: string
     price: number
     image: string
-    
 }
 
 export type TOrder = {
@@ -27,6 +26,7 @@ export type TActivity ={
     Instructor: string
     location : string
     description : string
+    days? : string 
 
 
 }

@@ -110,7 +110,7 @@ export default function HomeScreen() {
             <ThemedView style={styles.welcomeBox}>
                 <View style={styles.leftContainer}>
                     <ThemedText style={styles.subtitle}>Welcome </ThemedText>
-                    <ThemedText style={styles.title}>{currentUser.firstName} </ThemedText>
+                    <ThemedText style={styles.title}>{currentUser?.firstName || 'Guest'} </ThemedText>
                     <Image
                         source={require('@/assets/images/linkedin1.jpg')} // Change to your logo path
                         style={styles.picture}

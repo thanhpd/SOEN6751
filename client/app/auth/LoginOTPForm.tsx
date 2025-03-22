@@ -36,6 +36,7 @@ type Props = {
 const LoginOTPForm = ({ user }: Props) => {
     const dispatch = useAppDispatch()
     console.log({ tmpUser: user })
+    console.log({ tmpUser: user })
 
     const { handleSubmit, control } = useForm<TLoginOTPSchema>({
         mode: 'onChange',

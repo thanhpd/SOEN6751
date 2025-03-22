@@ -12,10 +12,10 @@ interface CalendarState {
 const defaultBookedEvents: CalendarEvent[] = [
   {
     id: '2025-04-03',
-    title: 'Cardio Dance',
+    
     date: '2025-04-04',
-    selected: true, 
-    selectedColor: '#EC7063',
+    
+    
       activity: {
       title: 'Cardio Dance',
       instructor: 'Danielle Hubbard',
@@ -26,16 +26,16 @@ const defaultBookedEvents: CalendarEvent[] = [
       days: 'Monday, Wednesday, Friday',
       time: '5:30 PM - 6:30 PM',
       image: '../../assets/images/cardio.png',
-      inPerson: true
+      
     },
     user_id : "1"
   },
 {
   id: '2025-03-25',
-  title: 'Zumba Fitness',
+ 
   date: '2025-03-25',
-  selected: true, 
-  selectedColor: '#F4D03F',
+  
+  
   activity: {
       title: 'Cooking Workshop',
       instructor: 'Chef Gordon',
@@ -44,7 +44,7 @@ const defaultBookedEvents: CalendarEvent[] = [
       time: '4:00 PM - 6:00 PM',
       description: 'Learn to cook delicious meals.',
       price: 25,
-      inPerson: false
+      
   },
     user_id : "1"
 }];

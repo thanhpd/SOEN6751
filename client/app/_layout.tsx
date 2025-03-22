@@ -142,11 +142,13 @@ const LIGHT_THEME: Theme = {
                                         style={{ marginRight: 15 }}
                                     />
                                 </TouchableOpacity>
+                               
                             </Link>
                         ),
                     }}
                 />
                 <Stack.Screen name="+not-found" />
+
 
                 <Stack.Screen
                     name="qrmodal"
@@ -202,6 +204,8 @@ const LIGHT_THEME: Theme = {
                     name="terms"
                     options={{ title: 'Terms and Conditions' }}
                 />
+
+            
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}
@@ -213,6 +217,7 @@ const LIGHT_THEME: Theme = {
                         headerTitle: 'Edit Profile',
                     }}
                 />
+                
             </Stack>
             <StatusBar style="auto" />
             <ToastManager
