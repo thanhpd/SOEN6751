@@ -45,10 +45,10 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
             }
 
             const activityColors = {
-                InPersonActivity: 'lightblue',
-                online: 'lightgreen',
-                personal: 'orange',
-                nutrition: 'peachpuff',
+                InPerson: 'lightblue',
+                Online: 'lightgreen',
+                Personal: 'orange',
+                Nutrition: 'peachpuff',
 
               };
               
