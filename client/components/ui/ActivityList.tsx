@@ -28,7 +28,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
     const addEvent = useCalendarStore((state) => state.addEvent);
     const addNotification = useCalendarStore((state) => state.addNotification);
     const handleBook = (activity: Activity) => {
-        console.log('handlebook', activity);
+        
         const days = activity.days.split(',').map(day => day.trim());
         days.forEach(day => {
             const formattedDate = getFormattedDate(day);
@@ -44,64 +44,11 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
                 return nextDate.toISOString().split('T')[0];
             }
 
-            const activityColors = {
-                InPerson: 'lightblue',
-                Online: 'lightgreen',
-                Personal: 'orange',
-                Nutrition: 'peachpuff',
-
-              };
-              
-              const highlightColor = activityColors[activity.type as keyof typeof activityColors] || 'gray';
-
-
-            const timeStart = activity.time.substring(0, activity.time.indexOf('-')).trim();
-            const timeEnd = activity.time.substring(activity.time.indexOf('-') + 1).trim();
-
-            const hasConflict = useCalendarStore.getState().events.some(event => {
-                const existingDate = event.date;
-                const existingStartTime = event.activity.time.substring(0, 7).trim();
-                const existingEndTime = event.activity.time.substring(9, 17).trim();
-
-                if (existingDate !== formattedDate) return false;
-
-                const convertTo24HourFormat = (time: string): number => {
-                    console.log('time', time);
-                    const [hourMinute, period] = time.split(/(AM|PM)/i);
-                    let [hour, minute] = hourMinute.split(':').map(Number);
-                    if (period.toLowerCase() === 'pm' && hour !== 12) hour += 12;
-                    if (period.toLowerCase() === 'am' && hour === 12) hour = 0;
-                    return hour * 60 + minute; // Convert to minutes for easier comparison
-                };
-
-                const startMinutes = convertTo24HourFormat(timeStart);
-                const endMinutes = convertTo24HourFormat(timeEnd);
-                const existingStartMinutes = convertTo24HourFormat(existingStartTime);
-                const existingEndMinutes = convertTo24HourFormat(existingEndTime);
-
-                return (
-                    (startMinutes >= existingStartMinutes && startMinutes < existingEndMinutes) ||
-                    (endMinutes > existingStartMinutes && endMinutes <= existingEndMinutes) ||
-                    (startMinutes <= existingStartMinutes && endMinutes >= existingEndMinutes)
-                );
-            });
-
-            console.log('hasConflict', hasConflict);
-            if (hasConflict) {
-                // **Add Notification**
-                addNotification(
-                    `${activity.title}`,
-                    `Conflict ${day} at ${activity.time} at ${activity.location}.`
-                );
-                return;
-            }
-
             addEvent({
                 id: uuidv4(),
                 title: activity.title,
                 date: formattedDate,
                 selected: true,
-                selectedColor: highlightColor,
                 activity: activity,
             });
             // **Add Notification**

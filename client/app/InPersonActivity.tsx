@@ -12,8 +12,6 @@ export default function InPersonActivities() {
     const { activities } = useActivityStore();
     var inPersons = activities.filter(item=> item.type === 'InPerson')
     const [filteredActivities, setFilteredActivities] = useState<Activity[]>(inPersons);
-    console.log(inPersons);
-    console.log(activities);
 
     return (
         <View style={{ flex: 1 }}>
@@ -31,7 +29,7 @@ export default function InPersonActivities() {
                     setFilteredActivities(inPersons);
                     return;
                 }
-                
+
                 const filtered = inPersons.filter(activity => activity.category === category);
                 setFilteredActivities(filtered);
             }} 

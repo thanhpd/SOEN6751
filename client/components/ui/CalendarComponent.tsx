@@ -5,6 +5,9 @@ import { Calendar } from 'react-native-calendars'
 import EventDetailsPopup from './EventDetailsPopup'
 import useCalendarStore from '@/store/CalendarStore'
 import { Colors } from '@/constants/Colors'
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
 interface Notification {
     id: number;
     message: string;
@@ -13,10 +16,10 @@ interface Notification {
 }
 
 const CalendarComponent = () => {
+    const { events } = useCalendarStore();
     const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[]>([])
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [noEventModalVisible, setNoEventModalVisible] = useState<boolean>(false)
-    const { events } = useCalendarStore()
 
     const handleDayPress = (day: { dateString: string }) => {
         const selectedDay: string = day.dateString
@@ -41,7 +44,7 @@ const CalendarComponent = () => {
         setNoEventModalVisible(false)
     }
 
-    const markedDates = events.reduce((acc: any, event: any) => {
+    const markedDates = events.reduce((acc: any, event: CalendarEvent) => {
     if (!acc[event.date]) {
         acc[event.date] = { dots: [] };
     }
@@ -51,10 +54,20 @@ const CalendarComponent = () => {
         (dot: any) => dot.key === event.activity
     );
 
+
+const activityColors = {
+    InPerson: 'lightblue',
+    Online: 'lightgreen',
+    Personal: 'orange',
+    Nutrition: 'peachpuff',
+
+    };
+    
+    const highlightColor = activityColors[event.activity.type as keyof typeof activityColors] || 'gray';
     if (!isDuplicate) {
         acc[event.date].dots.push({
-            color: event.selectedColor || 'blue',
-            key: event.activity || `default-${event.date}-${acc[event.date].dots.length}`,
+            color: highlightColor || 'blue',
+            key: uuidv4(),
         });
     }
 

@@ -5,14 +5,14 @@ import { Colors } from '@/constants/Colors';
 import BookingModal from '@/components/BookingSlotModal';
 import BookingTimeModal from '@/components/BookingTimeModal';
 import useCalendarStore from '@/store/CalendarStore'
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 const { width } = Dimensions.get('window');
 
 export default function OnlinePage() {
 
     const { addEvent} = useCalendarStore()
-
-
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [isModalVisible2, setModalVisible2] = useState(false);
@@ -34,14 +34,11 @@ export default function OnlinePage() {
         setSelectedTime(time);
         
         setModalVisible2(false);
-        
         addEvent({
-            id: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
-            title: 'Nutrition Consultancy',
+            id: uuidv4(),
             date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
 
             selected: true,
-            selectedColor: 'red',
             activity: {
                 title: 'Nutrition Consultancy',
                 instructor: 'Jenny Cheung',
@@ -50,7 +47,7 @@ export default function OnlinePage() {
                 time: selectedTime,
                 description: 'Learn to diet Properly.',
                 price: '$90',
-                inPerson: false
+                type: 'Nutrition'
             }
         })
     };
