@@ -59,14 +59,14 @@ const activityColors = {
     InPerson: 'lightblue',
     Online: 'lightgreen',
     Personal: 'orange',
-    Nutrition: 'peachpuff',
+    Nutrition: 'red',
 
     };
     
     const highlightColor = activityColors[event.activity.type as keyof typeof activityColors] || 'gray';
     if (!isDuplicate) {
         acc[event.date].dots.push({
-            color: highlightColor || 'blue',
+            color: highlightColor || 'gray',
             key: uuidv4(),
         });
     }

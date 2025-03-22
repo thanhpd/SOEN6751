@@ -21,7 +21,7 @@ export default function InPersonActivities() {
             date="From April 10 to June 30"
             image={require('../assets/images/hero.png')} 
             />
-            <SearchBar />
+            
             <CategoryList 
             onCategorySelect={(category: string) => {
 

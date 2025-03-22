@@ -38,7 +38,7 @@ export default function OnlinePage() {
             id: uuidv4(),
             date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
 
-            selected: true,
+            
             activity: {
                 title: 'Nutrition Consultancy',
                 instructor: 'Jenny Cheung',

@@ -1,18 +1,10 @@
 import { CalendarEvent } from '@/constants/types';
 import {create} from 'zustand';
 
-interface Notification {
-  id: number;
-  message: string;
-  date: string;
-  details: string;
-}
-
 interface CalendarStore {
   events: CalendarEvent[];
   notifications: Notification[];
-  addEvent: (event: CalendarEvent) => void;
-  addNotification: (message: string, details: string) => void;  
+  addEvent: (event: CalendarEvent) => void; 
   removeEvent: (eventId: string) => void;
 }
 
@@ -32,21 +24,10 @@ const useCalendarStore = create<CalendarStore>((set) => ({
     set((state) => ({
       events: state.events.filter((event) => event.id !== eventId),
     })),
-    
-  addNotification: (message, details) => {
-      const newNotification: Notification = {
-          id: Date.now(),
-          message,
-          date: new Date().toDateString(),
-          details,
-      };
-      set((state) => ({ notifications: [newNotification, ...state.notifications] }));
-  },
 }));
 
 
 function conflictCheck (event: CalendarEvent, events: CalendarEvent[]) {
-
   const date = event.date;
   const time = event.activity.time;
   const {startTime, endTime} = getTimeRange(time);

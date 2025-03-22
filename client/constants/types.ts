@@ -23,3 +23,11 @@ export interface CalendarEvent {
   activity: Activity;
   // bookedActivities: Activity[];
 }
+
+
+export interface Notification {
+  id: number;
+  title: string;
+  dateTime: Date;
+  body: string;
+}
