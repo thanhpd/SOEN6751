@@ -3,7 +3,7 @@ import { Button } from '@/components/primitives/button'
 import { useAuth } from '@/hooks/useAuth'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { router } from 'expo-router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -22,6 +22,7 @@ const PaymentCompleted = () => {
     const{addEvent} = useCalendarStore()
     const order = useAppSelector(state => state.currentOrder)
     const dispatch = useAppDispatch();
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false);
 
     const getFutureDates = (daysArray: string[], startDate: Date, endDate: Date) => {
         const dayMap = {
@@ -79,9 +80,7 @@ const PaymentCompleted = () => {
             eventDates = getFutureDates(activityDays as string[], minStartDate, maxEndDate);
         } else {
             // If it's another type, just use the given date if valid
-            if (isAfter(activityStartDate, today) || format(activityStartDate, "yyyy-MM-dd") === format(today, "yyyy-MM-dd")) {
-                eventDates = [format(activityStartDate, "yyyy-MM-dd")];
-            }
+            eventDates = order?.activity?.date ? [order.activity.date] : [];
         }
     
         // Loop through each date and dispatch events
@@ -92,7 +91,7 @@ const PaymentCompleted = () => {
 
         eventDates.forEach((date) => {
             const newEvent = {
-                id: date,
+                id: date + order?.product?.name || "",
                 title: order?.product?.name || "",
                 date: date,
     
@@ -109,14 +108,17 @@ const PaymentCompleted = () => {
                 user_id: currentUser?.id || "",
             };
     
-            console.log("New Event", newEvent.date);
+            
              dispatch(addCalendarEvent(newEvent));
+             setTimeout(() => {
+                console.log("New Event", newEvent.date);
+            }, 1500);
         });
     
         // Navigate to booking after delay
         setTimeout(() => {
             router.push('/(tabs)/booking');
-        }, 500);
+        }, 1500);
     };
 
     
