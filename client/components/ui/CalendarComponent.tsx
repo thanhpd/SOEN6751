@@ -64,18 +64,19 @@ const CalendarComponent = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const dispatch = useAppDispatch();
-  const calendarEvents = Object.values(useAppSelector((state: RootState) => state.CalendarDb.entities)) as CalendarEvent[];
+  const calendarEventss = Object.values(useAppSelector((state: RootState) => state.CalendarDb.entities)) as CalendarEvent[];
 
   // Filter and set initial events when the user logs in
-useEffect(() => {
-    const userEvents = defaultBookedEvents.filter((event: CalendarEvent) => event.user_id === userId);
-    userEvents.forEach((event) => {
-        dispatch(addCalendarEvent(event));
-    });
-  }, [userId, dispatch]);
+// useEffect(() => {
+//     const userEvents = defaultBookedEvents.filter((event: CalendarEvent) => event.user_id === userId);
+//     userEvents.forEach((event) => {
+//         dispatch(addCalendarEvent(event));
+//     });
+//   }, [userId, dispatch]);
 
     
     
+   const calendarEvents = calendarEventss.filter(event => event.user_id === userId);
 
     // console.log("Current events in store:", events);
 
