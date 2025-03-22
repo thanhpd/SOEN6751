@@ -12,7 +12,8 @@ interface CalendarStore {
   events: CalendarEvent[];
   notifications: Notification[];
   addEvent: (event: CalendarEvent) => void;
-  addNotification: (message: string, details: string) => void;
+  addNotification: (message: string, details: string) => void;  
+  removeEvent: (eventId: string) => void;
 }
 
 const useCalendarStore = create<CalendarStore>((set) => ({
@@ -26,7 +27,12 @@ const useCalendarStore = create<CalendarStore>((set) => ({
       console.warn('Event conflict detected. Event not added {event}', event);
       return state;
     }
-  }),
+  }),  
+  removeEvent: (eventId) =>
+    set((state) => ({
+      events: state.events.filter((event) => event.id !== eventId),
+    })),
+    
   addNotification: (message, details) => {
       const newNotification: Notification = {
           id: Date.now(),

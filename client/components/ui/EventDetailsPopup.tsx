@@ -11,6 +11,7 @@ import { Colors } from '@/constants/Colors'
 import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
 import CancelBookingWarning from './CancelBookingWarning'
 import { CalendarEvent } from '@/constants/types'
+import useCalendarStore from '@/store/CalendarStore'
 
 interface EventDetailsPopupProps {
     visible: boolean,
@@ -25,8 +26,17 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
 }) => {
     const [showCancelWarning, setShowCancelWarning] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
+    const { removeEvent } = useCalendarStore();
 
-    const activities = events.map(event => event.activity);
+    const activities = events.map(event => event.activity);    
+    
+    const handleCancelBooking = () => {
+        const eventToCancel = events[currentIndex];
+        if (eventToCancel) {
+            removeEvent(eventToCancel.id)
+            handleClose()
+        }
+    }
 
     const handleNext = () => {
         setCurrentIndex(prevIndex =>
@@ -111,11 +121,8 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
             {showCancelWarning && (
                 <CancelBookingWarning
                     visible={showCancelWarning}
-                    handleClose={() => setShowCancelWarning(false)}
-                    handleConfirm={() => {
-                        setShowCancelWarning(false)
-                        handleClose()
-                    }}
+                    onClose={() => setShowCancelWarning(false)}
+                    onCancel={handleCancelBooking}
                 />
             )}
         </Modal>
