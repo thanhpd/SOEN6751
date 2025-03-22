@@ -43,19 +43,23 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
 
                 return nextDate.toISOString().split('T')[0];
             }
-
+            
+            const id = uuidv4();
             addEvent({
-                id: uuidv4(),
-                title: activity.title,
+                id: id,
                 date: formattedDate,
-                selected: true,
                 activity: activity,
             });
+
+
             // **Add Notification**
-            addNotification(
-                `${activity.title}`,
-                `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
-            );
+            const existingEvent = useCalendarStore.getState().events.find(event => event.id === id);
+            if (!existingEvent) {
+                addNotification(
+                    `${activity.title}`,
+                    `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
+                );
+            }
         });
 
         handleClose();

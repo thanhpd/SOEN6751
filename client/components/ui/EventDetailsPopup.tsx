@@ -10,49 +10,27 @@ import {
 import { Colors } from '@/constants/Colors'
 import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
 import CancelBookingWarning from './CancelBookingWarning'
-
-const dummyActivities = [
-    {
-        title: 'Hard Core',
-        instructor: 'Vila Woo',
-        location: 'SGW – Le Gym – Gymnasium',
-        price: '100',
-        description:
-            'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back.',
-        days: 'Saturday, Sunday',
-        time: '12:00 PM – 1:00 PM',
-        image: '../../assets/images/exercise_classes.png',
-        type: 'InPersonActivity',
-    },
-    {
-        title: 'Cardio Dance-Online',
-        instructor: 'Danielle Hubbard',
-        location: 'SGW – Le Gym – Studio C',
-        price: '100',
-        description:
-            'Cardio Dance is a high-energy class that combines dance and fitness with various styles.',
-        days: 'Monday, Wednesday, Friday',
-        time: '8:30 PM – 10:30 PM',
-        image: '../../assets/images/cardio.png',
-        type: 'online',
-    },
-]
+import { CalendarEvent } from '@/constants/types'
 
 interface EventDetailsPopupProps {
-    visible: boolean
+    visible: boolean,
+    events: CalendarEvent[],
     close: () => void
 }
 
 const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     visible,
+    events,
     close: handleClose,
 }) => {
     const [showCancelWarning, setShowCancelWarning] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
 
+    const activities = events.map(event => event.activity);
+
     const handleNext = () => {
         setCurrentIndex(prevIndex =>
-            prevIndex < dummyActivities.length - 1 ? prevIndex + 1 : prevIndex
+            prevIndex < activities.length - 1 ? prevIndex + 1 : prevIndex
         )
     }
     const handlePrevious = () => {
@@ -79,27 +57,27 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
 
                         <ScrollView className="w-4/5">
                             <Text className="text-xl font-bold mb-1">
-                                {dummyActivities[currentIndex].title}
+                                {activities[currentIndex].title}
                             </Text>
                             <Text className="mb-1">
-                                {dummyActivities[currentIndex].instructor}
+                                {activities[currentIndex].instructor}
                             </Text>
                             <View className="flex-row items-center">
                                 <Entypo name="location" size={15} color="black" />
                                 <Text className="ml-2 font-bold">
-                                    {dummyActivities[currentIndex].location}
+                                    {activities[currentIndex].location}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
                                 <FontAwesome name="calendar" size={15} color="black" />
                                 <Text className="ml-2 font-bold">
-                                    {dummyActivities[currentIndex].days}
+                                    {activities[currentIndex].days}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
                                 <AntDesign name="clockcircleo" size={15} color="black" />
                                 <Text className="ml-2 font-bold">
-                                    {dummyActivities[currentIndex].time}
+                                    {activities[currentIndex].time}
                                 </Text>
                             </View>
                         </ScrollView>

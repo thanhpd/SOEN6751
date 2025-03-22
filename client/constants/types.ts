@@ -20,6 +20,6 @@ export interface Activity {
 export interface CalendarEvent {
   id: string;
   date: string;
-  selected: boolean;
   activity: Activity;
+  // bookedActivities: Activity[];
 }

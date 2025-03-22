@@ -118,7 +118,7 @@ const activityColors = {
             {modalVisible && selectedEvents.length > 0 && (
                 <EventDetailsPopup
                     visible={modalVisible}
-                    // event={selectedEvents[0]}
+                    events={selectedEvents}
                     close={handleClose}
                 />
             )}

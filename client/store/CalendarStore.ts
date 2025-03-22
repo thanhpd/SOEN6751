@@ -38,6 +38,7 @@ const useCalendarStore = create<CalendarStore>((set) => ({
   },
 }));
 
+
 function conflictCheck (event: CalendarEvent, events: CalendarEvent[]) {
 
   const date = event.date;
