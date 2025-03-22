@@ -5,7 +5,8 @@ import {
     View,
     ScrollView,
     TouchableOpacity,
-    Text
+    Text,
+    Pressable,
 } from 'react-native'
 import { HelloWave } from '@/components/HelloWave'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -20,11 +21,19 @@ import { useState } from 'react'
 import UserQRCodeModal from '@/components/UserQRCodeModal'
 import BookingCard2 from '@/components/BookingCard2'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useAuth } from '@/hooks/useAuth'
+import { currentUserIdSlice } from '@/store/currentUserId'
 
 
 import BookingCard from '@/components/BookingCard'
+import { router } from 'expo-router'
+
 
 export default function HomeScreen() {
+
+    
+    const {currentUser} = useAuth()
+    console.log(currentUser)
     const upcomingBookings = [
         {
             id: 1,
@@ -101,7 +110,7 @@ export default function HomeScreen() {
             <ThemedView style={styles.welcomeBox}>
                 <View style={styles.leftContainer}>
                     <ThemedText style={styles.subtitle}>Welcome </ThemedText>
-                    <ThemedText style={styles.title}>Younes! </ThemedText>
+                    <ThemedText style={styles.title}>{currentUser.firstName} </ThemedText>
                     <Image
                         source={require('@/assets/images/linkedin1.jpg')} // Change to your logo path
                         style={styles.picture}
@@ -137,7 +146,7 @@ export default function HomeScreen() {
             </ThemedView>
 
 
-            <View></View>
+            
             <ThemedText style={styles.today}>Today </ThemedText>
             <ThemedText style={styles.date}>{today}</ThemedText>
 
@@ -152,7 +161,6 @@ export default function HomeScreen() {
 {/* <View style ={{backgroundColor :'black', borderTopLeftRadius: 25, borderTopRightRadius: 25}}> */}
             <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
             {/* Upcoming Bookings */}
-
 
             {/* <View style={styles.upcomingBookingsContainer}>
                 {upcomingBookings.map((booking, index) => (
@@ -189,6 +197,13 @@ export default function HomeScreen() {
             </TouchableOpacity>
             {/* </View> */}
 
+           
+
+            <View>
+                <TouchableOpacity onPress={() => router.push('/order-review' as any)}>
+                    <Text>Test Order</Text>
+                </TouchableOpacity>
+            </View>
 
             {/* QR Code Modal */}
             {isModalVisible && (
@@ -235,7 +250,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: 'bold',
         color: Colors.light.concordiaColor,
     },

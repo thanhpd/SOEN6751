@@ -3,9 +3,11 @@ import { View, Text, Pressable, Touchable, TouchableOpacity } from 'react-native
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
+import { useSignOut } from '@/hooks/useSignOut'
 
 const SettingsSection: React.FC = () => {
     const router = useRouter() // Use Expo Router for navigation
+    const signOut = useSignOut()
     return (
         <View className="mt-2 bg-white">
             <View className="p-4">
@@ -82,7 +84,9 @@ const SettingsSection: React.FC = () => {
 
                 <View
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log('payment pressed')}
+                    onTouchEnd={() => {
+                        router.push('/payment-manager')
+                    }}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -140,7 +144,7 @@ const SettingsSection: React.FC = () => {
                     />
                 </View>
 
-                
+
                 <TouchableOpacity
                     className="flex-row items-center justify-between mb-1"
                     onPress={() => router.push('/terms')}
@@ -161,7 +165,7 @@ const SettingsSection: React.FC = () => {
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
                 </TouchableOpacity>
-                
+
 
                 {/* Horizontal line divider within the same View */}
                 <View className="flex-row items-center justify-between mb-2">
@@ -208,9 +212,9 @@ const SettingsSection: React.FC = () => {
                     />
                 </View>
 
-                <View
+                <TouchableOpacity
                     className="flex-row items-center justify-between"
-                    onTouchEnd={() => console.log('log out pressed')}
+                    onPress={signOut}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -227,7 +231,7 @@ const SettingsSection: React.FC = () => {
                         source={require('../assets/images/chevron.forward.svg')}
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     )

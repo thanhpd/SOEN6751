@@ -20,14 +20,15 @@ const defaultBookedEvents: CalendarEvent[] = [
       title: 'Cardio Dance',
       instructor: 'Danielle Hubbard',
       location: 'SGW – Le Gym – Studio C',
-      price: '100',
+      price: 100,
       description:
         'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
       days: 'Monday, Wednesday, Friday',
       time: '5:30 PM - 6:30 PM',
       image: '../../assets/images/cardio.png',
       inPerson: true
-    }
+    },
+    user_id : "1"
   },
 {
   id: '2025-03-25',
@@ -42,9 +43,10 @@ const defaultBookedEvents: CalendarEvent[] = [
       days: 'Tuesday',
       time: '4:00 PM - 6:00 PM',
       description: 'Learn to cook delicious meals.',
-      price: '$25',
+      price: 25,
       inPerson: false
-  }
+  },
+    user_id : "1"
 }];
 
 const useCalendarStore = create<CalendarState>((set) => ({

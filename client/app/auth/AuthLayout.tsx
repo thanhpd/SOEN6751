@@ -29,10 +29,7 @@ const tabs = [
 ]
 
 const AuthLayout: React.FC = () => {
-    const userToken = useAppSelector(state => state.auth.userToken)
-    const currentLoggingInUser = useAppSelector(
-        state => state.auth.currentLoggingInUser
-    )
+    const currentLoggingInUser = useAppSelector(state => state.tmpUser)
 
     const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
     const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false)

@@ -8,6 +8,10 @@ import { Button } from 'react-native-paper';
 import BookingModal from '@/components/BookingSlotModal';
 import BookingTimeModal from '@/components/BookingTimeModal';
 import useCalendarStore from '@/stores/CalendarStore'
+import { setCurrentOrder } from '@/store/currentOrder';
+import { useAppDispatch } from '@/store';
+import OrderReview from './order-review';
+import { router } from 'expo-router'
 
     
 
@@ -24,6 +28,10 @@ export default function OnlinePage() {
     const [isModalVisible2, setModalVisible2] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedTime, setSelectedTime] = useState("")
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false); // Track if payment is confirmed
+
+    const dispatch = useAppDispatch();
+
 
     const handleConfirm = (date: Date) => {
         setSelectedDate(date);
@@ -40,25 +48,40 @@ export default function OnlinePage() {
         setSelectedTime(time);
         
         setModalVisible2(false);
-        
-        addEvent({
-            id: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
-            title: 'Nutrition Consultancy',
-            date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
 
-            selected: true,
-            selectedColor: 'green',
+
+        const customOrder = {
+            id: '2',
+            product: {
+                id: '2',
+                name: 'Nutrition Consultancy',
+                price: 90.0,
+                image: 'https://via.placeholder.com/150',
+                
+            },
             activity: {
-                title: 'Nutrition Consultancy',
-                instructor: 'Jenny Cheung',
-                location: 'Online',
-                days: 'Tuesday',
-                time: selectedTime,
-                description: 'Learn to diet Properly.',
-                price: '$90',
-                inPerson: false
-            }
-        })
+                date : selectedDate ? selectedDate.toISOString().split('T')[0] : '',
+                time : time,
+                type : 'Nutrition',
+                color: 'green',
+                Instructor: 'Jenny Cheung',
+                location : 'Online',
+                description : 'Learn to diet Properly.'
+
+            },
+            quantity: 1,
+            total: 90.0  + 3.5,
+            taxes: 3.5,
+            discount: 0.0,
+        };
+
+        dispatch(setCurrentOrder(customOrder));
+
+        router.push('/order-review' as any);
+
+
+        
+        
     };
 
 

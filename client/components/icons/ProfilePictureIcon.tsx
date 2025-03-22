@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Svg, { G, Rect, Path, Defs, ClipPath } from 'react-native-svg'
+import Svg, { G, Rect, Path, Defs, ClipPath, SvgProps } from 'react-native-svg'
 
-const ProfilePictureIcon = () => {
+const ProfilePictureIcon = (props: SvgProps) => {
     return (
-        <Svg width={78} height={78} viewBox="0 0 78 78" fill="none">
+        <Svg width={78} height={78} viewBox="0 0 78 78" fill="none" {...props}>
             <G clipPath="url(#clip0_1_1751)">
                 <Rect
                     x={2}
