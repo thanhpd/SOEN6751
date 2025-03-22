@@ -110,7 +110,7 @@ const PaymentCompleted = () => {
             };
     
             console.log("New Event", newEvent.date);
-            // dispatch(addCalendarEvent(newEvent));
+             dispatch(addCalendarEvent(newEvent));
         });
     
         // Navigate to booking after delay
