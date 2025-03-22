@@ -13,41 +13,23 @@ import { InPersonActivityItem } from '@/components/ui/InPersonActivityItem'
    
 
 export default function InPersonActivity() {
-    const upcomingBookings = [
-        {
-            id: 1,
-            serviceName: 'Personal training',
-            customerName: 'John Doe',
-            bookingDate: 'March 6, 2025',
-            startTime: '10:00 AM',
-            endTime: '11:00 AM',
-            status: 'Confirmed',
-            image: require('@/assets/images/linkedin1.jpg'), // You can replace with your image path or URL
-        },
-        {
-            id: 2,
-            serviceName: 'Massage Therapy',
-            customerName: 'Jane Smith',
-            bookingDate: 'March 6, 2025',
-            startTime: '12:00 PM',
-            endTime: '1:00 PM',
-            status: 'Pending',
-            image: 'https://example.com/images/massage.jpg', // You can replace with your image path or URL
-        },
-    ]
+    
     
     return (
         <View style={{ flex: 1 }}>
             <HeroBanner 
             title="In-Person Activities Winter 2025"
-        description="Get inspired and moving at the same time."
-        date="From April 10 to June 30"
-        image={require('../assets/images/hero.png')} />
+            description="Get inspired and moving at the same time."
+            date="From April 10 to June 30"
+            image={require('../assets/images/hero.png')} 
+            />
             <SearchBar />
-            <CategoryList />
-            
-                      <InPersonActivityList />
-                      
+            <CategoryList 
+            onCategorySelect={(category: string) => {
+                console.log('Selected category:', category);
+            }} 
+            />
+            <InPersonActivityList selectedCategory={category.name} />
         </View>
     )
 }

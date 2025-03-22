@@ -1,1 +1,7 @@
 node_modules/
+*.lock
+*.class
+*.probe
+*.java
+*.bin
+*.properties

@@ -13,10 +13,10 @@ const { width } = Dimensions.get('window') // Get screen width
 
 export default function PersonalTraining() {
     const cards = [
-        { id: '1', title: '1 session - 55$', path: 'in-person' },
-        { id: '2', title: '5 sessions - 250$', path: 'online' },
-        { id: '3', title: '10 sessions - 475$', path: 'training' },
-        { id: '4', title: '20 session - 900$', path: 'nutrition' },
+        { id: '1', title: '1 session - 55$', time: '5:30 PM - 6:30 PM', sessions: 1 },
+        { id: '2', title: '5 sessions - 250$',  time: '5:30 PM - 6:30 PM', sessions: 5 },
+        { id: '3', title: '10 sessions - 475$',  time: '5:30 PM - 6:30 PM',sessions: 10 },
+        { id: '4', title: '20 session - 900$',  time: '5:30 PM - 6:30 PM', sessions: 20 },
     ]
 
     return (
@@ -36,13 +36,13 @@ export default function PersonalTraining() {
             <Text style={styles.title}>Meet Our Trainers</Text>
             <View style={styles.trainerContainer}>
                 <TrainerCard
-                    profilePic="@/assets/images/linkedin1.jpg" // Replace with actual URL or local file
+                    profilePic={require('@/assets/images/trainer.png')} 
                     name="Jane Smith"
                     certification="Certified Strength and Conditioning Specialist (CSCS)"
                     education="Master's in Kinesiology"
                 />
                 <TrainerCard
-                    profilePic="https://example.com/profile2.jpg" // Replace with actual URL or local file
+                    profilePic={require('@/assets/images/trainer.png')}
                     name="John Doe"
                     certification="Certified Personal Trainer (CPT)"
                     education="Bachelor's in Exercise Science"

@@ -41,7 +41,7 @@ export default function OnlinePage() {
             date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
 
             selected: true,
-            selectedColor: 'green',
+            selectedColor: 'red',
             activity: {
                 title: 'Nutrition Consultancy',
                 instructor: 'Jenny Cheung',

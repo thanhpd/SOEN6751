@@ -13,26 +13,25 @@ const initialCategories = [
     { name: 'Instructional Activities' },
 ];
 
-export const CategoryList: React.FC = () => {
-    const [activeIndex, setActiveIndex] = useState<number | null>(1); // Default selected index (Aerobics)
+export const CategoryList: React.FC<{ onCategorySelect: (category: string) => void }> = ({ onCategorySelect }) => {
+    const [activeIndex, setActiveIndex] = useState<number | null>(0); // Default selected index (All Activities)
 
-    const toggleCategory = (index: number) => {
+    const toggleCategory = (index: number, category: string) => {
         setActiveIndex(index);
+        onCategorySelect(category);
     };
 
     return (
-        <View className="mb-1" style = {{ marginBottom : 15}}  >
-            <Text className="text-black text-2xl font-bold text" style = {{ marginLeft : 25}} >Categories</Text>
+        <View className="mb-1" style={{ marginBottom: 15 }}>
+            <Text className="text-black text-2xl font-bold text" style={{ marginLeft: 25 }}>Categories</Text>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}  className="mt-4">
-
-                
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-4">
                 {initialCategories.map((category, index) => {
                     const isActive = index === activeIndex;
                     return (
                         <TouchableOpacity
                             key={index}
-                            onPress={() => toggleCategory(index)}
+                            onPress={() => toggleCategory(index, category.name)}
                             style={{
                                 paddingHorizontal: 16,
                                 paddingVertical: 10,

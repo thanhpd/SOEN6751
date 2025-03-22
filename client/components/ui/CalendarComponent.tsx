@@ -83,14 +83,22 @@ const CalendarComponent = () => {
                 />
             </View>
 
-            <View className="flex-row justify-center mt-4">
-                <View className="flex-row items-center mx-4">
-                    <View className="w-3 h-3 rounded-full bg-red-400 mr-2" />
+            <View className="flex-row justify-center mt-1">
+                <View className="flex-row items-center mx-1">
+                    <View className="w-3 h-3 rounded-full bg-blue-400 mr-2" />
                     <Text className="text-black">In-Person</Text>
                 </View>
-                <View className="flex-row items-center mx-4">
-                    <View className="w-3 h-3 rounded-full bg-yellow-400 mr-2" />
+                <View className="flex-row items-center mx-1">
+                    <View className="w-3 h-3 rounded-full bg-green-400 mr-2" />
                     <Text className="text-black">Online</Text>
+                </View>
+                <View className="flex-row items-center mx-1">
+                    <View className="w-3 h-3 rounded-full bg-orange-400 mr-2" />
+                    <Text className="text-black">Personal Train</Text>
+                </View>
+                <View className="flex-row items-center mx-1">
+                    <View className="w-3 h-3 rounded-full bg-red-400 mr-2" />
+                    <Text className="text-black">Nutrition</Text>
                 </View>
             </View>
 

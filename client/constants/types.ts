@@ -8,6 +8,7 @@ export interface Activity {
     days: string;
     image?: string;
     type?: string
+    category?: string;
   }
   
   export interface Category {
