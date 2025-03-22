@@ -1,28 +1,81 @@
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import TrainerCard from '@/components/TrainerCard';
+import { v4 as uuidv4 } from 'uuid';
+import useCalendarStore from '@/store/CalendarStore';
+import React, { useState } from 'react';
 import TrainerCard2 from '@/components/TrainerCardSwipe';
 import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/Colors';
+import BookingModal from '@/components/BookingSlotModal';
+import BookingTimeModal from '@/components/BookingTimeModal';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
 export default function PersonalTrainingPage() {
   const cards = [
-    { id: '1', title: '1 ',price:'49', path: 'in-person' },
-    { id: '2', title: '5 ', price:'55',path: 'online' },
-    { id: '3', title: '10  ',price:'150', path: 'training' },
-    { id: '4', title: '20  ',price:'55', path: 'nutrition' },
-  ];
+    { id: '1', title: '1',price: '55$', time: '5:30 PM - 6:30 PM', sessions: 1 },
+    { id: '2', title: '5 ',price: '250$', time: '5:30 PM - 6:30 PM', sessions: 5 },
+    { id: '3', title: '10',price: '475$', time: '5:30 PM - 6:30 PM', sessions: 10 },
+    { id: '4', title: '20', price: '900$',time: '5:30 PM - 6:30 PM', sessions: 20 },
+];
+  const { addEvent } = useCalendarStore();
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState('12:00 PM - 1:00 PM');
+  const [selectedSessions, setSelectedSessions] = useState(0);
+
+  const handleConfirm = (date: Date) => {
+      setSelectedDate(date);
+      setModalVisible(false);
+
+      setTimeout(() => {
+          setModalVisible2(true);
+      }, 500);
+  };
+
+  const handleConfirm2 = (time: string, sessions: number) => {
+      setSelectedTime(time);
+      setModalVisible2(false);
+
+      if (!selectedDate) return;
+
+      const events = [];
+      let currentDate = new Date(selectedDate);
+
+      for (let i = 0; i < sessions; i++) {
+          events.push({
+              id: uuidv4(),
+              date: currentDate.toISOString().split('T')[0],
+              activity: {
+                  title: 'Personal Training',
+                  instructor: 'Jane Smith',
+                  location: 'Concordia Gym',
+                  days: currentDate.toLocaleDateString('en-US', { weekday: 'long' }),
+                  time: selectedTime,
+                  description: 'Learn to diet Properly.',
+                  price: '$90',
+                  type: 'Personal' as 'Personal',
+              }
+          });
+
+          currentDate.setDate(currentDate.getDate() + 7);
+      }
+
+      events.forEach(event => addEvent(event));
+  };
   
   return (
     <ScrollView style={styles.container}>
       <Text style = {styles.title}>Personal Training Packages</Text>
-
-      {/* Card Section */}
       <View style={styles.cardContainer}>
         {cards.map((item) => (
-          <TouchableOpacity key={item.id} style={styles.card}>
+          <TouchableOpacity key={item.id} style={styles.card} onPress={() => {
+                                    console.log('Selected sessions on press:', item.sessions);
+                                    setModalVisible(true);
+                                    setSelectedSessions(item.sessions);
+                                }}>
             <View style={styles.price}>
               <Text style={styles.priceText}>${item.price}</Text>
                </View>
@@ -32,7 +85,20 @@ export default function PersonalTrainingPage() {
             <Text style={styles.cardText}>Book Now</Text>
             </View>
           </TouchableOpacity>
+          
+          
         ))}
+        <BookingModal
+                        isVisible={isModalVisible}
+                        onClose={() => setModalVisible(false)}
+                        onConfirm={handleConfirm}
+                    />
+
+                    <BookingTimeModal 
+                    modalVisible={isModalVisible2}
+                    onClose={() => setModalVisible2(false)}
+                    onConfirm={(selectedDate) => handleConfirm2(selectedDate, selectedSessions)}
+                    date={selectedDate || new Date()}/>
       </View>
 
       {/* Trainer Card Section */}

@@ -17,7 +17,7 @@ export default function OnlinePage() {
     const [isModalVisible, setModalVisible] = useState(false);
     const [isModalVisible2, setModalVisible2] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [selectedTime, setSelectedTime] = useState("")
+    const [selectedTime, setSelectedTime] = useState('12:00 PM - 1:00 PM');
 
     const handleConfirm = (date: Date) => {
         setSelectedDate(date);

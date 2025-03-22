@@ -65,29 +65,41 @@ export default function PersonalTraining() {
     };
 
     return (
-        <FlatList
-            data={cards}
-            keyExtractor={(item) => item.id} // Ensure unique key for each item
-            renderItem={({ item }) => {
-                console.log('Rendering item:', item); // Log full item to see structure
-                console.log('Selected sessions:', item.sessions); // Log sessions specifically
 
-                return (
-                    <View>
-                        <TouchableOpacity
-                            style={styles.card}
+        <View>
+             <TouchableOpacity
                             onPress={() => {
-                                console.log('Selected sessions on press:', item.sessions);
+                                console.log('Selected sessions on press:', cards[0].sessions);
                                 setModalVisible(true);
-                                setSelectedSessions(item.sessions);
+                                setSelectedSessions(cards[0].sessions);
                             }}
                         >
-                            <Text style={styles.cardText}>{item.title}</Text>
+                            <Text style={styles.cardText}>{cards[0].title}</Text>
                         </TouchableOpacity>
-                    </View>
-                );
-            }}
-        />
+            </View>
+        // <FlatList
+        //     data={cards}
+        //     keyExtractor={(item) => item.id} // Ensure unique key for each item
+        //     renderItem={({ item }) => {
+        //         console.log('Rendering item:', item); // Log full item to see structure
+        //         console.log('Selected sessions:', item.sessions); // Log sessions specifically
+
+        //         return (
+        //             <View>
+        //                 <TouchableOpacity
+        //                     style={styles.card}
+        //                     onPress={() => {
+        //                         console.log('Selected sessions on press:', item.sessions);
+        //                         setModalVisible(true);
+        //                         setSelectedSessions(item.sessions);
+        //                     }}
+        //                 >
+        //                     <Text style={styles.cardText}>{item.title}</Text>
+        //                 </TouchableOpacity>
+        //             </View>
+        //         );
+        //     }}
+        // />
     );
 }
 

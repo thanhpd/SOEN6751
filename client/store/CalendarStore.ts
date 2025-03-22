@@ -46,6 +46,11 @@ function conflictCheck (event: CalendarEvent, events: CalendarEvent[]) {
 
 function getTimeRange(time: string): { startTime: number, endTime: number } {
   // Function to convert 12-hour format to 24-hour integer format
+  console.log('time:', time);
+  if (time == null) {
+    time = "12:00 PM - 1:00 PM";
+  }
+  console.log('time:', time);
   function convertTo24HourFormat(time: string): number {
     const [hourMinute, period] = time.split(/(AM|PM)/i);
     let [hour, minute] = hourMinute.split(':').map(Number);

@@ -26,7 +26,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
     };
 
     const addEvent = useCalendarStore((state) => state.addEvent);
-    const addNotification = useCalendarStore((state) => state.addNotification);
+    // const addNotification = useCalendarStore((state) => state.addNotification);
     const handleBook = (activity: Activity) => {
         
         const days = activity.days.split(',').map(day => day.trim());
@@ -55,10 +55,10 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
             // **Add Notification**
             const existingEvent = useCalendarStore.getState().events.find(event => event.id === id);
             if (!existingEvent) {
-                addNotification(
-                    `${activity.title}`,
-                    `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
-                );
+                // addNotification(
+                //     `${activity.title}`,
+                //     `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
+                // );
             }
         });
 
