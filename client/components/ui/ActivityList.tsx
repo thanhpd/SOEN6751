@@ -8,19 +8,12 @@ import { useRoute } from '@react-navigation/native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
-export const InPersonActivityList: React.FC<{ selectedCategory: string }> = ({ selectedCategory }) => {
+export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities }) => {
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
 
     const route = useRoute();
     const isInPersonScreen = route.name === 'InPerson';
-    
-    const filteredActivities = useMemo(() => {
-        if (selectedCategory === 'All Activities') {
-            return activityItems;
-        }
-        return activityItems.filter(item => item.category === selectedCategory);
-    }, [selectedCategory]);
 
     const handlePress = (activity: Activity) => {
         setSelectedActivity(activity);
@@ -125,7 +118,7 @@ export const InPersonActivityList: React.FC<{ selectedCategory: string }> = ({ s
     return (
         <View style={{ flex: 1 }}>
         <FlatList
-            data={filteredActivities}
+            data={activities}
             renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
                     <InPersonActivityItem activity={item} />
@@ -145,110 +138,3 @@ export const InPersonActivityList: React.FC<{ selectedCategory: string }> = ({ s
     );
 };
 
-const activityItems: Activity[] = [
-    {
-        title: 'Cardio Dance',
-        instructor: 'Danielle Hubbard',
-        location: 'SGW – Le Gym – Studio C',
-        price: '100',
-        description:
-            'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
-        days: 'Monday, Wednesday, Friday',
-        time: '5:30 PM - 6:30 PM',
-        image: '../../assets/images/cardio.png',
-        type: 'InPersonActivity',
-        category: 'Dance',
-    },
-    {
-        title: 'Zumba Fitness',
-        instructor: 'Veronica Aguirre',
-        location: 'SGW - Le Gym – Gymnasium',
-        price: '55',
-        description:
-            'Zumba Fitness is a dance-based fitness class that incorporates Latin and international music. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
-        days: 'Tuesday, Thursday',
-        time: '5:30 PM - 6:30 PM',
-        image: '../../assets/images/zumba.png',
-        type: 'InPersonActivity',
-        category: 'Dance',
-    },
-    {
-        title: 'Total Body Fitness',
-        instructor: 'Daphne Cunliffe',
-        location: 'SGW - Le Gym – Gymnasium',
-        price: '100',
-        description:
-            'Total Body Fitness is a full-body workout that incorporates strength training, cardio, and flexibility exercises. The class is designed to improve overall fitness and strength.',
-        days: 'Monday, Wednesday, Friday',
-        time: '12:00 PM - 1:00 PM',
-        image: '../../assets/images/aero.png',
-        type: 'InPersonActivity',
-        category: 'Aerobics',
-    },
-    {
-        title: 'Hard Core',
-        instructor: 'Vila Woo',
-        location: 'SGW - Le Gym – Gymnasium',
-        price: '100',
-        description:
-            'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
-        days: 'Saturday, Sunday',
-        time: '12:00 PM - 1:00 PM',
-        image: '../../assets/images/exercise_classes.png',
-        type: 'InPersonActivity',
-        category: 'Fitness & Relaxation',
-    },
-
-    {
-        title: 'Cardio Dance-Online',
-        instructor: 'Danielle Hubbard',
-        location: 'Online',
-        price: '100',
-        description:
-            'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
-        days: 'Monday, Wednesday, Friday',
-        time: '8:30 PM - 10:30 PM',
-        image: '../../assets/images/cardio.png',
-        type: 'online',
-        category: 'Spinning',
-    },
-    {
-        title: 'Zumba Fitness-Online',
-        instructor: 'Veronica Aguirre',
-        location: 'Online',
-        price: '55',
-        description:
-            'Zumba Fitness is a dance-based fitness class that incorporates Latin and international music. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
-        days: 'Tuesday, Thursday',
-        time: '2:30 PM - 4:30 PM',
-        image: '../../assets/images/zumba.png',
-        type: 'online',
-        category: 'Instructional Activities',
-    },
-    {
-        title: 'Total Body Fitness-Online',
-        instructor: 'Daphne Cunliffe',
-        location: 'Online',
-        price: '100',
-        description:
-            'Total Body Fitness is a full-body workout that incorporates strength training, cardio, and flexibility exercises. The class is designed to improve overall fitness and strength.',
-        days: 'Monday, Wednesday, Friday',
-        time: '4:00 PM - 5:00 PM',
-        image: '../../assets/images/aero.png',
-        type: 'online',
-        category: 'Martial Arts',
-    },
-    {
-        title: 'Hard Core-Online',
-        instructor: 'Vila Woo',
-        location: 'Online',
-        price: '100',
-        description:
-            'Hard Core is an intense core workout that targets the abdominal muscles, obliques, and lower back. The class is designed to improve core strength, stability, and endurance.',
-        days: 'Saturday, Sunday',
-        time: '4:00 PM - 5:00 PM',
-        image: '../../assets/images/exercise_classes.png',
-        type: 'online',
-        category: 'Drop-In Recreation',
-    },
-]

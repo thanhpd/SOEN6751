@@ -1,13 +1,5 @@
-import { Activity, CalendarEvent } from '@/constants/types';
+import { CalendarEvent } from '@/constants/types';
 import {create} from 'zustand';
-
-
-interface CalendarState {
-  events: CalendarEvent[];
-  addEvent: (event: CalendarEvent) => void;
-  removeEvent: (eventId: string) => void;
-  clearEvents: () => void;
-}
 
 interface Notification {
   id: number;

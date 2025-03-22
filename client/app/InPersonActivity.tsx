@@ -1,20 +1,20 @@
-import { StyleSheet, Image, Text, Platform, ScrollView } from 'react-native'
-import React from 'react'
-import { View, SafeAreaView, StatusBar } from 'react-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
 import HeroBanner from '../components/HeroBanner'
-import { InPersonActivityList } from '@/components/ui/ActivityList'
+import { ActivityList } from '@/components/ui/ActivityList'
 import { CategoryList } from '@/components/CategoryList'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import BookingCard2 from '@/components/BookingCard2'
-import BookingCard from '@/components/BookingCard'
 import SearchBar from '@/components/SearchBar'
-import { InPersonActivityItem } from '@/components/ui/InPersonActivityItem'
+import useActivityStore from '@/store/ActivityStore'
+import { Activity } from '@/constants/types'
 
-   
+export default function InPersonActivities() {
+    
+    const { activities } = useActivityStore();
+    var inPersons = activities.filter(item=> item.type === 'InPerson')
+    const [filteredActivities, setFilteredActivities] = useState<Activity[]>(inPersons);
+    console.log(inPersons);
+    console.log(activities);
 
-export default function InPersonActivity() {
-    
-    
     return (
         <View style={{ flex: 1 }}>
             <HeroBanner 
@@ -26,23 +26,17 @@ export default function InPersonActivity() {
             <SearchBar />
             <CategoryList 
             onCategorySelect={(category: string) => {
-                console.log('Selected category:', category);
+
+                if (category === 'All Activities') {
+                    setFilteredActivities(inPersons);
+                    return;
+                }
+                
+                const filtered = inPersons.filter(activity => activity.category === category);
+                setFilteredActivities(filtered);
             }} 
             />
-            <InPersonActivityList selectedCategory={category.name} />
+            <ActivityList activities={filteredActivities} />
         </View>
     )
-}
-
-const styles = StyleSheet.create({
-
-    upcomingBookingsContainer: {
-        marginTop: 20,
-        borderRadius: 10,
-        
-        
-    },
-    bookingCardContainer: {
-      marginRight: 20, 
-    },
-})
+};

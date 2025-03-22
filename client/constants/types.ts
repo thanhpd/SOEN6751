@@ -7,7 +7,7 @@ export interface Activity {
     time: string;
     days: string;
     image?: string;
-    type?: string
+    type?: 'InPerson' | 'Online' | 'Personal' | 'Nutrition';
     category?: string;
   }
   
