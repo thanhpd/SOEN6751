@@ -26,66 +26,66 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
     };
 
     const addEvent = useCalendarStore((state) => state.addEvent);
-    // const addNotification = useCalendarStore((state) => state.addNotification);
+
     const handleBook = (activity: Activity) => {
-        
         const days = activity.days.split(',').map(day => day.trim());
         days.forEach(day => {
-            const formattedDate = getFormattedDate(day);
+            for (let weekOffset = 0; weekOffset < 8; weekOffset++) {
+                const formattedDate = getFormattedDateForWeek(day, weekOffset);
 
-            function getFormattedDate(day: string): string {
-                const today = new Date();
-                const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                    .findIndex(d => d.toLowerCase() === day.toLowerCase());
+                function getFormattedDateForWeek(day: string, weekOffset: number): string {
+                    const today = new Date();
+                    const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                        .findIndex(d => d.toLowerCase() === day.toLowerCase());
 
-                let nextDate = new Date(today);
-                nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7));
+                    let nextDate = new Date(today);
+                    nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7) + (weekOffset * 7));
 
-                return nextDate.toISOString().split('T')[0];
-            }
-            
-            const id = uuidv4();
-            addEvent({
-                id: id,
-                date: formattedDate,
-                activity: activity,
-            });
+                    return nextDate.toISOString().split('T')[0];
+                }
 
+                const id = uuidv4();
+                addEvent({
+                    id: id,
+                    date: formattedDate,
+                    activity: activity,
+                });
 
-            // **Add Notification**
-            const existingEvent = useCalendarStore.getState().events.find(event => event.id === id);
-            if (!existingEvent) {
-                // addNotification(
-                //     `${activity.title}`,
-                //     `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
-                // );
+                // **Add Notification**
+                const existingEvent = useCalendarStore.getState().events.find(event => event.id === id);
+                if (!existingEvent) {
+                    // Add notification for the event if needed.
+                    // addNotification(
+                    //     `${activity.title}`,
+                    //     `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
+                    // );
+                }
             }
         });
 
         handleClose();
     };
 
-
     return (
         <View style={{ flex: 1 }}>
-        <FlatList
-            data={activities}
-            renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
-                    <InPersonActivityItem activity={item} />
-                </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-        />
-        {modalVisible && selectedActivity && (
-            <ActivityDetailsPopup
-                visible={modalVisible}
-                activity={selectedActivity}
-                handleClose={handleClose}
-                handleBook={() => handleBook(selectedActivity)}
+            <FlatList
+                data={activities}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
+                        <InPersonActivityItem activity={item} />
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
             />
-        )}
-    </View>
+            {modalVisible && selectedActivity && (
+                <ActivityDetailsPopup
+                    visible={modalVisible}
+                    activity={selectedActivity}
+                    handleClose={handleClose}
+                    handleBook={() => handleBook(selectedActivity)}
+                />
+            )}
+        </View>
     );
 };
 
