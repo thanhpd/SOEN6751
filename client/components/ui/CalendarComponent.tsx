@@ -8,13 +8,6 @@ import { Colors } from '@/constants/Colors'
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
-interface Notification {
-    id: number;
-    message: string;
-    date: string;
-    details: string;
-}
-
 const CalendarComponent = () => {
     const { events } = useCalendarStore();
     const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[]>([])

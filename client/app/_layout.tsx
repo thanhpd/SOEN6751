@@ -3,7 +3,7 @@ import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { Image, TouchableOpacity, View, Text } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
@@ -15,6 +15,7 @@ import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
 import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
+import useNotificationStore from '@/store/NotificationStore'
 
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
@@ -43,6 +44,8 @@ export default function RootLayout() {
         return null
     }
 
+    const { unreadNotifications: notifications } = useNotificationStore();
+
     return (
         <Providers>
             <AuthWrapper />
@@ -69,8 +72,9 @@ export default function RootLayout() {
                             <Link href="/notifications" asChild>
                                 <TouchableOpacity
                                     onPress={() =>
-                                        console.log('Notifications  Pressed')
+                                        console.log('Notifications Pressed')
                                     }
+                                    style={{ position: 'relative' }}
                                 >
                                     <Ionicons
                                         name="notifications-outline"
@@ -78,6 +82,31 @@ export default function RootLayout() {
                                         color="#333"
                                         style={{ marginRight: 15 }}
                                     />
+                                    {notifications.length > 0 && (
+                                        <View
+                                            style={{
+                                                position: 'absolute',
+                                                top: -5,
+                                                right: 10,
+                                                backgroundColor: 'red',
+                                                borderRadius: 10,
+                                                width: 20,
+                                                height: 20,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    color: 'white',
+                                                    fontSize: 12,
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                {notifications.length}
+                                            </Text>
+                                        </View>
+                                    )}
                                 </TouchableOpacity>
                             </Link>
                         ),

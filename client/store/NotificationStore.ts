@@ -1,7 +1,6 @@
 import * as Notifications from "expo-notifications";
 import { Notification } from '@/constants/types';
 import {create} from 'zustand';
-import { useEffect, useRef, useState } from "react";
 import { Alert, Platform } from "react-native";
 import * as Device from 'expo-device';
 import Constants from 'expo-constants';
@@ -9,66 +8,32 @@ import Constants from 'expo-constants';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
 
 
 interface NotificationStore {
-  notifications: Notification[];
+  unreadNotifications: Notification[];
   addNotification: (dateTime: Date, title: string, body: string) => void;
+  scheduleNotification: (dateTime: Date, title: string, body: string) => void;
 }
 
 
 const useNotificationStore = create<NotificationStore>((set) => ({
-  notifications: [],
-  addNotification: (dateTime, title, body) => {
+  unreadNotifications: [],
+  addNotification: async(dateTime, title, body) => {
       const newNotification: Notification = {
           id: Date.now(),
           title,
           dateTime,
           body,
       };
-      set((state) => ({ notifications: [newNotification, ...state.notifications] }));
+      set((state) => ({ unreadNotifications: [newNotification, ...state.unreadNotifications] }));
   },
   scheduleNotification : schedulePushNotification,
 }));
-
-
-// const NotificationComponent: React.FC = () => {
-//   //const [expoPushToken, setExpoPushToken] = useState('');
-//   //const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
-// //   const [notification, setNotification] = useState<Notifications.Notification | undefined>(
-// //      undefined
-// //    );
-//   const notificationListener = useRef<Notifications.EventSubscription>();
-//   const responseListener = useRef<Notifications.EventSubscription>();
-
-//    useEffect(() => {
-//       registerForPushNotificationsAsync();//.then(token => token && setExpoPushToken(token));
-  
-//       if (Platform.OS === 'android') {
-//        // Notifications.getNotificationChannelsAsync().then(value => setChannels(value ?? []));
-//       }
-//       notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-//         //setNotification(notification);
-//       });
-  
-//       responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-//         console.log(response);
-//       });
-  
-//       return () => {
-//         notificationListener.current &&
-//           Notifications.removeNotificationSubscription(notificationListener.current);
-//         responseListener.current &&
-//           Notifications.removeNotificationSubscription(responseListener.current);
-//       };
-//     }, []);
-
-    
-// };
 
 
 async function registerForPushNotificationsAsync() {
@@ -80,6 +45,7 @@ async function registerForPushNotificationsAsync() {
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: '#FF231F7C',
+        
       });
     }
 
@@ -116,29 +82,17 @@ async function registerForPushNotificationsAsync() {
     return token;
   }
 
-async function schedulePushNotification(selectedDate: Date, selectedTime: Date) {
-    if (!selectedDate || !selectedTime) {
-      Alert.alert("Error", "Please select a date and time.");
-      return;
-    }
-    console.log("Scheduling at " + selectedDate + " time: " + selectedTime + " curr: " + new Date());
-    const targetTime = selectedTime;
-
-    // // Add the event to the reminders list
-    // const newReminder = {
-    //   date: selectedDate,
-    //   time: selectedTime.toLocaleTimeString(),
-    // };
-    // setReminders(prevReminders => [...prevReminders, newReminder]);
-
+async function schedulePushNotification(dateTime: Date, title: string, body: string) {
+    console.log('Scheduling notification');
+    await registerForPushNotificationsAsync();
     await Notifications.scheduleNotificationAsync({
       content: {
         title: '📅 Reminder',
-        body: "Time to get ready for fitness",
+        body: body,
       },
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
-        date: targetTime,
+        date: dateTime,
       },
     });
 

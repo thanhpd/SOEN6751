@@ -7,10 +7,12 @@ import useCalendarStore from '@/store/CalendarStore';
 import { useRoute } from '@react-navigation/native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import useNotificationStore from '@/store/NotificationStore';
 
 export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities }) => {
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const { scheduleNotification, addNotification } = useNotificationStore();
 
     const route = useRoute();
     const isInPersonScreen = route.name === 'InPerson';
@@ -25,6 +27,11 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
         setModalVisible(false);
     };
 
+
+    const showDummyNotification = () => {
+        scheduleNotification(new Date(Date.now() + 1000), 'Test Notification', 'This is a test notification');
+    };
+    
     const addEvent = useCalendarStore((state) => state.addEvent);
 
     const handleBook = (activity: Activity) => {
@@ -62,6 +69,11 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
                 }
             }
         });
+
+        if (activity.title.toLowerCase().includes('test')) {
+            addNotification(new Date(Date.now() + 1000), activity.title, activity.description);
+            showDummyNotification();
+        }
 
         handleClose();
     };
