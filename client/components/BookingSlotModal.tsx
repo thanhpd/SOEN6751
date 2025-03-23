@@ -26,7 +26,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isVisible, onClose, onConfi
 
     const getDisabledDates = () => {
         let disabledDates: { [key: string]: { disabled: boolean; disableTouchEvent: boolean } } = {};
-        const startDate = new Date('2025-04-01'); // Start from April 1st
+        const startDate = new Date(today); // Start from April 1st
         const endDate = new Date('2025-06-30');   // End on June 30th
 
         for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -69,7 +69,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isVisible, onClose, onConfi
                         ...getDisabledDates(),
                         [selected]: { selected: true, selectedColor: Colors.light.concordiaColor },
                     }}
-                    minDate="2025-04-01" // Prevent navigating before April
+                    minDate={today} // Prevent navigating before April
                     maxDate="2025-06-30" // Prevent navigating after June
                 />
 

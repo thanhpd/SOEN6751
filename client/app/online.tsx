@@ -14,7 +14,7 @@ export default function OnlinePage() {
     <View style={styles.container}>
      <HeroBanner title="Online Workouts Spring 2025"
         description="Stay fit and healthy from home."
-        date="From April 10 to June 30"
+        date="From Feb 10 to June 30"
         image={require('../assets/images/online.png')}
 />
 

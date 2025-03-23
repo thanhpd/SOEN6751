@@ -13,9 +13,10 @@ import QRCode from 'react-native-qrcode-svg'
 
 interface UserQRCodeModalProps {
     userData: {
-        name: string
+        firstName: string
+        lastName: string
         email: string
-        phone: string
+        studentId: string
     }
     closeModal: () => void
 }
@@ -133,7 +134,7 @@ export default function UserQRCodeModal({
 
                     {/* QR Code */}
                     <QRCode
-                        value={`${userData.name},${userData.email},${userData.phone}`}
+                        value={`${userData.firstName},${userData.lastName},${userData.email},${userData.studentId}`}
                         size={150}
                     />
 

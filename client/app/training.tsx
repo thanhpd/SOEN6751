@@ -111,7 +111,7 @@ export default function PersonalTrainingPage() {
     <ScrollView style={styles.container}>
       <HeroBanner title="Personal Training Spring 2025"
                                   description="helping you achieve your fitness goals."
-                                  date="From April 10 to June 30"
+                                  date="From Feb 10 to June 30"
                                   image={require('../assets/images/training.jpg')}
                               />
       <Text style = {styles.title}>Personal Training Packages</Text>

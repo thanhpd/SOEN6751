@@ -1,10 +1,16 @@
 import { Colors } from '@/constants/Colors'
 import React, { useState } from 'react'
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import { useAuth } from '@/hooks/useAuth'
 
 const ContactPage = () => {
-    const [name, setName] = useState('Younes Nouri')
-    const [email, setEmail] = useState('y_nouri@concordia.ca') // Pre-filled email
+
+const{currentUser} = useAuth();
+
+
+
+    const [name, setName] = useState(currentUser.firstName + " " + currentUser.lastName)
+    const [email, setEmail] = useState(currentUser.email) // Pre-filled email
     const [message, setMessage] = useState('')
 
     const handleSend = () => {

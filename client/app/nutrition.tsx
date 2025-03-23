@@ -87,7 +87,7 @@ export default function OnlinePage() {
         <View style={styles.container}>
             <HeroBanner title="Nutrition Consultancy Spring 2025"
                 description="Keep track of your macros."
-                date="From April 10 to June 30"
+                date="From Feb 10 to June 30"
                 image={require('../assets/images/nutrition.jpg')}
             />
 
