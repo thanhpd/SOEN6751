@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Modal from 'react-native-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Calendar } from 'react-native-calendars';
+import { Colors } from '@/constants/Colors';
 
 
 interface BookingTimeModalProps {
@@ -58,19 +59,9 @@ const BookingTimeModal: React.FC<BookingTimeModalProps> = ({ modalVisible, onClo
               </TouchableOpacity>
             ))}
 
-<TouchableOpacity
-    style={styles.closeButton}
-    onPress={() => {
-        if (selectedTime) {
-            onConfirm(selectedTime); // Send selected time
-            onClose(); // Close modal after confirmation
-        } else {
-            Alert.alert('Please select a time before confirming.');
-        }
-    }}
->
-    <Text style={styles.closeButtonText}>Confirm</Text>
-    </TouchableOpacity>
+           <View style ={{flexDirection :'row', gap : 50}}>
+
+
 
             <TouchableOpacity
               style={styles.closeButton}
@@ -79,6 +70,24 @@ const BookingTimeModal: React.FC<BookingTimeModalProps> = ({ modalVisible, onClo
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
+
+
+            <TouchableOpacity
+    style={[styles.confirmButton, !selectedTime && styles.disabledButton]}
+    onPress={() => {
+        if (selectedTime) {
+            onConfirm(selectedTime); // Send selected time
+            onClose(); // Close modal after confirmation
+        }
+    }}
+    disabled={!selectedTime} // Disable button if no time is selected
+>
+    <Text style={styles.closeButtonText}>Confirm</Text>
+</TouchableOpacity>
+
+
+    
+            </View> 
           </View>
         </View>
       </Modal>
@@ -117,7 +126,7 @@ const styles = StyleSheet.create({
     },
     buttonConfirm: {
         flex: 1,
-        backgroundColor: '#3498db',
+        backgroundColor: Colors.light.concordiaColor,
         padding: 10,
         borderRadius: 5,
         marginLeft: 5,
@@ -134,9 +143,10 @@ const styles = StyleSheet.create({
   modalContent: { backgroundColor: 'white', padding: 20, borderRadius: 10, width: 300, alignItems: 'center' },
   modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
   timeSlot: { padding: 15, backgroundColor: '#ddd', marginVertical: 5, width: '80%', alignItems: 'center', borderRadius: 5 },
-  selectedSlot: { backgroundColor: 'blue' },
+  selectedSlot: { backgroundColor: Colors.light.fadedconcordiaColor },
   timeText: { fontSize: 16, color: 'black' },
-  closeButton: { marginTop: 10, backgroundColor: 'red', padding: 10, borderRadius: 5 },
+  closeButton: { marginTop: 10, backgroundColor: 'gray', padding: 10, borderRadius: 5 },
+  confirmButton: { marginTop: 10, backgroundColor: Colors.light.concordiaColor, padding: 10, borderRadius: 5 },
   closeButtonText: { color: 'white', fontWeight: 'bold' },
 
   disabledButton: { backgroundColor: '#ccc' },

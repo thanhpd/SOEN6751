@@ -3,13 +3,18 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions, Modal, Button, ScrollView } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Colors } from '@/constants/Colors';
-
+import { useAuth } from '@/hooks/useAuth';
+import { router } from 'expo-router';
+import { setCurrentOrder } from '@/store/currentOrder';
+import { useAppDispatch } from '@/store';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
+
+
 const cards = [
     { 
-        id: '1', 
+        id: '4', 
         title: 'Weekly Membership', 
         price: '$35/week',
         duration: 7, // 7 days
@@ -17,7 +22,7 @@ const cards = [
         circleColor: '#2980b9'
     },
     { 
-        id: '2', 
+        id: '3', 
         title: 'Monthly Membership', 
         price: '$50/month',
         duration: 30, // 30 days
@@ -25,7 +30,7 @@ const cards = [
         circleColor: '#1e8449'
     },
     { 
-        id: '3', 
+        id: '2', 
         title: 'Quarterly Membership', 
         price: '$110/4 months',
         duration: 120, // 120 days
@@ -33,7 +38,7 @@ const cards = [
         circleColor: '#d35400'
     },
     { 
-        id: '4', 
+        id: '1', 
         title: 'Yearly Membership', 
         price: '$275/year',
         duration: 365, // 365 days
@@ -43,15 +48,20 @@ const cards = [
 ];
 export default function MmeberhipPage() {
 
+    const {currentUser} = useAuth();
+const dispatch = useAppDispatch();
+    
+    const expiryDate = new Date(currentUser.expiryDate).toDateString();
+
     const getFutureDate = (days: number) => {
-        const date = new Date();
-        date.setDate(date.getDate() + days);
-        return date.toDateString(); // Convert to readable format
+        const expiry = new Date(currentMembership.expiryDate);
+        expiry.setDate(expiry.getDate() + days); 
+        return expiry.toDateString(); 
     };
 
     const [currentMembership, setCurrentMembership] = useState({
         title: 'Weekly Membership',
-        expiryDate: getFutureDate(7),
+        expiryDate: expiryDate,
     });
 
     const [selectedMembership, setSelectedMembership] = useState<{ title: string; duration: number } | null>(null);
@@ -63,6 +73,32 @@ export default function MmeberhipPage() {
     };
 
     const confirmPurchase = () => {
+
+
+
+
+        const customOrder = {
+            id: '2',
+            product: {
+                id: '4',
+                name: 'Membership',
+                price: 90.0,
+                image: 'https://via.placeholder.com/150',
+                
+            },
+           
+            quantity: 1,
+            total: 90.0  + 3.5,
+            taxes: 3.5,
+            discount: 0.0,
+        };
+
+
+        dispatch(setCurrentOrder(customOrder));
+        
+        router.push('/order-review' as any);
+
+
         if (selectedMembership) {
             setCurrentMembership({
                 title: selectedMembership.title,

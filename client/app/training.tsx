@@ -9,6 +9,9 @@ import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/Col
 import HeroBanner from '@/components/HeroBanner';
 import BookingModal from '@/components/BookingSlotModal';
 import BookingTimeModal from '@/components/BookingTimeModal';
+import { setCurrentOrder } from '@/store/currentOrder';
+import { useAppDispatch } from '@/store';
+import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window'); // Get screen width
 
@@ -20,6 +23,9 @@ export default function PersonalTrainingPage() {
     { id: '4', title: '20', price: '900$',time: '5:30 PM - 6:30 PM', sessions: 20 },
 ];
   const { addEvent } = useCalendarStore();
+
+  const dispatch = useAppDispatch();
+  
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible2, setModalVisible2] = useState(false);
@@ -45,30 +51,60 @@ export default function PersonalTrainingPage() {
       const events = [];
       let currentDate = new Date(selectedDate);
 
-      for (let i = 0; i < sessions; i++) {
-          events.push({
-              id: uuidv4(),
-              title: 'Personal Training',
-              date: currentDate.toISOString().split('T')[0],
-              selected: true,
-              selectedColor: '#EC7063', // Example color
-              user_id: 'default_user', // Replace with actual user ID if available
-              activity: {
-                  title: 'Personal Training',
-                  instructor: 'Jane Smith',
-                  location: 'Concordia Gym',
-                  days: currentDate.toLocaleDateString('en-US', { weekday: 'long' }),
-                  time: selectedTime,
-                  description: 'Learn to diet Properly.',
-                  price: 90,
-                  type: 'Personal' as 'Personal',
-              }
-          });
+      const customOrder = {
+        id: '2',
+        product: {
+            id: '4',
+            name: 'Nutrition Consultancy',
+            price: 90.0,
+            image: 'https://via.placeholder.com/150',
+            
+        },
+        activity: {
+            date : selectedDate ? selectedDate.toISOString().split('T')[0] : '',
+            time : time,
+            type : 'Nutrition',
+            
+            Instructor: 'Jenny Cheung',
+            location : 'Online',
+            description : 'Learn to diet Properly.'
 
-          currentDate.setDate(currentDate.getDate() + 7);
-      }
+        },
+        quantity: 1,
+        total: 90.0  + 3.5,
+        taxes: 3.5,
+        discount: 0.0,
+    };
 
-      events.forEach(event => addEvent(event));
+
+    dispatch(setCurrentOrder(customOrder));
+            
+                    router.push('/order-review' as any);
+
+      // for (let i = 0; i < sessions; i++) {
+      //     events.push({
+      //         id: uuidv4(),
+      //         title: 'Personal Training',
+      //         date: currentDate.toISOString().split('T')[0],
+      //         selected: true,
+      //         selectedColor: '#EC7063', // Example color
+      //         user_id: 'default_user', // Replace with actual user ID if available
+      //         activity: {
+      //             title: 'Personal Training',
+      //             instructor: 'Jane Smith',
+      //             location: 'Concordia Gym',
+      //             days: currentDate.toLocaleDateString('en-US', { weekday: 'long' }),
+      //             time: selectedTime,
+      //             description: 'Learn to diet Properly.',
+      //             price: 90,
+      //             type: 'Personal' as 'Personal',
+      //         }
+      //     });
+
+      //     currentDate.setDate(currentDate.getDate() + 7);
+      // }
+
+      // events.forEach(event => addEvent(event));
   };
   
   return (

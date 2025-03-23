@@ -127,8 +127,9 @@ export default function UserQRCodeModal({
                     ]}
                     {...panResponder.panHandlers} // Attach pan handlers
                 >
-                    <Text style={styles.userName}>{userData.name}</Text>
-                    <Text style={styles.userEmail}>{userData.email}</Text>
+                    <Text style={styles.userName}>{userData.firstName} {userData.lastName}</Text>
+                    
+                    <Text style={styles.userEmail}>{userData.studentId}</Text>
 
                     {/* QR Code */}
                     <QRCode

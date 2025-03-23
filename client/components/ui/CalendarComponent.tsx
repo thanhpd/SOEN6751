@@ -93,7 +93,7 @@ const CalendarComponent = () => {
 
     // console.log("Current events in store:", events);
 
-    console.log("Current events store:", calendarEvents);
+    //console.log("Current events store:", calendarEvents);
     const [noEventModalVisible, setNoEventModalVisible] = useState<boolean>(false)
 
     const handleDayPress = (day: { dateString: string }) => {

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Modal from 'react-native-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Calendar } from 'react-native-calendars';
+import { Colors } from '@/constants/Colors';
 
 
 interface BookingModalProps {
@@ -66,7 +67,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isVisible, onClose, onConfi
                     }}
                     markedDates={{
                         ...getDisabledDates(),
-                        [selected]: { selected: true, selectedColor: 'blue' },
+                        [selected]: { selected: true, selectedColor: Colors.light.concordiaColor },
                     }}
                     minDate="2025-04-01" // Prevent navigating before April
                     maxDate="2025-06-30" // Prevent navigating after June
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     },
     buttonConfirm: {
         flex: 1,
-        backgroundColor: '#3498db',
+        backgroundColor: Colors.light.concordiaColor,
         padding: 10,
         borderRadius: 5,
         marginLeft: 5,
