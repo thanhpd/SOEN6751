@@ -18,6 +18,7 @@ interface NotificationStore {
   unreadNotifications: Notification[];
   addNotification: (dateTime: Date, title: string, body: string) => void;
   scheduleNotification: (dateTime: Date, title: string, body: string) => void;
+  clearUnreadNotifications: () => void;
 }
 
 
@@ -33,6 +34,7 @@ const useNotificationStore = create<NotificationStore>((set) => ({
       set((state) => ({ unreadNotifications: [newNotification, ...state.unreadNotifications] }));
   },
   scheduleNotification : schedulePushNotification,
+  clearUnreadNotifications: () => set({ unreadNotifications: [] }),
 }));
 
 

@@ -1,11 +1,13 @@
+import useNotificationStore from '@/store/NotificationStore';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import useCalendarStore from '@/store/CalendarStore';
 
 const NotificationPage = () => {
-    const { notifications } = useCalendarStore();
-
+    const { unreadNotifications, clearUnreadNotifications } = useNotificationStore();
+    const notifications = unreadNotifications.slice().sort((a, b) => b.dateTime.getTime() - a.dateTime.getTime());
+    const clear = () => clearUnreadNotifications();
+   // clear();
     return (
         <View style={styles.container}>
             <View style={styles.notificationContainer}>
@@ -22,10 +24,10 @@ const NotificationPage = () => {
                                     style={{ marginRight: 15 }}
                                 />
                                 <View style={styles.headerColumn}>
-                                    <Text style={styles.message}>{notification.message}</Text>
-                                    <Text style={styles.details}>{notification.details}</Text>
+                                    <Text style={styles.message}>{notification.title}</Text>
+                                    <Text style={styles.details}>{notification.body}</Text>
                                 </View>
-                                <Text style={styles.date}>{notification.date}</Text>
+                                <Text style={styles.date}>{notification.dateTime.toDateString()}</Text>
                             </View>
                         ))
                     )}
