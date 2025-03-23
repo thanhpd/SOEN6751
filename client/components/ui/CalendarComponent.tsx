@@ -56,8 +56,8 @@ const CalendarComponent = () => {
 
 
 const activityColors = {
-    InPerson: 'lightblue',
-    Online: 'lightgreen',
+    InPerson: 'blue',
+    Online: 'green',
     Personal: 'orange',
     Nutrition: 'red',
 
@@ -68,6 +68,7 @@ const activityColors = {
         acc[event.date].dots.push({
             color: highlightColor || 'gray',
             key: uuidv4(),
+            
         });
     }
 
@@ -92,6 +93,11 @@ const activityColors = {
                         todayTextColor: '#000',
                         monthTextColor: '#000',
                         arrowColor: '#000',
+                        dotStyle: {
+                            width: 5, // Increase the width of the dots
+                            height: 5, // Increase the height of the dots
+                            borderRadius: 5, // Ensure the dots remain circular
+                        },
                     }}
                 />
             </View>
