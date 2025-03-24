@@ -4,7 +4,7 @@
         "slug": "gym-app-client",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/images/notification-icon.png",
+        "icon": "./assets/images/le_gym.png",
         "scheme": "myapp",
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
