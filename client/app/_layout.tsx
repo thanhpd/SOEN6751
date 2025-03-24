@@ -12,11 +12,7 @@ import AuthWrapper from '@/app/auth/AuthWrapper';
 import { Asset } from 'expo-asset';
 import Splash from './splash';
 import { Link, Stack } from 'expo-router'
-import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
-import * as SplashScreen from 'expo-splash-screen'
-import { StatusBar } from 'expo-status-bar'
 import { Image, TouchableOpacity, View, Text } from 'react-native'
-import { useColorScheme } from '@/hooks/useColorScheme'
 import { NAV_THEME } from '@/lib/constants'
 import { persistor, store } from '../store'
 
@@ -31,7 +27,7 @@ import useNotificationStore from '@/store/NotificationStore'
 
 
 
-    
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 
@@ -97,17 +93,17 @@ const LIGHT_THEME: Theme = {
     }
   }, [fontsLoaded]);
 
-  
+
   if (!fontsLoaded) {
     return null;
   }
 
-  
+
   if (showLoadingScreen) {
     return <Splash />;
   }
 
- 
+
   if (!appReady) {
     return null;
   }
@@ -178,7 +174,7 @@ const LIGHT_THEME: Theme = {
                                         </View>
                                     )}
                                 </TouchableOpacity>
-                               
+
                             </Link>
                         ),
                     }}
@@ -241,7 +237,7 @@ const LIGHT_THEME: Theme = {
                     options={{ title: 'Terms and Conditions' }}
                 />
 
-            
+
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}
@@ -253,7 +249,7 @@ const LIGHT_THEME: Theme = {
                         headerTitle: 'Edit Profile',
                     }}
                 />
-                
+
             </Stack>
             <StatusBar style="auto" />
             <ToastManager
@@ -288,4 +284,3 @@ const LIGHT_THEME: Theme = {
       )
   }
 }
-

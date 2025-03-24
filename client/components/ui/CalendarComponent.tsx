@@ -16,10 +16,10 @@ import { useAppDispatch, useAppSelector } from '@/store'
 const defaultBookedEvents: CalendarEvent[] = [
     {
       id: '2025-04-03',
-      
+
       date: '2025-04-04',
-      
-      
+
+
         activity: {
         title: 'Cardio Dance',
         instructor: 'Danielle Hubbard',
@@ -30,16 +30,16 @@ const defaultBookedEvents: CalendarEvent[] = [
         days: 'Monday, Wednesday, Friday',
         time: '5:30 PM - 6:30 PM',
         image: '../../assets/images/cardio.png',
-        
+
         type: 'InPerson' // Added type property
       },
       user_id : "3"
     },
   {
     id: '2025-03-25',
-    
+
     date: '2025-03-25',
-    
+
         activity: {
         title: 'Cooking Workshop',
         instructor: 'Chef Gordon',
@@ -48,10 +48,10 @@ const defaultBookedEvents: CalendarEvent[] = [
         time: '4:00 PM - 6:00 PM',
         description: 'Learn to cook delicious meals.',
         price: 25,
-        
+
         type: 'Online' // Added type property
     },
-    
+
     user_id: "3"
   }
 ];
@@ -80,8 +80,8 @@ const CalendarComponent = () => {
 //     });
 //   }, [userId, dispatch]);
 
-    
-    
+
+
    const calendarEvents = calendarEventss.filter(event => event.user_id === userId);
 
     // console.log("Current events in store:", events);
@@ -91,14 +91,14 @@ const CalendarComponent = () => {
 
     const handleDayPress = (day: { dateString: string }) => {
         const selectedDay: string = day.dateString
-        const event = Array.isArray(calendarEvents) 
-            ? calendarEvents.find((calendarEvent: CalendarEvent) => calendarEvent.date === selectedDay) 
+        const event = Array.isArray(calendarEvents)
+            ? calendarEvents.find((calendarEvent: CalendarEvent) => calendarEvent.date === selectedDay)
             : undefined;
 
         if (event) {
             setSelectedEvent(event ?? null)
         const eventList = [event]; // Wrap the single event in an array
-    
+
         if (eventList.length > 0) {
             console.log('Activities for selected day:', eventList)
             setSelectedEvent(event)
@@ -138,13 +138,13 @@ const activityColors = {
     Nutrition: 'red',
 
     };
-    
+
     const highlightColor = event.activity ? activityColors[event.activity.type as keyof typeof activityColors] || 'gray' : 'gray';
     if (!isDuplicate) {
         acc[event.date].dots.push({
             color: highlightColor || 'gray',
             key: uuidv4(),
-            
+
         });
     }
 
@@ -174,22 +174,6 @@ const activityColors = {
                             height: 5, // Increase the height of the dots
                             borderRadius: 5, // Ensure the dots remain circular
                         },
-                    }}
-                />
-            </View>
-            <View className="h-50 w-50">
-                <Calendar
-                    onDayPress={handleDayPress}
-                    current={'2025-03-20'}
-                    markedDates={markedDates}
-                    markingType={'multi-dot'}
-                    theme={{
-                        calendarBackground: '#fff',
-                        textSectionTitleColor: '#000',
-                        dayTextColor: '#000',
-                        todayTextColor: '#000',
-                        monthTextColor: '#000',
-                        arrowColor: '#000',
                     }}
                 />
             </View>

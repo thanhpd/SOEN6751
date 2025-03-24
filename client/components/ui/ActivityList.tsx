@@ -38,7 +38,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
             `${selectedActivity?.title} is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`
         );
     };
-    
+
     const addEvent = useCalendarStore((state) => state.addEvent);
 
     const handleBook = (activity: Activity) => {
@@ -55,87 +55,86 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
                     let nextDate = new Date(today);
                     nextDate.setDate(today.getDate() + ((7 + dayIndex - today.getDay()) % 7) + (weekOffset * 7));
 
-                return nextDate.toISOString().split('T')[0];
-            }
-        const customOrder = {
+                    return nextDate.toISOString().split('T')[0];
+                }
+                const customOrder = {
                     id: '2',
                     product: {
                         id: '4',
                         name: activity.title,
                         price: activity.price,
                         image: 'https://via.placeholder.com/150',
-                        
+
                     },
                     activity: {
-                        date : formattedDate,
-                        time : activity.time,
-                        type : activity.type,
+                        date: formattedDate,
+                        time: activity.time,
+                        type: activity.type,
                         days: activity.days,
-                        
+
                         Instructor: activity.instructor,
-                        location : activity.location,
-                        description : activity.description
-        
+                        location: activity.location,
+                        description: activity.description
+
                     },
                     quantity: 1,
-                    total: activity.price ,
+                    total: activity.price,
                     taxes: 0,
                     discount: 0.0,
                 };
-        
+
                 dispatch(setCurrentOrder(customOrder));
-        
+
                 router.push('/order-review' as any);
-        
-            
-            const id = uuidv4();
-            // addEvent({
-            //     id: id,
-            //     date: formattedDate,
-            //     activity: activity,
-            // });
 
 
-            // **Add Notification**
-            const existingEvent = useCalendarStore.getState().events.find(event => event.id === id);
-            if (!existingEvent) {
-                // addNotification(
-                //     `${activity.title}`,
-                //     `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
-                // );
-            }
+                const id = uuidv4();
+                // addEvent({
+                //     id: id,
+                //     date: formattedDate,
+                //     activity: activity,
+                // });
+
+
+                // **Add Notification**
+                const existingEvent = useCalendarStore.getState().events.find(event => event.id === id);
+                if (!existingEvent) {
+                    // addNotification(
+                    //     `${activity.title}`,
+                    //     `Your class is booked for ${day} at ${activity.time} at ${activity.location}.`
+                    // );
+                }
+
+                if (activity.title.toLowerCase().includes('test')) {
+                    addNotification(new Date(Date.now() + 1000),
+                        `${selectedActivity?.title}`,
+                        `The activity is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`);
+                    showDummyNotification();
+                }
+
+                handleClose();
+            };
         });
 
-        if (activity.title.toLowerCase().includes('test')) {
-            addNotification(new Date(Date.now() + 1000), 
-            `${selectedActivity?.title}`,
-            `The activity is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`);
-            showDummyNotification();
-        }
-
-        handleClose();
-    };
-
-    return (
-        <View style={{ flex: 1 }}>
-            <FlatList
-                data={activities}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
-                        <InPersonActivityItem activity={item} />
-                    </TouchableOpacity>
-                )}
-                keyExtractor={(item, index) => index.toString()}
-            />
-            {modalVisible && selectedActivity && (
-                <ActivityDetailsPopup
-                    visible={modalVisible}
-                    activity={selectedActivity}
-                    handleClose={handleClose}
-                    handleBook={() => handleBook(selectedActivity)}
-                />
-            )}
-        </View>
-    );
-};
-
+            return (
+                <View style={{ flex: 1 }}>
+                    <FlatList
+                        data={activities}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.7}>
+                                <InPersonActivityItem activity={item} />
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                    {modalVisible && selectedActivity && (
+                        <ActivityDetailsPopup
+                            visible={modalVisible}
+                            activity={selectedActivity}
+                            handleClose={handleClose}
+                            handleBook={() => handleBook(selectedActivity)}
+                        />
+                    )}
+                </View>
+            );
+        }}
