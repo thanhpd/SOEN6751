@@ -7,7 +7,8 @@ import { ControlledInput } from '@/components/primitives/input'
 import { Button } from '@/components/primitives/button'
 import { Portal } from '@rn-primitives/portal'
 import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon'
-
+import { useForgetPassword } from '@/hooks/useForgetPassword'
+import { BaseAccount } from '@/constants/types'
 const ResetPasswordSchema = zod
     .object({
         newPassword: zod.string().min(2),
@@ -23,9 +24,11 @@ export type TResetPasswordSchema = zod.infer<typeof ResetPasswordSchema>
 type Props = {
     onGoBack: () => void
     onSuccess: (form: TResetPasswordSchema) => void
+    user: BaseAccount
 }
 
-const ResetPasswordForm = ({ onGoBack, onSuccess }: Props) => {
+const ResetPasswordForm = ({ onGoBack, onSuccess, user }: Props) => {
+    const { resetPassword } = useForgetPassword()
     const { handleSubmit, control } = useForm<TResetPasswordSchema>({
         mode: 'onChange',
         resolver: zodResolver(ResetPasswordSchema),
@@ -36,6 +39,7 @@ const ResetPasswordForm = ({ onGoBack, onSuccess }: Props) => {
     })
 
     const onSubmit = (data: TResetPasswordSchema) => {
+        resetPassword({ id: user.id, password: data.newPassword })
         onSuccess(data)
     }
 

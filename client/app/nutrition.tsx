@@ -1,21 +1,58 @@
-import React from 'react'
-import {
-    View,
-    Text,
-    StyleSheet,
-    Dimensions,
-    Image,
-    ScrollView,
-} from 'react-native'
-import HeroBanner from '@/components/HeroBanner'
-import SearchBar from '@/components/SearchBar'
-import { InPersonActivityList } from '@/components/ui/InPersonActivityList'
-import { Colors } from '@/constants/Colors'
-import { Button } from 'react-native-paper'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import HeroBanner from '@/components/HeroBanner';
+import { Colors } from '@/constants/Colors';
+import BookingModal from '@/components/BookingSlotModal';
+import BookingTimeModal from '@/components/BookingTimeModal';
+import useCalendarStore from '@/store/CalendarStore'
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 const { width } = Dimensions.get('window')
 
 export default function OnlinePage() {
+
+    const { addEvent} = useCalendarStore()
+
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible2, setModalVisible2] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedTime, setSelectedTime] = useState('12:00 PM - 1:00 PM');
+
+    const handleConfirm = (date: Date) => {
+        setSelectedDate(date);
+        setModalVisible(false);
+    
+        // Introduce a delay before opening the second modal
+        setTimeout(() => {
+            setModalVisible2(true);
+        }, 500);  // Delay in milliseconds (1000ms = 1 second)
+    };
+
+
+    const handleConfirm2 = (time: string) => {
+        setSelectedTime(time);
+        
+        setModalVisible2(false);
+        addEvent({
+            id: uuidv4(),
+            date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
+
+            
+            activity: {
+                title: 'Nutrition Consultancy',
+                instructor: 'Jenny Cheung',
+                location: 'Online',
+                days: 'Tuesday',
+                time: selectedTime,
+                description: 'Learn to diet Properly.',
+                price: '$90',
+                type: 'Nutrition'
+            }
+        })
+    };
+
+
     return (
         <View style={styles.container}>
             <HeroBanner
@@ -39,9 +76,25 @@ export default function OnlinePage() {
                     </Text>
                     <Text style={styles.cardText}>Saturdays - 9-11 a.m</Text>
                     <Text style={styles.cardText}>Each Session $90</Text>
-                    <View style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
                         <Text style={styles.cardText2}>Register Now</Text>
-                    </View>
+                    </TouchableOpacity>
+
+                    <BookingModal
+                        isVisible={isModalVisible}
+                        onClose={() => setModalVisible(false)}
+                        onConfirm={handleConfirm}
+                    />
+
+                    <BookingTimeModal 
+                    modalVisible={isModalVisible2}
+                    onClose={() => setModalVisible2(false)}
+                    onConfirm={handleConfirm2}
+                    date={selectedDate || new Date()}/>
+                    
+
+
+
                 </View>
 
                 <View style={styles.imageSection}>
@@ -54,32 +107,31 @@ export default function OnlinePage() {
 
             <Text style={styles.title}>Diet Tips</Text>
 
-            <View style={styles.tipsContainer}>
+            <View style={styles.tipsContainer}  >
+
                 <View style={styles.tips}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/images/tip.png')}
-                    ></Image>
-                    <Text style={styles.tipText}>
-                        Switch up your morning routine with this simple combo
-                        you can prepare the night before Greek or plain yogurt,
-                        fruit and muesli. A combo that's easy to pack, delivers
-                        on texture and is nutritious..
-                    </Text>
+
+                    <Image style={styles.image} source={require('../assets/images/tip.png')}></Image>
+                    <Text style={styles.tipText}>Switch up your morning routine with this simple combo you can prepare the night before
+                        Greek or plain yogurt, fruit and muesli. A combo that's easy to pack,
+                        delivers on texture and is nutritious..</Text>
+
+
+
                 </View>
 
                 <View style={styles.tips}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/images/tip2.png')}
-                    ></Image>
-                    <Text style={styles.tipText}>
-                        Research suggests that eating patterns similar to
-                        the Mediterranean diet (rich in fruits, vegetables, nuts
-                        and whole-grains and low in red meat and processed
-                        food) can support a positive mood.
-                    </Text>
+
+                    <Image style={styles.image} source={require('../assets/images/tip2.png')}></Image>
+                    <Text style={styles.tipText}>Research suggests that eating patterns similar
+                        to the Mediterranean diet (rich in fruits, vegetables, nuts and whole-grains
+                        and low in red meat and processed food) can support a positive mood.</Text>
+
+
+
                 </View>
+
+
             </View>
         </View>
     )
@@ -99,6 +151,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: width - 40,
         marginBottom: 20,
+
+
     },
     cardText: {
         color: 'black',
@@ -161,6 +215,7 @@ const styles = StyleSheet.create({
     },
 
     tips: {
+
         flexDirection: 'column',
         alignItems: 'flex-start',
 
@@ -169,6 +224,7 @@ const styles = StyleSheet.create({
     },
 
     tipsContainer: {
+
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -178,6 +234,7 @@ const styles = StyleSheet.create({
     },
 
     tipText: {
+
         fontSize: 10,
     },
 })

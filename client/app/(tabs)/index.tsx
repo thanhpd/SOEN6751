@@ -5,6 +5,7 @@ import {
     View,
     ScrollView,
     TouchableOpacity,
+    Pressable,
 } from 'react-native'
 import { HelloWave } from '@/components/HelloWave'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -20,6 +21,8 @@ import UserQRCodeModal from '@/components/UserQRCodeModal'
 import BookingCard2 from '@/components/BookingCard2'
 
 import BookingCard from '@/components/BookingCard'
+import { router } from 'expo-router'
+import { Text } from 'react-native'
 
 export default function HomeScreen() {
     const upcomingBookings = [
@@ -119,6 +122,7 @@ export default function HomeScreen() {
             >
                 {upcomingBookings.map((booking, index) => (
                     <View
+                        key={index}
                         style={[
                             styles.bookingCardContainer,
                             { marginLeft: index === 0 ? 10 : 0 },
@@ -128,6 +132,12 @@ export default function HomeScreen() {
                     </View>
                 ))}
             </ScrollView>
+
+            <View>
+                <Pressable onPress={() => router.push('/order-review')}>
+                    <Text>Test Order</Text>
+                </Pressable>
+            </View>
 
             {/* QR Code Modal */}
             {isModalVisible && (

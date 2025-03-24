@@ -3,9 +3,11 @@ import { View, Text, Pressable } from 'react-native'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
+import { useSignOut } from '@/hooks/useSignOut'
 
 const SettingsSection: React.FC = () => {
     const router = useRouter() // Use Expo Router for navigation
+    const signOut = useSignOut()
     return (
         <View className="mt-2 bg-white">
             <View className="p-4">
@@ -82,7 +84,9 @@ const SettingsSection: React.FC = () => {
 
                 <View
                     className="flex-row items-center justify-between mb-1"
-                    onTouchEnd={() => console.log('payment pressed')}
+                    onTouchEnd={() => {
+                        router.push('/payment-manager')
+                    }}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">
@@ -208,7 +212,7 @@ const SettingsSection: React.FC = () => {
 
                 <View
                     className="flex-row items-center justify-between"
-                    onTouchEnd={() => console.log('log out pressed')}
+                    onTouchEnd={signOut}
                 >
                     <View className="flex-row items-center space-x-3">
                         <View className="w-10 h-10 items-center justify-center">

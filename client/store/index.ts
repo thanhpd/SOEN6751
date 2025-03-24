@@ -1,12 +1,34 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import authSliceReducers from '@/app/auth/authSlice'
+import accountDBSliceReducers from './accountDB'
+import membershipDBSliceReducers from './membershipDB'
+import { persistStore, persistReducer } from 'redux-persist'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import currentUserIdSliceReducers from './currentUserId'
+import tmpUserSliceReducers from './tmpUser'
+import paymentMethodDBSliceReducers from './paymentMethodDB'
+import currentOrderSliceReducers from './currentOrder'
+
+const persistConfig = {
+    key: 'root',
+    storage: AsyncStorage,
+    blacklist: ['currentUserId', 'tmpUser', 'currentOrder'],
+}
+
+const rootReducer = combineReducers({
+    accountDB: accountDBSliceReducers,
+    membershipDB: membershipDBSliceReducers,
+    currentUserId: currentUserIdSliceReducers,
+    tmpUser: tmpUserSliceReducers,
+    paymentMethodDB: paymentMethodDBSliceReducers,
+    currentOrder: currentOrderSliceReducers,
+})
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    reducer: {
-        auth: authSliceReducers,
-    },
+    reducer: persistedReducer,
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,
@@ -22,3 +44,4 @@ export type AppDispatch = typeof store.dispatch
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
 export const useAppSelector = useSelector.withTypes<RootState>()
+export const persistor = persistStore(store)

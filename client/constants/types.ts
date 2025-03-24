@@ -7,7 +7,8 @@ export interface Activity {
     time: string;
     days: string;
     image?: string;
-    inPerson?: boolean
+    type?: 'InPerson' | 'Online' | 'Personal' | 'Nutrition';
+    category?: string;
   }
   
   export interface Category {
@@ -15,12 +16,18 @@ export interface Activity {
     isActive?: boolean;
   }
   
-  export interface CalendarEvent {
-    id: string;
-    title: string;
-    date: string; // Date of the event, can be adjusted based on your needs    
-    selected: boolean, 
-    selectedColor: string,
-    activity?: Activity;
-  }
   
+export interface CalendarEvent {
+  id: string;
+  date: string;
+  activity: Activity;
+  // bookedActivities: Activity[];
+}
+
+
+export interface Notification {
+  id: number;
+  title: string;
+  dateTime: Date;
+  body: string;
+}

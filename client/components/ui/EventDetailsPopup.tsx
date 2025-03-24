@@ -1,39 +1,52 @@
-import React from 'react'
-import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
+import React, { useState } from 'react'
+import {
+    Modal,
+    View,
+    Text,
+    TouchableOpacity,
+    FlatList,
+    ScrollView,
+} from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
 import CancelBookingWarning from './CancelBookingWarning'
-import useCalendarStore from '@/stores/CalendarStore'
 import { CalendarEvent } from '@/constants/types'
+import useCalendarStore from '@/store/CalendarStore'
 
 interface EventDetailsPopupProps {
-    visible: boolean
-    event: CalendarEvent
+    visible: boolean,
+    events: CalendarEvent[],
     close: () => void
 }
 
 const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     visible,
-    event,
+    events,
     close: handleClose,
 }) => {
-    const [showCancelWarning, setShowCancelWarning] = React.useState(false)
-    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore()
-    const activity = event.activity ?? {
-        title: '',
-        instructor: '',
-        location: '',
-        days: '',
-        time: '',
-    }
+    const [showCancelWarning, setShowCancelWarning] = useState(false)
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const { removeEvent } = useCalendarStore();
 
+    const activities = events.map(event => event.activity);    
+    
     const handleCancelBooking = () => {
-        const eventToCancel = events.find(e => e.id === event?.id)
+        const eventToCancel = events[currentIndex];
         if (eventToCancel) {
             removeEvent(eventToCancel.id)
             handleClose()
         }
     }
+
+    const handleNext = () => {
+        setCurrentIndex(prevIndex =>
+            prevIndex < activities.length - 1 ? prevIndex + 1 : prevIndex
+        )
+    }
+    const handlePrevious = () => {
+        setCurrentIndex(prevIndex => (prevIndex > 0 ? prevIndex - 1 : 0))
+    }
+
     return (
         <Modal
             animationType="slide"
@@ -43,51 +56,57 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
         >
             <View className="flex-1 justify-center items-center bg-black/50">
                 <View className="w-4/5 bg-white p-4 rounded-lg">
-                    {/* Header */}
-                    <View className="flex-row justify-between items-center mb-2">
-                        <Text className="text-lg font-bold text-center w-full">
-                            Event Details
-                        </Text>
-                    </View>
-
-                    {/* Event Details */}
-                    <Text className="text-xl font-bold mb-1">
-                        {activity.title}
+                    <Text className="text-lg font-bold text-center mb-2">
+                        Event Details
                     </Text>
-                    <Text className="mb-1">{activity.instructor}</Text>
-                    <View className="flex-row items-center">
-                        <Entypo name="location" size={15} color="black" />
-                        <Text className="ml-2 font-bold">
-                            {activity.location}
-                        </Text>
-                    </View>
-                    <View className="flex-row items-center">
-                        <FontAwesome name="calendar" size={15} color="black" />
-                        <Text className="ml-2 font-bold">{activity.days}</Text>
-                    </View>
-                    <View className="flex-row items-center">
-                        <AntDesign
-                            name="clockcircleo"
-                            size={15}
-                            color="black"
-                        />
-                        <Text className="ml-2 font-bold">{activity.time}</Text>
+
+                    <View className="flex-row items-center justify-between mb-2">
+                        <TouchableOpacity onPress={handlePrevious} className='p-3'>
+                            <AntDesign name="left" size={20} color="black" />
+                        </TouchableOpacity>
+
+                        <ScrollView className="w-4/5">
+                            <Text className="text-xl font-bold mb-1">
+                                {activities[currentIndex].title}
+                            </Text>
+                            <Text className="mb-1">
+                                {activities[currentIndex].instructor}
+                            </Text>
+                            <View className="flex-row items-center">
+                                <Entypo name="location" size={15} color="black" />
+                                <Text className="ml-2 font-bold">
+                                    {activities[currentIndex].location}
+                                </Text>
+                            </View>
+                            <View className="flex-row items-center">
+                                <FontAwesome name="calendar" size={15} color="black" />
+                                <Text className="ml-2 font-bold">
+                                    {activities[currentIndex].days}
+                                </Text>
+                            </View>
+                            <View className="flex-row items-center">
+                                <AntDesign name="clockcircleo" size={15} color="black" />
+                                <Text className="ml-2 font-bold">
+                                    {activities[currentIndex].time}
+                                </Text>
+                            </View>
+                        </ScrollView>
+
+                        <TouchableOpacity onPress={handleNext} className='p-3'>
+                            <AntDesign name="right" size={20} color="black" />
+                        </TouchableOpacity>
                     </View>
 
-                    <View className="flex-row justify-between mt-2">
-                        {/* Close Button */}
+                    <View className="flex-row justify-between mt-4">
                         <TouchableOpacity
                             onPress={handleClose}
-                            className="bg-white  px-10 py-3 rounded-lg border border-gray-300"
+                            className="bg-white px-10 py-3 rounded-lg border border-gray-300"
                         >
-                            <Text className="text-center text-gray-600">
-                                Close
-                            </Text>
+                            <Text className="text-center text-gray-600">Close</Text>
                         </TouchableOpacity>
-                        {/* Book Button */}
                         <TouchableOpacity
                             onPress={() => setShowCancelWarning(true)}
-                            className="bg-blue-600 p-3 rounded-lg "
+                            className="bg-blue-600 p-3 rounded-lg"
                             style={{
                                 backgroundColor: Colors.concordia.background,
                             }}
@@ -96,16 +115,16 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                                 Cancel Booking
                             </Text>
                         </TouchableOpacity>
-                        {showCancelWarning && (
-                            <CancelBookingWarning
-                                visible={showCancelWarning}
-                                handleClose={() => setShowCancelWarning(false)}
-                                handleConfirm={handleCancelBooking}
-                            />
-                        )}
                     </View>
                 </View>
             </View>
+            {showCancelWarning && (
+                <CancelBookingWarning
+                    visible={showCancelWarning}
+                    onClose={() => setShowCancelWarning(false)}
+                    onCancel={handleCancelBooking}
+                />
+            )}
         </Modal>
     )
 }

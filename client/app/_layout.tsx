@@ -8,16 +8,13 @@ import { Image, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
-
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-
-import { useColorScheme } from '@/hooks/useColorScheme'
 import { NAV_THEME } from '@/lib/constants'
-import { store } from '../store'
+import { persistor, store } from '../store'
 import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
-import SignOutButton from '@/components/ui/SignOutButton'
 import ToastManager, { Toast } from 'toastify-react-native'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const LIGHT_THEME: Theme = {
     ...DefaultTheme,
@@ -32,9 +29,6 @@ export const unstable_settings = {
 }
 export default function RootLayout() {
     const [loaded] = useFonts({
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-        Mirza: require('../assets/fonts/Mirza-Regular.ttf'),
-        Poppins: require('../assets/fonts/Poppins-Light.ttf'),
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
@@ -114,9 +108,47 @@ export default function RootLayout() {
                         headerBackTitle: 'Go Back',
                     }}
                 />
+
+                <Stack.Screen
+                    name="order-review"
+                    options={{
+                        title: 'My Order',
+                    }}
+                />
+
+                <Stack.Screen
+                    name="order-payment"
+                    options={{
+                        title: 'Payment Details',
+                    }}
+                />
+
+                <Stack.Screen
+                    name="payment-manager"
+                    options={{
+                        title: 'Payment Details',
+                    }}
+                />
+                <Stack.Screen
+                    name="order-completed"
+                    options={{
+                        headerTitle: '',
+                    }}
+                />
+                <Stack.Screen
+                    name="terms"
+                    options={{ title: 'Terms and Conditions' }}
+                />
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="ProfileDetails"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Edit Profile',
+                    }}
                 />
             </Stack>
             <StatusBar style="auto" />
@@ -143,7 +175,11 @@ function Providers({ children }: { children: React.ReactNode }) {
     return (
         <GestureHandlerRootView className="flex-1">
             <Provider store={store}>
-                <ThemeProvider value={LIGHT_THEME}>{children}</ThemeProvider>
+                <PersistGate loading={null} persistor={persistor}>
+                    <ThemeProvider value={LIGHT_THEME}>
+                        {children}
+                    </ThemeProvider>
+                </PersistGate>
             </Provider>
         </GestureHandlerRootView>
     )
