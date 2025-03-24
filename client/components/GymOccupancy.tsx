@@ -23,7 +23,10 @@ export const GymOccupancy: React.FC = () => {
             <OccupancyTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
             {activeTab === 'realtime' ? (
-                <RealTimeGraph />
+                <View className="mt-6">
+                    <RealTimeGraph data={barData} />
+                    <OccupancyLegend />
+                </View>
             ) : (
                 <View className="mt-6">
                     <HistoricalGraph data={barData} />
