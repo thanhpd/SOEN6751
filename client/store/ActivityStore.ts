@@ -6,6 +6,19 @@ interface ActivityStore {
 }
 
 const defaultActivityItems: Activity[] = [
+    {
+        title: 'Test Activity',
+        instructor: 'Danielle Hubbard',
+        location: 'SGW – Le Gym – Studio C',
+        price: '100',
+        description:
+            'Cardio Dance is a high-energy class that combines dance and fitness. It incorporates a variety of dance styles, including hip-hop, jazz, and Latin. The class is designed to improve cardiovascular fitness, coordination, and rhythm.',
+        days: 'Wednesday',
+        time: '5:30 PM - 6:30 PM',
+        image: '../../assets/images/cardio.png',
+        type: 'InPerson',
+        category: 'Dance',
+    },
   {
       title: 'Cardio Dance',
       instructor: 'Danielle Hubbard',
