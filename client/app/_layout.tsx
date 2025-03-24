@@ -34,6 +34,7 @@ export default function RootLayout() {
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
 
+    const { unreadNotifications } = useNotificationStore();
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync()
@@ -44,7 +45,6 @@ export default function RootLayout() {
         return null
     }
 
-    const { unreadNotifications: notifications } = useNotificationStore();
 
     return (
         <Providers>
@@ -82,7 +82,7 @@ export default function RootLayout() {
                                         color="#333"
                                         style={{ marginRight: 15 }}
                                     />
-                                    {notifications.length > 0 && (
+                                    {unreadNotifications.length > 0 && (
                                         <View
                                             style={{
                                                 position: 'absolute',
@@ -103,7 +103,7 @@ export default function RootLayout() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                {notifications.length}
+                                                {unreadNotifications.length}
                                             </Text>
                                         </View>
                                     )}
