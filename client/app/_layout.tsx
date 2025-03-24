@@ -33,7 +33,7 @@ export default function RootLayout() {
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
 
-    const { unreadNotifications } = useNotificationStore();
+    const { unreadNotifications } = useNotificationStore()
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync()
@@ -43,7 +43,6 @@ export default function RootLayout() {
     if (!loaded) {
         return null
     }
-
 
     return (
         <Providers>
@@ -68,7 +67,7 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-                            <Link href="/Notifications" asChild>
+                            <Link href="/notifications" asChild>
                                 <TouchableOpacity
                                     onPress={() =>
                                         console.log('Notifications Pressed')
@@ -176,6 +175,13 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Edit Profile',
+                    }}
+                />
+                <Stack.Screen
+                    name="notifications"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Notifications',
                     }}
                 />
             </Stack>
