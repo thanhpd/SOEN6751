@@ -13,7 +13,7 @@ const cards = [
         title: 'In Person Activities', 
         path: 'InPersonActivity', 
         image: require('@/assets/images/hero.png'),
-        bgColor: 'rgba(52, 152, 219, 0.7)', // Blue with transparency
+        bgColor: 'rgba(52, 152, 219, 1)', // Blue with transparency
         icon: 'person-running', 
         iconSize: 18, 
     },
@@ -22,7 +22,7 @@ const cards = [
         title: 'Online Activities', 
         path: 'online', 
         image: require('@/assets/images/online.png'),
-        bgColor: 'rgba(39, 174, 96, 0.5)', // Green with transparency
+        bgColor: 'rgba(39, 174, 96, 1)', // Green with transparency
         icon: 'laptop', 
         iconSize: 15, 
     },
@@ -31,7 +31,7 @@ const cards = [
         title: 'Personal Training', 
         path: 'training', 
         image: require('@/assets/images/training.jpg'),
-        bgColor: 'rgba(230, 126, 34, 0.6)', // Orange with transparency
+        bgColor: 'rgba(230, 126, 34, 1)', // Orange with transparency
         icon: 'dumbbell', 
         iconSize: 15, 
     },
@@ -40,7 +40,7 @@ const cards = [
         title: 'Nutrition Consultation', 
         path: 'nutrition', 
         image: require('@/assets/images/nutrition.jpg'),
-        bgColor: 'rgba(192, 57, 43, 0.6)', // Red with transparency
+        bgColor: 'rgba(192, 57, 43, 1)', // Red with transparency
         icon: 'apple-whole', 
         iconSize: 16, 
     },
@@ -58,7 +58,7 @@ export default function BookingPage() {
 
     const renderItem = ({ item }: { item: { path: string; id: string; title: string; image: any; bgColor: string; icon: string; iconSize: number } }) => (
         <TouchableOpacity 
-            style={{ width: (width / 2) - 20, height: (width / 2) -100 }} 
+            style={{ width: (width / 2) - 20, height: (width / 2) -100 ,marginTop : '15'}} 
             className="m-2 rounded-lg overflow-hidden" 
             onPress={() => handlePress(item.path)
                 
@@ -70,7 +70,7 @@ export default function BookingPage() {
             <View style={{ backgroundColor: item.bgColor }} className="absolute inset-0 rounded-lg" />
 
             {/* Card Content */}
-            <View className="p-2">
+            <View className="p-5">
                 <Text className="text-white text-lg font-bold text-center">{item.title}</Text>
             </View>
             {/* Circular icon container */}

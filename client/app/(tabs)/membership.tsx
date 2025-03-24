@@ -59,15 +59,17 @@ const dispatch = useAppDispatch();
         return expiry.toDateString(); 
     };
 
+    const userMembership = cards.find(card => card.id === currentUser.membershipTypeId.toString());
+
     const [currentMembership, setCurrentMembership] = useState({
-        title: 'Weekly Membership',
+        title: userMembership?.title,
         expiryDate: expiryDate,
     });
 
-    const [selectedMembership, setSelectedMembership] = useState<{ title: string; duration: number } | null>(null);
+    const [selectedMembership, setSelectedMembership] = useState<{ title: string; duration: number ; price : number } | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
 
-    const handlePress = (item: { title: string; duration: number }) => {
+    const handlePress = (item: { title: string; duration: number; price: number }) => {
         setSelectedMembership(item);
         setModalVisible(true);
     };
@@ -81,15 +83,21 @@ const dispatch = useAppDispatch();
             id: '2',
             product: {
                 id: '4',
-                name: 'Membership',
-                price: 90.0,
+                name: selectedMembership?.title,
+                price: selectedMembership?.price,
                 image: 'https://via.placeholder.com/150',
                 
             },
+
+            activity :{
+
+                date : selectedMembership?.duration ? getFutureDate(selectedMembership.duration) : 'Invalid duration',
+
+            },
            
             quantity: 1,
-            total: 90.0  + 3.5,
-            taxes: 3.5,
+            total: selectedMembership?.price ,
+            taxes: 0.0,
             discount: 0.0,
         };
 
@@ -99,17 +107,17 @@ const dispatch = useAppDispatch();
         router.push('/order-review' as any);
 
 
-        if (selectedMembership) {
-            setCurrentMembership({
-                title: selectedMembership.title,
-                expiryDate: getFutureDate(selectedMembership.duration),
-            });
-        }
+        // if (selectedMembership) {
+        //     setCurrentMembership({
+        //         title: selectedMembership.title,
+        //         expiryDate: selectedMembership.duration ? getFutureDate(selectedMembership.duration) : 'Invalid duration',
+        //     });
+        // }
         setModalVisible(false);
     };
 
-    const renderItem = ({ item }: { item: { path: string; id: string; title: string; bgColor: string; icon: string; circleColor: string; iconSize: number } }) => (
-        <TouchableOpacity style={[styles.card, { backgroundColor: item.bgColor }]} onPress={() => handlePress(item)} >
+    const renderItem = ({ item }: { item: { id: string; title: string; bgColor: string; circleColor: string; price: string; duration: number } }) => (
+            <TouchableOpacity style={[styles.card, { backgroundColor: item.bgColor }]} onPress={() => handlePress({ title: item.title, duration: item.duration, price: parseFloat(item.price.replace(/[^0-9.]/g, '')) })} >
             <Text style={styles.cardText}>{item.title}</Text>
             <Text style={styles.cardPrice}>{item.price}</Text>
             

@@ -158,7 +158,7 @@ const activityColors = {
 }, {});
 
     return (
-        <View className="p-1 bg-white">
+        <View className="p-1  bg-white">
             <Text className="text-center text-xl font-bold text-black">Calendar</Text>
             <Text className="text-center text-base text-gray-600">View your upcoming bookings</Text>
 
