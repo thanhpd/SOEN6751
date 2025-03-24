@@ -27,7 +27,6 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
         <View className='items-center'>
             <BarChart
                 data={{
-                    //labels: ['7 am', '10 am', '1 pm', '4 pm', '7 pm', '10 pm'], // X-axis labels
                     labels: [
                         '10 am',
                         '',

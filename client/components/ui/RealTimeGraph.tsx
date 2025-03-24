@@ -21,8 +21,8 @@ export const RealTimeGraph: React.FC<RealTimeGraphProps> = ({ data }) => {
     const labels = ['10 am', '', '', '1 pm', '', '', '4 pm', '', '', '7 pm']
 
     // Get the current hour to determine the current time bar
-    //const currentHour = new Date().getHours()
-    const currentHour = 14
+    const currentHour = new Date().getHours()
+    // const currentHour = 14 // For TESTING ONLY
 
     // Determine the starting hour from the first non-empty label
     const startingHour = 10 // '10 am' corresponds to 10 in 24-hour format
