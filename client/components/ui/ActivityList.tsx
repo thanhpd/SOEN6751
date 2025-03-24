@@ -29,7 +29,11 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
 
 
     const showDummyNotification = () => {
-        scheduleNotification(new Date(Date.now() + 1000), 'Test Notification', 'This is a test notification');
+        scheduleNotification(
+            new Date(Date.now() + 1000),
+            `Upcoming activity: ${selectedActivity?.title}`,
+            `${selectedActivity?.title} is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`
+        );
     };
     
     const addEvent = useCalendarStore((state) => state.addEvent);
@@ -71,7 +75,9 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({ activities 
         });
 
         if (activity.title.toLowerCase().includes('test')) {
-            addNotification(new Date(Date.now() + 1000), activity.title, activity.description);
+            addNotification(new Date(Date.now() + 1000), 
+            `${selectedActivity?.title}`,
+            `The activity is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`);
             showDummyNotification();
         }
 

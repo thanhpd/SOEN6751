@@ -4,7 +4,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 import { Image, TouchableOpacity, View, Text } from 'react-native'
-
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
@@ -69,7 +68,7 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-                            <Link href="/notifications" asChild>
+                            <Link href="/Notifications" asChild>
                                 <TouchableOpacity
                                     onPress={() =>
                                         console.log('Notifications Pressed')
