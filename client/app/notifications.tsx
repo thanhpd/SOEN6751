@@ -1,20 +1,25 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import useCalendarStore from '@/store/CalendarStore';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import React from 'react'
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
+import useCalendarStore from '@/store/CalendarStore'
 
 const NotificationPage = () => {
-    const { notifications } = useCalendarStore();
+    const { notifications } = useCalendarStore()
 
     return (
         <View style={styles.container}>
             <View style={styles.notificationContainer}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {notifications.length === 0 ? (
-                        <Text style={styles.emptyMessage}>No new notifications</Text>
+                        <Text style={styles.emptyMessage}>
+                            No new notifications
+                        </Text>
                     ) : (
-                        notifications.map((notification) => (
-                            <View key={notification.id} style={styles.notificationBox}>
+                        notifications.map(notification => (
+                            <View
+                                key={notification.id}
+                                style={styles.notificationBox}
+                            >
                                 <Ionicons
                                     name="notifications-outline"
                                     size={28}
@@ -22,10 +27,16 @@ const NotificationPage = () => {
                                     style={{ marginRight: 15 }}
                                 />
                                 <View style={styles.headerColumn}>
-                                    <Text style={styles.message}>{notification.message}</Text>
-                                    <Text style={styles.details}>{notification.details}</Text>
+                                    <Text style={styles.message}>
+                                        {notification.message}
+                                    </Text>
+                                    <Text style={styles.details}>
+                                        {notification.details}
+                                    </Text>
                                 </View>
-                                <Text style={styles.date}>{notification.date}</Text>
+                                <Text style={styles.date}>
+                                    {notification.date}
+                                </Text>
                             </View>
                         ))
                     )}
@@ -59,7 +70,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     headerColumn: {
-        flexDirection: 'column',   
+        flexDirection: 'column',
         marginBottom: 5,
     },
     message: {

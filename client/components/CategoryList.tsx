@@ -13,19 +13,30 @@ const initialCategories = [
     { name: 'Instructional Activities' },
 ]
 
-export const CategoryList: React.FC<{ onCategorySelect: (category: string) => void }> = ({ onCategorySelect }) => {
-    const [activeIndex, setActiveIndex] = useState<number | null>(0); // Default selected index (All Activities)
+export const CategoryList: React.FC<{
+    onCategorySelect: (category: string) => void
+}> = ({ onCategorySelect }) => {
+    const [activeIndex, setActiveIndex] = useState<number | null>(0) // Default selected index (All Activities)
 
     const toggleCategory = (index: number, category: string) => {
-        setActiveIndex(index);
-        onCategorySelect(category);
-    };
+        setActiveIndex(index)
+        onCategorySelect(category)
+    }
 
     return (
         <View className="mb-1" style={{ marginBottom: 15 }}>
-            <Text className="text-black text-2xl font-bold text" style={{ marginLeft: 25 }}>Categories</Text>
+            <Text
+                className="text-black text-2xl font-bold text"
+                style={{ marginLeft: 25 }}
+            >
+                Categories
+            </Text>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-4">
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                className="mt-4"
+            >
                 {initialCategories.map((category, index) => {
                     const isActive = index === activeIndex
                     return (

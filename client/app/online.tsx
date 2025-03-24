@@ -1,26 +1,29 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
- import HeroBanner from '@/components/HeroBanner';
-import SearchBar from '@/components/SearchBar';
-import { ActivityList } from '@/components/ui/ActivityList';
-import useActivityStore from '@/store/ActivityStore';
+import React from 'react'
+import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
+import HeroBanner from '@/components/HeroBanner'
+import SearchBar from '@/components/SearchBar'
+import { ActivityList } from '@/components/ui/ActivityList'
+import useActivityStore from '@/store/ActivityStore'
 
 const { width } = Dimensions.get('window')
 
 export default function OnlinePage() {
-  const { activities } = useActivityStore();
-  return (
-    <View style={styles.container}>
-     <HeroBanner title="Online Workouts Spring 2025"
-        description="Stay fit and healthy from home."
-        date="From April 10 to June 30"
-        image={require('../assets/images/online.png')}
-/>
+    const { activities } = useActivityStore()
+    return (
+        <View style={styles.container}>
+            <HeroBanner
+                title="Online Workouts Spring 2025"
+                description="Stay fit and healthy from home."
+                date="From April 10 to June 30"
+                image={require('../assets/images/online.png')}
+            />
 
-<SearchBar/>
-<ActivityList activities={activities.filter(item=> item.type === 'Online')}/>
-    </View>
-  );
+            <SearchBar />
+            <ActivityList
+                activities={activities.filter(item => item.type === 'Online')}
+            />
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

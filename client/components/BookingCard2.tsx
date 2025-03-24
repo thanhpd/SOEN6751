@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'; // Importing FontAwesome5 icons
+import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5' // Importing FontAwesome5 icons
 
 interface BookingData {
     serviceName: string

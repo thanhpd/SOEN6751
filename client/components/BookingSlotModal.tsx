@@ -1,59 +1,74 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import Modal from 'react-native-modal';
-import { Calendar } from 'react-native-calendars';
-
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import Modal from 'react-native-modal'
+import { Calendar } from 'react-native-calendars'
 
 interface BookingModalProps {
-    isVisible: boolean;
-    onClose: () => void;
-    onConfirm: (selectedDate: Date) => void;
+    isVisible: boolean
+    onClose: () => void
+    onConfirm: (selectedDate: Date) => void
 }
 
-const BookingModal: React.FC<BookingModalProps> = ({ isVisible, onClose, onConfirm }) => {
-    const [date, setDate] = useState(new Date());
+const BookingModal: React.FC<BookingModalProps> = ({
+    isVisible,
+    onClose,
+    onConfirm,
+}) => {
+    const [date, setDate] = useState(new Date())
 
-    const [selected, setSelected] = useState('');
+    const [selected, setSelected] = useState('')
 
-
-
-    const today = new Date().toISOString().split('T')[0];
-
-
-
+    const today = new Date().toISOString().split('T')[0]
 
     const getDisabledDates = () => {
-        let disabledDates: { [key: string]: { disabled: boolean; disableTouchEvent: boolean } } = {};
-        const startDate = new Date('2025-04-01'); // Start from April 1st
-        const endDate = new Date('2025-06-30');   // End on June 30th
+        let disabledDates: {
+            [key: string]: { disabled: boolean; disableTouchEvent: boolean }
+        } = {}
+        const startDate = new Date('2025-04-01') // Start from April 1st
+        const endDate = new Date('2025-06-30') // End on June 30th
 
-        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-            let dayString = d.toISOString().split('T')[0];
-            let dayOfWeek = d.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        for (
+            let d = new Date(startDate);
+            d <= endDate;
+            d.setDate(d.getDate() + 1)
+        ) {
+            let dayString = d.toISOString().split('T')[0]
+            let dayOfWeek = d.getDay() // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
             // Disable if it's before today OR not Tuesday (2), Thursday (4), or Saturday (6)
             if (dayString < today || ![1, 3, 5].includes(dayOfWeek)) {
-                disabledDates[dayString] = { disabled: true, disableTouchEvent: true };
+                disabledDates[dayString] = {
+                    disabled: true,
+                    disableTouchEvent: true,
+                }
             }
         }
-        return disabledDates;
-    };
-
-
-
-
+        return disabledDates
+    }
 
     return (
-        <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.modal}>
+        <Modal
+            isVisible={isVisible}
+            onBackdropPress={onClose}
+            style={styles.modal}
+        >
             <View style={styles.container}>
                 <Text style={styles.title}>Select Date & Time</Text>
                 <Calendar
-                    onDayPress={(day: { dateString: string; day: number; month: number; year: number }) => {
+                    onDayPress={(day: {
+                        dateString: string
+                        day: number
+                        month: number
+                        year: number
+                    }) => {
                         if (!getDisabledDates()[day.dateString]) {
-                            setSelected(day.dateString);
+                            setSelected(day.dateString)
                             // console.log(selected);
                         } else {
-                            Alert.alert('Unavailable', 'This date cannot be booked.');
+                            Alert.alert(
+                                'Unavailable',
+                                'This date cannot be booked.'
+                            )
                         }
                     }}
                     markedDates={{
@@ -65,31 +80,33 @@ const BookingModal: React.FC<BookingModalProps> = ({ isVisible, onClose, onConfi
                 />
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.buttonCancel} onPress={onClose}>
+                    <TouchableOpacity
+                        style={styles.buttonCancel}
+                        onPress={onClose}
+                    >
                         <Text style={styles.buttonText}>Cancel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[styles.buttonConfirm, !selected && styles.disabledButton]}
+                        style={[
+                            styles.buttonConfirm,
+                            !selected && styles.disabledButton,
+                        ]}
                         onPress={() => {
                             if (selected) {
-                                 // Update the date
+                                // Update the date
                                 // console.log(date);
-                                onConfirm(new Date(selected));  // Call onConfirm with the selected date
-
-                                
+                                onConfirm(new Date(selected)) // Call onConfirm with the selected date
                             }
                         }}
-                        disabled={!selected}  // Disable button if 'selected' is false
+                        disabled={!selected} // Disable button if 'selected' is false
                     >
                         <Text style={styles.buttonText}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-
-
         </Modal>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     modal: {
@@ -133,19 +150,40 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-
     selectedText: { textAlign: 'center', marginTop: 10, fontSize: 16 },
-    modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
-    modalContent: { backgroundColor: 'white', padding: 20, borderRadius: 10, width: 300, alignItems: 'center' },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        width: 300,
+        alignItems: 'center',
+    },
     modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-    timeSlot: { padding: 15, backgroundColor: '#ddd', marginVertical: 5, width: '80%', alignItems: 'center', borderRadius: 5 },
+    timeSlot: {
+        padding: 15,
+        backgroundColor: '#ddd',
+        marginVertical: 5,
+        width: '80%',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
     selectedSlot: { backgroundColor: 'blue' },
     timeText: { fontSize: 16, color: 'black' },
-    closeButton: { marginTop: 10, backgroundColor: 'red', padding: 10, borderRadius: 5 },
+    closeButton: {
+        marginTop: 10,
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5,
+    },
     closeButtonText: { color: 'white', fontWeight: 'bold' },
 
     disabledButton: { backgroundColor: '#ccc' },
+})
 
-});
-
-export default BookingModal;
+export default BookingModal

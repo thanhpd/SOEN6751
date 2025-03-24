@@ -58,33 +58,57 @@ export default function BookingPage() {
     const router = useRouter()
 
     const handlePress = (path: string) => {
-        router.push(path as any);
-        
-            console.log('Button Pressed:', path);
-        
-    };
+        router.push(path as any)
 
-    const renderItem = ({ item }: { item: { path: string; id: string; title: string; image: any; bgColor: string; icon: string; iconSize: number } }) => (
-        <TouchableOpacity 
-            style={{ width: (width / 2) - 20, height: (width / 2) -100 }} 
-            className="m-2 rounded-lg overflow-hidden" 
-            onPress={() => handlePress(item.path)
-                
-            }
-            
+        console.log('Button Pressed:', path)
+    }
+
+    const renderItem = ({
+        item,
+    }: {
+        item: {
+            path: string
+            id: string
+            title: string
+            image: any
+            bgColor: string
+            icon: string
+            iconSize: number
+        }
+    }) => (
+        <TouchableOpacity
+            style={{ width: width / 2 - 20, height: width / 2 - 100 }}
+            className="m-2 rounded-lg overflow-hidden"
+            onPress={() => handlePress(item.path)}
         >
-            <ImageBackground source={item.image} className="flex-1 justify-center items-center w-full h-full" imageStyle={{ borderRadius: 10 }}>
-            {/* Semi-transparent colored overlay */}
-            <View style={{ backgroundColor: item.bgColor }} className="absolute inset-0 rounded-lg" />
+            <ImageBackground
+                source={item.image}
+                className="flex-1 justify-center items-center w-full h-full"
+                imageStyle={{ borderRadius: 10 }}
+            >
+                {/* Semi-transparent colored overlay */}
+                <View
+                    style={{ backgroundColor: item.bgColor }}
+                    className="absolute inset-0 rounded-lg"
+                />
 
-            {/* Card Content */}
-            <View className="p-2">
-                <Text className="text-white text-lg font-bold text-center">{item.title}</Text>
-            </View>
-            {/* Circular icon container */}
-            <View className="absolute top-2 right-2 rounded-full p-1 justify-center items-center h-8 w-8" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}>
-                <FontAwesome6 name={item.icon} size={item.iconSize} color="white" />
-            </View>
+                {/* Card Content */}
+                <View className="p-2">
+                    <Text className="text-white text-lg font-bold text-center">
+                        {item.title}
+                    </Text>
+                </View>
+                {/* Circular icon container */}
+                <View
+                    className="absolute top-2 right-2 rounded-full p-1 justify-center items-center h-8 w-8"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
+                >
+                    <FontAwesome6
+                        name={item.icon}
+                        size={item.iconSize}
+                        color="white"
+                    />
+                </View>
             </ImageBackground>
         </TouchableOpacity>
     )
@@ -93,9 +117,9 @@ export default function BookingPage() {
         <FlatList
             data={cards}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             numColumns={2}
             ListFooterComponent={<CalendarComponent />}
         />
-    );
+    )
 }
