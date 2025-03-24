@@ -1,28 +1,25 @@
 import {
     Image,
     StyleSheet,
-    Platform,
     View,
     ScrollView,
     TouchableOpacity,
     Pressable,
 } from 'react-native'
-import { HelloWave } from '@/components/HelloWave'
-import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Colors } from '@/constants/Colors'
 import '../../global.css'
-import UpcomingBookingCard from '@/components/UpcomingBooking'
 import DaysOfWeek from '@/components/DaysofWeek'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import UserQRCodeModal from '@/components/UserQRCodeModal'
 import BookingCard2 from '@/components/BookingCard2'
-
-import BookingCard from '@/components/BookingCard'
 import { router } from 'expo-router'
 import { Text } from 'react-native'
+import React from 'react'
+
+import GymOccupancy from '@/components/GymOccupancy'
 
 export default function HomeScreen() {
     const upcomingBookings = [
@@ -133,6 +130,10 @@ export default function HomeScreen() {
                 ))}
             </ScrollView>
 
+            <View style={{ marginTop: 30 }}>
+                <GymOccupancy />
+            </View>
+
             <View>
                 <Pressable onPress={() => router.push('/order-review')}>
                     <Text>Test Order</Text>
@@ -229,6 +230,7 @@ const styles = StyleSheet.create({
     },
     bookingCardContainer: {
         marginRight: 20,
+        marginBottom: 100,
     },
 
     titles: {
