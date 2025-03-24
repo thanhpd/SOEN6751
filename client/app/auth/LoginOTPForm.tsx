@@ -16,9 +16,6 @@ import { setCurrentUserId } from '@/store/currentUserId'
 import { Account, Membership } from '@/constants/types'
 import { setTmpUser } from '@/store/tmpUser'
 import ProfilePicker from '@/components/ui/ProfilePicker'
-import { ControlledInput } from '@/components/primitives/input'
-
-
 
 const LoginOTPSchema = zod.object({
     otpCode: zod.string().length(6),
@@ -35,7 +32,6 @@ type Props = {
 
 const LoginOTPForm = ({ user }: Props) => {
     const dispatch = useAppDispatch()
-    console.log({ tmpUser: user })
     console.log({ tmpUser: user })
 
     const { handleSubmit, control } = useForm<TLoginOTPSchema>({
@@ -106,7 +102,7 @@ const LoginOTPForm = ({ user }: Props) => {
                                 </Text>
                             </View>
                             <View className="flex flex-col gap-4">
-                                <ControlledInput
+                                <ControlledInputOTP
                                     name="otpCode"
                                     control={control}
                                     

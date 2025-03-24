@@ -58,7 +58,7 @@ export default function BookingPage() {
 
     const renderItem = ({ item }: { item: { path: string; id: string; title: string; image: any; bgColor: string; icon: string; iconSize: number } }) => (
         <TouchableOpacity 
-            style={{ width: (width / 2) - 20, height: (width / 2) -100 ,marginTop : '15'}} 
+            style={{ width: (width / 2) - 20, height: (width / 2) -100 }} 
             className="m-2 rounded-lg overflow-hidden" 
             onPress={() => handlePress(item.path)
                 
@@ -70,7 +70,7 @@ export default function BookingPage() {
             <View style={{ backgroundColor: item.bgColor }} className="absolute inset-0 rounded-lg" />
 
             {/* Card Content */}
-            <View className="p-5">
+            <View className="p-2">
                 <Text className="text-white text-lg font-bold text-center">{item.title}</Text>
             </View>
             {/* Circular icon container */}

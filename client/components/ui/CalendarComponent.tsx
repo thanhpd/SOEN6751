@@ -178,6 +178,22 @@ const activityColors = {
                     }}
                 />
             </View>
+            <View className="h-50 w-50">
+                <Calendar
+                    onDayPress={handleDayPress}
+                    current={'2025-03-20'}
+                    markedDates={markedDates}
+                    markingType={'multi-dot'}
+                    theme={{
+                        calendarBackground: '#fff',
+                        textSectionTitleColor: '#000',
+                        dayTextColor: '#000',
+                        todayTextColor: '#000',
+                        monthTextColor: '#000',
+                        arrowColor: '#000',
+                    }}
+                />
+            </View>
 
             <View className="flex-row justify-center mt-1">
                 <View className="flex-row items-center mx-1">

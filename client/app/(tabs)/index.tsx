@@ -191,7 +191,6 @@ export default function HomeScreen() {
             <ThemedText style={styles.titles}>Upcoming Bookings</ThemedText>
             {/* Upcoming Bookings */}
 
-
             {/* // <View
                     //     style={[
                     //         styles.bookingCardContainer,

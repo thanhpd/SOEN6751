@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import SearchBar from '@/components/SearchBar';
 import { ActivityList } from '@/components/ui/ActivityList';
 import useActivityStore from '@/store/ActivityStore';
-import { OnlineActivityList } from '@/components/ui/OnlineActivityList';
 
 const { width } = Dimensions.get('window');
 

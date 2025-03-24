@@ -9,32 +9,25 @@ import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
-
 import AuthWrapper from '@/app/auth/AuthWrapper';
 import { Asset } from 'expo-asset';
 import Splash from './splash';
-
 import { Link, Stack } from 'expo-router'
 
-
+import 'react-native-reanimated'
+import { useColorScheme } from '@/hooks/useColorScheme'
 import { NAV_THEME } from '@/lib/constants'
 import { persistor, store } from '../store'
 
 import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 
-
-
-
 // Prevent the splash screen from auto-hiding
 
 
 
-export const unstable_settings = {
-    initialRouteName: 'index',
-  }
 
-export default function RootLayout() {
+
 
     SplashScreen.preventAutoHideAsync()
 
@@ -51,6 +44,10 @@ const LIGHT_THEME: Theme = {
 
 
 
+export const unstable_settings = {
+    initialRouteName: 'index',
+}
+export default function RootLayout() {
     const [loaded] = useFonts({
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
