@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 import LogoMastercard from '@/components/payment/images/LogoMastercard'
 import LogoVisa from '@/components/payment/images/LogoVisa'
-import useCalendarStore from '@/stores/CalendarStore'
+
 import { addCalendarEvent } from '../../store/CalendarDb';
 import { setCalendarEvents } from '../../store/CalendarDb';
 import { addDays, format, parseISO, isAfter, isBefore } from "date-fns";
@@ -19,7 +19,7 @@ import { addDays, format, parseISO, isAfter, isBefore } from "date-fns";
 
 const PaymentCompleted = () => {
     const { currentUser } = useAuth()
-    const{addEvent} = useCalendarStore()
+    
     const order = useAppSelector(state => state.currentOrder)
     const dispatch = useAppDispatch();
     const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false);

@@ -5,7 +5,7 @@ import { Colors } from '@/constants/Colors';
 import { Button } from 'react-native-paper';
 import BookingModal from '@/components/BookingSlotModal';
 import BookingTimeModal from '@/components/BookingTimeModal';
-import useCalendarStore from '@/stores/CalendarStore'
+
 import { setCurrentOrder } from '@/store/currentOrder';
 import { useAppDispatch } from '@/store';
 import OrderReview from './order-review';
@@ -18,7 +18,7 @@ const { width } = Dimensions.get('window');
 
 export default function OnlinePage() {
 
-    const { events, addEvent, removeEvent, clearEvents } = useCalendarStore()
+   
 
 
 

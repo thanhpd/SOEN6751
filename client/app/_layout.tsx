@@ -22,11 +22,24 @@ import { persistor, store } from '../store'
 import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 
-// Prevent the splash screen from auto-hiding
 
 
 
 
+
+
+
+    
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+
+
+
+
+export const unstable_settings = {
+    initialRouteName: 'index',
+}
+export default function RootLayout() {
 
 
     SplashScreen.preventAutoHideAsync()
@@ -38,16 +51,6 @@ const LIGHT_THEME: Theme = {
     ...DefaultTheme,
     colors: NAV_THEME.light,
 }
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-
-
-
-
-export const unstable_settings = {
-    initialRouteName: 'index',
-}
-export default function RootLayout() {
     const [loaded] = useFonts({
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
