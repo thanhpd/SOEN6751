@@ -24,7 +24,7 @@ export const HistoricalGraph: React.FC<HistoricalGraphProps> = ({ data }) => {
     const normalizedData = data.map(value => (value > 200 ? 200 : value))
 
     return (
-        <View className='items-center'>
+        <View className="items-center">
             <BarChart
                 data={{
                     labels: [
