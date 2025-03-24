@@ -3,7 +3,6 @@ import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
@@ -13,14 +12,17 @@ import AuthWrapper from '@/app/auth/AuthWrapper';
 import { Asset } from 'expo-asset';
 import Splash from './splash';
 import { Link, Stack } from 'expo-router'
-
-import 'react-native-reanimated'
+import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
+import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
+import { Image, TouchableOpacity, View, Text } from 'react-native'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { NAV_THEME } from '@/lib/constants'
 import { persistor, store } from '../store'
 
 import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
+import useNotificationStore from '@/store/NotificationStore'
 
 
 
@@ -56,16 +58,23 @@ const LIGHT_THEME: Theme = {
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
 
-  const [fontsLoaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    Poppins: require('../assets/fonts/Poppins-Light.ttf'),
-  });
+    const [fontsLoaded] = useFonts({
+      SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+      Poppins: require('../assets/fonts/Poppins-Light.ttf'),
+    });
 
-  const images = [
-    require('../assets/images/jessy.png'),
-    require('../assets/images/trainer.png'),
-    require('../assets/images/training.jpg'),
-  ];
+    const images = [
+      require('../assets/images/jessy.png'),
+      require('../assets/images/trainer.png'),
+      require('../assets/images/training.jpg'),
+    ];
+
+    const { unreadNotifications } = useNotificationStore();
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync()
+        }
+    }, [loaded])
 
   useEffect(() => {
     async function loadAssets() {
@@ -106,6 +115,7 @@ const LIGHT_THEME: Theme = {
 
 
 
+
     return (
         <Providers>
             <AuthWrapper />
@@ -129,11 +139,12 @@ const LIGHT_THEME: Theme = {
                             />
                         ),
                         headerRight: () => (
-                            <Link href="/notifications" asChild>
+                            <Link href="/Notifications" asChild>
                                 <TouchableOpacity
                                     onPress={() =>
-                                        console.log('Notifications  Pressed')
+                                        console.log('Notifications Pressed')
                                     }
+                                    style={{ position: 'relative' }}
                                 >
                                     <Ionicons
                                         name="notifications-outline"
@@ -141,6 +152,31 @@ const LIGHT_THEME: Theme = {
                                         color="#333"
                                         style={{ marginRight: 15 }}
                                     />
+                                    {unreadNotifications.length > 0 && (
+                                        <View
+                                            style={{
+                                                position: 'absolute',
+                                                top: -5,
+                                                right: 10,
+                                                backgroundColor: 'red',
+                                                borderRadius: 10,
+                                                width: 20,
+                                                height: 20,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    color: 'white',
+                                                    fontSize: 12,
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                {unreadNotifications.length}
+                                            </Text>
+                                        </View>
+                                    )}
                                 </TouchableOpacity>
                                
                             </Link>

@@ -59,13 +59,6 @@ import { Colors } from '@/constants/Colors'
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
-interface Notification {
-    id: number;
-    message: string;
-    date: string;
-    details: string;
-}
-
 const CalendarComponent = () => {
 
     const { currentUser } = useAuth(); // Get currentUser from useAuth
@@ -139,8 +132,8 @@ const CalendarComponent = () => {
     console.log(event.activity.type)
 
 const activityColors = {
-    InPerson: 'lightblue',
-    Online: 'lightgreen',
+    InPerson: 'blue',
+    Online: 'green',
     Personal: 'orange',
     Nutrition: 'red',
 
@@ -151,6 +144,7 @@ const activityColors = {
         acc[event.date].dots.push({
             color: highlightColor || 'gray',
             key: uuidv4(),
+            
         });
     }
 
@@ -175,6 +169,11 @@ const activityColors = {
                         todayTextColor: '#000',
                         monthTextColor: '#000',
                         arrowColor: '#000',
+                        dotStyle: {
+                            width: 5, // Increase the width of the dots
+                            height: 5, // Increase the height of the dots
+                            borderRadius: 5, // Ensure the dots remain circular
+                        },
                     }}
                 />
             </View>
