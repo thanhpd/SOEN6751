@@ -13,8 +13,7 @@ const Profile: React.FC = () => {
     const signOut = useSignOut()
 
     return (
-        <ScrollView className="flex-1 bg-gray-50 relative relative" style = {{marginBottom : 100,}}>
-           
+        <ScrollView className="flex-1 bg-gray-50 relative">
             <TouchableOpacity
                 containerStyle={{
                     width: 30,

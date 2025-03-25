@@ -1,16 +1,15 @@
-
-import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import 'react-native-reanimated';
-import { useFonts } from 'expo-font';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider } from 'react-redux';
-import AuthWrapper from '@/app/auth/AuthWrapper';
-import { Asset } from 'expo-asset';
-import Splash from './splash';
+import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
+import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
+import React, { useEffect, useState } from 'react'
+import { Ionicons } from '@expo/vector-icons'
+import 'react-native-reanimated'
+import { useFonts } from 'expo-font'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { Provider } from 'react-redux'
+import AuthWrapper from '@/app/auth/AuthWrapper'
+import { Asset } from 'expo-asset'
+import Splash from './splash'
 import { Link, Stack } from 'expo-router'
 import { Image, TouchableOpacity, View, Text } from 'react-native'
 import { NAV_THEME } from '@/lib/constants'
@@ -20,69 +19,38 @@ import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 import useNotificationStore from '@/store/NotificationStore'
 
-
-
-
-
-
-
-
-
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-
-
-
 
 export const unstable_settings = {
     initialRouteName: 'index',
 }
 export default function RootLayout() {
-
-
     SplashScreen.preventAutoHideAsync()
 
-    const [appReady, setAppReady] = useState(false);
-const [showLoadingScreen, setShowLoadingScreen] = useState(false);
+    const [appReady, setAppReady] = useState(false)
+    const [showLoadingScreen, setShowLoadingScreen] = useState(false)
 
-const LIGHT_THEME: Theme = {
-    ...DefaultTheme,
-    colors: NAV_THEME.light,
-}
+    const LIGHT_THEME: Theme = {
+        ...DefaultTheme,
+        colors: NAV_THEME.light,
+    }
     const [loaded] = useFonts({
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
 
-
     const images = [
-      require('../assets/images/jessy.png'),
-      require('../assets/images/trainer.png'),
-      require('../assets/images/training.jpg'),
-    ];
+        require('../assets/images/jessy.png'),
+        require('../assets/images/trainer.png'),
+        require('../assets/images/training.jpg'),
+    ]
 
-    const { unreadNotifications } = useNotificationStore();
+    const { unreadNotifications } = useNotificationStore()
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync()
         }
     }, [loaded])
-
-  useEffect(() => {
-    async function loadAssets() {
-      const imageAssets = images.map((image) =>
-        Asset.fromModule(image).downloadAsync()
-      );
-      await Promise.all(imageAssets);
-      await SplashScreen.hideAsync(); // Hide splash screen
-
-      // Show the loading screen for 2 seconds before navigating to the home screen
-      setShowLoadingScreen(true);
-      setTimeout(() => {
-        setShowLoadingScreen(false);
-        setAppReady(true);
-      }, 2000);
-    }
 
     return (
         <Providers>
@@ -146,13 +114,11 @@ const LIGHT_THEME: Theme = {
                                         </View>
                                     )}
                                 </TouchableOpacity>
-
                             </Link>
                         ),
                     }}
                 />
                 <Stack.Screen name="+not-found" />
-
 
                 <Stack.Screen
                     name="qrmodal"
@@ -206,9 +172,11 @@ const LIGHT_THEME: Theme = {
                 />
                 <Stack.Screen
                     name="terms"
-                    options={{ title: 'Terms and Conditions' }}
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Terms and Conditions',
+                    }}
                 />
-
 
                 <Stack.Screen
                     name="auth/AuthLayout"
@@ -226,6 +194,13 @@ const LIGHT_THEME: Theme = {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
+                    }}
+                />
+                <Stack.Screen
+                    name="faq"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'FAQ',
                     }}
                 />
             </Stack>
@@ -249,16 +224,16 @@ const LIGHT_THEME: Theme = {
     )
 
     function Providers({ children }: { children: React.ReactNode }) {
-      return (
-          <GestureHandlerRootView className="flex-1">
-              <Provider store={store}>
-                  <PersistGate loading={null} persistor={persistor}>
-                      <ThemeProvider value={LIGHT_THEME}>
-                          {children}
-                      </ThemeProvider>
-                  </PersistGate>
-              </Provider>
-          </GestureHandlerRootView>
-      )
-  }
+        return (
+            <GestureHandlerRootView className="flex-1">
+                <Provider store={store}>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <ThemeProvider value={LIGHT_THEME}>
+                            {children}
+                        </ThemeProvider>
+                    </PersistGate>
+                </Provider>
+            </GestureHandlerRootView>
+        )
+    }
 }
