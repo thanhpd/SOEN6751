@@ -198,15 +198,8 @@ export default function MmeberhipPage() {
                 </View>
                 <Text style={styles.title}>Membership Packages</Text>
 
-                <View style={styles.membership}>
-                    <Text style={styles.cardText}>
-                        {currentMembership.title}
-                    </Text>
-                    <Text style={styles.cardPrice}>
-                        {' '}
-                        Your Membership is valid until{' '}
-                        {currentMembership.expiryDate}
-                    </Text>
+               
+                   
                     <FlatList
                         data={cards}
                         renderItem={renderItem}
@@ -234,7 +227,7 @@ export default function MmeberhipPage() {
                         </Text>
                     </View>
                 </View>
-            </View>
+           
         </ScrollView>
     )
 }
