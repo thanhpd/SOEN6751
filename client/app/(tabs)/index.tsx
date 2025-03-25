@@ -26,6 +26,7 @@ import { RootState, useAppDispatch, useAppSelector } from '@/store'
 import { CalendarEvent } from '@/constants/types'
 import { Rows } from 'lucide-react-native'
 import GymOccupancy from '@/components/GymOccupancy'
+import UpcomingBookingCard from '@/components/UpcomingBooking'
 
 export default function HomeScreen() {
     const dispatch = useAppDispatch()
@@ -107,7 +108,7 @@ export default function HomeScreen() {
                         <View style={styles.qrTextContainer}>
                             <Text style={styles.qrText}>Gym Check-in</Text>
                             <Text style={styles.qrsubText}>
-                                Tap to here scan qr code
+                                Tap here to scan QR code
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -158,7 +159,7 @@ export default function HomeScreen() {
                                 textAlign: 'center',
                             }}
                         >
-                            5
+                            6
                         </Text>
                         <Text style={styles.streakCount}>Days Streak</Text>
                     </View>
@@ -200,6 +201,7 @@ export default function HomeScreen() {
             {filteredBookings.length > 0 ? (
                 filteredBookings.map((booking, index) => (
                     <TouchableOpacity
+                        key={index}
                         onPress={() => {
                             setSelectedBooking(booking) // Store selected booking
                             setEventModalVisible(true) // Open modal

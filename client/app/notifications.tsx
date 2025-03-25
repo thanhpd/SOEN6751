@@ -1,3 +1,4 @@
+import NoNotification from '@/components/icons/NoNotification'
 import { Colors } from '@/constants/Colors'
 import useNotificationStore from '@/store/NotificationStore'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -14,6 +15,7 @@ import {
 const NotificationPage = () => {
     const { unreadNotifications, clearUnreadNotifications } =
         useNotificationStore()
+
     const notifications = unreadNotifications
         .slice()
         .sort((a, b) => b.dateTime.getTime() - a.dateTime.getTime())
@@ -21,27 +23,44 @@ const NotificationPage = () => {
     return (
         <View style={styles.container}>
             {/* Header with Clear Button */}
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>Notifications</Text>
-                {notifications.length > 0 && (
-                    <TouchableOpacity
-                        onPress={clearUnreadNotifications}
-                        style={[
-                            styles.clearButton,
-                            { backgroundColor: Colors.concordia.background },
-                        ]}
-                    >
-                        <Text style={styles.clearButtonText}>Clear All</Text>
-                    </TouchableOpacity>
-                )}
-            </View>
+            {!!notifications.length && (
+                <View style={styles.header}>
+                    <Text style={styles.headerTitle}>Notifications</Text>
+                    {notifications.length > 0 && (
+                        <TouchableOpacity
+                            onPress={clearUnreadNotifications}
+                            style={[
+                                styles.clearButton,
+                                {
+                                    backgroundColor:
+                                        Colors.concordia.background,
+                                },
+                            ]}
+                        >
+                            <Text style={styles.clearButtonText}>
+                                Clear All
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
+            )}
 
             <View style={styles.notificationContainer}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {notifications.length === 0 ? (
-                        <Text style={styles.emptyMessage}>
-                            No new notifications
-                        </Text>
+                        <View className="flex items-center justify-center">
+                            <View className="mt-[70px]">
+                                <NoNotification />
+                            </View>
+                            <View className="flex flex-col items-center justify-center mt-[70px]">
+                                <Text className="text-red font-bold text-2xl">
+                                    There are no notifications
+                                </Text>
+                                <Text className="text-lg">
+                                    Your notifications will appear on this page
+                                </Text>
+                            </View>
+                        </View>
                     ) : (
                         notifications.map(notification => (
                             <View
@@ -150,12 +169,6 @@ const styles = StyleSheet.create({
         color: '#333',
         marginTop: 5,
         paddingRight: 80,
-    },
-    emptyMessage: {
-        textAlign: 'center',
-        marginTop: 20,
-        fontSize: 16,
-        color: '#888',
     },
 })
 

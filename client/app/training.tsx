@@ -27,28 +27,28 @@ export default function PersonalTrainingPage() {
         {
             id: '1',
             title: '1',
-            price: '55$',
+            price: 55,
             time: '5:30 PM - 6:30 PM',
             sessions: 1,
         },
         {
             id: '2',
             title: '5 ',
-            price: '250$',
+            price: 250,
             time: '5:30 PM - 6:30 PM',
             sessions: 5,
         },
         {
             id: '3',
             title: '10',
-            price: '475$',
+            price: 475,
             time: '5:30 PM - 6:30 PM',
             sessions: 10,
         },
         {
             id: '4',
             title: '20',
-            price: '900$',
+            price: 900,
             time: '5:30 PM - 6:30 PM',
             sessions: 20,
         },
@@ -140,7 +140,7 @@ export default function PersonalTrainingPage() {
         <ScrollView style={styles.container}>
             <HeroBanner
                 title="Personal Training Spring 2025"
-                description="helping you achieve your fitness goals."
+                description="Helping you achieve your fitness goals."
                 date="From Feb 10 to June 30"
                 image={require('../assets/images/training.jpg')}
             />

@@ -7,9 +7,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import LogOutIcon from '@/components/icons/LogOutIcon'
 import { router } from 'expo-router'
 import { useSignOut } from '@/hooks/useSignOut'
+import { useAuth } from '@/hooks/useAuth'
 // import MoreOptionsSection from "./MoreOptionsSection";
 
 const Profile: React.FC = () => {
+    const { currentUser } = useAuth()
     const signOut = useSignOut()
 
     return (
@@ -34,10 +36,10 @@ const Profile: React.FC = () => {
                 <LogOutIcon />
             </TouchableOpacity>
             <ProfileHeader
-                name="Mahim Rahman"
-                email="mahim@gmail.com"
-                avatar="https://cdn.builder.io/api/v1/image/assets/TEMP/9f59753e6c945de3eae836cbfd7d48d387c27c44dd67926552a5a077f4146122?placeholderIfAbsent=true&apiKey=650a6d7feb6041edbb7dcb01545c3ece"
-                streak={102}
+                name={`${currentUser?.firstName} ${currentUser?.lastName}`}
+                email={currentUser?.email || ''}
+                avatar={currentUser?.avatar || ''}
+                streak={6}
                 onEditPress={() => {
                     router.push('/ProfileDetails' as any)
                 }}
