@@ -54,10 +54,6 @@ const LIGHT_THEME: Theme = {
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
 
-    const [fontsLoaded] = useFonts({
-      SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-      Poppins: require('../assets/fonts/Poppins-Light.ttf'),
-    });
 
     const images = [
       require('../assets/images/jessy.png'),
@@ -88,30 +84,6 @@ const LIGHT_THEME: Theme = {
       }, 2000);
     }
 
-    if (fontsLoaded) {
-      loadAssets();
-    }
-  }, [fontsLoaded]);
-
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
-
-  if (showLoadingScreen) {
-    return <Splash />;
-  }
-
-
-  if (!appReady) {
-    return null;
-  }
-
-
-
-
-
     return (
         <Providers>
             <AuthWrapper />
@@ -135,7 +107,7 @@ const LIGHT_THEME: Theme = {
                             />
                         ),
                         headerRight: () => (
-                            <Link href="/Notifications" asChild>
+                            <Link href="/notifications" asChild>
                                 <TouchableOpacity
                                     onPress={() =>
                                         console.log('Notifications Pressed')
@@ -249,7 +221,13 @@ const LIGHT_THEME: Theme = {
                         headerTitle: 'Edit Profile',
                     }}
                 />
-
+                <Stack.Screen
+                    name="notifications"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Notifications',
+                    }}
+                />
             </Stack>
             <StatusBar style="auto" />
             <ToastManager

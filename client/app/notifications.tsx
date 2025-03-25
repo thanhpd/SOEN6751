@@ -1,12 +1,22 @@
-import { Colors } from '@/constants/Colors';
-import useNotificationStore from '@/store/NotificationStore';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { Colors } from '@/constants/Colors'
+import useNotificationStore from '@/store/NotificationStore'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import React from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    ScrollView,
+    Dimensions,
+    TouchableOpacity,
+} from 'react-native'
 
 const NotificationPage = () => {
-    const { unreadNotifications, clearUnreadNotifications } = useNotificationStore();
-    const notifications = unreadNotifications.slice().sort((a, b) => b.dateTime.getTime() - a.dateTime.getTime());
+    const { unreadNotifications, clearUnreadNotifications } =
+        useNotificationStore()
+    const notifications = unreadNotifications
+        .slice()
+        .sort((a, b) => b.dateTime.getTime() - a.dateTime.getTime())
 
     return (
         <View style={styles.container}>
@@ -14,7 +24,13 @@ const NotificationPage = () => {
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Notifications</Text>
                 {notifications.length > 0 && (
-                    <TouchableOpacity onPress={clearUnreadNotifications} style={[styles.clearButton, { backgroundColor: Colors.concordia.background }]}>
+                    <TouchableOpacity
+                        onPress={clearUnreadNotifications}
+                        style={[
+                            styles.clearButton,
+                            { backgroundColor: Colors.concordia.background },
+                        ]}
+                    >
                         <Text style={styles.clearButtonText}>Clear All</Text>
                     </TouchableOpacity>
                 )}
@@ -23,10 +39,15 @@ const NotificationPage = () => {
             <View style={styles.notificationContainer}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {notifications.length === 0 ? (
-                        <Text style={styles.emptyMessage}>No new notifications</Text>
+                        <Text style={styles.emptyMessage}>
+                            No new notifications
+                        </Text>
                     ) : (
-                        notifications.map((notification) => (
-                            <View key={notification.id} style={styles.notificationBox}>
+                        notifications.map(notification => (
+                            <View
+                                key={notification.id}
+                                style={styles.notificationBox}
+                            >
                                 <Ionicons
                                     name="notifications-outline"
                                     size={28}
@@ -34,20 +55,26 @@ const NotificationPage = () => {
                                     style={{ marginRight: 15 }}
                                 />
                                 <View style={styles.headerColumn}>
-                                    <Text style={styles.message}>{notification.title}</Text>
-                                    <Text style={styles.details}>{notification.body}</Text>
+                                    <Text style={styles.message}>
+                                        {notification.title}
+                                    </Text>
+                                    <Text style={styles.details}>
+                                        {notification.body}
+                                    </Text>
                                 </View>
-                                <Text style={styles.date}>{notification.dateTime.toDateString()}</Text>
+                                <Text style={styles.date}>
+                                    {notification.dateTime.toDateString()}
+                                </Text>
                             </View>
                         ))
                     )}
                 </ScrollView>
             </View>
         </View>
-    );
-};
+    )
+}
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container: {
@@ -103,7 +130,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     headerColumn: {
-        flexDirection: 'column',   
+        flexDirection: 'column',
         marginBottom: 5,
         flex: 1,
     },
@@ -130,6 +157,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#888',
     },
-});
+})
 
-export default NotificationPage;
+export default NotificationPage

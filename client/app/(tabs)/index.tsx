@@ -1,53 +1,48 @@
 import {
     Image,
     StyleSheet,
-    Platform,
     View,
     ScrollView,
     TouchableOpacity,
     Text,
     Pressable,
 } from 'react-native'
-import { HelloWave } from '@/components/HelloWave'
-import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Colors } from '@/constants/Colors'
 import '../../global.css'
-import UpcomingBookingCard from '@/components/UpcomingBooking'
 import DaysOfWeek from '@/components/DaysofWeek'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import UserQRCodeModal from '@/components/UserQRCodeModal'
 import BookingCard2 from '@/components/BookingCard2'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { useAuth } from '@/hooks/useAuth'
 import EventDetailsPopup from '@/components/ui/EventDetailsPopup'
-
 
 import BookingCard from '@/components/BookingCard'
 import { router } from 'expo-router'
 import { RootState, useAppDispatch, useAppSelector } from '@/store'
 import { CalendarEvent } from '@/constants/types'
 import { Rows } from 'lucide-react-native'
-
+import GymOccupancy from '@/components/GymOccupancy'
 
 export default function HomeScreen() {
-
-    const dispatch = useAppDispatch();
-    const calendarEvents = Object.values(useAppSelector((state: RootState) => state.CalendarDb.entities)) as CalendarEvent[];
+    const dispatch = useAppDispatch()
+    const calendarEvents = Object.values(
+        useAppSelector((state: RootState) => state.CalendarDb.entities)
+    ) as CalendarEvent[]
 
     const { currentUser } = useAuth()
     console.log(currentUser)
 
     const [eventModalVisible, setEventModalVisible] = useState<boolean>(false)
-    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [selectedBooking, setSelectedBooking] = useState(null)
 
     const handleClose = () => {
         setSelectedBooking(null)
         setEventModalVisible(false)
     }
-
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -68,26 +63,24 @@ export default function HomeScreen() {
     })
 
     const today = new Date().toLocaleDateString('en-US', {
-        weekday: 'long',  // Full weekday name (e.g., "Thursday")
-        day: 'numeric',  // Day of the month (e.g., "16")
-        month: 'long',    // Full month name (e.g., "May")
-        year: 'numeric'   // Year (e.g., "2025")
-    });
+        weekday: 'long', // Full weekday name (e.g., "Thursday")
+        day: 'numeric', // Day of the month (e.g., "16")
+        month: 'long', // Full month name (e.g., "May")
+        year: 'numeric', // Year (e.g., "2025")
+    })
 
-
-    const filteredBookings = calendarEvents.filter((booking) => {
+    const filteredBookings = calendarEvents.filter(booking => {
         const bookingDate = booking.date
         // const bookingDateFormatted = bookingDate.toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
 
         console.log('booking', bookingDate)
         console.log('selecteddate', selectedDate)
 
-
         // Ensure selectedDate and selectedId are defined
-        return bookingDate === selectedDate && booking.user_id === currentUser.id;
-    });
-
-
+        return (
+            bookingDate === selectedDate && booking.user_id === currentUser.id
+        )
+    })
 
     console.log('filtered bookings', filteredBookings)
 
@@ -97,24 +90,27 @@ export default function HomeScreen() {
             <ThemedView style={styles.welcomeBox}>
                 <View style={styles.leftContainer}>
                     <ThemedText style={styles.subtitle}>Welcome </ThemedText>
-                    <ThemedText style={styles.title}>{currentUser?.firstName || 'Guest'} </ThemedText>
+                    <ThemedText style={styles.title}>
+                        {currentUser?.firstName || 'Guest'}{' '}
+                    </ThemedText>
 
-                    <TouchableOpacity style={styles.qrcontainer} onPress={openModal}>
+                    <TouchableOpacity
+                        style={styles.qrcontainer}
+                        onPress={openModal}
+                    >
                         <Ionicons
                             name="qr-code-outline"
                             size={35}
                             color="white"
-                            style={{ marginTop: 0, padding: 0, }}
+                            style={{ marginTop: 0, padding: 0 }}
                         />
                         <View style={styles.qrTextContainer}>
-
                             <Text style={styles.qrText}>Gym Check-in</Text>
-                            <Text style={styles.qrsubText}>Tap to here scan qr code</Text>
-
+                            <Text style={styles.qrsubText}>
+                                Tap to here scan qr code
+                            </Text>
                         </View>
                     </TouchableOpacity>
-
-
                 </View>
 
                 <View style={styles.divider} />
@@ -131,19 +127,26 @@ export default function HomeScreen() {
                 </View> */}
 
                 <View style={styles.rightContainer}>
-
                     <Image
                         source={require('@/assets/images/Streak.png')} // Change to your logo path
-                        style={{ width: 80, height: 70, marginLeft: 0, marginBottom: 0, padding: 0, }}
+                        style={{
+                            width: 80,
+                            height: 70,
+                            marginLeft: 0,
+                            marginBottom: 0,
+                            padding: 0,
+                        }}
                         resizeMode="contain"
-
                     />
 
-                    <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }} >
-
-
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
                         <Text
-
                             className="text-2xl font-bold"
                             style={{
                                 fontFamily: 'Roboto',
@@ -157,33 +160,26 @@ export default function HomeScreen() {
                         >
                             5
                         </Text>
-                        <Text
-
-                            style={styles.streakCount}
-                        >
-                            Days Streak
-                        </Text>
+                        <Text style={styles.streakCount}>Days Streak</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.details} onPress={() => router.push('/profile' as any)}>
+                    <TouchableOpacity
+                        style={styles.details}
+                        onPress={() => router.push('/profile' as any)}
+                    >
                         <Text style={styles.calendarText}>see details</Text>
-
                     </TouchableOpacity>
-
                 </View>
             </ThemedView>
-
-
 
             <ThemedText style={styles.today}>Today </ThemedText>
             <ThemedText style={styles.date}>{today}</ThemedText>
 
-
-
             <DaysOfWeek
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
-                upcomingBookings={calendarEvents.filter(event => event.user_id === currentUser?.id) // Filter by user_id
+                upcomingBookings={calendarEvents
+                    .filter(event => event.user_id === currentUser?.id) // Filter by user_id
                     .map(event => ({ bookingDate: event.date }))}
             />
 
@@ -203,21 +199,33 @@ export default function HomeScreen() {
 
             {filteredBookings.length > 0 ? (
                 filteredBookings.map((booking, index) => (
-
-                    <TouchableOpacity onPress={() => {
-                        setSelectedBooking(booking); // Store selected booking
-                        setEventModalVisible(true); // Open modal
-                    }} style={styles.upcomingBookingsContainer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setSelectedBooking(booking) // Store selected booking
+                            setEventModalVisible(true) // Open modal
+                        }}
+                        style={styles.upcomingBookingsContainer}
+                    >
                         {filteredBookings.map((booking, index) => (
                             <UpcomingBookingCard
                                 key={index}
                                 bookingData={{
-                                    serviceName: booking.title || 'Unknown Service',
-                                    customerName: booking.activity.instructor || 'Unknown Customer',
+                                    serviceName:
+                                        booking.title || 'Unknown Service',
+                                    customerName:
+                                        booking.activity.instructor ||
+                                        'Unknown Customer',
                                     bookingDate: booking.date,
-                                    startTime: (booking.activity.time?.split(" - ")[0] || '00:00'),
-                                    endTime: (booking.activity.time?.split(" - ")[1] || '00:00'),
-                                    location: booking.location || 'Unknown Location',
+                                    startTime:
+                                        booking.activity.time?.split(
+                                            ' - '
+                                        )[0] || '00:00',
+                                    endTime:
+                                        booking.activity.time?.split(
+                                            ' - '
+                                        )[1] || '00:00',
+                                    location:
+                                        booking.location || 'Unknown Location',
                                 }}
                             />
                         ))}
@@ -232,13 +240,14 @@ export default function HomeScreen() {
                 </View>
             )}
 
-
-            <TouchableOpacity style={styles.calendar} onPress={() => router.push('/booking' as any)}>
+            <TouchableOpacity
+                style={styles.calendar}
+                onPress={() => router.push('/booking' as any)}
+            >
                 <Text style={styles.calendarText}>View full calendar</Text>
                 <Icon name="chevron-right" size={8} color="black" />
             </TouchableOpacity>
             {/* </View> */}
-
 
             {eventModalVisible && selectedBooking && (
                 <EventDetailsPopup
@@ -248,12 +257,16 @@ export default function HomeScreen() {
                 />
             )}
 
-
-
+            <View style={{ marginTop: 30 }}>
+                <GymOccupancy />
+            </View>
 
             {/* QR Code Modal */}
             {isModalVisible && (
-                <UserQRCodeModal userData={currentUser} closeModal={closeModal} />
+                <UserQRCodeModal
+                    userData={currentUser}
+                    closeModal={closeModal}
+                />
             )}
         </ScrollView>
     )
@@ -269,7 +282,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: "white",
+        backgroundColor: 'white',
         paddingHorizontal: 10, // Increased padding for a bigger box
         borderRadius: 10,
 
@@ -277,7 +290,6 @@ const styles = StyleSheet.create({
         marginTop: 10, // Added margin to the top
         marginRight: 15, // Added margin to the right
         marginLeft: 15, // Added margin to the left
-
     },
     leftContainer: {
         flexDirection: 'column',
@@ -311,7 +323,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: '#FF5733',
-
     },
     picture: {
         width: 80,
@@ -339,12 +350,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
 
         maxHeight: 220,
-
-
-
     },
     bookingCardContainer: {
         marginRight: 20,
+        marginBottom: 100,
     },
 
     titles: {
@@ -366,7 +375,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.light.concordiaColor,
         marginLeft: 20,
-
     },
 
     today: {
@@ -375,13 +383,10 @@ const styles = StyleSheet.create({
         color: '#888',
         marginLeft: 20,
         marginBottom: 5,
-
-
     },
 
-
     noBookingsMessageContainer: {
-        width: 245,  // Adjust based on the expected width of a booking card
+        width: 245, // Adjust based on the expected width of a booking card
         height: 95, // Adjust to match the height of the booking card
         justifyContent: 'center',
         alignItems: 'center',
@@ -396,7 +401,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'black', // Or any color you prefer
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
 
     calendar: {
@@ -412,7 +417,6 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         gap: 5,
         marginBottom: 10,
-
     },
 
     details: {
@@ -428,7 +432,6 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         gap: 5,
         marginBottom: 10,
-
     },
 
     qrcontainer: {
@@ -445,44 +448,29 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         width: 165,
         height: 60,
-
-
     },
 
-
     qrText: {
-
         color: 'white',
         fontSize: 12,
         fontWeight: 'bold',
-
-
     },
 
     qrsubText: {
-
         color: 'white',
         fontSize: 8,
         fontWeight: 'bold',
-
-
     },
 
     qrTextContainer: {
-
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-
-
     },
 
     calendarText: {
-
         color: 'white',
         fontSize: 10,
         fontWeight: 'bold',
-
-
     },
 })

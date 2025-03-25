@@ -14,8 +14,8 @@ import { CalendarEvent } from '@/constants/types'
 import useCalendarStore from '@/store/CalendarStore'
 
 interface EventDetailsPopupProps {
-    visible: boolean,
-    events: CalendarEvent[],
+    visible: boolean
+    events: CalendarEvent[]
     close: () => void
 }
 
@@ -26,12 +26,12 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
 }) => {
     const [showCancelWarning, setShowCancelWarning] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
-    const { removeEvent } = useCalendarStore();
+    const { removeEvent } = useCalendarStore()
 
-    const activities = events.map(event => event.activity);    
-    
+    const activities = events.map(event => event.activity)
+
     const handleCancelBooking = () => {
-        const eventToCancel = events[currentIndex];
+        const eventToCancel = events[currentIndex]
         if (eventToCancel) {
             removeEvent(eventToCancel.id)
             handleClose()
@@ -61,7 +61,10 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                     </Text>
 
                     <View className="flex-row items-center justify-between mb-2">
-                        <TouchableOpacity onPress={handlePrevious} className='p-3'>
+                        <TouchableOpacity
+                            onPress={handlePrevious}
+                            className="p-3"
+                        >
                             <AntDesign name="left" size={20} color="black" />
                         </TouchableOpacity>
 
@@ -73,26 +76,38 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                                 {activities[currentIndex].instructor}
                             </Text>
                             <View className="flex-row items-center">
-                                <Entypo name="location" size={15} color="black" />
+                                <Entypo
+                                    name="location"
+                                    size={15}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activities[currentIndex].location}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                                <FontAwesome name="calendar" size={15} color="black" />
+                                <FontAwesome
+                                    name="calendar"
+                                    size={15}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activities[currentIndex].days}
                                 </Text>
                             </View>
                             <View className="flex-row items-center">
-                                <AntDesign name="clockcircleo" size={15} color="black" />
+                                <AntDesign
+                                    name="clockcircleo"
+                                    size={15}
+                                    color="black"
+                                />
                                 <Text className="ml-2 font-bold">
                                     {activities[currentIndex].time}
                                 </Text>
                             </View>
                         </ScrollView>
 
-                        <TouchableOpacity onPress={handleNext} className='p-3'>
+                        <TouchableOpacity onPress={handleNext} className="p-3">
                             <AntDesign name="right" size={20} color="black" />
                         </TouchableOpacity>
                     </View>
@@ -102,7 +117,9 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                             onPress={handleClose}
                             className="bg-white px-10 py-3 rounded-lg border border-gray-300"
                         >
-                            <Text className="text-center text-gray-600">Close</Text>
+                            <Text className="text-center text-gray-600">
+                                Close
+                            </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => setShowCancelWarning(true)}
