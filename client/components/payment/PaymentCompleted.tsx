@@ -65,8 +65,9 @@ const PaymentCompleted = () => {
 
     const handleConfirm = (): void => {
         const activityType = order?.activity?.type;
+
+        
         const activityDays = order?.activity?.days ? order.activity.days.split(",") : [];
-    
         // Set date range
         const today = new Date();
         const activityStartDate = order?.activity?.date ? parseISO(order?.activity?.date) : today;
@@ -81,14 +82,21 @@ const PaymentCompleted = () => {
         } else {
             // If it's another type, just use the given date if valid
             eventDates = order?.activity?.date ? [order.activity.date] : [];
+
+
+          
+                
+           
+            
         }
     
         // Loop through each date and dispatch events
-        console.log("actvity Type", activityType)
-        console.log("actvity Days", activityDays)
-        console.log("activity Day" , order?.activity?.days)
-        console.log("Event dates", eventDates)
+       
 
+        console.log("lmaaaooo",order?.activity?.date)
+        console.log("lmaaaooo",eventDates)
+        console.log("lmaaaooo activityyy ",activityDays)
+        
         eventDates.forEach((date) => {
             const newEvent = {
                 id: date + order?.product?.name || "",
@@ -99,7 +107,7 @@ const PaymentCompleted = () => {
                     title: order?.product?.name || "",
                     instructor: order?.activity?.Instructor || "",
                     location: order?.activity?.location || "",
-                    days: Array.isArray(activityDays) ? activityDays.join(", ") : "",
+                    days: Array.isArray(activityDays) ? activityDays.join(", ") : order?.activity?.days,
                     time: order?.activity?.time || "",
                     description: order?.activity?.description || "",
                     price: Number(order?.product?.price) || 0,
