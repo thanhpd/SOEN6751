@@ -47,6 +47,9 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
 
     const handleBook = (activity: Activity) => {
         const days = activity.days.split(',').map(day => day.trim())
+        const today = new Date();
+        const formattedDatetoday = today.toISOString().split('T')[0];
+
         days.forEach(day => {
             for (let weekOffset = 0; weekOffset < 8; weekOffset++) {
                 const formattedDate = getFormattedDateForWeek(day, weekOffset)
@@ -84,7 +87,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
                         image: 'https://via.placeholder.com/150',
                     },
                     activity: {
-                        date: formattedDate,
+                        date: formattedDatetoday,
                         time: activity.time,
                         type: activity.type,
                         days: activity.days,

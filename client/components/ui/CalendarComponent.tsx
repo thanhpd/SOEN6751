@@ -20,7 +20,7 @@ const CalendarComponent = () => {
         useAppSelector((state: RootState) => state.CalendarDb.entities)
     ).filter((event) => event.user_id === userId) as CalendarEvent[]
 
-    const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
+    const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[] | null>(null);
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [noEventModalVisible, setNoEventModalVisible] = useState<boolean>(false)
 
@@ -30,7 +30,7 @@ const CalendarComponent = () => {
         const eventList = calendarEvents.filter(event => event.date === selectedDay)
 
         if (eventList.length > 0) {
-            setSelectedEvent(eventList[0]) // Choose the first event (or handle multiple)
+            setSelectedEvents(eventList) // Choose the first event
             setModalVisible(true)
         } else {
             setNoEventModalVisible(true)
@@ -38,7 +38,7 @@ const CalendarComponent = () => {
     }
 
     const handleClose = () => {
-        setSelectedEvent(null)
+        setSelectedEvents(null)
         setModalVisible(false)
     }
 
@@ -116,10 +116,10 @@ const CalendarComponent = () => {
             </View>
 
             {/* Event Details Popup */}
-            {modalVisible && selectedEvent && (
+            {modalVisible && selectedEvents && (
                 <EventDetailsPopup
                     visible={modalVisible}
-                    events={[selectedEvent]}
+                    events={selectedEvents}
                     close={handleClose}
                 />
             )}
