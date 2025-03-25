@@ -16,7 +16,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                onPress={() => router.push('/InPersonActivity' as any)}
+                onPress={() => router.push('/InPersonActivity')}
             >
                 In-Person Activities
             </Button>
@@ -29,7 +29,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                onPress={() => router.push('/OnlineActivity' as any)}
+                onPress={() => router.push('/OnlineActivity')}
             >
                 Online Activities
             </Button>
@@ -42,7 +42,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                onPress={() => router.push('/PersonalTraining' as any)}
+                onPress={() => router.push('/PersonalTraining')}
             >
                 Personal Training
             </Button>
@@ -55,7 +55,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                onPress={() => router.push('/NutritionConsultancy' as any)}
+                onPress={() => router.push('/NutritionConsultancy')}
             >
                 Nutrition Consultancy
             </Button>

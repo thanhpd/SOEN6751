@@ -64,6 +64,10 @@ const BookingModal: React.FC<BookingModalProps> = ({
                 /> */}
 
                 <Calendar
+                    theme={{
+                        todayTextColor: Colors.light.concordiaColor,
+                        arrowColor: Colors.light.concordiaColor,
+                    }}
                     onDayPress={(day: {
                         dateString: string
                         day: number

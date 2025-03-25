@@ -22,7 +22,8 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+                tabBarInactiveTintColor: 'black',
+                tabBarActiveTintColor: Colors.light.concordiaColor,
                 headerShown: false,
                 tabBarButton: HapticTab,
                 tabBarBackground: TabBarBackground,
@@ -40,7 +41,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Home',
                     tabBarIcon: ({ color }) => (
-                        <Entypo name="home" size={28} color="black" />
+                        <Entypo name="home" size={28} color={color} />
                     ),
                 }}
             />
@@ -63,9 +64,8 @@ export default function TabLayout() {
                 name="membership"
                 options={{
                     title: 'Membership',
-
                     tabBarIcon: ({ color }) => (
-                        <Entypo name="v-card" size={28} color="black" />
+                        <Entypo name="v-card" size={28} color={color} />
                     ),
                 }}
             />
@@ -73,12 +73,12 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="booking"
                 options={{
-                    title: 'booking',
+                    title: 'Booking',
                     tabBarIcon: ({ color }) => (
                         <Ionicons
                             name="calendar-clear"
                             size={28}
-                            color="black"
+                            color={color}
                         />
                     ),
                 }}

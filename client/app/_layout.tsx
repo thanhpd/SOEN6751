@@ -133,13 +133,6 @@ export default function RootLayout() {
                     name="training"
                     options={{
                         title: 'Personal Training', // Set the title for the header
-                        headerStyle: {
-                            backgroundColor: '#3498db', // Set the background color of the header
-                        },
-                        headerTintColor: '#fff', // Set the color of the header text
-                        headerTitleStyle: {
-                            fontWeight: 'bold', // Make the title bold
-                        },
                         headerBackTitle: 'Go Back',
                     }}
                 />
@@ -174,7 +167,7 @@ export default function RootLayout() {
                     name="terms"
                     options={{
                         headerShown: true,
-                        headerTitle: 'Terms and Conditions',
+                        headerTitle: 'Terms & Conditions',
                     }}
                 />
 
@@ -201,6 +194,34 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'FAQ',
+                    }}
+                />
+                <Stack.Screen
+                    name="InPersonActivity"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'In Person Activities',
+                    }}
+                />
+                <Stack.Screen
+                    name="online"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Online Activities',
+                    }}
+                />
+                <Stack.Screen
+                    name="nutrition"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Nutrition Consultation',
+                    }}
+                />
+                <Stack.Screen
+                    name="contact"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Contact Us',
                     }}
                 />
             </Stack>

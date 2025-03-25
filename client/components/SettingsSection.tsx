@@ -1,13 +1,22 @@
 import React from 'react'
-import { View, Text, Pressable, Touchable, TouchableOpacity } from 'react-native'
+import {
+    View,
+    Text,
+    Pressable,
+    Touchable,
+    TouchableOpacity,
+} from 'react-native'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
 import { useSignOut } from '@/hooks/useSignOut'
+import { useAuth } from '@/hooks/useAuth'
 
 const SettingsSection: React.FC = () => {
     const router = useRouter() // Use Expo Router for navigation
     const signOut = useSignOut()
+    const { currentUser, toggleGamification, toggleNotification } = useAuth()
+
     return (
         <View className="mt-2 bg-white">
             <View className="p-4">
@@ -40,7 +49,10 @@ const SettingsSection: React.FC = () => {
                             Notifications
                         </Text>
                     </View>
-                    <ToggleButton />
+                    <ToggleButton
+                        initialState={currentUser?.notificationToggle}
+                        onToggle={toggleNotification}
+                    />
                 </View>
 
                 {/* Horizontal line divider within the same View */}
@@ -67,7 +79,10 @@ const SettingsSection: React.FC = () => {
                             Gamification
                         </Text>
                     </View>
-                    <ToggleButton />
+                    <ToggleButton
+                        initialState={currentUser?.gamificationToggle}
+                        onToggle={toggleGamification}
+                    />
                 </View>
 
                 {/* Horizontal line divider within the same View */}
@@ -144,7 +159,6 @@ const SettingsSection: React.FC = () => {
                     />
                 </View>
 
-
                 <TouchableOpacity
                     className="flex-row items-center justify-between mb-1"
                     onPress={() => router.push('/terms')}
@@ -165,7 +179,6 @@ const SettingsSection: React.FC = () => {
                         style={{ width: 7, height: 12, marginRight: 10 }}
                     />
                 </TouchableOpacity>
-
 
                 {/* Horizontal line divider within the same View */}
                 <View className="flex-row items-center justify-between mb-2">

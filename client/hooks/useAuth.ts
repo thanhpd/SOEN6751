@@ -110,10 +110,42 @@ export function useAuth() {
         [currentUserId]
     )
 
+    const toggleNotification = useCallback(
+        (value: boolean) => {
+            if (!currentUserId) return
+            dispatch(
+                updateDBAccount({
+                    id: currentUserId,
+                    changes: {
+                        notificationToggle: value,
+                    },
+                })
+            )
+        },
+        [currentUserId]
+    )
+
+    const toggleGamification = useCallback(
+        (value: boolean) => {
+            if (!currentUserId) return
+            dispatch(
+                updateDBAccount({
+                    id: currentUserId,
+                    changes: {
+                        gamificationToggle: value,
+                    },
+                })
+            )
+        },
+        [currentUserId]
+    )
+
     return {
         currentUser,
         authenticate,
         register,
         updatePassword,
+        toggleNotification,
+        toggleGamification,
     }
 }
