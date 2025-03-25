@@ -8,6 +8,9 @@ import { useRoute } from '@react-navigation/native'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 import useNotificationStore from '@/store/NotificationStore'
+import { useAppDispatch } from '@/store'
+import { setCurrentOrder } from '@/store/currentOrder'
+import { router } from 'expo-router'
 
 export const ActivityList: React.FC<{ activities: Activity[] }> = ({
     activities,
@@ -20,6 +23,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
 
     const route = useRoute()
     const isInPersonScreen = route.name === 'InPerson'
+    const dispatch = useAppDispatch()
 
     const handlePress = (activity: Activity) => {
         setSelectedActivity(activity)
@@ -71,12 +75,42 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
 
                     return nextDate.toISOString().split('T')[0]
                 }
+                const customOrder = {
+                    id: '2',
+                    product: {
+                        id: '4',
+                        name: activity.title,
+                        price: activity.price,
+                        image: 'https://via.placeholder.com/150',
+                    },
+                    activity: {
+                        date: formattedDate,
+                        time: activity.time,
+                        type: activity.type,
+                        days: activity.days,
+
+                        Instructor: activity.instructor,
+                        location: activity.location,
+                        description: activity.description,
+                    },
+                    quantity: 1,
+                    total: activity.price,
+                    taxes: 0,
+                    discount: 0.0,
+                }
+
+                dispatch(setCurrentOrder(customOrder))
+
+                router.push('/order-review' as any)
 
                 const id = uuidv4()
+
+                // TODO: FIX CONFLICT
                 addEvent({
                     id: id,
                     date: formattedDate,
                     activity: activity,
+                    user_id: '1',
                 })
 
                 // **Add Notification**

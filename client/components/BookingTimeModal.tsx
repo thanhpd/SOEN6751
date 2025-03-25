@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import Modal from 'react-native-modal'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { Calendar } from 'react-native-calendars'
+import { Colors } from '@/constants/Colors'
 
 interface BookingTimeModalProps {
     modalVisible: boolean
@@ -15,37 +18,13 @@ const BookingTimeModal: React.FC<BookingTimeModalProps> = ({
     onConfirm,
     date,
 }) => {
-    // Set initial time to the default time slot
-    const [selectedTime, setSelectedTime] = useState('12:00 PM - 1:00 PM')
-
-    // Get available time slots based on the day of the week
+    const [selectedTime, setSelectedTime] = useState('')
     const getTimeSlots = () => {
-        if (!date) return [] // Return empty array if no date is provided
+        if (!date) return []
         let dayOfWeek = date.getDay() // Get the day of the week directly
         return dayOfWeek === 5
-            ? ['9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM'] // Saturday slots
-            : [
-                  '9:00 AM - 10:00 AM',
-                  '10:00 AM - 11:00 AM',
-                  '11:00 AM - 12:00 PM',
-              ] // Tuesday & Thursday slots
-    }
-
-    // Set the default selected time when time slots are available
-    useEffect(() => {
-        const timeSlots = getTimeSlots()
-        if (timeSlots.length > 0 && !selectedTime) {
-            setSelectedTime(timeSlots[0]) // Set the first slot as default if no time is selected
-        }
-    }, [date, selectedTime]) // Re-run this effect if `date` or `selectedTime` changes
-
-    const handleConfirm = () => {
-        if (!selectedTime) {
-            // If still no time is selected, default to '12:00 PM - 1:00 PM'
-            setSelectedTime('12:00 PM - 1:00 PM')
-        }
-        onConfirm(selectedTime) // Send selected time (or default time)
-        onClose() // Close modal after confirmation
+            ? ['9AM - 10AM', '10AM - 11AM'] // Saturday slots
+            : ['4PM - 5PM', '5PM - 6PM', '6PM - 7PM'] // Tuesday & Thursday slots
     }
 
     return (
@@ -63,33 +42,40 @@ const BookingTimeModal: React.FC<BookingTimeModalProps> = ({
                             key={index}
                             style={[
                                 styles.timeSlot,
-                                selectedTime === time ||
-                                (!selectedTime && time === '12:00 PM - 1:00 PM')
+                                selectedTime === time
                                     ? styles.selectedSlot
-                                    : '',
+                                    : null,
                             ]}
-                            onPress={() => {
-                                setSelectedTime(time)
-                                console.log('Selected time:', time) // Log the selected time
-                            }}
+                            onPress={() => setSelectedTime(time)}
                         >
                             <Text style={styles.timeText}>{time}</Text>
                         </TouchableOpacity>
                     ))}
 
-                    <TouchableOpacity
-                        style={styles.closeButton}
-                        onPress={handleConfirm}
-                    >
-                        <Text style={styles.closeButtonText}>Confirm</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', gap: 50 }}>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={onClose}
+                        >
+                            <Text style={styles.closeButtonText}>Close</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.closeButton}
-                        onPress={onClose}
-                    >
-                        <Text style={styles.closeButtonText}>Close</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                styles.confirmButton,
+                                !selectedTime && styles.disabledButton,
+                            ]}
+                            onPress={() => {
+                                if (selectedTime) {
+                                    onConfirm(selectedTime) // Send selected time
+                                    onClose() // Close modal after confirmation
+                                }
+                            }}
+                            disabled={!selectedTime} // Disable button if no time is selected
+                        >
+                            <Text style={styles.closeButtonText}>Confirm</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -108,6 +94,43 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: 'center',
     },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 15,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        marginTop: 15,
+    },
+    buttonCancel: {
+        flex: 1,
+        backgroundColor: '#ccc',
+        padding: 10,
+        borderRadius: 5,
+        marginRight: 5,
+        alignItems: 'center',
+    },
+    buttonConfirm: {
+        flex: 1,
+        backgroundColor: Colors.light.concordiaColor,
+        padding: 10,
+        borderRadius: 5,
+        marginLeft: 5,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+
+    selectedText: { textAlign: 'center', marginTop: 10, fontSize: 16 },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
     modalContent: {
         backgroundColor: 'white',
         padding: 20,
@@ -124,15 +147,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 5,
     },
-    selectedSlot: { backgroundColor: 'blue' },
+    selectedSlot: { backgroundColor: Colors.light.fadedconcordiaColor },
     timeText: { fontSize: 16, color: 'black' },
     closeButton: {
         marginTop: 10,
-        backgroundColor: 'red',
+        backgroundColor: 'gray',
+        padding: 10,
+        borderRadius: 5,
+    },
+    confirmButton: {
+        marginTop: 10,
+        backgroundColor: Colors.light.concordiaColor,
         padding: 10,
         borderRadius: 5,
     },
     closeButtonText: { color: 'white', fontWeight: 'bold' },
+
+    disabledButton: { backgroundColor: '#ccc' },
 })
 
 export default BookingTimeModal

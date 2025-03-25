@@ -47,12 +47,25 @@ export default function BookingCard2({
             {/* Details Below */}
             <View style={styles.cardTextContainer}>
                 <Text style={styles.serviceName}>{serviceName}</Text>
-                <Text style={styles.customerName}>{customerName}</Text>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Text style={styles.customerName}>{customerName}</Text>
 
-                <View style={styles.infoContainer}>
-                    <FontAwesome5 name="calendar-alt" size={15} color="#333" />
-                    <Text style={styles.infoText}>{bookingDate}</Text>
+                    {/* <Text style={styles.infoText}>{startTime} - {endTime}</Text> */}
                 </View>
+                {/* <View style={styles.infoContainer}>
+          <FontAwesome5 name="calendar-alt" size={15} color="#333" />
+          <Text style={styles.infoText}>{bookingDate}</Text>
+        </View> */}
+
+                {/* <View style={styles.infoContainer}>
+          <FontAwesome5 name="clock" size={14} color="#333" />
+          <Text style={styles.infoText}>{startTime} - {endTime}</Text>
+        </View> */}
 
                 <View style={styles.infoContainer}>
                     <FontAwesome5 name="clock" size={14} color="#333" />
@@ -113,10 +126,10 @@ const styles = StyleSheet.create({
     infoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 3, // Adjust margin between icons and text
+        marginVertical: 0, // Adjust margin between icons and text
     },
     infoText: {
-        fontSize: 12,
+        fontSize: 14,
         color: '#555',
         marginLeft: 5,
     },

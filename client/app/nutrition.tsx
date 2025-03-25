@@ -11,19 +11,21 @@ import HeroBanner from '@/components/HeroBanner'
 import { Colors } from '@/constants/Colors'
 import BookingModal from '@/components/BookingSlotModal'
 import BookingTimeModal from '@/components/BookingTimeModal'
-import useCalendarStore from '@/store/CalendarStore'
-import 'react-native-get-random-values'
-import { v4 as uuidv4 } from 'uuid'
+
+import { setCurrentOrder } from '@/store/currentOrder'
+import { useAppDispatch } from '@/store'
+import { router } from 'expo-router'
 
 const { width } = Dimensions.get('window')
 
 export default function OnlinePage() {
-    const { addEvent } = useCalendarStore()
-
     const [isModalVisible, setModalVisible] = useState(false)
     const [isModalVisible2, setModalVisible2] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-    const [selectedTime, setSelectedTime] = useState('12:00 PM - 1:00 PM')
+    const [selectedTime, setSelectedTime] = useState('')
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false) // Track if payment is confirmed
+
+    const dispatch = useAppDispatch()
 
     const handleConfirm = (date: Date) => {
         setSelectedDate(date)
@@ -39,21 +41,35 @@ export default function OnlinePage() {
         setSelectedTime(time)
 
         setModalVisible2(false)
-        addEvent({
-            id: uuidv4(),
-            date: selectedDate ? selectedDate.toISOString().split('T')[0] : '',
 
-            activity: {
-                title: 'Nutrition Consultancy',
-                instructor: 'Jenny Cheung',
-                location: 'Online',
-                days: 'Tuesday',
-                time: selectedTime,
-                description: 'Learn to diet Properly.',
-                price: '$90',
-                type: 'Nutrition',
+        const customOrder = {
+            id: '2',
+            product: {
+                id: '4',
+                name: 'Nutrition Consultancy',
+                price: 90.0,
+                image: 'https://via.placeholder.com/150',
             },
-        })
+            activity: {
+                date: selectedDate
+                    ? selectedDate.toISOString().split('T')[0]
+                    : '',
+                time: time,
+                type: 'Nutrition',
+
+                Instructor: 'Jenny Cheung',
+                location: 'Online',
+                description: 'Learn to diet Properly.',
+            },
+            quantity: 1,
+            total: 90.0 + 3.5,
+            taxes: 3.5,
+            discount: 0.0,
+        }
+
+        dispatch(setCurrentOrder(customOrder))
+
+        router.push('/order-review' as any)
     }
 
     return (
@@ -61,7 +77,7 @@ export default function OnlinePage() {
             <HeroBanner
                 title="Nutrition Consultancy Spring 2025"
                 description="Keep track of your macros."
-                date="From April 10 to June 30"
+                date="From Feb 10 to June 30"
                 image={require('../assets/images/nutrition.jpg')}
             />
 

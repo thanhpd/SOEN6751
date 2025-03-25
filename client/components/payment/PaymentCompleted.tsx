@@ -1,21 +1,135 @@
 import PaymentBackground from '@/components/payment/PaymentBackground'
 import { Button } from '@/components/primitives/button'
 import { useAuth } from '@/hooks/useAuth'
-import { useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/store'
 import { router } from 'expo-router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { format } from 'date-fns'
+
 import LogoMastercard from '@/components/payment/images/LogoMastercard'
 import LogoVisa from '@/components/payment/images/LogoVisa'
 
+import { addCalendarEvent } from '../../store/CalendarDb';
+import { setCalendarEvents } from '../../store/CalendarDb';
+import { addDays, format, parseISO, isAfter, isBefore } from "date-fns";
+
+
+
+
 const PaymentCompleted = () => {
     const { currentUser } = useAuth()
+    
     const order = useAppSelector(state => state.currentOrder)
+    const dispatch = useAppDispatch();
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false);
 
-    console.log({ order })
+    const getFutureDates = (daysArray: string[], startDate: Date, endDate: Date) => {
+        const dayMap = {
+            Monday: 1,
+            Tuesday: 2,
+            Wednesday: 3,
+            Thursday: 4,
+            Friday: 5,
+            Saturday: 6,
+            Sunday: 0,
+        };
+    
+        let futureDates = [];
+        let checkDate = new Date(startDate);
+        
+        // Ensure the start date is at least today's date
+        checkDate.setHours(0, 0, 0, 0); // Set the check date time to midnight
+        
+        while (checkDate <= endDate) {
+            let dayName = format(checkDate, "EEEE"); // Get full day name, e.g., "Monday"
+            
+            console.log("daysArray",daysArray)
+            console.log("daysArray[0]",daysArray[0])
+            console.log("daysArray[1]",daysArray[1])
+            if (daysArray.map(day => day.trim()).includes(dayName)) {
 
+                futureDates.push(format(checkDate, "yyyy-MM-dd")); // Format as needed
+            }
+    
+            checkDate = addDays(checkDate, 1); // Move to the next day
+        }
+    
+        return futureDates;
+    };
+    
+    
+    // Extract activity details
+    
+    
+
+    const handleConfirm = (): void => {
+        const activityType = order?.activity?.type;
+        const activityDays = order?.activity?.days ? order.activity.days.split(",") : [];
+    
+        // Set date range
+        const today = new Date();
+        const activityStartDate = order?.activity?.date ? parseISO(order?.activity?.date) : today;
+        const minStartDate = isBefore(activityStartDate, today) ? today : activityStartDate; // Ensure start date is at least today
+        const maxEndDate = new Date("2025-06-30");
+    
+        let eventDates: string[] = [];
+    
+        if (activityType === "InPerson" || activityType === "Online") {
+            // Generate future dates based on activity days
+            eventDates = getFutureDates(activityDays as string[], minStartDate, maxEndDate);
+        } else {
+            // If it's another type, just use the given date if valid
+            eventDates = order?.activity?.date ? [order.activity.date] : [];
+        }
+    
+        // Loop through each date and dispatch events
+        console.log("actvity Type", activityType)
+        console.log("actvity Days", activityDays)
+        console.log("activity Day" , order?.activity?.days)
+        console.log("Event dates", eventDates)
+
+        eventDates.forEach((date) => {
+            const newEvent = {
+                id: date + order?.product?.name || "",
+                title: order?.product?.name || "",
+                date: date,
+    
+                activity: {
+                    title: order?.product?.name || "",
+                    instructor: order?.activity?.Instructor || "",
+                    location: order?.activity?.location || "",
+                    days: Array.isArray(activityDays) ? activityDays.join(", ") : "",
+                    time: order?.activity?.time || "",
+                    description: order?.activity?.description || "",
+                    price: Number(order?.product?.price) || 0,
+                    type: activityType || "",
+                },
+                user_id: currentUser?.id || "",
+            };
+    
+            
+             dispatch(addCalendarEvent(newEvent));
+             setTimeout(() => {
+                console.log("New Event", newEvent.date);
+            }, 1500);
+        });
+    
+        // Navigate to booking after delay
+        setTimeout(() => {
+            router.push('/(tabs)/booking');
+        }, 1500);
+    };
+
+    
+
+
+    
+        
+     
+
+
+      
     const CardBrand =
         order?.paymentMethod?.cardBrand === 'mastercard'
             ? LogoMastercard
@@ -90,7 +204,7 @@ const PaymentCompleted = () => {
                                     variant="outline"
                                     className="h-[60px]"
                                     onPress={() =>
-                                        router.push('/(tabs)/booking')
+                                        handleConfirm()
                                     }
                                 >
                                     <Text className="text-xl font-medium text-red leading-[1.2]">

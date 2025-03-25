@@ -9,6 +9,7 @@ import currentUserIdSliceReducers from './currentUserId'
 import tmpUserSliceReducers from './tmpUser'
 import paymentMethodDBSliceReducers from './paymentMethodDB'
 import currentOrderSliceReducers from './currentOrder'
+import  calendarEventsSlice  from './CalendarDb'
 
 const persistConfig = {
     key: 'root',
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     tmpUser: tmpUserSliceReducers,
     paymentMethodDB: paymentMethodDBSliceReducers,
     currentOrder: currentOrderSliceReducers,
+    CalendarDb : calendarEventsSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

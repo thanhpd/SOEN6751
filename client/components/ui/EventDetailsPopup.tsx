@@ -49,7 +49,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
 
     return (
         <Modal
-            animationType="slide"
+            
             transparent={true}
             visible={visible}
             onRequestClose={handleClose}

@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import React, { useState, useRef, useEffect } from 'react'
 import {
     View,
@@ -12,9 +13,10 @@ import QRCode from 'react-native-qrcode-svg'
 
 interface UserQRCodeModalProps {
     userData: {
-        name: string
+        firstName: string
+        lastName: string
         email: string
-        phone: string
+        studentId: string
     }
     closeModal: () => void
 }
@@ -126,12 +128,13 @@ export default function UserQRCodeModal({
                     ]}
                     {...panResponder.panHandlers} // Attach pan handlers
                 >
-                    <Text style={styles.userName}>{userData.name}</Text>
-                    <Text style={styles.userEmail}>{userData.email}</Text>
+                    <Text style={styles.userName}>{userData.firstName} {userData.lastName}</Text>
+                    
+                    <Text style={styles.userEmail}>{userData.studentId}</Text>
 
                     {/* QR Code */}
                     <QRCode
-                        value={`${userData.name},${userData.email},${userData.phone}`}
+                        value={`${userData.firstName},${userData.lastName},${userData.email},${userData.studentId}`}
                         size={150}
                     />
 
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         marginTop: 15,
-        backgroundColor: '#e74c3c',
+        backgroundColor:    Colors.light.concordiaColor,
         paddingVertical: 10,
         paddingHorizontal: 30,
         borderRadius: 10,

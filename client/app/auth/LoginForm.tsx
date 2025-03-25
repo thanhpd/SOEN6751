@@ -20,6 +20,7 @@ type Props = {
 const LoginForm = ({ onClickForgotPassword }: Props) => {
     const { authenticate } = useAuth()
     const dispatch = useAppDispatch()
+    
     const { handleSubmit, control } = useForm<TLoginSchema>({
         mode: 'onChange',
         resolver: zodResolver(LoginSchema),
@@ -58,6 +59,7 @@ const LoginForm = ({ onClickForgotPassword }: Props) => {
                         placeholder="Enter your email"
                         autoCorrect={false}
                         keyboardType="email-address"
+                        style ={{justifyContent: 'center', alignContent :'center'}}
                     />
                     <ControlledInput
                         control={control}

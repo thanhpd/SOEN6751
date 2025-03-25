@@ -3,7 +3,6 @@ import { View } from 'react-native'
 import HeroBanner from '../components/HeroBanner'
 import { ActivityList } from '@/components/ui/ActivityList'
 import { CategoryList } from '@/components/CategoryList'
-import SearchBar from '@/components/SearchBar'
 import useActivityStore from '@/store/ActivityStore'
 import { Activity } from '@/constants/types'
 
@@ -18,7 +17,7 @@ export default function InPersonActivities() {
             <HeroBanner
                 title="In-Person Activities Winter 2025"
                 description="Get inspired and moving at the same time."
-                date="From April 10 to June 30"
+                date="From Feb 10 to June 30"
                 image={require('../assets/images/hero.png')}
             />
 

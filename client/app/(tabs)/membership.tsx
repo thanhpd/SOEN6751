@@ -1,4 +1,3 @@
-import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import {
     View,
@@ -11,72 +10,117 @@ import {
     Button,
     ScrollView,
 } from 'react-native'
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { Colors } from '@/constants/Colors'
+import { useAuth } from '@/hooks/useAuth'
+import { router } from 'expo-router'
+import { setCurrentOrder } from '@/store/currentOrder'
+import { useAppDispatch } from '@/store'
 
 const { width } = Dimensions.get('window') // Get screen width
 
 const cards = [
     {
-        id: '1',
-        title: 'Weekly Membership ',
+        id: '4',
+        title: 'Weekly Membership',
         price: '$35/week',
-        path: 'InPersonActivity',
-        bgColor: '#3498db', // Blue
-        icon: 'person-running',
-        iconSize: 18, // Unique icon size
-        circleColor: '#2980b9', // Darker blue
-    },
-    {
-        id: '2',
-        title: 'Monthly Membership',
-        price: '$50/month',
-        path: 'online',
-        bgColor: '#27ae60', // Green
-        icon: 'laptop',
-        iconSize: 15, // Unique icon size
-        circleColor: '#1e8449', // Darker green
+        duration: 7, // 7 days
+        bgColor: '#3498db',
+        circleColor: '#2980b9',
     },
     {
         id: '3',
-        title: 'Quarterly Membership',
-        price: '$110/4 months',
-        path: 'training',
-        bgColor: '#e67e22', // Orange
-        icon: 'dumbbell',
-        iconSize: 15, // Unique icon size
-        circleColor: '#d35400', // Darker orange
+        title: 'Monthly Membership',
+        price: '$50/month',
+        duration: 30, // 30 days
+        bgColor: '#27ae60',
+        circleColor: '#1e8449',
     },
     {
-        id: '4',
+        id: '2',
+        title: 'Quarterly Membership',
+        price: '$110/4 months',
+        duration: 120, // 120 days
+        bgColor: '#e67e22',
+        circleColor: '#d35400',
+    },
+    {
+        id: '1',
         title: 'Yearly Membership',
         price: '$275/year',
-        path: 'nutrition',
-        bgColor: '#c0392b', // Red
-        icon: 'apple-whole',
-        iconSize: 16, // Unique icon size
-        circleColor: '#922b21', // Darker red
+        duration: 365, // 365 days
+        bgColor: '#c0392b',
+        circleColor: '#922b21',
     },
 ]
-
 export default function MmeberhipPage() {
-    const router = useRouter() // Use Expo Router for navigation
+    const { currentUser } = useAuth()
+    const dispatch = useAppDispatch()
+
+    const expiryDate = new Date(currentUser.expiryDate).toDateString()
+
+    const getFutureDate = (days: number) => {
+        const expiry = new Date(currentMembership.expiryDate)
+        expiry.setDate(expiry.getDate() + days)
+        return expiry.toDateString()
+    }
+
+    const userMembership = cards.find(
+        card => card.id === currentUser.membershipTypeId.toString()
+    )
+
+    const [currentMembership, setCurrentMembership] = useState({
+        title: userMembership?.title,
+        expiryDate: expiryDate,
+    })
 
     const [selectedMembership, setSelectedMembership] = useState<{
         title: string
-        path: string
+        duration: number
+        price: number
     } | null>(null)
     const [modalVisible, setModalVisible] = useState(false)
 
-    const handlePress = (item: { title: string; path: string }) => {
+    const handlePress = (item: {
+        title: string
+        duration: number
+        price: number
+    }) => {
         setSelectedMembership(item)
         setModalVisible(true)
     }
 
     const confirmPurchase = () => {
-        if (selectedMembership) {
-            router.push(selectedMembership.path as any)
+        const customOrder = {
+            id: '2',
+            product: {
+                id: '4',
+                name: selectedMembership?.title,
+                price: selectedMembership?.price,
+                image: 'https://via.placeholder.com/150',
+            },
+
+            activity: {
+                date: selectedMembership?.duration
+                    ? getFutureDate(selectedMembership.duration)
+                    : 'Invalid duration',
+            },
+
+            quantity: 1,
+            total: selectedMembership?.price,
+            taxes: 0.0,
+            discount: 0.0,
         }
+
+        dispatch(setCurrentOrder(customOrder))
+
+        router.push('/order-review' as any)
+
+        // if (selectedMembership) {
+        //     setCurrentMembership({
+        //         title: selectedMembership.title,
+        //         expiryDate: selectedMembership.duration ? getFutureDate(selectedMembership.duration) : 'Invalid duration',
+        //     });
+        // }
         setModalVisible(false)
     }
 
@@ -84,18 +128,23 @@ export default function MmeberhipPage() {
         item,
     }: {
         item: {
-            path: string
             id: string
             title: string
             bgColor: string
-            icon: string
             circleColor: string
-            iconSize: number
+            price: string
+            duration: number
         }
     }) => (
         <TouchableOpacity
             style={[styles.card, { backgroundColor: item.bgColor }]}
-            onPress={() => handlePress(item)}
+            onPress={() =>
+                handlePress({
+                    title: item.title,
+                    duration: item.duration,
+                    price: parseFloat(item.price.replace(/[^0-9.]/g, '')),
+                })
+            }
         >
             <Text style={styles.cardText}>{item.title}</Text>
             <Text style={styles.cardPrice}>{item.price}</Text>
@@ -149,30 +198,41 @@ export default function MmeberhipPage() {
                 </View>
                 <Text style={styles.title}>Membership Packages</Text>
 
-                <FlatList
-                    data={cards}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    numColumns={2} // Two columns
-                    contentContainerStyle={styles.listContainer}
-                    scrollEnabled={false}
-                />
-
-                <Text style={styles.notice1}>
-                    Tax will be added to listed prices
-                </Text>
-
-                <View style={styles.note}>
-                    <Text style={styles.notice}>
-                        Note: When you purchase a new membership, the remaining
-                        duration of your current membership will automatically
-                        be combined with the new membership. The new expiry date
-                        will reflect the cumulative length of both memberships,
-                        starting from the current date. Please review your new
-                        membership details carefully before confirming. If you
-                        have any questions or need assistance, feel free to
-                        contact Le Gym's customer service.
+                <View style={styles.membership}>
+                    <Text style={styles.cardText}>
+                        {currentMembership.title}
                     </Text>
+                    <Text style={styles.cardPrice}>
+                        {' '}
+                        Your Membership is valid until{' '}
+                        {currentMembership.expiryDate}
+                    </Text>
+                    <FlatList
+                        data={cards}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        numColumns={2} // Two columns
+                        contentContainerStyle={styles.listContainer}
+                        scrollEnabled={false}
+                    />
+
+                    <Text style={styles.notice1}>
+                        Tax will be added to listed prices
+                    </Text>
+
+                    <View style={styles.note}>
+                        <Text style={styles.notice}>
+                            Note: When you purchase a new membership, the
+                            remaining duration of your current membership will
+                            automatically be combined with the new membership.
+                            The new expiry date will reflect the cumulative
+                            length of both memberships, starting from the
+                            current date. Please review your new membership
+                            details carefully before confirming. If you have any
+                            questions or need assistance, feel free to contact
+                            Le Gym's customer service.
+                        </Text>
+                    </View>
                 </View>
             </View>
         </ScrollView>

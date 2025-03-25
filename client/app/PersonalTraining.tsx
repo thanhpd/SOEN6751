@@ -5,12 +5,11 @@ import {
     Text,
     StyleSheet,
     Dimensions,
+    ScrollView,
 } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import BookingModal from '@/components/BookingSlotModal'
-import BookingTimeModal from '@/components/BookingTimeModal'
 import useCalendarStore from '@/store/CalendarStore'
 
 const { width } = Dimensions.get('window')
@@ -72,7 +71,11 @@ export default function PersonalTraining() {
         for (let i = 0; i < sessions; i++) {
             events.push({
                 id: uuidv4(),
+                title: 'Personal Training',
                 date: currentDate.toISOString().split('T')[0],
+                selected: true,
+                selectedColor: Colors.light.concordiaColor,
+                user_id: 'default_user', // Replace with actual user_id if available
                 activity: {
                     title: 'Personal Training',
                     instructor: 'Jane Smith',
@@ -82,7 +85,7 @@ export default function PersonalTraining() {
                     }),
                     time: selectedTime,
                     description: 'Learn to diet Properly.',
-                    price: '$90',
+                    price: 90,
                     type: 'Personal' as 'Personal',
                 },
             })
@@ -94,43 +97,58 @@ export default function PersonalTraining() {
     }
 
     return (
-        <View>
-            <TouchableOpacity
-                onPress={() => {
-                    console.log(
-                        'Selected sessions on press:',
-                        cards[0].sessions
-                    )
-                    setModalVisible(true)
-                    setSelectedSessions(cards[0].sessions)
-                }}
-            >
-                <Text style={styles.cardText}>{cards[0].title}</Text>
-            </TouchableOpacity>
-        </View>
-        // <FlatList
-        //     data={cards}
-        //     keyExtractor={(item) => item.id} // Ensure unique key for each item
-        //     renderItem={({ item }) => {
-        //         console.log('Rendering item:', item); // Log full item to see structure
-        //         console.log('Selected sessions:', item.sessions); // Log sessions specifically
+        <ScrollView style={styles.container}>
+            <Text style={styles.title}>Personal Training Packages</Text>
 
-        //         return (
-        //             <View>
-        //                 <TouchableOpacity
-        //                     style={styles.card}
-        //                     onPress={() => {
-        //                         console.log('Selected sessions on press:', item.sessions);
-        //                         setModalVisible(true);
-        //                         setSelectedSessions(item.sessions);
-        //                     }}
-        //                 >
-        //                     <Text style={styles.cardText}>{item.title}</Text>
-        //                 </TouchableOpacity>
-        //             </View>
-        //         );
-        //     }}
-        // />
+            {/* Card Section */}
+            <View style={styles.cardContainer}>
+                {cards.map(item => (
+                    <TouchableOpacity key={item.id} style={styles.card}>
+                        <Text style={styles.cardText}>{item.title}</Text>
+                    </TouchableOpacity>
+                ))}
+
+                {/* <View>
+             <TouchableOpacity
+                            onPress={() => {
+                                console.log('Selected sessions on press:', cards[0].sessions);
+                                setModalVisible(true);
+                                setSelectedSessions(cards[0].sessions);
+                            }}
+                        >
+                            <Text style={styles.cardText}>{cards[0].title}</Text>
+                        </TouchableOpacity>
+            </View> */}
+                <FlatList
+                    data={cards}
+                    keyExtractor={item => item.id} // Ensure unique key for each item
+                    renderItem={({ item }) => {
+                        console.log('Rendering item:', item) // Log full item to see structure
+                        console.log('Selected sessions:', item.sessions) // Log sessions specifically
+
+                        return (
+                            <View>
+                                <TouchableOpacity
+                                    style={styles.card}
+                                    onPress={() => {
+                                        console.log(
+                                            'Selected sessions on press:',
+                                            item.sessions
+                                        )
+                                        setModalVisible(true)
+                                        setSelectedSessions(item.sessions)
+                                    }}
+                                >
+                                    <Text style={styles.cardText}>
+                                        {item.title}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }}
+                />
+            </View>
+        </ScrollView>
     )
 }
 

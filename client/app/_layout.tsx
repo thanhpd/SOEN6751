@@ -1,37 +1,49 @@
-import { Link, Stack } from 'expo-router'
 import { DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import React, { useEffect } from 'react'
-import { Image, TouchableOpacity, View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import 'react-native-reanimated'
 import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { NAV_THEME } from '@/lib/constants'
-import { persistor, store } from '../store'
 import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
+import { Asset } from 'expo-asset'
+import Splash from './splash'
+import { Link, Stack } from 'expo-router'
+import { Image, TouchableOpacity, View, Text } from 'react-native'
+import { NAV_THEME } from '@/lib/constants'
+import { persistor, store } from '../store'
+
 import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 import useNotificationStore from '@/store/NotificationStore'
 
-const LIGHT_THEME: Theme = {
-    ...DefaultTheme,
-    colors: NAV_THEME.light,
-}
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync()
 
 export const unstable_settings = {
     initialRouteName: 'index',
 }
 export default function RootLayout() {
+    SplashScreen.preventAutoHideAsync()
+
+    const [appReady, setAppReady] = useState(false)
+    const [showLoadingScreen, setShowLoadingScreen] = useState(false)
+
+    const LIGHT_THEME: Theme = {
+        ...DefaultTheme,
+        colors: NAV_THEME.light,
+    }
     const [loaded] = useFonts({
         Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
         Inter: require('../assets/fonts/Inter_18pt-Regular.ttf'),
     })
+
+    const images = [
+        require('../assets/images/jessy.png'),
+        require('../assets/images/trainer.png'),
+        require('../assets/images/training.jpg'),
+    ]
 
     const { unreadNotifications } = useNotificationStore()
     useEffect(() => {
@@ -39,10 +51,6 @@ export default function RootLayout() {
             SplashScreen.hideAsync()
         }
     }, [loaded])
-
-    if (!loaded) {
-        return null
-    }
 
     return (
         <Providers>
@@ -164,8 +172,12 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                     name="terms"
-                    options={{ title: 'Terms and Conditions' }}
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Terms and Conditions',
+                    }}
                 />
+
                 <Stack.Screen
                     name="auth/AuthLayout"
                     options={{ headerShown: false }}
@@ -182,6 +194,13 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
+                    }}
+                />
+                <Stack.Screen
+                    name="faq"
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'FAQ',
                     }}
                 />
             </Stack>
@@ -203,18 +222,18 @@ export default function RootLayout() {
             />
         </Providers>
     )
-}
 
-function Providers({ children }: { children: React.ReactNode }) {
-    return (
-        <GestureHandlerRootView className="flex-1">
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <ThemeProvider value={LIGHT_THEME}>
-                        {children}
-                    </ThemeProvider>
-                </PersistGate>
-            </Provider>
-        </GestureHandlerRootView>
-    )
+    function Providers({ children }: { children: React.ReactNode }) {
+        return (
+            <GestureHandlerRootView className="flex-1">
+                <Provider store={store}>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <ThemeProvider value={LIGHT_THEME}>
+                            {children}
+                        </ThemeProvider>
+                    </PersistGate>
+                </Provider>
+            </GestureHandlerRootView>
+        )
+    }
 }

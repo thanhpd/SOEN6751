@@ -60,7 +60,7 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-                name="explore"
+                name="membership"
                 options={{
                     title: 'Membership',
 

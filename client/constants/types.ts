@@ -3,11 +3,11 @@ export interface Activity {
     instructor: string;
     description: string;
     location: string;
-    price: string;
+    price: number;
     time: string;
     days: string;
     image?: string;
-    type?: 'InPerson' | 'Online' | 'Personal' | 'Nutrition';
+    type?: string;
     category?: string;
   }
   
@@ -21,6 +21,7 @@ export interface CalendarEvent {
   id: string;
   date: string;
   activity: Activity;
+  user_id : string
   // bookedActivities: Activity[];
 }
 

@@ -13,8 +13,12 @@ import useCalendarStore from '@/store/CalendarStore'
 import React, { useState } from 'react'
 import TrainerCard2 from '@/components/TrainerCardSwipe'
 import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/Colors'
+import HeroBanner from '@/components/HeroBanner'
 import BookingModal from '@/components/BookingSlotModal'
 import BookingTimeModal from '@/components/BookingTimeModal'
+import { setCurrentOrder } from '@/store/currentOrder'
+import { useAppDispatch } from '@/store'
+import { router } from 'expo-router'
 
 const { width } = Dimensions.get('window') // Get screen width
 
@@ -51,6 +55,8 @@ export default function PersonalTrainingPage() {
     ]
     const { addEvent } = useCalendarStore()
 
+    const dispatch = useAppDispatch()
+
     const [isModalVisible, setModalVisible] = useState(false)
     const [isModalVisible2, setModalVisible2] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
@@ -75,32 +81,69 @@ export default function PersonalTrainingPage() {
         const events = []
         let currentDate = new Date(selectedDate)
 
-        for (let i = 0; i < sessions; i++) {
-            events.push({
-                id: uuidv4(),
-                date: currentDate.toISOString().split('T')[0],
-                activity: {
-                    title: 'Personal Training',
-                    instructor: 'Jane Smith',
-                    location: 'Concordia Gym',
-                    days: currentDate.toLocaleDateString('en-US', {
-                        weekday: 'long',
-                    }),
-                    time: selectedTime,
-                    description: 'Learn to diet Properly.',
-                    price: '$90',
-                    type: 'Personal' as 'Personal',
-                },
-            })
+        const customOrder = {
+            id: '2',
+            product: {
+                id: '4',
+                name: 'Nutrition Consultancy',
+                price: 90.0,
+                image: 'https://via.placeholder.com/150',
+            },
+            activity: {
+                date: selectedDate
+                    ? selectedDate.toISOString().split('T')[0]
+                    : '',
+                time: time,
+                type: 'Nutrition',
 
-            currentDate.setDate(currentDate.getDate() + 7)
+                Instructor: 'Jenny Cheung',
+                location: 'Online',
+                description: 'Learn to diet Properly.',
+            },
+            quantity: 1,
+            total: 90.0 + 3.5,
+            taxes: 3.5,
+            discount: 0.0,
         }
 
-        events.forEach(event => addEvent(event))
+        dispatch(setCurrentOrder(customOrder))
+
+        router.push('/order-review' as any)
+
+        // for (let i = 0; i < sessions; i++) {
+        //     events.push({
+        //         id: uuidv4(),
+        //         title: 'Personal Training',
+        //         date: currentDate.toISOString().split('T')[0],
+        //         selected: true,
+        //         selectedColor: '#EC7063', // Example color
+        //         user_id: 'default_user', // Replace with actual user ID if available
+        //         activity: {
+        //             title: 'Personal Training',
+        //             instructor: 'Jane Smith',
+        //             location: 'Concordia Gym',
+        //             days: currentDate.toLocaleDateString('en-US', { weekday: 'long' }),
+        //             time: selectedTime,
+        //             description: 'Learn to diet Properly.',
+        //             price: 90,
+        //             type: 'Personal' as 'Personal',
+        //         }
+        //     });
+
+        //     currentDate.setDate(currentDate.getDate() + 7);
+        // }
+
+        // events.forEach(event => addEvent(event));
     }
 
     return (
         <ScrollView style={styles.container}>
+            <HeroBanner
+                title="Personal Training Spring 2025"
+                description="helping you achieve your fitness goals."
+                date="From Feb 10 to June 30"
+                image={require('../assets/images/training.jpg')}
+            />
             <Text style={styles.title}>Personal Training Packages</Text>
             <View style={styles.cardContainer}>
                 {cards.map(item => (
@@ -167,19 +210,19 @@ export default function PersonalTrainingPage() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        padding: 0,
     },
     cardContainer: {
         flexDirection: 'row', // Make the cards appear in a row
         flexWrap: 'wrap', // Allow wrapping to the next line if there is no space
-        justifyContent: 'space-around', // Space out the items in the row
-        marginBottom: 30, // Add some space between the cards and the trainer section
+        justifyContent: 'center', // Space out the items in the row
+        marginBottom: 10, // Add some space between the cards and the trainer section
     },
     card: {
         backgroundColor: 'rgb(176, 49, 35)',
         padding: 10,
         margin: 10,
-        borderRadius: 20,
+        borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
         height: 110,
@@ -187,7 +230,7 @@ const styles = StyleSheet.create({
     },
     cardText: {
         color: 'white',
-        fontSize: 9,
+        fontSize: 11,
         fontWeight: 'bold',
     },
     trainerContainer: {
@@ -198,6 +241,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         margin: 10,
         fontWeight: 'bold',
+        marginLeft: 25,
     },
 
     price: {
@@ -221,7 +265,7 @@ const styles = StyleSheet.create({
     priceText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 10,
+        fontSize: 11,
     },
 
     booking: {
@@ -241,12 +285,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
     },
-
     session: {
         position: 'absolute',
         top: 40,
         left: 15,
-        fontSize: 12,
+        fontSize: 13,
         color: 'white',
         fontWeight: 'bold',
     },

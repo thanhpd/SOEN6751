@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import HeroBanner from '@/components/HeroBanner'
 import SearchBar from '@/components/SearchBar'
 import { ActivityList } from '@/components/ui/ActivityList'
@@ -14,7 +14,7 @@ export default function OnlinePage() {
             <HeroBanner
                 title="Online Workouts Spring 2025"
                 description="Stay fit and healthy from home."
-                date="From April 10 to June 30"
+                date="From Feb 10 to June 30"
                 image={require('../assets/images/online.png')}
             />
 

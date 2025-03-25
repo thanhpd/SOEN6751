@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import Modal from 'react-native-modal'
+import DateTimePicker from '@react-native-community/datetimepicker'
 import { Calendar } from 'react-native-calendars'
+import { Colors } from '@/constants/Colors'
 
 interface BookingModalProps {
     isVisible: boolean
@@ -24,7 +26,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
         let disabledDates: {
             [key: string]: { disabled: boolean; disableTouchEvent: boolean }
         } = {}
-        const startDate = new Date('2025-04-01') // Start from April 1st
+        const startDate = new Date(today) // Start from April 1st
         const endDate = new Date('2025-06-30') // End on June 30th
 
         for (
@@ -54,6 +56,13 @@ const BookingModal: React.FC<BookingModalProps> = ({
         >
             <View style={styles.container}>
                 <Text style={styles.title}>Select Date & Time</Text>
+                {/* <DateTimePicker
+                    value={date}
+                    mode="datetime"
+                    display="default"
+                    onChange={(event, selectedDate) => setDate(selectedDate || date)}
+                /> */}
+
                 <Calendar
                     onDayPress={(day: {
                         dateString: string
@@ -73,9 +82,12 @@ const BookingModal: React.FC<BookingModalProps> = ({
                     }}
                     markedDates={{
                         ...getDisabledDates(),
-                        [selected]: { selected: true, selectedColor: 'blue' },
+                        [selected]: {
+                            selected: true,
+                            selectedColor: Colors.light.concordiaColor,
+                        },
                     }}
-                    minDate="2025-04-01" // Prevent navigating before April
+                    minDate={today} // Prevent navigating before April
                     maxDate="2025-06-30" // Prevent navigating after June
                 />
 
@@ -139,7 +151,7 @@ const styles = StyleSheet.create({
     },
     buttonConfirm: {
         flex: 1,
-        backgroundColor: '#3498db',
+        backgroundColor: Colors.light.concordiaColor,
         padding: 10,
         borderRadius: 5,
         marginLeft: 5,

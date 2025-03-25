@@ -28,6 +28,12 @@ const CartReview = () => {
                 <Text className="text-white text-2xl font-bold mb-[22px]">
                     {order?.product.name}
                 </Text>
+                <Text className="text-white text-xl font-bold mb-[16px]">
+                    {order?.activity.date}
+                </Text>
+                <Text className="text-white text-xl font-bold mb-[16px]">
+                    {order?.activity.time}
+                </Text>
                 <View className="flex flex-row items-center justify-between gap-[47px]">
                     <QtySelector
                         qty={order?.quantity || 1}
