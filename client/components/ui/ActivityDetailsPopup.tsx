@@ -62,13 +62,13 @@ const ActivityDetailsPopup: React.FC<ActivityDetailsPopupProps> = ({
                                     {activity.location}
                                 </Text>
                             </View>
-                            <View className="flex-row items-center">
+                            <View className="flex-row items-center gap-3">
                                 <Foundation
                                     name="dollar"
                                     size={24}
                                     color="black"
                                 />
-                                <Text className="ml-2 font-bold">
+                                <Text className="font-bold">
                                     {activity.price}
                                 </Text>
                             </View>
