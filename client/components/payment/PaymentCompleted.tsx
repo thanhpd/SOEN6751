@@ -99,7 +99,7 @@ const PaymentCompleted = () => {
         
         eventDates.forEach((date) => {
             const newEvent = {
-                id: date + order?.product?.name || "",
+                id: date + order?.product?.name + currentUser?.id || "",
                 title: order?.product?.name || "",
                 date: date,
     

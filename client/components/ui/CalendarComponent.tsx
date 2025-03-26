@@ -20,6 +20,8 @@ const CalendarComponent = () => {
         useAppSelector((state: RootState) => state.CalendarDb.entities)
     ).filter((event) => event.user_id === userId) as CalendarEvent[]
 
+    console.log(calendarEvents)
+
     const [selectedEvents, setSelectedEvents] = useState<CalendarEvent[] | null>(null);
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [noEventModalVisible, setNoEventModalVisible] = useState<boolean>(false)
@@ -52,6 +54,7 @@ const CalendarComponent = () => {
             acc[event.date] = { dots: [] }
         }
 
+        
         const activityColors = {
             InPerson: 'blue',
             Online: 'green',
