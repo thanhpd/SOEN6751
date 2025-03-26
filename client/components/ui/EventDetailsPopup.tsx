@@ -12,6 +12,9 @@ import { FontAwesome, Entypo, AntDesign } from '@expo/vector-icons/'
 import CancelBookingWarning from './CancelBookingWarning'
 import { CalendarEvent } from '@/constants/types'
 import useCalendarStore from '@/store/CalendarStore'
+import { removeCalendarEvent } from '@/store/CalendarDb'
+import { useAppDispatch } from '@/store'
+
 
 interface EventDetailsPopupProps {
     visible: boolean
@@ -27,14 +30,22 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     const [showCancelWarning, setShowCancelWarning] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
     const { removeEvent } = useCalendarStore()
-
+    const dispatch = useAppDispatch();
+    
     const activities = events.map(event => event.activity)
 
     const handleCancelBooking = () => {
         const eventToCancel = events[currentIndex]
+
+        const id = eventToCancel.date + eventToCancel.activity.title + eventToCancel.user_id
+        console.log(id)
         if (eventToCancel) {
-            removeEvent(eventToCancel.id)
-            handleClose()
+            dispatch(removeCalendarEvent(id))
+
+            setTimeout(() => {
+                handleClose()
+            }, 1500);
+            
         }
     }
 
