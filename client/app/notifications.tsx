@@ -54,7 +54,7 @@ const NotificationPage = () => {
                             </View>
                             <View className="flex flex-col items-center justify-center mt-[70px]">
                                 <Text className="text-red font-bold text-2xl">
-                                    There's no notifications
+                                    There are no notifications
                                 </Text>
                                 <Text className="text-lg">
                                     Your notifications will appear on this page
