@@ -247,7 +247,7 @@ export default function HomeScreen() {
                 onPress={() => router.push('/booking' as any)}
             >
                 <Text style={styles.calendarText}>View full calendar</Text>
-                <Icon name="chevron-right" size={8} color="black" />
+                <Icon name="chevron-right" size={8} color="white" />
             </TouchableOpacity>
             {/* </View> */}
 
