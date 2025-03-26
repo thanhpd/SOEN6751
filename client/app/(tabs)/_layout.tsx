@@ -47,13 +47,13 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-                name="profile"
+                name="booking"
                 options={{
-                    title: 'Profile',
+                    title: 'Booking',
                     tabBarIcon: ({ color }) => (
-                        <IconSymbol
+                        <Ionicons
+                            name="calendar-clear"
                             size={28}
-                            name="person.fill"
                             color={color}
                         />
                     ),
@@ -71,13 +71,13 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-                name="booking"
+                name="profile"
                 options={{
-                    title: 'Booking',
+                    title: 'Profile',
                     tabBarIcon: ({ color }) => (
-                        <Ionicons
-                            name="calendar-clear"
+                        <IconSymbol
                             size={28}
+                            name="person.fill"
                             color={color}
                         />
                     ),
