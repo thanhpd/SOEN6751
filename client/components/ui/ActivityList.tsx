@@ -163,7 +163,10 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
             {modalVisible && selectedActivity && (
                 <ActivityDetailsPopup
                     visible={modalVisible}
-                    activity={selectedActivity}
+                    activity={{
+                        ...selectedActivity,
+                        price: selectedActivity.price.toString(),
+                    }}
                     handleClose={handleClose}
                     handleBook={() => handleBook(selectedActivity)}
                 />

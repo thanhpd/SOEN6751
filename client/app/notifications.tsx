@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 
 const NotificationPage = () => {
-    const { notifications, clearNotifications, setHasUnreadNotifications, markAllAsRead } =
+    const { notifications, clearNotifications, markAllAsRead } =
         useNotificationStore()
 
     const handleClearAll = () => {
