@@ -19,6 +19,9 @@ interface NotificationStore {
   addNotification: (dateTime: Date, title: string, body: string) => void;
   scheduleNotification: (dateTime: Date, title: string, body: string) => void;
   clearNotifications: () => void;
+  hasUnreadNotifications: boolean;
+  setHasUnreadNotifications: (value: boolean) => void;
+  markAllAsRead: () => void;
 }
 
 
@@ -36,6 +39,15 @@ const useNotificationStore = create<NotificationStore>((set) => ({
   },
   scheduleNotification : schedulePushNotification,
   clearNotifications: () => set({ notifications: [] }),
+  hasUnreadNotifications: false,
+  setHasUnreadNotifications: (value) => set({ hasUnreadNotifications: value }),
+  markAllAsRead: () => set((state) => {
+      const updatedNotifications = state.notifications.map(notification => ({
+          ...notification,
+          isRead: true,
+      }));
+      return { notifications: updatedNotifications, hasUnreadNotifications: false };
+  }),
 }));
 
 

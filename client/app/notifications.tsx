@@ -2,6 +2,7 @@ import NoNotification from '@/components/icons/NoNotification'
 import { Colors } from '@/constants/Colors'
 import useNotificationStore from '@/store/NotificationStore'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { set } from 'date-fns'
 import React from 'react'
 import {
     View,
@@ -13,12 +14,19 @@ import {
 } from 'react-native'
 
 const NotificationPage = () => {
-    const { notifications, clearNotifications } =
+    const { notifications, clearNotifications, setHasUnreadNotifications, markAllAsRead } =
         useNotificationStore()
 
     const handleClearAll = () => {
         clearNotifications()
+        setHasUnreadNotifications(false)
     };
+
+
+    React.useEffect(() => {
+        setHasUnreadNotifications(false)
+        markAllAsRead()
+    }, [])
 
     const filtered = notifications
         .slice()
