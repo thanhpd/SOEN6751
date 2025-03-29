@@ -20,7 +20,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
         null
     )
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-    const { scheduleNotification, addNotification, setHasUnreadNotifications } = useNotificationStore()
+    const { scheduleNotification, addNotification } = useNotificationStore()
 
     const route = useRoute()
     const isInPersonScreen = route.name === 'InPerson'
@@ -38,7 +38,6 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
     }
 
     const showDummyNotification = () => {
-       setHasUnreadNotifications(true);
         scheduleNotification(
             new Date(Date.now() + 1000),
             `Upcoming activity: ${selectedActivity?.title}`,

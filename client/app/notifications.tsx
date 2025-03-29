@@ -19,12 +19,10 @@ const NotificationPage = () => {
 
     const handleClearAll = () => {
         clearNotifications()
-        setHasUnreadNotifications(false)
     };
 
 
     React.useEffect(() => {
-        setHasUnreadNotifications(false)
         markAllAsRead()
     }, [])
 

@@ -3,7 +3,7 @@ import { View, Text } from "react-native"
 
  
 export default function NotificationBellIcon() {
-    const { notifications, hasUnreadNotifications } = useNotificationStore()
+    const { notifications } = useNotificationStore()
     const unreadNotifications = notifications.filter(
         (notification) => !notification.isRead
     );
@@ -14,7 +14,7 @@ export default function NotificationBellIcon() {
             top: -5,
             right: 10,
         }}>
-        {hasUnreadNotifications && unreadNotifications.length > 0 && (
+        { unreadNotifications.length > 0 && (
             <View
                 style={{
                     backgroundColor: 'red',
