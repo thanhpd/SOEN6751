@@ -58,7 +58,7 @@ const CalendarComponent = () => {
         const activityColors = {
             InPerson: 'blue',
             Online: 'green',
-            Personal: 'orange',
+            training: 'orange',
             Nutrition: 'red',
         }
 

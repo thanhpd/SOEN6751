@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import HeroBanner from '../components/HeroBanner'
 import { ActivityList } from '@/components/ui/ActivityList'
 import { CategoryList } from '@/components/CategoryList'
@@ -21,20 +21,27 @@ export default function InPersonActivities() {
                 image={require('../assets/images/hero.png')}
             />
 
-            <CategoryList
-                onCategorySelect={(category: string) => {
-                    if (category === 'All Activities') {
-                        setFilteredActivities(inPersons)
-                        return
-                    }
+<CategoryList
+            onCategorySelect={(category: string) => {
+                if (category === 'All Activities') {
+                    setFilteredActivities(inPersons)
+                    return
+                }
 
-                    const filtered = inPersons.filter(
-                        activity => activity.category === category
-                    )
-                    setFilteredActivities(filtered)
-                }}
-            />
+                const filtered = inPersons.filter(
+                    activity => activity.category === category
+                )
+                setFilteredActivities(filtered)
+            }}
+        />
+
+        {filteredActivities.length > 0 ? (
             <ActivityList activities={filteredActivities} />
-        </View>
+        ) : (
+            <Text style={{ textAlign: 'center', marginTop: 20 }}>
+                No activities have been scheduled yet.
+            </Text>
+        )}
+    </View>
     )
 }

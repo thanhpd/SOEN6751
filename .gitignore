@@ -5,3 +5,4 @@ node_modules/
 *.java
 *.bin
 *.properties
+package-lock.json

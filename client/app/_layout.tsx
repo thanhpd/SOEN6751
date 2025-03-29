@@ -8,8 +8,6 @@ import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
-import { Asset } from 'expo-asset'
-import Splash from './splash'
 import { Link, Stack } from 'expo-router'
 import { Image, TouchableOpacity, View, Text } from 'react-native'
 import { NAV_THEME } from '@/lib/constants'
@@ -17,7 +15,7 @@ import { persistor, store } from '../store'
 
 import ToastManager, { Toast } from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
-import useNotificationStore from '@/store/NotificationStore'
+import NotificationBellIcon from '@/components/ui/NotificationBellIcon'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 
@@ -45,7 +43,6 @@ export default function RootLayout() {
         require('../assets/images/training.jpg'),
     ]
 
-    const { unreadNotifications } = useNotificationStore()
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync()
@@ -77,9 +74,6 @@ export default function RootLayout() {
                         headerRight: () => (
                             <Link href="/notifications" asChild>
                                 <TouchableOpacity
-                                    onPress={() =>
-                                        console.log('Notifications Pressed')
-                                    }
                                     style={{ position: 'relative' }}
                                 >
                                     <Ionicons
@@ -88,31 +82,7 @@ export default function RootLayout() {
                                         color="#333"
                                         style={{ marginRight: 15 }}
                                     />
-                                    {unreadNotifications.length > 0 && (
-                                        <View
-                                            style={{
-                                                position: 'absolute',
-                                                top: -5,
-                                                right: 10,
-                                                backgroundColor: 'red',
-                                                borderRadius: 10,
-                                                width: 20,
-                                                height: 20,
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                            }}
-                                        >
-                                            <Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontSize: 12,
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                {unreadNotifications.length}
-                                            </Text>
-                                        </View>
-                                    )}
+                                   <NotificationBellIcon/>
                                 </TouchableOpacity>
                             </Link>
                         ),

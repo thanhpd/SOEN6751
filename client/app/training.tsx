@@ -85,7 +85,7 @@ export default function PersonalTrainingPage() {
             id: '2',
             product: {
                 id: '4',
-                name: 'Nutrition Consultancy',
+                name: 'Personal Training',
                 price: 90.0,
                 image: 'https://via.placeholder.com/150',
             },
@@ -94,11 +94,11 @@ export default function PersonalTrainingPage() {
                     ? selectedDate.toISOString().split('T')[0]
                     : '',
                 time: time,
-                type: 'Nutrition',
+                type: 'training',
 
-                Instructor: 'Jenny Cheung',
-                location: 'Online',
-                description: 'Learn to diet Properly.',
+                Instructor: 'James Smith',
+                location: 'Le Gym',
+                description: 'Training with James Smith',
             },
             quantity: 1,
             total: 90.0 + 3.5,
