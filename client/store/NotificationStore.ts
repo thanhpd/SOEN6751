@@ -15,26 +15,27 @@ Notifications.setNotificationHandler({
 
 
 interface NotificationStore {
-  unreadNotifications: Notification[];
+  notifications: Notification[];
   addNotification: (dateTime: Date, title: string, body: string) => void;
   scheduleNotification: (dateTime: Date, title: string, body: string) => void;
-  clearUnreadNotifications: () => void;
+  clearNotifications: () => void;
 }
 
 
 const useNotificationStore = create<NotificationStore>((set) => ({
-  unreadNotifications: [],
+  notifications: [],
   addNotification: async(dateTime, title, body) => {
       const newNotification: Notification = {
           id: Date.now(),
           title,
           dateTime,
           body,
+          isRead: false,
       };
-      set((state) => ({ unreadNotifications: [newNotification, ...state.unreadNotifications] }));
+      set((state) => ({ notifications: [newNotification, ...state.notifications] }));
   },
   scheduleNotification : schedulePushNotification,
-  clearUnreadNotifications: () => set({ unreadNotifications: [] }),
+  clearNotifications: () => set({ notifications: [] }),
 }));
 
 
