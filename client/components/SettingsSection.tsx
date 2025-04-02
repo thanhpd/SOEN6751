@@ -54,7 +54,7 @@ const SettingsSection: React.FC = () => {
                             />
                         </View>
                         <Text className="text-base font-medium ml-2">
-                            Notifications
+                            Push Notifications
                         </Text>
                     </View>
                     <ToggleButton
