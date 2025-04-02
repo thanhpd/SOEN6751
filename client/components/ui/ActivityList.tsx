@@ -11,6 +11,7 @@ import useNotificationStore from '@/store/NotificationStore'
 import { useAppDispatch } from '@/store'
 import { setCurrentOrder } from '@/store/currentOrder'
 import { router } from 'expo-router'
+import { useAuth } from '@/hooks/useAuth'
 
 export const ActivityList: React.FC<{ activities: Activity[] }> = ({
     activities,
@@ -24,6 +25,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
     const route = useRoute()
     const isInPersonScreen = route.name === 'InPerson'
     const dispatch = useAppDispatch()
+    const { currentUser } = useAuth();
 
     const handlePress = (activity: Activity) => {
         setSelectedActivity(activity)
@@ -136,7 +138,9 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
                 `${selectedActivity?.title}`,
                 `The activity is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`
             )
-            showDummyNotification()
+
+            if (currentUser?.notificationToggle)
+                showDummyNotification()
         }
 
         handleClose()
@@ -159,7 +163,10 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
             {modalVisible && selectedActivity && (
                 <ActivityDetailsPopup
                     visible={modalVisible}
-                    activity={selectedActivity}
+                    activity={{
+                        ...selectedActivity,
+                        price: selectedActivity.price.toString(),
+                    }}
                     handleClose={handleClose}
                     handleBook={() => handleBook(selectedActivity)}
                 />
