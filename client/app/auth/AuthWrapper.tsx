@@ -34,6 +34,7 @@ const AuthWrapper = ({ children }: PropsWithChildren) => {
             try {
                 // Restore token stored in `SecureStore` or any other encrypted storage
                 userId = await SecureStore.getItemAsync('userId')
+                console.log('Restored userId:', userId)
             } catch (e) {
                 // Restoring token failed
             }

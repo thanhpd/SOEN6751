@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { BackHandler, Text, TouchableOpacity, View } from 'react-native'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -42,6 +42,20 @@ const ResetPasswordForm = ({ onGoBack, onSuccess, user }: Props) => {
         resetPassword({ id: user.id, password: data.newPassword })
         onSuccess(data)
     }
+
+    useEffect(() => {
+        const backAction = () => {
+            onGoBack?.()
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [onGoBack])
 
     return (
         <Portal name="reset-password-form">

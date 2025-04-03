@@ -86,6 +86,12 @@ const PaymentSelection = ({
                 }}
             />
             <View className="w-[85%] mx-auto">
+                <View className="flex flex-row mb-2">
+                    <Text className="text-red-600 font-default-400 text-sm font-bold">
+                        {'*'}
+                    </Text>
+                    <Text>{' indicates a required field'}</Text>
+                </View>
                 <View className="flex flex-col gap-2">
                     <ControlledInput
                         control={control}
@@ -137,8 +143,9 @@ const PaymentSelection = ({
                     </View>
                 </View>
 
-                <Text className="text-lg font-bold mt-9 mb-2">
-                    Billing Address
+                <Text className="text-lg font-bold mt-9">Billing Address</Text>
+                <Text className="mb-2">
+                    This is required for processing payments securely.
                 </Text>
                 <View className="flex flex-col gap-2">
                     <ControlledInput

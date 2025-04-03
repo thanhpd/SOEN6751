@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { BackHandler, Text, TouchableOpacity, View } from 'react-native'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +10,7 @@ import { ControlledInputOTP } from '@/components/ui/InputOTP'
 import InfoIcon from '@/components/icons/InfoIcon'
 import { BaseAccount } from '@/constants/types'
 import ProfilePicker from '@/components/ui/ProfilePicker'
+import ProfilePictureIcon from '@/components/icons/ProfilePictureIcon'
 
 const ResetPasswordOTPSchema = zod.object({
     otpCode: zod.string().length(6),
@@ -36,6 +37,20 @@ const ResetPasswordOTPForm = ({ user, onGoBack, onSuccess }: Props) => {
         onSuccess(data)
     }
 
+    useEffect(() => {
+        const backAction = () => {
+            onGoBack?.()
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [onGoBack])
+
     return (
         <Portal name="reset-password-form">
             <View
@@ -60,7 +75,14 @@ const ResetPasswordOTPForm = ({ user, onGoBack, onSuccess }: Props) => {
                             </View>
                             <View className="flex flex-col items-center">
                                 <View className="mb-4">
-                                    <ProfilePicker value={user.avatar} />
+                                    {user.avatar ? (
+                                        <ProfilePicker
+                                            value={user.avatar}
+                                            disabled
+                                        />
+                                    ) : (
+                                        <ProfilePictureIcon />
+                                    )}
                                 </View>
                                 <Text className="font-bold text-base leading-[1.3] text-[#090D20]">
                                     {user.name}
