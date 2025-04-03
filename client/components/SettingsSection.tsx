@@ -84,7 +84,7 @@ const SettingsSection: React.FC = () => {
                             />
                         </View>
                         <Text className="text-base font-medium ml-2">
-                            Gamification
+                            LeStreak
                         </Text>
                     </View>
                     <ToggleButton
