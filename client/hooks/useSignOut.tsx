@@ -8,7 +8,7 @@ export function useSignOut() {
     const dispatch = useAppDispatch()
 
     const signOut = () => {
-        SecureStore.deleteItemAsync('userToken')
+        SecureStore.deleteItemAsync('userId')
         dispatch(setCurrentUserId(null))
         dispatch(setTmpUser(null))
         Toast.success('Logged out successfully')

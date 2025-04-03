@@ -9,8 +9,8 @@
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
         "notification": {
-          "icon": "./assets/images/notification-icon.png",
-          "iosDisplayInForeground": true
+            "icon": "./assets/images/notification-icon.png",
+            "iosDisplayInForeground": true
         },
         "ios": {
             "supportsTablet": true
@@ -41,20 +41,27 @@
             [
                 "expo-notifications",
                 {
-                  "icon": "./assets/images/notification-icon.png",
-                  "color": "#ffffff",
-                  "defaultChannel": "default",
-                  "sounds": [
-                    "./local/assets/notification_sound.wav",
-                    "./local/assets/notification_sound_other.wav"
-                  ],
-                  "enableBackgroundRemoteNotifications": false
+                    "icon": "./assets/images/notification-icon.png",
+                    "color": "#ffffff",
+                    "defaultChannel": "default",
+                    "sounds": [
+                        "./local/assets/notification_sound.wav",
+                        "./local/assets/notification_sound_other.wav"
+                    ],
+                    "enableBackgroundRemoteNotifications": false
                 }
-              ],
+            ],
             [
                 "expo-image-picker",
                 {
                     "photosPermission": "The app accesses your photos to let you share them with your friends."
+                }
+            ],
+            [
+                "expo-secure-store",
+                {
+                    "configureAndroidBackup": true,
+                    "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
                 }
             ],
             "expo-font"

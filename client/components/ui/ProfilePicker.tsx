@@ -48,9 +48,11 @@ const ProfilePicker = ({
                 onPress={pickImage}
                 disabled={disabled}
             >
-                <View className="absolute bottom-2 left-2 w-[84px] flex items-center justify-center flex-row z-50">
-                    <EditIcon className="w-[21px] h-[19px]" />
-                </View>
+                {!disabled && (
+                    <View className="absolute bottom-2 left-2 w-[84px] flex items-center justify-center flex-row z-50">
+                        <EditIcon className="w-[21px] h-[19px]" />
+                    </View>
+                )}
                 {image && (
                     <View className="w-24 h-24 rounded-full border border-gray-300">
                         <Image
