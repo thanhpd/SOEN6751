@@ -16,7 +16,7 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
 }) => {
     return (
         <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             visible={visible}
             onRequestClose={handleClose}
@@ -38,7 +38,7 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
                         {/* Close Button */}
                         <TouchableOpacity
                             onPress={handleClose}
-                            className="bg-white  px-10 py-3 rounded-lg border border-gray-300"
+                            className="bg-white px-10 py-3 rounded-lg border border-gray-300 w-[120px]"
                         >
                             <Text className="text-center text-gray-600">
                                 No
@@ -47,7 +47,7 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
                         {/* Book Button */}
                         <TouchableOpacity
                             onPress={handleConfirm}
-                            className="bg-blue-600 p-3 rounded-lg "
+                            className="bg-blue-600 p-3 rounded-lg w-[120px]"
                             style={{
                                 backgroundColor: Colors.concordia.background,
                             }}

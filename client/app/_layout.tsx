@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import AuthWrapper from '@/app/auth/AuthWrapper'
-import { Link, Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import { Image, TouchableOpacity, View, Text } from 'react-native'
 import { NAV_THEME } from '@/lib/constants'
 import { persistor, store } from '../store'
@@ -72,19 +72,20 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-                            <Link href="/notifications" asChild>
-                                <TouchableOpacity
-                                    style={{ position: 'relative' }}
-                                >
-                                    <Ionicons
-                                        name="notifications-outline"
-                                        size={28}
-                                        color="#333"
-                                        style={{ marginRight: 15 }}
-                                    />
-                                   <NotificationBellIcon/>
-                                </TouchableOpacity>
-                            </Link>
+                            <TouchableOpacity
+                                onPressIn={() => {
+                                    router.push('/notifications')
+                                }}
+                                style={{ position: 'relative' }}
+                            >
+                                <Ionicons
+                                    name="notifications-outline"
+                                    size={28}
+                                    color="#333"
+                                    style={{ marginRight: 15 }}
+                                />
+                                <NotificationBellIcon />
+                            </TouchableOpacity>
                         ),
                     }}
                 />
