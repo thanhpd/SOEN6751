@@ -1,11 +1,7 @@
 import React from 'react'
 import Toast from 'react-native-simple-toast'
 
-import {
-    View,
-    Text,
-    TouchableOpacity,
-} from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
@@ -18,16 +14,26 @@ const SettingsSection: React.FC = () => {
     const { currentUser, toggleGamification, toggleNotification } = useAuth()
 
     const handleToggleNotification = (value: boolean) => {
-        toggleNotification(value);
-        
-        Toast.show( value ? 'Great, you get reminders' : 'Warning, no reminders for you', 1000); 
-    };
+        toggleNotification(value)
+
+        Toast.show(
+            value
+                ? 'Great, you get reminders'
+                : 'Warning, no reminders for you',
+            1000
+        )
+    }
 
     const handleToggleGamification = (value: boolean) => {
-        toggleGamification(value);
+        toggleGamification(value)
 
-        Toast.show( value ? 'Workout streak now VISIBLE!' : 'Workout streak now HIDDEN!', 1000);
-    };
+        Toast.show(
+            value
+                ? 'Workout streak now VISIBLE!'
+                : 'Workout streak now HIDDEN!',
+            1000
+        )
+    }
 
     return (
         <View className="mt-2 bg-white">

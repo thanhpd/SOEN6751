@@ -42,9 +42,7 @@ const Profile: React.FC = () => {
                     router.push('/ProfileDetails' as any)
                 }}
             />
-            <GamificationSection
-                streak={6} 
-            />
+            <GamificationSection streak={6} />
             <SettingsSection />
         </ScrollView>
     )
