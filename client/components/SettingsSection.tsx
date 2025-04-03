@@ -32,19 +32,6 @@ const SettingsSection: React.FC = () => {
     return (
         <View className="mt-2 bg-white">
             <View className="p-4">
-                <Text className="text-lg font-semibold">Badges</Text>
-                <View className="flex-row items-center ml-1">
-                    <Image
-                        source={require('../assets/images/Brown Retro Badge Fitness Center Logo 1.svg')}
-                        style={{ width: 107, height: 107 }}
-                    />
-                    <Image
-                        source={require('../assets/images/Simple Illustration Sports Gym Fitness Badge Logo 1.svg')}
-                        style={{ width: 124, height: 124 }}
-                    />
-                </View>
-            </View>
-            <View className="p-4">
                 <Text className="text-lg font-semibold">Settings</Text>
             </View>
 

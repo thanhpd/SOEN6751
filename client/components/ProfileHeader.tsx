@@ -6,7 +6,6 @@ interface ProfileHeaderProps {
     name: string
     email: string
     avatar: string
-    streak: number
     onEditPress?: () => void
 }
 
@@ -14,7 +13,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     name,
     email,
     avatar,
-    streak,
     onEditPress,
 }) => {
     return (
@@ -53,33 +51,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                         Edit Profile
                     </Text>
                 </Pressable>
-                <View className="mt-4 items-center">
-                    <Text
-                        className="text-6xl font-bold"
-                        style={{
-                            fontFamily: 'Roboto',
-                            fontWeight: 'bold',
-                            color: '#FFC107',
-                            textShadowColor: '#FF6600',
-                            textShadowOffset: { width: 2, height: 2 },
-                            textShadowRadius: 2,
-                            textAlign: 'center',
-                        }}
-                    >
-                        {streak}
-                    </Text>
-                    <Text
-                        className="text-gray-600 mt-0.5"
-                        style={{
-                            fontFamily: 'Roboto',
-                            fontWeight: 'bold',
-                            color: '#0F2552',
-                            textAlign: 'center',
-                        }}
-                    >
-                        Workout Streak
-                    </Text>
-                </View>
             </View>
         </View>
     )
