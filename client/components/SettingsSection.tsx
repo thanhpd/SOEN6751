@@ -4,8 +4,6 @@ import Toast from 'react-native-simple-toast'
 import {
     View,
     Text,
-    Pressable,
-    Touchable,
     TouchableOpacity,
 } from 'react-native'
 import { Image } from 'expo-image'
@@ -23,6 +21,12 @@ const SettingsSection: React.FC = () => {
         toggleNotification(value);
         
         Toast.show( value ? 'Great, you get reminders' : 'Warning, no reminders for you', 1000); 
+    };
+
+    const handleToggleGamification = (value: boolean) => {
+        toggleGamification(value);
+
+        Toast.show( value ? 'Workout streak now VISIBLE!' : 'Workout streak now HIDDEN!', 1000);
     };
 
     return (
@@ -89,7 +93,7 @@ const SettingsSection: React.FC = () => {
                     </View>
                     <ToggleButton
                         initialState={currentUser?.gamificationToggle}
-                        onToggle={toggleGamification}
+                        onToggle={handleToggleGamification}
                     />
                 </View>
 
