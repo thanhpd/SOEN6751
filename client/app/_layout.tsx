@@ -87,6 +87,7 @@ export default function RootLayout() {
                                 <NotificationBellIcon />
                             </TouchableOpacity>
                         ),
+                        
                     }}
                 />
                 <Stack.Screen name="+not-found" />
@@ -94,9 +95,9 @@ export default function RootLayout() {
                 <Stack.Screen
                     name="qrmodal"
                     options={{
-                        presentation: 'transparentModal',
-                        animation: 'fade',
-                        headerShown: false,
+                        presentation: 'modal',
+                        
+                        
                     }}
                 />
 
@@ -158,6 +159,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
+                        
                     }}
                 />
                 <Stack.Screen
@@ -179,6 +181,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Online Activities',
+                        headerBackTitle: 'Go Back',
                     }}
                 />
                 <Stack.Screen
@@ -186,6 +189,8 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Nutrition Consultation',
+                        headerBackTitle: 'Go Back',
+                        
                     }}
                 />
                 <Stack.Screen

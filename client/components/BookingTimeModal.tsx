@@ -23,8 +23,8 @@ const BookingTimeModal: React.FC<BookingTimeModalProps> = ({
         if (!date) return []
         let dayOfWeek = date.getDay() // Get the day of the week directly
         return dayOfWeek === 5
-            ? ['9AM - 10AM', '10AM - 11AM'] // Saturday slots
-            : ['4PM - 5PM', '5PM - 6PM', '6PM - 7PM'] // Tuesday & Thursday slots
+            ? ['9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM'] // Saturday slots
+            : ['4:00 PM - 5:00 PM', '5:00 PM - 6:00 PM', '6:00 PM - 7:00 PM'] // Tuesday & Thursday slots
     }
 
     return (
