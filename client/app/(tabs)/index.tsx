@@ -130,7 +130,7 @@ export default function HomeScreen() {
                         <View style={styles.qrTextContainer}>
                             <Text style={styles.qrText}>Gym Check-in</Text>
                             <Text style={styles.qrsubText}>
-                                Tap to here scan QR code
+                                Tap here to scan QR code
                             </Text>
                         </View>
                     </TouchableOpacity> */}

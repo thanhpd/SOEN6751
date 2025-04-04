@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { BackHandler, Text, TouchableOpacity, View } from 'react-native'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,8 +16,6 @@ import { setCurrentUserId } from '@/store/currentUserId'
 import { Account, Membership } from '@/constants/types'
 import { setTmpUser } from '@/store/tmpUser'
 import ProfilePicker from '@/components/ui/ProfilePicker'
-import { ControlledInput } from '@/components/primitives/input'
-
 
 const LoginOTPSchema = zod.object({
     otpCode: zod.string().length(6),
@@ -50,12 +48,27 @@ const LoginOTPForm = ({ user }: Props) => {
         console.log(user)
 
         if (user.stayLoggedIn) {
+            console.log('storing userId in SecureStore', user.id)
             await SecureStore.setItemAsync('userId', user.id)
         }
         dispatch(setCurrentUserId(user.id))
         Toast.success('Login successful')
         dispatch(setTmpUser(null))
     }
+
+    useEffect(() => {
+        const backAction = () => {
+            dispatch(setTmpUser(null))
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [])
 
     return (
         <Portal name="reset-password-form">
@@ -84,7 +97,10 @@ const LoginOTPForm = ({ user }: Props) => {
                             <View className="flex flex-col items-center">
                                 <View className="mb-4">
                                     {user.avatar ? (
-                                        <ProfilePicker value={user.avatar} />
+                                        <ProfilePicker
+                                            value={user.avatar}
+                                            disabled
+                                        />
                                     ) : (
                                         <ProfilePictureIcon />
                                     )}
@@ -104,10 +120,9 @@ const LoginOTPForm = ({ user }: Props) => {
                                 </Text>
                             </View>
                             <View className="flex flex-col gap-4">
-                                <ControlledInput
+                                <ControlledInputOTP
                                     name="otpCode"
                                     control={control}
-                                    
                                 />
                             </View>
                         </View>

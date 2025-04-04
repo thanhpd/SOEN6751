@@ -20,7 +20,7 @@ type Props = {
 const LoginForm = ({ onClickForgotPassword }: Props) => {
     const { authenticate } = useAuth()
     const dispatch = useAppDispatch()
-    
+
     const { handleSubmit, control } = useForm<TLoginSchema>({
         mode: 'onChange',
         resolver: zodResolver(LoginSchema),
@@ -35,8 +35,12 @@ const LoginForm = ({ onClickForgotPassword }: Props) => {
         const res = authenticate(data)
 
         if (res.success) {
-            const { ...account } = res.user
-            dispatch(setTmpUser(account))
+            dispatch(
+                setTmpUser({
+                    ...res.user,
+                    stayLoggedIn: data.stayLoggedIn,
+                })
+            )
         } else {
             Toast.error('Invalid email or password, please try again')
         }
@@ -59,7 +63,10 @@ const LoginForm = ({ onClickForgotPassword }: Props) => {
                         placeholder="Enter your email"
                         autoCorrect={false}
                         keyboardType="email-address"
-                        style ={{justifyContent: 'center', alignContent :'center'}}
+                        style={{
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                        }}
                     />
                     <ControlledInput
                         control={control}

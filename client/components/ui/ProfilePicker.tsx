@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { Pressable } from 'react-native-gesture-handler'
 import { cn } from '@/lib/utils'
 import ProfilePictureIcon from '@/components/icons/ProfilePictureIcon'
+import EditIcon from '@/components/icons/EditIcon'
 
 type ProfilePickerProps = {
     className?: string
@@ -43,10 +44,15 @@ const ProfilePicker = ({
     return (
         <View className={cn('flex items-center justify-center', className)}>
             <Pressable
-                className="w-[84px] h-[84px] rounded-full mb-2 border-2 border-black flex"
+                className="w-[84px] h-[84px] rounded-full mb-2 border-2 border-black flex relative"
                 onPress={pickImage}
                 disabled={disabled}
             >
+                {!disabled && (
+                    <View className="absolute bottom-2 left-2 w-[84px] flex items-center justify-center flex-row z-50">
+                        <EditIcon className="w-[21px] h-[19px]" />
+                    </View>
+                )}
                 {image && (
                     <View className="w-24 h-24 rounded-full border border-gray-300">
                         <Image

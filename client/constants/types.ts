@@ -28,7 +28,8 @@ export interface Notification {
     id: number
     title: string
     dateTime: Date
-    body: string
+    body: string,
+    isRead: boolean
 }
 
 export interface Membership {

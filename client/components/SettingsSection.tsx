@@ -1,4 +1,6 @@
 import React from 'react'
+import Toast from 'react-native-simple-toast'
+
 import {
     View,
     Text,
@@ -16,6 +18,12 @@ const SettingsSection: React.FC = () => {
     const router = useRouter() // Use Expo Router for navigation
     const signOut = useSignOut()
     const { currentUser, toggleGamification, toggleNotification } = useAuth()
+
+    const handleToggleNotification = (value: boolean) => {
+        toggleNotification(value);
+        
+        Toast.show( value ? 'Great, you get reminders' : 'Warning, no reminders for you', 1000); 
+    };
 
     return (
         <View className="mt-2 bg-white">
@@ -46,12 +54,12 @@ const SettingsSection: React.FC = () => {
                             />
                         </View>
                         <Text className="text-base font-medium ml-2">
-                            Notifications
+                            Push Notifications
                         </Text>
                     </View>
                     <ToggleButton
                         initialState={currentUser?.notificationToggle}
-                        onToggle={toggleNotification}
+                        onToggle={handleToggleNotification}
                     />
                 </View>
 

@@ -29,7 +29,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                onPress={() => router.push('/OnlineActivity')}
+                onPress={() => router.push('/online')}
             >
                 Online Activities
             </Button>
@@ -55,7 +55,7 @@ const BookingOptions = () => {
                     flexWrap: 'wrap',
                     width: '100%',
                 }}
-                onPress={() => router.push('/NutritionConsultancy')}
+                onPress={() => router.push('/nutrition')}
             >
                 Nutrition Consultancy
             </Button>

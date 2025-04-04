@@ -26,7 +26,7 @@ const inputTv = tv({
     slots: {
         container: 'mb-2',
         label: 'text-sm text-red leading-[1.3] font-bold mb-2',
-        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-white p-4 w-full text-sm text-[#262D33] leading-[1.6] font-default-400 h-[54px]',
+        input: 'rounded-[28px] border-[1.5px] border-solid border-[rgba(152,36,60,0.29)] bg-white p-4 w-full text-sm text-[#262D33] leading-[1.3] font-default-400',
     },
 
     variants: {
@@ -64,6 +64,7 @@ export interface NInputProps extends TextInputProps {
     disabled?: boolean
     error?: string
     showPasswordToggle?: boolean
+    isRequired?: boolean
 }
 
 type TRule<T extends FieldValues> =
@@ -105,7 +106,7 @@ export const Input = React.forwardRef<
     NTextInput,
     NInputProps & { maskMode?: 'card' | 'cvv' }
 >((props, ref) => {
-    const { label, error, testID, ...inputProps } = props
+    const { label, error, testID, isRequired = true, ...inputProps } = props
     const [isFocussed, setIsFocussed] = React.useState(false)
     const onBlur = React.useCallback(() => setIsFocussed(false), [])
     const onFocus = React.useCallback(() => setIsFocussed(true), [])
@@ -135,6 +136,12 @@ export const Input = React.forwardRef<
                     className={styles.label()}
                 >
                     {label}
+
+                    {isRequired && (
+                        <Text className="text-red-600 font-default-400 text-sm">
+                            {' *'}
+                        </Text>
+                    )}
                 </Text>
             )}
             {inputProps.secureTextEntry ? (

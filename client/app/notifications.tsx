@@ -2,6 +2,7 @@ import NoNotification from '@/components/icons/NoNotification'
 import { Colors } from '@/constants/Colors'
 import useNotificationStore from '@/store/NotificationStore'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { set } from 'date-fns'
 import React from 'react'
 import {
     View,
@@ -13,22 +14,32 @@ import {
 } from 'react-native'
 
 const NotificationPage = () => {
-    const { unreadNotifications, clearUnreadNotifications } =
+    const { notifications, clearNotifications, markAllAsRead } =
         useNotificationStore()
 
-    const notifications = unreadNotifications
+    const handleClearAll = () => {
+        clearNotifications()
+    };
+
+
+    React.useEffect(() => {
+        markAllAsRead()
+    }, [])
+
+    const filtered = notifications
         .slice()
         .sort((a, b) => b.dateTime.getTime() - a.dateTime.getTime())
+
 
     return (
         <View style={styles.container}>
             {/* Header with Clear Button */}
-            {!!notifications.length && (
+            {!!filtered.length && (
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Notifications</Text>
-                    {notifications.length > 0 && (
+                    {filtered.length > 0 && (
                         <TouchableOpacity
-                            onPress={clearUnreadNotifications}
+                            onPress={handleClearAll}
                             style={[
                                 styles.clearButton,
                                 {
@@ -47,14 +58,14 @@ const NotificationPage = () => {
 
             <View style={styles.notificationContainer}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {notifications.length === 0 ? (
+                    {filtered.length === 0 ? (
                         <View className="flex items-center justify-center">
                             <View className="mt-[70px]">
                                 <NoNotification />
                             </View>
                             <View className="flex flex-col items-center justify-center mt-[70px]">
                                 <Text className="text-red font-bold text-2xl">
-                                    There's no notifications
+                                    There are no notifications
                                 </Text>
                                 <Text className="text-lg">
                                     Your notifications will appear on this page
@@ -62,7 +73,7 @@ const NotificationPage = () => {
                             </View>
                         </View>
                     ) : (
-                        notifications.map(notification => (
+                        filtered.map(notification => (
                             <View
                                 key={notification.id}
                                 style={styles.notificationBox}
