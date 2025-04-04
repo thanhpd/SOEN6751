@@ -22,7 +22,7 @@ const SettingsSection: React.FC = () => {
     const handleToggleNotification = (value: boolean) => {
         toggleNotification(value);
         
-        Toast.show( value ? 'Great, you get reminders' : 'Warning, no reminders for you', 1000); 
+        // Toast.show( value ? 'Great, you get reminders' : 'Warning, no reminders for you', 1000); 
     };
 
     return (
