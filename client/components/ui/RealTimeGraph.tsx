@@ -34,16 +34,18 @@ export const RealTimeGraph: React.FC<RealTimeGraphProps> = ({ data }) => {
             ? currentHour - startingHour // Calculate the relative index
             : -1 // If the current hour is outside the range, no bar is highlighted
 
+    // Normalize data to fit within the fixed Y-axis range
+    const normalizedData = data.map((value, index) =>
+        index === currentTimeIndex ? 170 : value > 200 ? 200 : value
+    )
+
     // Generate colors for the bars dynamically
     const barColors = data.map(
         (value, index) =>
             index === currentTimeIndex
-                ? getBarColor(value) // Use the threshold-based color for the current time bar
+                ? getBarColor(170) // Use the threshold-based color for the current time bar
                 : (opacity = 1) => `rgba(233, 236, 241, ${opacity})` // Default bar color for other bars
     )
-
-    // Normalize data to fit within the fixed Y-axis range
-    const normalizedData = data.map(value => (value > 200 ? 200 : value))
 
     return (
         <View className="items-center">
