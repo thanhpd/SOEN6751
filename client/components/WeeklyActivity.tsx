@@ -2,7 +2,11 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { Image } from 'expo-image'
 
-const WeeklyActivity: React.FC = () => {
+interface WeeklyActivityProps {
+    streak: number
+}
+
+const WeeklyActivity: React.FC<WeeklyActivityProps> = ({ streak }) => {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
     return (
@@ -20,10 +24,12 @@ const WeeklyActivity: React.FC = () => {
                             className="w-8 h-8 rounded-full mt-2 items-center justify-center"
                             style={{
                                 backgroundColor:
-                                    day === 'Mon' ? '#EDEFF1' : '#FFCE51',
+                                    streak > 0 && index < streak
+                                        ? '#FFCE51' // Highlighted color
+                                        : '#EDEFF1', // Default color
                             }}
                         >
-                            {day !== 'Mon' && (
+                            {streak > 0 && index < streak && (
                                 <Image
                                     source={require('../assets/images/fire-vector.svg')}
                                     style={{ width: 16, height: 23 }}

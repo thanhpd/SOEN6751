@@ -39,7 +39,7 @@ const GamificationSection: React.FC<GamificationSectionProps> = ({
                     Workout Streak
                 </Text>
             </View>
-            <WeeklyActivity />
+            <WeeklyActivity streak={streak} />
             <View className="mt-2 p-4 bg-white">
                 <Text className="text-lg font-semibold">Badges</Text>
                 <View className="flex-row items-center ml-1">
