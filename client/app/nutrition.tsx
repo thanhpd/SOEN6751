@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     },
 
     quote: {
-        fontSize: 10,
+        fontSize: 11,
         fontStyle: 'italic',
         marginBottom: 10,
     },
@@ -251,6 +251,6 @@ const styles = StyleSheet.create({
     },
 
     tipText: {
-        fontSize: 10,
+        fontSize: 11,
     },
 })

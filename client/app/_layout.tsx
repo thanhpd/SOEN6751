@@ -13,7 +13,7 @@ import { Image, TouchableOpacity, View, Text } from 'react-native'
 import { NAV_THEME } from '@/lib/constants'
 import { persistor, store } from '../store'
 
-import ToastManager, { Toast } from 'toastify-react-native'
+import ToastManager from 'toastify-react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 import NotificationBellIcon from '@/components/ui/NotificationBellIcon'
 
@@ -25,8 +25,6 @@ export const unstable_settings = {
 export default function RootLayout() {
     SplashScreen.preventAutoHideAsync()
 
-    const [appReady, setAppReady] = useState(false)
-    const [showLoadingScreen, setShowLoadingScreen] = useState(false)
 
     const LIGHT_THEME: Theme = {
         ...DefaultTheme,
@@ -87,6 +85,7 @@ export default function RootLayout() {
                                 <NotificationBellIcon />
                             </TouchableOpacity>
                         ),
+                        
                     }}
                 />
                 <Stack.Screen name="+not-found" />
@@ -94,9 +93,9 @@ export default function RootLayout() {
                 <Stack.Screen
                     name="qrmodal"
                     options={{
-                        presentation: 'transparentModal',
-                        animation: 'fade',
-                        headerShown: false,
+                        presentation: 'modal',
+                        
+                        
                     }}
                 />
 
@@ -158,6 +157,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
+                        
                     }}
                 />
                 <Stack.Screen
@@ -179,6 +179,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Online Activities',
+                        headerBackTitle: 'Go Back',
                     }}
                 />
                 <Stack.Screen
@@ -186,6 +187,8 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Nutrition Consultation',
+                        headerBackTitle: 'Go Back',
+                        
                     }}
                 />
                 <Stack.Screen
