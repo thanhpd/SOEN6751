@@ -75,47 +75,48 @@ export default function RootLayout() {
                             />
                         ),
                         headerRight: () => (
-                            <Link href="/notifications" asChild>
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        console.log('Notifications Pressed')
-                                    }
-                                    style={{ position: 'relative' }}
-                                >
-                                    <Ionicons
-                                        name="notifications-outline"
-                                        size={28}
-                                        color="#333"
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {/* QR Code Button
+                                <Link href="/qrmodal" asChild>
+                                    <TouchableOpacity
+                                        onPress={() => console.log('QR Code Pressed')}
                                         style={{ marginRight: 15 }}
-                                    />
-                                    {unreadNotifications.length > 0 && (
-                                        <View
-                                            style={{
-                                                position: 'absolute',
-                                                top: -5,
-                                                right: 10,
-                                                backgroundColor: 'red',
-                                                borderRadius: 10,
-                                                width: 20,
-                                                height: 20,
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                            }}
-                                        >
-                                            <Text
+                                    >
+                                        <Ionicons name="qr-code-outline" size={28} color="#333" />
+                                    </TouchableOpacity>
+                                </Link> */}
+                        
+                                {/* Notifications Button */}
+                                <Link href="/notifications" asChild>
+                                    <TouchableOpacity
+                                        onPress={() => console.log('Notifications Pressed')}
+                                        style={{ position: 'relative' }}
+                                    >
+                                        <Ionicons name="notifications-outline" size={28} color="#333" style={{ marginRight: 15 }} />
+                                        {unreadNotifications.length > 0 && (
+                                            <View
                                                 style={{
-                                                    color: 'white',
-                                                    fontSize: 12,
-                                                    fontWeight: 'bold',
+                                                    position: 'absolute',
+                                                    top: -5,
+                                                    right: 10,
+                                                    backgroundColor: 'red',
+                                                    borderRadius: 10,
+                                                    width: 20,
+                                                    height: 20,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
                                                 }}
                                             >
-                                                {unreadNotifications.length}
-                                            </Text>
-                                        </View>
-                                    )}
-                                </TouchableOpacity>
-                            </Link>
+                                                <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>
+                                                    {unreadNotifications.length}
+                                                </Text>
+                                            </View>
+                                        )}
+                                    </TouchableOpacity>
+                                </Link>
+                            </View>
                         ),
+                        
                     }}
                 />
                 <Stack.Screen name="+not-found" />
@@ -123,9 +124,9 @@ export default function RootLayout() {
                 <Stack.Screen
                     name="qrmodal"
                     options={{
-                        presentation: 'transparentModal',
-                        animation: 'fade',
-                        headerShown: false,
+                        presentation: 'modal',
+                        
+                        
                     }}
                 />
 
@@ -187,6 +188,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
+                        
                     }}
                 />
                 <Stack.Screen
@@ -208,6 +210,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Online Activities',
+                        headerBackTitle: 'Go Back',
                     }}
                 />
                 <Stack.Screen
@@ -215,6 +218,8 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Nutrition Consultation',
+                        headerBackTitle: 'Go Back',
+                        
                     }}
                 />
                 <Stack.Screen

@@ -303,18 +303,18 @@ const styles = StyleSheet.create({
 
     notice: {
         color: 'black',
-        fontSize: 12,
+        fontSize: 13,
     },
     notice1: {
         color: 'black',
-        fontSize: 10,
+        fontSize: 13,
         fontFamily: 'italic',
     },
 
     note: {
         alignContent: 'flex-start',
         justifyContent: 'flex-start',
-        marginTop: 30,
+        marginTop: 20,
     },
 
     note1: {

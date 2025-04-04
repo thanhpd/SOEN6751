@@ -27,6 +27,7 @@ import { CalendarEvent } from '@/constants/types'
 import { Rows } from 'lucide-react-native'
 import GymOccupancy from '@/components/GymOccupancy'
 import UpcomingBookingCard from '@/components/UpcomingBooking'
+import LeStreakModal from '../LeStreak'
 
 export default function HomeScreen() {
     const dispatch = useAppDispatch()
@@ -40,6 +41,12 @@ export default function HomeScreen() {
     const [eventModalVisible, setEventModalVisible] = useState<boolean>(false)
     const [selectedBooking, setSelectedBooking] = useState(null)
 
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleLeStreakModal = () => {
+        setModalVisible(true);  // Show modal when navigating
+        // You can also trigger any other navigation logic here
+    };
     const handleClose = () => {
         setSelectedBooking(null)
         setEventModalVisible(false)
@@ -74,28 +81,43 @@ export default function HomeScreen() {
         const bookingDate = booking.date
         // const bookingDateFormatted = bookingDate.toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
 
-        console.log('booking', bookingDate)
-        console.log('selecteddate', selectedDate)
+
 
         // Ensure selectedDate and selectedId are defined
         return (
-            bookingDate === selectedDate && booking.user_id === currentUser.id
+            bookingDate === selectedDate && booking.user_id === currentUser?.id
         )
     })
 
-    console.log('filtered bookings', filteredBookings)
+
+    const [isGamificationOn, setIsGamificationOn] = useState(false);
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {/* The whole Home Page container */}
-            <ThemedView style={styles.welcomeBox}>
-                <View style={styles.leftContainer}>
-                    <ThemedText style={styles.subtitle}>Welcome </ThemedText>
-                    <ThemedText style={styles.title}>
-                        {currentUser?.firstName || 'Guest'}{' '}
-                    </ThemedText>
+            {currentUser?.gamificationToggle && (
 
-                    <TouchableOpacity
+                <ThemedView style={styles.welcomeBox2} >
+                    <ThemedText style={styles.subtitle3}>Welcome</ThemedText>
+                    <Text style={styles.title2}>
+                        {currentUser?.firstName || 'Guest'}{' '}
+                    </Text>
+                    <ThemedText style={styles.subtitle4}>Earn Your Progress Today. </ThemedText>
+                </ThemedView>
+            )
+            }
+            {!currentUser?.gamificationToggle && (
+
+
+                <ThemedView style={styles.welcomeBox}>
+                    <View style={styles.leftContainer}>
+                        <ThemedText style={styles.subtitle}>Welcome</ThemedText>
+                        <Text style={styles.title}>
+                            {currentUser?.firstName || 'Guest'}{' '}
+                        </Text>
+                        <ThemedText style={styles.subtitle2}>Earn Your Progress Today. </ThemedText>
+
+                        {/* <TouchableOpacity
                         style={styles.qrcontainer}
                         onPress={openModal}
                     >
@@ -111,12 +133,12 @@ export default function HomeScreen() {
                                 Tap to here scan QR code
                             </Text>
                         </View>
-                    </TouchableOpacity>
-                </View>
+                    </TouchableOpacity> */}
+                    </View>
 
-                <View style={styles.divider} />
+                    <View style={styles.divider} />
 
-                {/* <View style={styles.qrCodeContainer}>
+                    {/* <View style={styles.qrCodeContainer}>
                     <TouchableOpacity onPress={openModal}>
                         <Ionicons
                             name="qr-code-outline"
@@ -127,51 +149,55 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                 </View> */}
 
-                <View style={styles.rightContainer}>
-                    <Image
-                        source={require('@/assets/images/Streak.png')} // Change to your logo path
-                        style={{
-                            width: 80,
-                            height: 70,
-                            marginLeft: 0,
-                            marginBottom: 0,
-                            padding: 0,
-                        }}
-                        resizeMode="contain"
-                    />
-
-                    <View
-                        style={{
-                            justifyContent: 'center',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text
-                            className="text-2xl font-bold"
+                    <View style={styles.rightContainer}>
+                        <Image
+                            source={require('@/assets/images/Streak.png')} // Change to your logo path
                             style={{
-                                fontFamily: 'Roboto',
-                                fontWeight: 'bold',
-                                color: '#FFC107',
-                                textShadowColor: '#FF6600',
-                                textShadowOffset: { width: 2, height: 2 },
-                                textShadowRadius: 2,
-                                textAlign: 'center',
+                                width: 80,
+                                height: 70,
+                                marginLeft: 0,
+                                marginBottom: 0,
+                                padding: 0,
+                            }}
+                            resizeMode="contain"
+                        />
+
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                position: 'absolute',
+                                marginTop: 55,
                             }}
                         >
-                            6
-                        </Text>
-                        <Text style={styles.streakCount}>Days Streak</Text>
-                    </View>
+                            <Text
+                                className="text-3xl font-bold"
+                                style={{
+                                    fontFamily: 'Roboto',
+                                    fontWeight: 'bold',
+                                    color: '#FFC107',
+                                    textShadowColor: '#FF6600',
+                                    textShadowOffset: { width: 2, height: 2 },
+                                    textShadowRadius: 2,
+                                    textAlign: 'center',
+                                }}
+                            >
+                                6
+                            </Text>
+                            {/* <Text style={styles.streakCount}>Days</Text> */}
+                            <TouchableOpacity
+                                style={styles.details}
+                                onPress={handleLeStreakModal}
+                            >
+                                <Text style={styles.calendarText}>See Details</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    <TouchableOpacity
-                        style={styles.details}
-                        onPress={() => router.push('/profile' as any)}
-                    >
-                        <Text style={styles.calendarText}>see details</Text>
-                    </TouchableOpacity>
-                </View>
-            </ThemedView>
+
+                    </View>
+                </ThemedView>
+            )}
 
             <ThemedText style={styles.today}>Today </ThemedText>
             <ThemedText style={styles.date}>{today}</ThemedText>
@@ -200,6 +226,7 @@ export default function HomeScreen() {
 
             {filteredBookings.length > 0 ? (
                 filteredBookings.map((booking, index) => (
+
                     <TouchableOpacity
                         key={index}
                         onPress={() => {
@@ -247,7 +274,7 @@ export default function HomeScreen() {
                 onPress={() => router.push('/booking' as any)}
             >
                 <Text style={styles.calendarText}>View full calendar</Text>
-                <Icon name="chevron-right" size={8} color="black" />
+                <Icon name="chevron-right" size={8} color="white" />
             </TouchableOpacity>
             {/* </View> */}
 
@@ -259,7 +286,10 @@ export default function HomeScreen() {
                 />
             )}
 
-            <View style={{ marginTop: 30 }}>
+            <LeStreakModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+
+
+            <View style={{ marginTop: 0 }}>
                 <GymOccupancy />
             </View>
 
@@ -288,33 +318,95 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10, // Increased padding for a bigger box
         borderRadius: 10,
 
-        marginBottom: 0,
-        marginTop: 10, // Added margin to the top
+        marginBottom: 20,
+        marginTop: 20, // Added margin to the top
+        marginRight: 15, // Added margin to the right
+        marginLeft: 15, // Added margin to the left
+    },
+
+
+    welcomeBox2: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        paddingHorizontal: 10, // Increased padding for a bigger box
+        borderRadius: 10,
+
+        marginBottom: 40,
+        marginTop: 40, // Added margin to the top
         marginRight: 15, // Added margin to the right
         marginLeft: 15, // Added margin to the left
     },
     leftContainer: {
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 0,
         flex: 1,
     },
     rightContainer: {
         flexDirection: 'column',
         alignItems: 'center',
+        marginBottom: 40,
+
 
         gap: 2,
         flex: 1,
     },
     title: {
-        fontSize: 24,
+        fontSize: 34,
         fontWeight: 'bold',
         color: Colors.light.concordiaColor,
+
     },
     subtitle: {
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: 'bold',
         color: '#333',
+        position: 'absolute',
+        bottom: 35,
+        textTransform :'uppercase',
+        paddingRight : 5,
+
+    },
+
+    subtitle2: {
+        fontSize: 11,
+        fontWeight: 'bold',
+        color: '#333',
+        position: 'absolute',
+        top: 37,
+       
+
+
+    },
+
+    title2: {
+        fontSize: 34,
+        fontWeight: 'bold',
+        color: Colors.light.concordiaColor,
+
+    },
+    subtitle3: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: '#333',
+        position: 'absolute',
+        bottom: 35,
+        right : 142,
+        textTransform :'uppercase'
+
+    },
+
+    subtitle4: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: '#333',
+        position: 'absolute',
+        top: 40
+
+
     },
     streakLabel: {
         fontSize: 48,
@@ -322,7 +414,7 @@ const styles = StyleSheet.create({
         color: '#FF5733',
     },
     streakCount: {
-        fontSize: 14,
+        fontSize: 11,
         fontWeight: 'bold',
         color: '#FF5733',
     },
@@ -342,7 +434,7 @@ const styles = StyleSheet.create({
 
     divider: {
         width: 1.5, // Adjust the width of the divider
-        height: '75%', // Make the divider span the entire height
+        height: '95%', // Make the divider span the entire height
         backgroundColor: 'black', // Use backgroundColor for the divider color
         marginVertical: 15, // Adjust the spacing above and below the divider
     },
@@ -427,11 +519,11 @@ const styles = StyleSheet.create({
 
         justifyContent: 'center',
 
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
 
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5,
+        paddingVertical: 7,
         gap: 5,
         marginBottom: 10,
     },
@@ -475,4 +567,13 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: 'bold',
     },
+
+    LeStreakCard: {
+
+        flexDirection: 'column',
+        borderRadius: 10,
+        borderColor: Colors.light.concordiaColor,
+        borderWidth: 1,
+
+    }
 })
