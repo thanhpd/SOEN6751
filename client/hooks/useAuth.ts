@@ -140,6 +140,22 @@ export function useAuth() {
         [currentUserId]
     )
 
+    const incrementGamification = useCallback(() => {
+        if (!currentUserId) return
+        dispatch(
+            updateDBAccount({
+                id: currentUserId,
+                changes: {
+                    gamificationProgress:
+                        (accountDB.entities[currentUserId].gamificationProgress) +
+                        1,
+                },
+            })
+        )
+    },
+        [currentUserId]
+    )
+
     return {
         currentUser,
         authenticate,
@@ -147,5 +163,6 @@ export function useAuth() {
         updatePassword,
         toggleNotification,
         toggleGamification,
+        incrementGamification,
     }
 }
