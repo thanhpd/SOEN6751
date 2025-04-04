@@ -8,7 +8,7 @@ import * as Brightness from "expo-brightness";
 import { useFocusEffect } from "@react-navigation/native";
 
 const QRCodeScreen: React.FC = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, incrementGamification } = useAuth();
 
     useFocusEffect(
         useCallback(() => {
@@ -22,6 +22,9 @@ const QRCodeScreen: React.FC = () => {
 
             setBrightness();
 
+            // Simulate a gamification increment when QR is scanned
+            incrementGamification();
+
             return async () => {
                 try {
                     await Brightness.restoreSystemBrightnessAsync(); // Reset to system brightness
@@ -29,7 +32,7 @@ const QRCodeScreen: React.FC = () => {
                     console.error("Failed to reset brightness:", error);
                 }
             };
-        }, [])
+        }, [incrementGamification])
     );
 
     if (!currentUser) {
