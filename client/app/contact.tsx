@@ -57,7 +57,7 @@ const ContactPage = () => {
             <View style={styles.contactDetails}>
                 <Text style={styles.contactTitle}>Location</Text>
                 <Text style={styles.contactText}>
-                    🏢 LeGym, EV buiding Room EV-S2.206
+                    🏢 LeGym, EV building Room EV-S2.206
                 </Text>
                 <Text style={styles.contactText}>
                     📍 1515 Ste. Catherine St. W.
