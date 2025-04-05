@@ -52,7 +52,7 @@ const cards = [
         circleColor: '#922b21',
     },
 ]
-export default function MmeberhipPage() {
+export default function MembershipPage() {
     const { currentUser } = useAuth()
     const dispatch = useAppDispatch()
 
