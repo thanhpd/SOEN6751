@@ -128,8 +128,10 @@ export default function UserQRCodeModal({
                     ]}
                     {...panResponder.panHandlers} // Attach pan handlers
                 >
-                    <Text style={styles.userName}>{userData.firstName} {userData.lastName}</Text>
-                    
+                    <Text style={styles.userName}>
+                        {userData.firstName} {userData.lastName}
+                    </Text>
+
                     <Text style={styles.userEmail}>{userData.studentId}</Text>
 
                     {/* QR Code */}
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         marginTop: 15,
-        backgroundColor:    Colors.light.concordiaColor,
+        backgroundColor: Colors.light.concordiaColor,
         paddingVertical: 10,
         paddingHorizontal: 30,
         borderRadius: 10,

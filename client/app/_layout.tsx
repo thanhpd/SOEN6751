@@ -25,7 +25,6 @@ export const unstable_settings = {
 export default function RootLayout() {
     SplashScreen.preventAutoHideAsync()
 
-
     const LIGHT_THEME: Theme = {
         ...DefaultTheme,
         colors: NAV_THEME.light,
@@ -85,7 +84,6 @@ export default function RootLayout() {
                                 <NotificationBellIcon />
                             </TouchableOpacity>
                         ),
-                        
                     }}
                 />
                 <Stack.Screen name="+not-found" />
@@ -94,8 +92,6 @@ export default function RootLayout() {
                     name="qrmodal"
                     options={{
                         presentation: 'modal',
-                        
-                        
                     }}
                 />
 
@@ -157,7 +153,6 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
-                        
                     }}
                 />
                 <Stack.Screen
@@ -188,7 +183,6 @@ export default function RootLayout() {
                         headerShown: true,
                         headerTitle: 'Nutrition Consultation',
                         headerBackTitle: 'Go Back',
-                        
                     }}
                 />
                 <Stack.Screen

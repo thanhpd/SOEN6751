@@ -198,36 +198,32 @@ export default function MmeberhipPage() {
                 </View>
                 <Text style={styles.title}>Membership Packages</Text>
 
-               
-                   
-                    <FlatList
-                        data={cards}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                        numColumns={2} // Two columns
-                        contentContainerStyle={styles.listContainer}
-                        scrollEnabled={false}
-                    />
+                <FlatList
+                    data={cards}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    numColumns={2} // Two columns
+                    contentContainerStyle={styles.listContainer}
+                    scrollEnabled={false}
+                />
 
-                    <Text style={styles.notice1}>
-                        Tax will be added to listed prices
+                <Text style={styles.notice1}>
+                    Tax will be added to listed prices
+                </Text>
+
+                <View style={styles.note}>
+                    <Text style={styles.notice}>
+                        Note: When you purchase a new membership, the remaining
+                        duration of your current membership will automatically
+                        be combined with the new membership. The new expiry date
+                        will reflect the cumulative length of both memberships,
+                        starting from the current date. Please review your new
+                        membership details carefully before confirming. If you
+                        have any questions or need assistance, feel free to
+                        contact Le Gym's customer service.
                     </Text>
-
-                    <View style={styles.note}>
-                        <Text style={styles.notice}>
-                            Note: When you purchase a new membership, the
-                            remaining duration of your current membership will
-                            automatically be combined with the new membership.
-                            The new expiry date will reflect the cumulative
-                            length of both memberships, starting from the
-                            current date. Please review your new membership
-                            details carefully before confirming. If you have any
-                            questions or need assistance, feel free to contact
-                            Le Gym's customer service.
-                        </Text>
-                    </View>
                 </View>
-           
+            </View>
         </ScrollView>
     )
 }

@@ -4,12 +4,16 @@ import { Colors } from '@/constants/Colors'
 import moment from 'moment' // Import moment.js for date handling
 
 interface DaysOfWeekProps {
-    selectedDate: string;
-    setSelectedDate: (date: string) => void;
-    upcomingBookings: { bookingDate: string }[];
+    selectedDate: string
+    setSelectedDate: (date: string) => void
+    upcomingBookings: { bookingDate: string }[]
 }
 
-export default function DaysOfWeek({ selectedDate, setSelectedDate, upcomingBookings }: DaysOfWeekProps) {
+export default function DaysOfWeek({
+    selectedDate,
+    setSelectedDate,
+    upcomingBookings,
+}: DaysOfWeekProps) {
     // Generate an array of 7 days starting from today
     const days = Array.from({ length: 7 }, (_, i) => {
         const date = moment().add(i, 'days') // Get today + i days
@@ -21,7 +25,8 @@ export default function DaysOfWeek({ selectedDate, setSelectedDate, upcomingBook
     })
 
     // Function to check if a date has an event
-    const hasEvent = (date: string) => upcomingBookings.some((booking) => booking.bookingDate === date)
+    const hasEvent = (date: string) =>
+        upcomingBookings.some(booking => booking.bookingDate === date)
 
     return (
         <View style={styles.container}>
@@ -30,17 +35,27 @@ export default function DaysOfWeek({ selectedDate, setSelectedDate, upcomingBook
                     key={index}
                     style={[
                         styles.dayBox,
-                        selectedDate === item.date ? styles.selectedBox : styles.unselectedBox,
+                        selectedDate === item.date
+                            ? styles.selectedBox
+                            : styles.unselectedBox,
                     ]}
                     onPress={() => setSelectedDate(item.date)}
                 >
                     <Text
-                        style={selectedDate === item.date ? styles.selectedText : styles.unselectedText}
+                        style={
+                            selectedDate === item.date
+                                ? styles.selectedText
+                                : styles.unselectedText
+                        }
                     >
                         {item.day}
                     </Text>
                     <Text
-                        style={selectedDate === item.date ? styles.selectedText : styles.unselectedText}
+                        style={
+                            selectedDate === item.date
+                                ? styles.selectedText
+                                : styles.unselectedText
+                        }
                     >
                         {item.displayDate}
                     </Text>

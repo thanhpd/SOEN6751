@@ -35,12 +35,12 @@ export default function HomeScreen() {
     const [eventModalVisible, setEventModalVisible] = useState<boolean>(false)
     const [selectedBooking, setSelectedBooking] = useState(null)
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
 
     const handleLeStreakModal = () => {
-        setModalVisible(true);  // Show modal when navigating
+        setModalVisible(true) // Show modal when navigating
         // You can also trigger any other navigation logic here
-    };
+    }
     const handleClose = () => {
         setSelectedBooking(null)
         setEventModalVisible(false)
@@ -74,8 +74,6 @@ export default function HomeScreen() {
         const bookingDate = booking.date
         // const bookingDateFormatted = bookingDate.toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
 
-
-
         // Ensure selectedDate and selectedId are defined
         return (
             bookingDate === selectedDate && booking.user_id === currentUser?.id
@@ -86,26 +84,26 @@ export default function HomeScreen() {
         <ScrollView contentContainerStyle={styles.container}>
             {/* The whole Home Page container */}
             {!currentUser?.gamificationToggle && (
-
-                <ThemedView style={styles.welcomeBox2} >
+                <ThemedView style={styles.welcomeBox2}>
                     <ThemedText style={styles.subtitle3}>Welcome</ThemedText>
                     <Text style={styles.title2}>
                         {currentUser?.firstName || 'Guest'}{' '}
                     </Text>
-                    <ThemedText style={styles.subtitle4}>Earn Your Progress Today. </ThemedText>
+                    <ThemedText style={styles.subtitle4}>
+                        Earn Your Progress Today.{' '}
+                    </ThemedText>
                 </ThemedView>
-            )
-            }
+            )}
             {currentUser?.gamificationToggle && (
-
-
                 <ThemedView style={styles.welcomeBox}>
                     <View style={styles.leftContainer}>
                         <ThemedText style={styles.subtitle}>Welcome</ThemedText>
                         <Text style={styles.title}>
                             {currentUser?.firstName || 'Guest'}{' '}
                         </Text>
-                        <ThemedText style={styles.subtitle2}>Earn Your Progress Today. </ThemedText>
+                        <ThemedText style={styles.subtitle2}>
+                            Earn Your Progress Today.{' '}
+                        </ThemedText>
 
                         {/* <TouchableOpacity
                         style={styles.qrcontainer}
@@ -161,52 +159,57 @@ export default function HomeScreen() {
                                 marginTop: 55,
                             }}
                         >
-                            <View style={{width: '100%'}}>
-                            <Text
-                                className="text-3xl font-bold"
-                                style={{
-                                    fontFamily: 'Roboto',
-                                    fontWeight: 'bold',
-                                    color: '#FFC107',
-                                    textShadowColor: '#FF6600',
-                                    textShadowOffset: { width: 2, height: 2 },
-                                    textShadowRadius: 2,
-                                    textAlign: 'center',
-                                    marginTop: 5,
-                                }}
-                            >
-                                {currentUser?.gamificationProgress}
-                            </Text>
-                            <Text
-                                className="text-1xl font-bold"
-                                style={{
-                                    fontFamily: 'Roboto',
-                                    fontWeight: 'bold',
-                                    color: '#FFC107',
-                                    textShadowColor: '#FF6600',
-                                    textShadowOffset: { width: 1, height: 1 },
-                                    textShadowRadius: 1,
-                                    textAlign: 'center',
-                                    marginTop: -8,
-                                    marginBottom: 5,
-                                    fontSize: 18,
-                                }}
-                            >
-                                Days
-                            </Text>
-                            
+                            <View style={{ width: '100%' }}>
+                                <Text
+                                    className="text-3xl font-bold"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontWeight: 'bold',
+                                        color: '#FFC107',
+                                        textShadowColor: '#FF6600',
+                                        textShadowOffset: {
+                                            width: 2,
+                                            height: 2,
+                                        },
+                                        textShadowRadius: 2,
+                                        textAlign: 'center',
+                                        marginTop: 5,
+                                    }}
+                                >
+                                    {currentUser?.gamificationProgress}
+                                </Text>
+                                <Text
+                                    className="text-1xl font-bold"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontWeight: 'bold',
+                                        color: '#FFC107',
+                                        textShadowColor: '#FF6600',
+                                        textShadowOffset: {
+                                            width: 1,
+                                            height: 1,
+                                        },
+                                        textShadowRadius: 1,
+                                        textAlign: 'center',
+                                        marginTop: -8,
+                                        marginBottom: 5,
+                                        fontSize: 18,
+                                    }}
+                                >
+                                    Days
+                                </Text>
                             </View>
-                            
+
                             {/* <Text style={styles.streakCount}>Days</Text> */}
                             <TouchableOpacity
                                 style={styles.details}
                                 onPress={handleLeStreakModal}
                             >
-                                <Text style={styles.calendarText}>See Details</Text>
+                                <Text style={styles.calendarText}>
+                                    See Details
+                                </Text>
                             </TouchableOpacity>
                         </View>
-
-
                     </View>
                 </ThemedView>
             )}
@@ -238,7 +241,6 @@ export default function HomeScreen() {
 
             {filteredBookings.length > 0 ? (
                 filteredBookings.map((booking, index) => (
-
                     <TouchableOpacity
                         key={index}
                         onPress={() => {
@@ -298,8 +300,10 @@ export default function HomeScreen() {
                 />
             )}
 
-            <LeStreakModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
-
+            <LeStreakModal
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+            />
 
             <View style={{ marginTop: 10 }}>
                 <GymOccupancy />
@@ -336,7 +340,6 @@ const styles = StyleSheet.create({
         marginLeft: 15, // Added margin to the left
     },
 
-
     welcomeBox2: {
         flexDirection: 'column',
         justifyContent: 'center',
@@ -362,7 +365,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 40,
 
-
         gap: 2,
         flex: 1,
     },
@@ -370,7 +372,6 @@ const styles = StyleSheet.create({
         fontSize: 34,
         fontWeight: 'bold',
         color: Colors.light.concordiaColor,
-
     },
     subtitle: {
         fontSize: 12,
@@ -378,9 +379,8 @@ const styles = StyleSheet.create({
         color: '#333',
         position: 'absolute',
         bottom: 35,
-        textTransform :'uppercase',
-        paddingRight : 5,
-
+        textTransform: 'uppercase',
+        paddingRight: 5,
     },
 
     subtitle2: {
@@ -389,9 +389,6 @@ const styles = StyleSheet.create({
         color: '#333',
         position: 'absolute',
         top: 37,
-       
-
-
     },
 
     title2: {
@@ -399,7 +396,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.light.concordiaColor,
         textAlign: 'center',
-
     },
     subtitle3: {
         fontSize: 17,
@@ -407,9 +403,8 @@ const styles = StyleSheet.create({
         color: '#333',
         position: 'absolute',
         bottom: 40,
-        textTransform :'uppercase',
+        textTransform: 'uppercase',
         textAlign: 'center',
-
     },
 
     subtitle4: {
@@ -419,8 +414,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 40,
         textAlign: 'center',
-
-
     },
     streakLabel: {
         fontSize: 48,
@@ -583,11 +576,9 @@ const styles = StyleSheet.create({
     },
 
     LeStreakCard: {
-
         flexDirection: 'column',
         borderRadius: 10,
         borderColor: Colors.light.concordiaColor,
         borderWidth: 1,
-
-    }
+    },
 })

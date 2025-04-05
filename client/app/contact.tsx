@@ -4,12 +4,11 @@ import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
 import { useAuth } from '@/hooks/useAuth'
 
 const ContactPage = () => {
+    const { currentUser } = useAuth()
 
-const{currentUser} = useAuth();
-
-
-
-    const [name, setName] = useState(currentUser.firstName + " " + currentUser.lastName)
+    const [name, setName] = useState(
+        currentUser.firstName + ' ' + currentUser.lastName
+    )
     const [email, setEmail] = useState(currentUser.email) // Pre-filled email
     const [message, setMessage] = useState('')
 
@@ -27,8 +26,6 @@ const{currentUser} = useAuth();
             {/* Name Input */}
             <TextInput
                 style={[styles.input, styles.disabledInput]}
-                
-                
                 value={name}
                 onChangeText={setName}
             />
@@ -59,10 +56,16 @@ const{currentUser} = useAuth();
             {/* Gym Contact Details */}
             <View style={styles.contactDetails}>
                 <Text style={styles.contactTitle}>Location</Text>
-                <Text style={styles.contactText}>🏢 LeGym, EV buiding Room EV-S2.206</Text>
-                <Text style={styles.contactText}>📍 1515 Ste. Catherine St. W.</Text>
+                <Text style={styles.contactText}>
+                    🏢 LeGym, EV buiding Room EV-S2.206
+                </Text>
+                <Text style={styles.contactText}>
+                    📍 1515 Ste. Catherine St. W.
+                </Text>
                 <Text style={styles.contactTitle}>Contact Information</Text>
-                <Text style={styles.contactText}>📞 514-848-2424, ext. 3860</Text>
+                <Text style={styles.contactText}>
+                    📞 514-848-2424, ext. 3860
+                </Text>
                 <Text style={styles.contactText}>✉️ legym@concordia.ca</Text>
             </View>
         </ScrollView>
@@ -91,7 +94,7 @@ const styles = {
         color: '#333',
         marginBottom: 12,
         borderWidth: 1.5,
-        borderColor:Colors.light.fadedconcordiaColor,
+        borderColor: Colors.light.fadedconcordiaColor,
     },
     disabledInput: {
         backgroundColor: '#EAEAEA',

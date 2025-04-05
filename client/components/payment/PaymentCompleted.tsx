@@ -10,21 +10,22 @@ import { ScrollView } from 'react-native-gesture-handler'
 import LogoMastercard from '@/components/payment/images/LogoMastercard'
 import LogoVisa from '@/components/payment/images/LogoVisa'
 
-import { addCalendarEvent } from '../../store/CalendarDb';
-import { setCalendarEvents } from '../../store/CalendarDb';
-import { addDays, format, parseISO, isAfter, isBefore } from "date-fns";
-
-
-
+import { addCalendarEvent } from '../../store/CalendarDb'
+import { setCalendarEvents } from '../../store/CalendarDb'
+import { addDays, format, parseISO, isAfter, isBefore } from 'date-fns'
 
 const PaymentCompleted = () => {
     const { currentUser } = useAuth()
-    
-    const order = useAppSelector(state => state.currentOrder)
-    const dispatch = useAppDispatch();
-    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false);
 
-    const getFutureDates = (daysArray: string[], startDate: Date, endDate: Date) => {
+    const order = useAppSelector(state => state.currentOrder)
+    const dispatch = useAppDispatch()
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false)
+
+    const getFutureDates = (
+        daysArray: string[],
+        startDate: Date,
+        endDate: Date
+    ) => {
         const dayMap = {
             Monday: 1,
             Tuesday: 2,
@@ -33,111 +34,101 @@ const PaymentCompleted = () => {
             Friday: 5,
             Saturday: 6,
             Sunday: 0,
-        };
-    
-        let futureDates = [];
-        let checkDate = new Date(startDate);
-        
-        // Ensure the start date is at least today's date
-        checkDate.setHours(0, 0, 0, 0); // Set the check date time to midnight
-        
-        while (checkDate <= endDate) {
-            let dayName = format(checkDate, "EEEE"); // Get full day name, e.g., "Monday"
-            
-            console.log("daysArray",daysArray)
-            console.log("daysArray[0]",daysArray[0])
-            console.log("daysArray[1]",daysArray[1])
-            if (daysArray.map(day => day.trim()).includes(dayName)) {
-
-                futureDates.push(format(checkDate, "yyyy-MM-dd")); // Format as needed
-            }
-    
-            checkDate = addDays(checkDate, 1); // Move to the next day
         }
-    
-        return futureDates;
-    };
-    
-    
+
+        let futureDates = []
+        let checkDate = new Date(startDate)
+
+        // Ensure the start date is at least today's date
+        checkDate.setHours(0, 0, 0, 0) // Set the check date time to midnight
+
+        while (checkDate <= endDate) {
+            let dayName = format(checkDate, 'EEEE') // Get full day name, e.g., "Monday"
+
+            console.log('daysArray', daysArray)
+            console.log('daysArray[0]', daysArray[0])
+            console.log('daysArray[1]', daysArray[1])
+            if (daysArray.map(day => day.trim()).includes(dayName)) {
+                futureDates.push(format(checkDate, 'yyyy-MM-dd')) // Format as needed
+            }
+
+            checkDate = addDays(checkDate, 1) // Move to the next day
+        }
+
+        return futureDates
+    }
+
     // Extract activity details
-    
-    
 
     const handleConfirm = (): void => {
-        const activityType = order?.activity?.type;
+        const activityType = order?.activity?.type
 
-        
-        const activityDays = order?.activity?.days ? order.activity.days.split(",") : [];
+        const activityDays = order?.activity?.days
+            ? order.activity.days.split(',')
+            : []
         // Set date range
-        const today = new Date();
-        const activityStartDate = order?.activity?.date ? parseISO(order?.activity?.date) : today;
-        const minStartDate = isBefore(activityStartDate, today) ? today : activityStartDate; // Ensure start date is at least today
-        const maxEndDate = new Date("2025-06-30");
-    
-        let eventDates: string[] = [];
-    
-        if (activityType === "InPerson" || activityType === "Online") {
+        const today = new Date()
+        const activityStartDate = order?.activity?.date
+            ? parseISO(order?.activity?.date)
+            : today
+        const minStartDate = isBefore(activityStartDate, today)
+            ? today
+            : activityStartDate // Ensure start date is at least today
+        const maxEndDate = new Date('2025-06-30')
+
+        let eventDates: string[] = []
+
+        if (activityType === 'InPerson' || activityType === 'Online') {
             // Generate future dates based on activity days
-            eventDates = getFutureDates(activityDays as string[], minStartDate, maxEndDate);
+            eventDates = getFutureDates(
+                activityDays as string[],
+                minStartDate,
+                maxEndDate
+            )
         } else {
             // If it's another type, just use the given date if valid
-            eventDates = order?.activity?.date ? [order.activity.date] : [];
-
-
-          
-                
-           
-            
+            eventDates = order?.activity?.date ? [order.activity.date] : []
         }
-    
-        // Loop through each date and dispatch events
-       
 
-        console.log("lmaaaooo",order?.activity?.date)
-        console.log("lmaaaooo",eventDates)
-        console.log("lmaaaooo activityyy ",activityDays)
-        
-        eventDates.forEach((date) => {
+        // Loop through each date and dispatch events
+
+        console.log('lmaaaooo', order?.activity?.date)
+        console.log('lmaaaooo', eventDates)
+        console.log('lmaaaooo activityyy ', activityDays)
+
+        eventDates.forEach(date => {
             const newEvent = {
-                id: date + order?.product?.name + currentUser?.id || "",
-                title: order?.product?.name || "",
+                id: date + order?.product?.name + currentUser?.id || '',
+                title: order?.product?.name || '',
                 date: date,
-    
+
                 activity: {
-                    title: order?.product?.name || "",
-                    instructor: order?.activity?.Instructor || "",
-                    location: order?.activity?.location || "",
-                    days: Array.isArray(activityDays) ? activityDays.join(", ") : order?.activity?.days,
-                    time: order?.activity?.time || "",
-                    description: order?.activity?.description || "",
+                    title: order?.product?.name || '',
+                    instructor: order?.activity?.Instructor || '',
+                    location: order?.activity?.location || '',
+                    days: Array.isArray(activityDays)
+                        ? activityDays.join(', ')
+                        : order?.activity?.days,
+                    time: order?.activity?.time || '',
+                    description: order?.activity?.description || '',
                     price: Number(order?.product?.price) || 0,
-                    type: activityType || "",
+                    type: activityType || '',
                 },
-                user_id: currentUser?.id || "",
-            };
-    
-            
-             dispatch(addCalendarEvent(newEvent));
-             setTimeout(() => {
-                console.log("New Event", newEvent.date);
-            }, 1500);
-        });
-    
+                user_id: currentUser?.id || '',
+            }
+
+            dispatch(addCalendarEvent(newEvent))
+            setTimeout(() => {
+                console.log('New Event', newEvent.date)
+            }, 1500)
+        })
+
         // Navigate to booking after delay
         setTimeout(() => {
-            router.push('/(tabs)/booking');
-        }, 1500);
-    };
+            router.push('/(tabs)/booking')
+        }, 1500)
+    }
 
-    
-
-
-    
-        
-     
-
-
-      
     const CardBrand =
         order?.paymentMethod?.cardBrand === 'mastercard'
             ? LogoMastercard
@@ -211,9 +202,7 @@ const PaymentCompleted = () => {
                                 <Button
                                     variant="outline"
                                     className="h-[60px]"
-                                    onPress={() =>
-                                        handleConfirm()
-                                    }
+                                    onPress={() => handleConfirm()}
                                 >
                                     <Text className="text-xl font-medium text-red leading-[1.2]">
                                         View calendar

@@ -18,10 +18,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     return (
         <View className="p-4 bg-white">
             <View className="items-center">
-                {avatar && <Image
-                    source={{ uri: avatar }}
-                    className="w-20 h-20 rounded-full border border-neutral-500"
-                />}
+                {avatar && (
+                    <Image
+                        source={{ uri: avatar }}
+                        className="w-20 h-20 rounded-full border border-neutral-500"
+                    />
+                )}
                 {!avatar && <ProfilePictureIcon width={96} height={96} />}
                 <Text
                     className="text-lg font-bold text-center mt-2"

@@ -72,7 +72,6 @@ export default function PersonalTrainingPage() {
 
         if (!selectedDate) return
 
-
         const customOrder = {
             id: '2',
             product: {
