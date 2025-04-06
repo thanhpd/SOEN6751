@@ -10,6 +10,6 @@ export const accounts: Account[] = [
         qrCode: '',
         notificationToggle: true,
         gamificationToggle: true,
-        gamificationProgress: 0,
+        gamificationProgress: 2,
     },
 ]

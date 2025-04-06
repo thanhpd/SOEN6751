@@ -21,27 +21,27 @@ export default function InPersonActivities() {
                 image={require('../assets/images/hero.png')}
             />
 
-<CategoryList
-            onCategorySelect={(category: string) => {
-                if (category === 'All Activities') {
-                    setFilteredActivities(inPersons)
-                    return
-                }
+            <CategoryList
+                onCategorySelect={(category: string) => {
+                    if (category === 'All Activities') {
+                        setFilteredActivities(inPersons)
+                        return
+                    }
 
-                const filtered = inPersons.filter(
-                    activity => activity.category === category
-                )
-                setFilteredActivities(filtered)
-            }}
-        />
+                    const filtered = inPersons.filter(
+                        activity => activity.category === category
+                    )
+                    setFilteredActivities(filtered)
+                }}
+            />
 
-        {filteredActivities.length > 0 ? (
-            <ActivityList activities={filteredActivities} />
-        ) : (
-            <Text style={{ textAlign: 'center', marginTop: 20 }}>
-                No activities have been scheduled yet.
-            </Text>
-        )}
-    </View>
+            {filteredActivities.length > 0 ? (
+                <ActivityList activities={filteredActivities} />
+            ) : (
+                <Text style={{ textAlign: 'center', marginTop: 20 }}>
+                    No activities have been scheduled yet.
+                </Text>
+            )}
+        </View>
     )
 }

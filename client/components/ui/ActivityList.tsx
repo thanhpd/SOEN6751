@@ -25,7 +25,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
     const route = useRoute()
     const isInPersonScreen = route.name === 'InPerson'
     const dispatch = useAppDispatch()
-    const { currentUser } = useAuth();
+    const { currentUser } = useAuth()
 
     const handlePress = (activity: Activity) => {
         setSelectedActivity(activity)
@@ -49,8 +49,8 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
 
     const handleBook = (activity: Activity) => {
         const days = activity.days.split(',').map(day => day.trim())
-        const today = new Date();
-        const formattedDatetoday = today.toISOString().split('T')[0];
+        const today = new Date()
+        const formattedDatetoday = today.toISOString().split('T')[0]
 
         days.forEach(day => {
             for (let weekOffset = 0; weekOffset < 8; weekOffset++) {
@@ -139,8 +139,7 @@ export const ActivityList: React.FC<{ activities: Activity[] }> = ({
                 `The activity is scheduled for ${selectedActivity?.time} at ${selectedActivity?.location}.`
             )
 
-            if (currentUser?.notificationToggle)
-                showDummyNotification()
+            if (currentUser?.notificationToggle) showDummyNotification()
         }
 
         handleClose()

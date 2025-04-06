@@ -6,13 +6,9 @@ import {
     TouchableOpacity,
     Dimensions,
 } from 'react-native'
-import { Colors } from '@/constants/Colors'
 import TrainerCard from '@/components/TrainerCard'
-import { v4 as uuidv4 } from 'uuid'
 import useCalendarStore from '@/store/CalendarStore'
 import React, { useState } from 'react'
-import TrainerCard2 from '@/components/TrainerCardSwipe'
-import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/Colors'
 import HeroBanner from '@/components/HeroBanner'
 import BookingModal from '@/components/BookingSlotModal'
 import BookingTimeModal from '@/components/BookingTimeModal'
@@ -53,8 +49,6 @@ export default function PersonalTrainingPage() {
             sessions: 20,
         },
     ]
-    const { addEvent } = useCalendarStore()
-
     const dispatch = useAppDispatch()
 
     const [isModalVisible, setModalVisible] = useState(false)
@@ -77,9 +71,6 @@ export default function PersonalTrainingPage() {
         setModalVisible2(false)
 
         if (!selectedDate) return
-
-        const events = []
-        let currentDate = new Date(selectedDate)
 
         const customOrder = {
             id: '2',
@@ -253,8 +244,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 30,
-        width: 30,
+        height: 35,
+        width: 35,
 
         backgroundColor: '#922b21',
 

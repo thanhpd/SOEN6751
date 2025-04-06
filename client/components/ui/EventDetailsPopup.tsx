@@ -15,7 +15,6 @@ import useCalendarStore from '@/store/CalendarStore'
 import { removeCalendarEvent } from '@/store/CalendarDb'
 import { useAppDispatch } from '@/store'
 
-
 interface EventDetailsPopupProps {
     visible: boolean
     events: CalendarEvent[]
@@ -30,22 +29,24 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     const [showCancelWarning, setShowCancelWarning] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
     const { removeEvent } = useCalendarStore()
-    const dispatch = useAppDispatch();
-    
+    const dispatch = useAppDispatch()
+
     const activities = events.map(event => event.activity)
 
     const handleCancelBooking = () => {
         const eventToCancel = events[currentIndex]
 
-        const id = eventToCancel.date + eventToCancel.activity.title + eventToCancel.user_id
+        const id =
+            eventToCancel.date +
+            eventToCancel.activity.title +
+            eventToCancel.user_id
         console.log(id)
         if (eventToCancel) {
             dispatch(removeCalendarEvent(id))
 
             setTimeout(() => {
                 handleClose()
-            }, 1500);
-            
+            }, 1500)
         }
     }
 
@@ -60,7 +61,6 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
 
     return (
         <Modal
-            
             transparent={true}
             visible={visible}
             onRequestClose={handleClose}

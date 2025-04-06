@@ -1,13 +1,7 @@
 import React from 'react'
 import Toast from 'react-native-simple-toast'
 
-import {
-    View,
-    Text,
-    Pressable,
-    Touchable,
-    TouchableOpacity,
-} from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
@@ -20,26 +14,29 @@ const SettingsSection: React.FC = () => {
     const { currentUser, toggleGamification, toggleNotification } = useAuth()
 
     const handleToggleNotification = (value: boolean) => {
-        toggleNotification(value);
-        
-        Toast.show( value ? 'Great, you get reminders' : 'Warning, no reminders for you', 1000); 
-    };
+        toggleNotification(value)
+
+        Toast.show(
+            value
+                ? 'Great, you get reminders'
+                : 'Warning, no reminders for you',
+            1000
+        )
+    }
+
+    const handleToggleGamification = (value: boolean) => {
+        toggleGamification(value)
+
+        Toast.show(
+            value
+                ? 'Workout streak now VISIBLE!'
+                : 'Workout streak now HIDDEN!',
+            1000
+        )
+    }
 
     return (
         <View className="mt-2 bg-white">
-            <View className="p-4">
-                <Text className="text-lg font-semibold">Badges</Text>
-                <View className="flex-row items-center ml-1">
-                    <Image
-                        source={require('../assets/images/Brown Retro Badge Fitness Center Logo 1.svg')}
-                        style={{ width: 107, height: 107 }}
-                    />
-                    <Image
-                        source={require('../assets/images/Simple Illustration Sports Gym Fitness Badge Logo 1.svg')}
-                        style={{ width: 124, height: 124 }}
-                    />
-                </View>
-            </View>
             <View className="p-4">
                 <Text className="text-lg font-semibold">Settings</Text>
             </View>
@@ -84,12 +81,12 @@ const SettingsSection: React.FC = () => {
                             />
                         </View>
                         <Text className="text-base font-medium ml-2">
-                            Gamification
+                            LeStreak
                         </Text>
                     </View>
                     <ToggleButton
                         initialState={currentUser?.gamificationToggle}
-                        onToggle={toggleGamification}
+                        onToggle={handleToggleGamification}
                     />
                 </View>
 

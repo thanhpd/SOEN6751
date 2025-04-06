@@ -1,14 +1,13 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
 import ProfileHeader from '@/components/ProfileHeader'
-import WeeklyActivity from '@/components/WeeklyActivity'
 import SettingsSection from '@/components/SettingsSection'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import LogOutIcon from '@/components/icons/LogOutIcon'
 import { router } from 'expo-router'
 import { useSignOut } from '@/hooks/useSignOut'
 import { useAuth } from '@/hooks/useAuth'
-// import MoreOptionsSection from "./MoreOptionsSection";
+import GamificationSection from '@/components/GamificationSection'
 
 const Profile: React.FC = () => {
     const { currentUser } = useAuth()
@@ -39,14 +38,15 @@ const Profile: React.FC = () => {
                 name={`${currentUser?.firstName} ${currentUser?.lastName}`}
                 email={currentUser?.email || ''}
                 avatar={currentUser?.avatar || ''}
-                streak={6}
                 onEditPress={() => {
                     router.push('/ProfileDetails' as any)
                 }}
             />
-
-            <WeeklyActivity />
-
+            {currentUser?.gamificationToggle && (
+                <GamificationSection
+                    streak={currentUser?.gamificationProgress}
+                />
+            )}
             <SettingsSection />
         </ScrollView>
     )

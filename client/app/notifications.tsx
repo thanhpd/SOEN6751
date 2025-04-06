@@ -19,8 +19,7 @@ const NotificationPage = () => {
 
     const handleClearAll = () => {
         clearNotifications()
-    };
-
+    }
 
     React.useEffect(() => {
         markAllAsRead()
@@ -29,7 +28,6 @@ const NotificationPage = () => {
     const filtered = notifications
         .slice()
         .sort((a, b) => b.dateTime.getTime() - a.dateTime.getTime())
-
 
     return (
         <View style={styles.container}>

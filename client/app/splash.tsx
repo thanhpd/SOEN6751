@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React from 'react'
+import { View, Image, StyleSheet } from 'react-native'
 
 const SplashScreen = () => {
     return (
@@ -10,8 +10,8 @@ const SplashScreen = () => {
                 resizeMode="cover"
             />
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
         height: '100%',
         position: 'absolute',
     },
-});
+})
 
-export default SplashScreen;
+export default SplashScreen
