@@ -1,5 +1,5 @@
 import React from 'react'
-import Toast from 'react-native-simple-toast'
+//import Toast from 'react-native-simple-toast'
 
 import { View, Text, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image'
@@ -16,23 +16,23 @@ const SettingsSection: React.FC = () => {
     const handleToggleNotification = (value: boolean) => {
         toggleNotification(value)
 
-        Toast.show(
-            value
-                ? 'Great, you get reminders'
-                : 'Warning, no reminders for you',
-            1000
-        )
+        // Toast.show(
+        //     value
+        //         ? 'Great, you get reminders'
+        //         : 'Warning, no reminders for you',
+        //     1000
+        // )
     }
 
     const handleToggleGamification = (value: boolean) => {
         toggleGamification(value)
 
-        Toast.show(
-            value
-                ? 'Workout streak now VISIBLE!'
-                : 'Workout streak now HIDDEN!',
-            1000
-        )
+        // Toast.show(
+        //     value
+        //         ? 'Workout streak now VISIBLE!'
+        //         : 'Workout streak now HIDDEN!',
+        //     1000
+        // )
     }
 
     return (

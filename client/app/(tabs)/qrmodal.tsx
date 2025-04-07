@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     Qrcontainer: {
         backgroundColor: Colors.light.concordiaColor,
         width: '85%',
-        height: '65%',
+        height: '70%',
         alignItems: 'center',
         borderRadius: 20,
         position: 'relative', // Required for absolute children

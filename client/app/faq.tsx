@@ -39,13 +39,21 @@ const faqs = [
     },
 ]
 
+// FAQPage.tsx
 export default function FAQPage() {
-    const [search, setSearch] = useState('')
-    const [expanded, setExpanded] = useState<string | null>(null) // Track which question is expanded
+    const [searchText, setSearchText] = useState('')
+    const [expanded, setExpanded] = useState<string | null>(null)
 
     const toggleExpand = (id: string) => {
-        setExpanded(expanded === id ? null : id) // Toggle expand/collapse
+        setExpanded(expanded === id ? null : id)
     }
+
+    const filteredFaqs = faqs.filter(faq => {
+        const keywords = searchText.toLowerCase().split(/\s+/).filter(Boolean)
+        const content = `${faq.question} ${faq.answer}`.toLowerCase()
+        return keywords.every(keyword => content.includes(keyword))
+    })
+    
 
     const renderFAQ = ({
         item,
@@ -72,18 +80,15 @@ export default function FAQPage() {
 
     return (
         <View style={styles.container}>
-            {/* Header */}
             <Text style={styles.headerText}>How can we help you?</Text>
 
-            {/* Search Bar */}
-            <SearchBar />
+            {/* Search Bar with state passed */}
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
 
-            {/* Top Questions Section */}
             <Text style={styles.subHeaderText}>Top Questions</Text>
 
-            {/* FAQ List */}
             <FlatList
-                data={faqs}
+                data={filteredFaqs}
                 renderItem={renderFAQ}
                 keyExtractor={item => item.id}
                 contentContainerStyle={styles.listContainer}

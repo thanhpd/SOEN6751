@@ -72,7 +72,7 @@ export default function HeroBanner({
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                // Semi-transparent red
+                                backgroundColor: 'rgba(192, 57, 43, 0.4)', // Semi-transparent red
                                 borderRadius: 8, // Match image border radius
                             }}
                         />

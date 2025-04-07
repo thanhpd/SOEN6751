@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10, // Increased padding for a bigger box
         borderRadius: 10,
 
-        marginBottom: 20,
+        marginBottom: 40,
         marginTop: 20, // Added margin to the top
         marginRight: 15, // Added margin to the right
         marginLeft: 15, // Added margin to the left

@@ -116,7 +116,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
                         }}
                         disabled={!selected} // Disable button if 'selected' is false
                     >
-                        <Text style={styles.buttonText}>Confirm</Text>
+                        <Text style={styles.buttonText2}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -147,11 +147,13 @@ const styles = StyleSheet.create({
     },
     buttonCancel: {
         flex: 1,
-        backgroundColor: '#ccc',
+        backgroundColor: 'white',
         padding: 10,
         borderRadius: 5,
         marginRight: 5,
         alignItems: 'center',
+        borderColor : 'grey',
+        borderWidth : 0.5,
     },
     buttonConfirm: {
         flex: 1,
@@ -162,6 +164,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
+        color: 'grey',
+        fontWeight: 'bold',
+    },
+
+    buttonText2: {
         color: '#fff',
         fontWeight: 'bold',
     },

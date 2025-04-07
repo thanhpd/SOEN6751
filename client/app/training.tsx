@@ -15,6 +15,8 @@ import BookingTimeModal from '@/components/BookingTimeModal'
 import { setCurrentOrder } from '@/store/currentOrder'
 import { useAppDispatch } from '@/store'
 import { router } from 'expo-router'
+import { Colors } from '@/constants/Colors'
+import TrainerDetailsModal from '@/components/ui/TrainerDetailsModal'
 
 const { width } = Dimensions.get('window') // Get screen width
 
@@ -101,6 +103,9 @@ export default function PersonalTrainingPage() {
 
         router.push('/order-review' as any)
 
+
+       
+
         // for (let i = 0; i < sessions; i++) {
         //     events.push({
         //         id: uuidv4(),
@@ -127,6 +132,38 @@ export default function PersonalTrainingPage() {
         // events.forEach(event => addEvent(event));
     }
 
+    const trainers = [
+        {
+          name: 'Damien Theo',
+          certification: 'Certified Strength and Conditioning',
+          education: 'Master\'s in Kinesiology',
+          trainingPhilosophy: 'I focus on a holistic approach to fitness, combining strength, flexibility, and mental well-being.',
+        },
+        {
+          name: 'Kimiya Abyaneh',
+          certification: 'Certified Personal Trainer (CPT)',
+          education: 'Bachelor\'s in Exercise Science',
+          trainingPhilosophy: 'My approach is to empower my clients by setting realistic goals and working towards them step-by-step.',
+        },
+      ];
+
+      const [isTrainerModalVisible, setTrainerModalVisible] = useState(false)
+
+
+    const [selectedTrainer, setSelectedTrainer] = useState<{
+        name: string;
+        certification: string;
+        education: string;
+        trainingPhilosophy: string;
+    } | null>(null);
+      const handleTrainerCardPress = (trainers: { name: string; certification: string; education: string; trainingPhilosophy: string }) => {
+        setSelectedTrainer(trainers);
+        setTrainerModalVisible(true);
+      };
+    
+      const closeModal = () => {
+        setTrainerModalVisible(false);
+      };
     return (
         <ScrollView style={styles.container}>
             <HeroBanner
@@ -184,16 +221,27 @@ export default function PersonalTrainingPage() {
             <View style={styles.trainerContainer}>
                 <TrainerCard
                     profilePic={require('@/assets/images/trainer.png')} // Replace with actual URL or local file
-                    name="Jane Smith"
+                    name="Damien Theo"
                     certification="Certified Strength and Conditioning "
                     education="Master's in Kinesiology"
+                    onPress={ () => handleTrainerCardPress(trainers[0])}
                 />
                 <TrainerCard
                     profilePic={require('@/assets/images/trainer1.png')} // Replace with actual URL or local file
-                    name="John Doe"
+                    name="Kimiya Abyaneh"
                     certification="Certified Personal Trainer (CPT)"
                     education="Bachelor's in Exercise Science"
+                    onPress={ () => handleTrainerCardPress(trainers[1])}
                 />
+
+
+{selectedTrainer && (
+<TrainerDetailsModal
+        visible={isTrainerModalVisible}
+        onClose={closeModal}
+        trainer={selectedTrainer }
+      />
+    ) }
             </View>
         </ScrollView>
     )
@@ -210,7 +258,7 @@ const styles = StyleSheet.create({
         marginBottom: 10, // Add some space between the cards and the trainer section
     },
     card: {
-        backgroundColor: 'rgb(176, 49, 35)',
+        backgroundColor: Colors.concordia.background,
         padding: 10,
         margin: 10,
         borderRadius: 10,
@@ -241,13 +289,14 @@ const styles = StyleSheet.create({
         right: 10, // Align to the right of the card
         padding: 0,
         // Add a semi-transparent background color
-        borderRadius: 15,
+        borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
         height: 35,
         width: 35,
-
-        backgroundColor: '#922b21',
+borderColor : 'black',
+borderWidth : 0,
+        backgroundColor: '#A93226',
 
         fontWeight: 'bold', // Make the text bold
         fontSize: 10, // Decrease the font size
@@ -260,12 +309,14 @@ const styles = StyleSheet.create({
     },
 
     booking: {
-        backgroundColor: '#922b21',
+        backgroundColor: '#A93226',
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 7,
         marginTop: 55,
+        borderColor : 'black',
+        borderWidth : 0,
     },
 
     number: {

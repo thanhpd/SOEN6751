@@ -100,6 +100,8 @@ export default function RootLayout() {
                     options={{
                         title: 'Personal Training', // Set the title for the header
                         headerBackTitle: 'Go Back',
+                        
+                        
                     }}
                 />
 
@@ -121,6 +123,7 @@ export default function RootLayout() {
                     name="payment-manager"
                     options={{
                         title: 'Payment Details',
+                        headerBackTitle: 'Go Back',
                     }}
                 />
                 <Stack.Screen

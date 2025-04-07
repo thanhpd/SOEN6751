@@ -1,14 +1,22 @@
-import React from 'react'
-import { View, StyleSheet, Dimensions } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Dimensions, Text } from 'react-native'
 import HeroBanner from '@/components/HeroBanner'
 import SearchBar from '@/components/SearchBar'
 import { ActivityList } from '@/components/ui/ActivityList'
 import useActivityStore from '@/store/ActivityStore'
+import { Activity } from '@/constants/types'
+import { CategoryList } from '@/components/CategoryList'
 
 const { width } = Dimensions.get('window')
 
 export default function OnlinePage() {
     const { activities } = useActivityStore()
+
+    var online = activities.filter(item => item.type === 'Online')
+        const [filteredActivities, setFilteredActivities] =
+            useState<Activity[]>(online)
+
+
     return (
         <View style={styles.container}>
             <HeroBanner
@@ -18,10 +26,26 @@ export default function OnlinePage() {
                 image={require('../assets/images/online.png')}
             />
 
-            <SearchBar />
-            <ActivityList
-                activities={activities.filter(item => item.type === 'Online')}
-            />
+            <CategoryList
+                            onCategorySelect={(category: string) => {
+                                if (category === 'All Activities') {
+                                    setFilteredActivities(online)
+                                    return
+                                }
+            
+                                const filtered = online.filter(
+                                    online => online.category === category
+                                )
+                                setFilteredActivities(filtered)
+                            }}
+                        />
+             {filteredActivities.length > 0 ? (
+                            <ActivityList activities={filteredActivities} />
+                        ) : (
+                            <Text style={{ textAlign: 'center', marginTop: 20 }}>
+                                No activities have been scheduled yet.
+                            </Text>
+                        )}
         </View>
     )
 }

@@ -1,57 +1,48 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { FontAwesome5 } from '@expo/vector-icons'
 
-const { width } = Dimensions.get('window') // Get screen width
+const { width } = Dimensions.get('window')
 
 interface TrainerCardProps {
-    profilePic: number // URL or local path to the profile picture
-    name: string
-    certification: string
-    education: string
+  profilePic: number
+  name: string
+  certification: string
+  education: string
+  onPress?: () => void // <-- Add this line
 }
 
 const TrainerCard: React.FC<TrainerCardProps> = ({
-    profilePic,
-    name,
-    certification,
-    education,
+  profilePic,
+  name,
+  certification,
+  education,
+  onPress, // <-- Destructure it
 }) => {
-    return (
-        <View style={styles.card}>
-            <Image source={profilePic} style={styles.profilePic} />
-            <View style={styles.details}>
-                <Text style={styles.name}>{name}</Text>
-                <View style={styles.container}>
-                    <Text style={styles.containerText}>See More</Text>
-                </View>
-
-                {/* Certification */}
-                <View style={styles.infoRow}>
-                    <FontAwesome5
-                        name="certificate"
-                        size={14}
-                        color="#555"
-                        style={styles.icon}
-                    />
-                    <Text style={styles.infoText}>{certification}</Text>
-                </View>
-
-                {/* Education */}
-                <View style={styles.infoRow}>
-                    <FontAwesome5
-                        name="graduation-cap"
-                        size={14}
-                        color="#555"
-                        style={styles.icon}
-                    />
-                    <Text style={styles.infoText}>{education}</Text>
-                </View>
-            </View>
+  return (
+    <TouchableOpacity style={styles.card} onPress={onPress}> {/* <-- Use it here */}
+      <Image source={profilePic} style={styles.profilePic} />
+      <View style={styles.details}>
+        <Text style={styles.name}>{name}</Text>
+        <View style={styles.container}>
+          <Text style={styles.containerText}>See More</Text>
         </View>
-    )
+
+        <View style={styles.infoRow}>
+          <FontAwesome5 name="certificate" size={14} color="#555" style={styles.icon} />
+          <Text style={styles.infoText}>{certification}</Text>
+        </View>
+
+        <View style={styles.infoRow}>
+          <FontAwesome5 name="graduation-cap" size={14} color="#555" style={styles.icon} />
+          <Text style={styles.infoText}>{education}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  )
 }
+
 
 const styles = StyleSheet.create({
     card: {
