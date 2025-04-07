@@ -109,9 +109,9 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     profileImage: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
+        width: 96,
+        height: 96,
+        borderRadius: 9999,
     },
     title: {
         fontSize: 20,

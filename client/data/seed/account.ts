@@ -12,4 +12,15 @@ export const accounts: Account[] = [
         gamificationToggle: true,
         gamificationProgress: 2,
     },
+    {
+        id: '2',
+        membershipId: '4',
+        email: 'alex@concordia.ca',
+        password: 'password',
+        avatar: '',
+        qrCode: '',
+        notificationToggle: true,
+        gamificationToggle: true,
+        gamificationProgress: 2,
+    },
 ]

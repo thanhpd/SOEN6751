@@ -51,15 +51,17 @@ const PaymentLayout = ({
                     <TabsTrigger
                         value="saved"
                         className={clsx(
-                            'rounded-2xl w-[110px] h-[60px] items-center  justify-center bg-white',
+                            'rounded-2xl w-[110px] h-[60px] items-center justify-center bg-white',
                             selectedTab === 'saved'
                                 ? 'border-2 border-red shadow shadow-red'
                                 : 'border border-black/50'
                         )}
                     >
-                        <View className="flex flex-col items-center gap-1">
+                        <View className="flex flex-col items-center gap-1 whitespace-nowrap">
                             <BookmarkIcon />
-                            <Text>Saved cards</Text>
+                            <Text className="text-sm whitespace-nowrap text-nowrap">
+                                Saved cards
+                            </Text>
                         </View>
                     </TabsTrigger>
                 </TabsList>
