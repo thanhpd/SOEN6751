@@ -1,6 +1,7 @@
 import { Colors } from '@/constants/Colors'
 import React, { useState } from 'react'
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import ToastManager from 'toastify-react-native'
 import { useAuth } from '@/hooks/useAuth'
 
 const ContactPage = () => {
@@ -9,13 +10,14 @@ const ContactPage = () => {
     const [name, setName] = useState(
         currentUser.firstName + ' ' + currentUser.lastName
     )
-    const [email, setEmail] = useState(currentUser.email) // Pre-filled email
+    const [email] = useState(currentUser.email) // Pre-filled
     const [message, setMessage] = useState('')
 
     const handleSend = () => {
         console.log('Message Sent:', { name, email, message })
-        alert('Your message has been sent!')
-        setName('')
+
+        ToastManager.success('sent successfully!')
+
         setMessage('')
     }
 
@@ -23,21 +25,18 @@ const ContactPage = () => {
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.header}>Contact Us</Text>
 
-            {/* Name Input */}
             <TextInput
                 style={[styles.input, styles.disabledInput]}
                 value={name}
                 onChangeText={setName}
             />
 
-            {/* Email Input (Pre-filled) */}
             <TextInput
                 style={[styles.input, styles.disabledInput]}
                 value={email}
-                editable={false} // Make it non-editable
+                editable={false}
             />
 
-            {/* Message Box */}
             <TextInput
                 style={[styles.input, styles.messageBox]}
                 placeholder="Your Message"
@@ -48,12 +47,17 @@ const ContactPage = () => {
                 onChangeText={setMessage}
             />
 
-            {/* Send Button */}
-            <Pressable style={styles.sendButton} onPress={handleSend}>
+            <Pressable
+                style={[
+                    styles.sendButton,
+                    { opacity: message.trim() ? 1 : 0.5 },
+                ]}
+                onPress={handleSend}
+                disabled={!message.trim()}
+            >
                 <Text style={styles.sendButtonText}>Send</Text>
             </Pressable>
 
-            {/* Gym Contact Details */}
             <View style={styles.contactDetails}>
                 <Text style={styles.contactTitle}>Location</Text>
                 <Text style={styles.contactText}>
@@ -72,7 +76,6 @@ const ContactPage = () => {
     )
 }
 
-// Styles
 const styles = {
     container: {
         padding: 20,

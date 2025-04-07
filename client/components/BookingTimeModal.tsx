@@ -73,7 +73,7 @@ const BookingTimeModal: React.FC<BookingTimeModalProps> = ({
                             }}
                             disabled={!selectedTime} // Disable button if no time is selected
                         >
-                            <Text style={styles.closeButtonText}>Confirm</Text>
+                            <Text style={styles.confirmButtonText}>Confirm</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -105,11 +105,15 @@ const styles = StyleSheet.create({
     },
     buttonCancel: {
         flex: 1,
-        backgroundColor: '#ccc',
+        backgroundColor: 'white',
         padding: 10,
         borderRadius: 5,
         marginRight: 5,
         alignItems: 'center',
+        paddingHorizontal : 25,
+        paddingVertical : 15,
+        borderColor : 'grey',
+        borderWidth : 0.5,
     },
     buttonConfirm: {
         flex: 1,
@@ -118,8 +122,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 5,
         alignItems: 'center',
+        paddingHorizontal : 20,
+        paddingVertical : 15,
     },
     buttonText: {
+        color: 'grey',
+        fontWeight: 'bold',
+    },
+
+
+    buttonText2: {
         color: '#fff',
         fontWeight: 'bold',
     },
@@ -151,17 +163,28 @@ const styles = StyleSheet.create({
     timeText: { fontSize: 16, color: 'black' },
     closeButton: {
         marginTop: 10,
-        backgroundColor: 'gray',
+       
+        flex: 1,
+        backgroundColor: 'white',
         padding: 10,
         borderRadius: 5,
+        marginRight: 5,
+        alignItems: 'center',
+        paddingHorizontal : 20,
+        paddingVertical : 15,
+        borderColor : 'grey',
+        borderWidth : 0.5,
     },
     confirmButton: {
         marginTop: 10,
         backgroundColor: Colors.light.concordiaColor,
         padding: 10,
         borderRadius: 5,
+        paddingHorizontal : 23,
+        paddingVertical : 15,
     },
-    closeButtonText: { color: 'white', fontWeight: 'bold' },
+    closeButtonText: { color: 'grey', fontWeight: 'bold' },
+    confirmButtonText: { color: 'white', fontWeight: 'bold' },
 
     disabledButton: { backgroundColor: '#ccc' },
 })

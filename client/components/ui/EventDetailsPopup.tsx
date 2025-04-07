@@ -96,7 +96,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                                     {activities[currentIndex].location}
                                 </Text>
                             </View>
-                            <View className="flex-row items-center">
+                            {/* <View className="flex-row items-center">
                                 <FontAwesome
                                     name="calendar"
                                     size={15}
@@ -105,7 +105,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
                                 <Text className="ml-2 font-bold">
                                     {activities[currentIndex].days}
                                 </Text>
-                            </View>
+                            </View> */}
                             <View className="flex-row items-center">
                                 <AntDesign
                                     name="clockcircleo"

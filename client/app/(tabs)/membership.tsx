@@ -38,7 +38,7 @@ const cards = [
     {
         id: '2',
         title: 'Quarterly Membership',
-        price: '$110/4 months',
+        price: '$110/4months',
         duration: 120, // 120 days
         bgColor: '#e67e22',
         circleColor: '#d35400',
@@ -172,17 +172,19 @@ export default function MembershipPage() {
                                 Are you sure you want to buy the{' '}
                                 {selectedMembership?.title}?
                             </Text>
-                            <View style={styles.modalButtons}>
-                                <Button
-                                    title="Cancel"
-                                    onPress={() => setModalVisible(false)}
-                                    color="gray"
-                                />
-                                <Button
-                                    title="Confirm"
-                                    onPress={confirmPurchase}
-                                    color={Colors.light.concordiaColor}
-                                />
+
+                            <View style ={{flexDirection : 'row' , gap : 50}}>
+                            <TouchableOpacity style={styles.modalButtons2} onPress={() => setModalVisible(false)}>
+
+<Text style ={{color : 'grey'}}> Cancel</Text>
+
+                               
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.modalButtons} onPress={confirmPurchase}>
+                            <Text style = {{color : 'white'}}> Confirm</Text>
+
+                            </TouchableOpacity>
+
                             </View>
                         </View>
                     </View>
@@ -297,10 +299,7 @@ const styles = StyleSheet.create({
         gap: 5,
     },
 
-    notice: {
-        color: 'black',
-        fontSize: 13,
-    },
+    
     notice1: {
         color: 'black',
         fontSize: 13,
@@ -319,6 +318,26 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
     },
+    note: {
+        backgroundColor: '#f9f9f9',
+        padding: 15,
+        borderRadius: 10,
+        marginTop: 20,
+        width: '100%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    
+    notice: {
+        color: '#333',
+        fontSize: 14,
+        lineHeight: 22,
+        textAlign: 'justify',
+    },
+    
 
     // Modal styles
     modalContainer: {
@@ -341,5 +360,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: Colors.light.concordiaColor,
     },
-    modalButtons: { flexDirection: 'row', gap: 30, marginTop: 10 },
+    modalButtons: { flexDirection: 'row', gap: 30, marginTop: 10, borderRadius : 5, backgroundColor : Colors.light.concordiaColor,justifyContent : 'center', alignItems : 'center', paddingHorizontal : 25,paddingVertical : 15, },
+    modalButtons2: { flexDirection: 'row', gap: 30, marginTop: 10, borderRadius : 5, backgroundColor : 'white',justifyContent : 'center', alignItems : 'center', paddingHorizontal : 25,borderColor : 'grey',borderWidth : 0.5, paddingVertical : 15 },
+
 })

@@ -82,7 +82,7 @@ const defaultActivityItems: Activity[] = [
       days: 'Monday, Wednesday, Friday',
       time: '8:30 PM - 10:30 PM',
       image: '../../assets/images/cardio.png',
-      type: 'InPerson',
+      type: 'Online',
       category: 'Spinning',
   },
   {
@@ -96,10 +96,10 @@ const defaultActivityItems: Activity[] = [
       time: '2:30 PM - 4:30 PM',
       image: '../../assets/images/zumba.png',
       type: 'Online',
-      category: 'Instructional Activities',
+      category: 'Dance',
   },
   {
-      title: 'Total Body Fitness-Online',
+      title: 'Body Fitness-Online',
       instructor: 'Daphne Cunliffe',
       location: 'Online',
       price: '100',
@@ -109,7 +109,7 @@ const defaultActivityItems: Activity[] = [
       time: '4:00 PM - 5:00 PM',
       image: '../../assets/images/aero.png',
       type: 'Online',
-      category: 'Martial Arts',
+      category: 'Aerobics',
   },
   {
       title: 'Hard Core-Online',
@@ -122,7 +122,7 @@ const defaultActivityItems: Activity[] = [
       time: '4:00 PM - 5:00 PM',
       image: '../../assets/images/exercise_classes.png',
       type: 'Online',
-      category: 'Drop-In Recreation',
+      category: 'Spinning',
   },
 ];
 

@@ -6,6 +6,8 @@ import {
     Dimensions,
     Image,
     TouchableOpacity,
+    FlatList,
+    Animated,
 } from 'react-native'
 import HeroBanner from '@/components/HeroBanner'
 import { Colors } from '@/constants/Colors'
@@ -72,6 +74,28 @@ export default function OnlinePage() {
         router.push('/order-review' as any)
     }
 
+    const tips = [
+        {
+            id: 1,
+            image: require('../assets/images/tip.png'),
+            text: "Switch up your morning routine with this simple combo you can prepare the night before Greek or plain yogurt, fruit and muesli. A combo that's easy to pack, delivers on texture and is nutritious.",
+        },
+        {
+            id: 2,
+            image: require('../assets/images/tip2.png'),
+            text: 'Research suggests that eating patterns similar to the Mediterranean diet (rich in fruits, vegetables, nuts and whole-grains and low in red meat and processed food) can support a positive mood.',
+        },
+    ]
+
+    // Track the current index for the dots
+    const [currentIndex, setCurrentIndex] = useState(0)
+
+    const handleScroll = (event: any) => {
+        const contentOffsetX = event.nativeEvent.contentOffset.x
+        const index = Math.floor(contentOffsetX / (width -50))
+        setCurrentIndex(index)
+    }
+
     return (
         <View style={styles.container}>
             <HeroBanner
@@ -120,38 +144,43 @@ export default function OnlinePage() {
                     <Image
                         style={styles.tipimage}
                         source={require('../assets/images/jessy.png')}
-                    ></Image>
+                    />
                 </View>
             </View>
 
             <Text style={styles.title}>Diet Tips</Text>
 
-            <View style={styles.tipsContainer}>
-                <View style={styles.tips}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/images/tip.png')}
-                    ></Image>
-                    <Text style={styles.tipText}>
-                        Switch up your morning routine with this simple combo
-                        you can prepare the night before Greek or plain yogurt,
-                        fruit and muesli. A combo that's easy to pack, delivers
-                        on texture and is nutritious..
-                    </Text>
-                </View>
+            <FlatList
+                data={tips}
+                horizontal
+                snapToInterval={width }  // Snap to each card's width
+                decelerationRate="fast"  // Smooth snapping effect
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                    <View style={styles.tipCard}>
+<Image style={styles.image} source={item.image} />
+                        <Text style={styles.tipText}>{item.text}</Text>
+                        
+                        
+                        
+                    </View>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+            />
 
-                <View style={styles.tips}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/images/tip2.png')}
-                    ></Image>
-                    <Text style={styles.tipText}>
-                        Research suggests that eating patterns similar to
-                        the Mediterranean diet (rich in fruits, vegetables, nuts
-                        and whole-grains and low in red meat and processed
-                        food) can support a positive mood.
-                    </Text>
-                </View>
+            {/* Dots to indicate position */}
+           <View style={styles.dotsContainer}>
+                {tips.map((_, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.dot,
+                            currentIndex === index && styles.activeDot,
+                        ]}
+                    />
+                ))}
             </View>
         </View>
     )
@@ -165,7 +194,6 @@ const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
         marginLeft: 20,
-
         justifyContent: 'space-between',
         backgroundColor: 'white',
         padding: 20,
@@ -177,32 +205,28 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 10,
         fontWeight: 'bold',
-        justifyContent: 'space-between',
     },
-
     cardText2: {
         color: 'white',
         fontSize: 10,
         fontWeight: 'bold',
-        justifyContent: 'space-between',
     },
     image: {
-        width: 150,
-        height: 150,
+        width: 120,
+        height: 120,
+        borderRadius: 10,
+        marginTop: 10,
     },
-
     tipimage: {
         width: 120,
         height: 150,
+        
     },
-
     cardTextContainer: {
         flexDirection: 'column',
-
         alignItems: 'flex-start',
         flex: 1,
     },
-
     button: {
         borderRadius: 20,
         backgroundColor: Colors.light.concordiaColor,
@@ -210,47 +234,66 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
         width: 100,
-
         marginTop: 20,
-
         marginLeft: 40,
     },
-
     imageSection: {
         flexDirection: 'column',
     },
-
     title: {
         fontSize: 15,
         fontWeight: 'bold',
         marginLeft: 25,
-        marginBottom: 10,
+        marginBottom: 15,
     },
-
     quote: {
         fontSize: 11,
         fontStyle: 'italic',
         marginBottom: 10,
     },
-
-    tips: {
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-
-        marginRight: 10,
-        flex: 1,
+    tipCard: {
+        width: width - 50,  // Width of each card
+        marginRight: 25,  // Space between cards
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        
+        height: 170,
+        marginLeft: 20,
+        elevation: 5,  // Adds shadow
+        flexDirection : 'row',
+        
     },
-
-    tipsContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginLeft: 30,
-
-        gap: 10,
-    },
-
     tipText: {
-        fontSize: 11,
+        fontSize: 10,
+        
+        paddingTop: 0,
+        paddingRight :120,
+        paddingLeft : 10,
+        marginTop: 10,
+        color: '#333',
+        
+        lineHeight: 20,
+        textAlign: 'justify',
+    },
+    dotsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10,
+        position : 'absolute',
+        bottom : 150,
+        left : 175,
+    },
+    dot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#d3d3d3',
+        margin: 3,
+    },
+    activeDot: {
+        backgroundColor: Colors.light.concordiaColor,
+        width: 12,
+        height: 12,
     },
 })
