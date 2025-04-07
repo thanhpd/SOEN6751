@@ -484,6 +484,7 @@ const styles = StyleSheet.create({
         color: '#888',
         marginLeft: 20,
         marginBottom: 5,
+        marginTop: 15,
     },
 
     noBookingsMessageContainer: {

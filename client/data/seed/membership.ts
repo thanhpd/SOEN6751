@@ -31,4 +31,14 @@ export const memberships: Membership[] = [
         studentId: '11111111',
         expiryDate: '2025-12-02T00:00:00.000Z',
     },
+    {
+        id: '4',
+        membershipTypeId: '1',
+        firstName: 'Alex',
+        lastName: 'Thompson',
+        email: 'alex@concordia.ca',
+        phoneNumber: '4758392123',
+        studentId: '40263828',
+        expiryDate: '2025-12-02T00:00:00.000Z',
+    },
 ]
