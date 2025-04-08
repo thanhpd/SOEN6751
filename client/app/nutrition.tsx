@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 10,
         position : 'absolute',
-        bottom : 150,
+        bottom : 90,
         left : 175,
     },
     dot: {
