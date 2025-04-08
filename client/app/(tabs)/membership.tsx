@@ -115,12 +115,12 @@ export default function MembershipPage() {
 
         router.push('/order-review' as any)
 
-        // if (selectedMembership) {
-        //     setCurrentMembership({
-        //         title: selectedMembership.title,
-        //         expiryDate: selectedMembership.duration ? getFutureDate(selectedMembership.duration) : 'Invalid duration',
-        //     });
-        // }
+        if (selectedMembership) {
+            setCurrentMembership({
+                title: selectedMembership.title,
+                expiryDate: selectedMembership.duration ? getFutureDate(selectedMembership.duration) : 'Invalid duration',
+            });
+        }
         setModalVisible(false)
     }
 
@@ -195,7 +195,7 @@ export default function MembershipPage() {
                     <Text style={styles.cardText}>Weekly Membership</Text>
                     <Text style={styles.cardPrice}>
                         {' '}
-                        Your Membership is valid until 15th May 2025
+                        Your Membership is valid until {currentMembership.expiryDate}
                     </Text>
                 </View>
                 <Text style={styles.title}>Membership Packages</Text>
