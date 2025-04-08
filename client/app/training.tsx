@@ -294,9 +294,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 35,
         width: 35,
-borderColor : 'black',
-borderWidth : 0,
-        backgroundColor: '#A93226',
+borderColor : 'white',
+borderWidth : 1,
+        backgroundColor: Colors.light.fadedconcordiaColor,
 
         fontWeight: 'bold', // Make the text bold
         fontSize: 10, // Decrease the font size
@@ -309,14 +309,14 @@ borderWidth : 0,
     },
 
     booking: {
-        backgroundColor: '#A93226',
+        backgroundColor: Colors.light.fadedconcordiaColor,
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 7,
         marginTop: 55,
-        borderColor : 'black',
-        borderWidth : 0,
+        borderColor : 'white',
+        borderWidth : 1,
     },
 
     number: {

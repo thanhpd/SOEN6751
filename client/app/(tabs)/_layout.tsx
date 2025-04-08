@@ -75,8 +75,8 @@ export default function TabLayout() {
                                        left: '50%',
                                        transform: [{ translateX: -30 }],
                                        backgroundColor: pressed || accessibilityState?.selected 
-                                           ? Colors.light.concordiaColor 
-                                           : 'grey', // Change background when pressed
+                                           ? "white" 
+                                           :  Colors.light.concordiaColor , // Change background when pressed
                                        width: 60,
                                        height: 60,
                                        borderRadius: 30,
@@ -101,7 +101,7 @@ export default function TabLayout() {
                                         <Ionicons
                                             name="qr-code"
                                             size={35}
-                                            color={pressed || accessibilityState?.selected ? 'white' : 'white'} // White icon on press, Burgundy otherwise
+                                            color={pressed || accessibilityState?.selected ? Colors.light.concordiaColor : 'white'} // White icon on press, Burgundy otherwise
                                         />
                                         {/* <Text
                 style={{

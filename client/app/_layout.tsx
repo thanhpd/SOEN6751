@@ -156,6 +156,7 @@ export default function RootLayout() {
                     options={{
                         headerShown: true,
                         headerTitle: 'Notifications',
+                        headerBackTitle: 'Go Back',
                     }}
                 />
                 <Stack.Screen
