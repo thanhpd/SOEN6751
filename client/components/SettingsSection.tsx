@@ -7,6 +7,8 @@ import { useRouter } from 'expo-router'
 import ToggleButton from '@/components/ui/ToggleButton'
 import { useSignOut } from '@/hooks/useSignOut'
 import { useAuth } from '@/hooks/useAuth'
+import ToastManager, { Toast } from 'toastify-react-native'
+import { push } from 'expo-router/build/global-state/routing'
 
 const SettingsSection: React.FC = () => {
     const router = useRouter() // Use Expo Router for navigation
@@ -16,23 +18,23 @@ const SettingsSection: React.FC = () => {
     const handleToggleNotification = (value: boolean) => {
         toggleNotification(value)
 
-        // Toast.show(
-        //     value
-        //         ? 'Great, you get reminders'
-        //         : 'Warning, no reminders for you',
-        //     1000
-        // )
+        ToastManager.success(
+            value
+                ? 'Your push notifications are turned ON'
+                : 'Your push notifications are turned OFF',
+        )
+      
     }
 
     const handleToggleGamification = (value: boolean) => {
         toggleGamification(value)
 
-        // Toast.show(
-        //     value
-        //         ? 'Workout streak now VISIBLE!'
-        //         : 'Workout streak now HIDDEN!',
-        //     1000
-        // )
+        Toast.info(
+            value
+                ? 'Workout streak now VISIBLE!'
+                : 'Workout streak now HIDDEN!',
+        )
+    
     }
 
     return (
