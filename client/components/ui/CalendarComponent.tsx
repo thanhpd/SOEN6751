@@ -108,7 +108,7 @@ const CalendarComponent = () => {
                         calendarBackground: '#fff',
                         textSectionTitleColor: '#000',
                         dayTextColor: '#000',
-                        todayTextColor: '#000',
+                        todayTextColor: '#0000FF',
                         monthTextColor: '#000',
                         arrowColor: '#000',
                         dotStyle: {
@@ -116,6 +116,7 @@ const CalendarComponent = () => {
                             height: 5,
                             borderRadius: 5,
                         },
+                        todayTextFontWeight: 'bold',
                     }}
                 />
             </View>
