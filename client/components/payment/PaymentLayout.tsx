@@ -59,7 +59,7 @@ const PaymentLayout = ({
                     >
                         <View className="flex flex-col items-center gap-1 whitespace-nowrap">
                             <BookmarkIcon />
-                            <Text className="text-sm whitespace-nowrap text-nowrap">
+                            <Text className="text-xs whitespace-nowrap text-nowrap">
                                 Saved cards
                             </Text>
                         </View>

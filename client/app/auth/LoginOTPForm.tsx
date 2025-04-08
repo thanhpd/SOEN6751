@@ -18,7 +18,6 @@ import { setTmpUser } from '@/store/tmpUser'
 import ProfilePicker from '@/components/ui/ProfilePicker'
 import { ControlledInput } from '@/components/primitives/input'
 
-
 const LoginOTPSchema = zod.object({
     otpCode: zod.string().length(6),
 })
@@ -122,7 +121,7 @@ const LoginOTPForm = ({ user }: Props) => {
                                 </Text>
                             </View>
                             <View className="flex flex-col gap-4">
-                                <ControlledInput
+                                <ControlledInputOTP
                                     name="otpCode"
                                     control={control}
                                 />

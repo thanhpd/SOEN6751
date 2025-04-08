@@ -11,8 +11,10 @@ import { useForgetPassword } from '@/hooks/useForgetPassword'
 import { BaseAccount } from '@/constants/types'
 const ResetPasswordSchema = zod
     .object({
-        newPassword: zod.string().min(2),
-        confirmPassword: zod.string().min(2),
+        newPassword: zod.string().min(2, 'Password has at least 2 characters'),
+        confirmPassword: zod
+            .string()
+            .min(2, 'Password has at least 2 characters'),
     })
     .refine(data => data.newPassword === data.confirmPassword, {
         message: 'Passwords do not match',

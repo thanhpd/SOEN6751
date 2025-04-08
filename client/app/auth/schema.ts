@@ -2,15 +2,17 @@ import { z } from 'zod'
 
 export const LoginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(2),
+    password: z.string().min(2, 'Password must be at least 2 characters'),
     stayLoggedIn: z.boolean().optional(),
 })
 
 export const RegisterSchema = z
     .object({
         email: z.string().email(),
-        password: z.string().min(2),
-        confirmPassword: z.string().min(2),
+        password: z.string().min(2, 'Password must be at least 2 characters'),
+        confirmPassword: z
+            .string()
+            .min(2, 'Password must be at least 2 characters'),
         acceptedTerms: z.boolean(),
     })
     .refine(data => data.password === data.confirmPassword, {

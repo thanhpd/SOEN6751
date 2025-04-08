@@ -3,11 +3,30 @@ import { CardSchema, TCardSchema } from '@/components/payment/schema'
 import SubmitButton from '@/components/payment/SubmitButton'
 import { ControlledInput } from '@/components/primitives/input'
 import { Label } from '@/components/primitives/label'
+import { ControlledPicker } from '@/components/ui/Picker'
 import { useAppSelector } from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Text, View, Switch } from 'react-native'
+
+// Define the Canadian provinces
+export const PROVINCES = [
+    { label: 'Select Province', value: '' },
+    { label: 'Alberta', value: 'AB' },
+    { label: 'British Columbia', value: 'BC' },
+    { label: 'Manitoba', value: 'MB' },
+    { label: 'New Brunswick', value: 'NB' },
+    { label: 'Newfoundland and Labrador', value: 'NL' },
+    { label: 'Northwest Territories', value: 'NT' },
+    { label: 'Nova Scotia', value: 'NS' },
+    { label: 'Nunavut', value: 'NU' },
+    { label: 'Ontario', value: 'ON' },
+    { label: 'Prince Edward Island', value: 'PE' },
+    { label: 'Quebec', value: 'QC' },
+    { label: 'Saskatchewan', value: 'SK' },
+    { label: 'Yukon', value: 'YT' },
+]
 
 type PaymentSelectionProps = {
     onMethodSubmit?: (data: TCardSchema) => void
@@ -75,6 +94,8 @@ const PaymentSelection = ({
     const onSubmit = (data: TCardSchema) => {
         onMethodSubmit?.(data)
     }
+
+    const [selectedLanguage, setSelectedLanguage] = useState()
 
     return (
         <View className="flex flex-col gap-4 pb-[40px]">
@@ -162,12 +183,18 @@ const PaymentSelection = ({
                         placeholder="Street address"
                         autoCorrect={false}
                     />
-                    <ControlledInput
+                    {/* <ControlledInput
                         control={control}
                         name="billingProvince"
                         label="Province"
                         placeholder="Province"
                         autoCorrect={false}
+                    /> */}
+                    <ControlledPicker
+                        control={control}
+                        options={PROVINCES}
+                        name="billingProvince"
+                        label="Province"
                     />
                     <ControlledInput
                         control={control}
