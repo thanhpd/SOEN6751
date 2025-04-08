@@ -101,7 +101,7 @@ const CalendarComponent = () => {
             <View className="h-50 w-50">
                 <Calendar
                     onDayPress={handleDayPress}
-                    current={'2025-03-20'}
+                    current={'2025-04-09'}
                     markedDates={markedDates}
                     markingType={'multi-dot'}
                     theme={{

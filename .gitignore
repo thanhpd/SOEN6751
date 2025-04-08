@@ -6,3 +6,4 @@ node_modules/
 *.bin
 *.properties
 package-lock.json
+client/package-lock.json
