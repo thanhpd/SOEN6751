@@ -158,5 +158,6 @@ const styles = StyleSheet.create({
     pageContainer: {
         paddingHorizontal: 10, // You can increase this value as needed
         flex: 1,
+        paddingBottom: 30
     },
 })
