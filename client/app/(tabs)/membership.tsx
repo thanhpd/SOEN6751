@@ -38,7 +38,7 @@ const cards = [
     {
         id: '2',
         title: 'Quarterly Membership',
-        price: '$110/4months',
+        price: '$110/four months',
         duration: 120, // 120 days
         bgColor: '#e67e22',
         circleColor: '#d35400',

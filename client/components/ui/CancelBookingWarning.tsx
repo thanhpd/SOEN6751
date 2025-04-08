@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal, View, Text, TouchableOpacity, Image } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import useCalendarStore from '@/store/CalendarStore'
+import { Toast } from 'toastify-react-native'
 
 interface CancelBookingWarningsProps {
     visible: boolean
@@ -14,6 +15,13 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
     onClose: handleClose,
     onCancel: handleConfirm,
 }) => {
+    const handleConfirmWithToast = () => {
+        Toast.success(
+            'Event cancelled successfully. Please check your calendar.'
+        );
+        handleConfirm();
+    };
+
     return (
         <Modal
             animationType="fade"
@@ -46,7 +54,7 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
                         </TouchableOpacity>
                         {/* Book Button */}
                         <TouchableOpacity
-                            onPress={handleConfirm}
+                            onPress={handleConfirmWithToast}
                             className="bg-blue-600 p-3 rounded-lg w-[120px]"
                             style={{
                                 backgroundColor: Colors.concordia.background,

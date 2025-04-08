@@ -118,7 +118,7 @@ const PaymentCompleted = () => {
         // Navigate to booking after delay
         setTimeout(() => {
             router.push('/(tabs)/booking');
-        }, 1500);
+        }, 500);
     };
 
     

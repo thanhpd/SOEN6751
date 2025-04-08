@@ -46,7 +46,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
 
             setTimeout(() => {
                 handleClose()
-            }, 1500)
+            }, 500)
         }
     }
 
