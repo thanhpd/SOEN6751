@@ -15,6 +15,9 @@ import { useAuth } from '@/hooks/useAuth'
 import { router } from 'expo-router'
 import { setCurrentOrder } from '@/store/currentOrder'
 import { useAppDispatch } from '@/store'
+import { updateDBMembershipExpiry } from '@/store/membershipDB'
+import { updateDBMembershipType } from '@/store/membershipDB'
+
 
 const { width } = Dimensions.get('window') // Get screen width
 
@@ -56,6 +59,10 @@ export default function MembershipPage() {
     const { currentUser } = useAuth()
     const dispatch = useAppDispatch()
 
+    
+
+    
+
     const expiryDate = new Date(currentUser.expiryDate).toDateString()
 
     const getFutureDate = (days: number) => {
@@ -69,7 +76,7 @@ export default function MembershipPage() {
     )
 
     const [currentMembership, setCurrentMembership] = useState({
-        title: userMembership?.title,
+        title: currentUser?.membershipTypeId,
         expiryDate: expiryDate,
     })
 
@@ -94,7 +101,7 @@ export default function MembershipPage() {
             id: '2',
             product: {
                 id: '4',
-                name: selectedMembership?.title,
+                name: currentMembership?.title,
                 price: selectedMembership?.price,
                 image: 'https://via.placeholder.com/150',
             },
@@ -112,7 +119,12 @@ export default function MembershipPage() {
         }
 
         dispatch(setCurrentOrder(customOrder))
-
+        if (currentUser?.id) {
+            dispatch(updateDBMembershipExpiry({ id: currentUser.id, expiryDate: currentMembership.expiryDate || '' }));
+            dispatch(updateDBMembershipType({ id: currentUser.id, membershipTypeId: currentMembership.title || '' }));
+        } else {
+            console.error('User ID is undefined');
+        }
         router.push('/order-review' as any)
 
         if (selectedMembership) {
@@ -192,7 +204,7 @@ export default function MembershipPage() {
                 <Text style={styles.title}>Current Plan</Text>
 
                 <View style={styles.membership}>
-                    <Text style={styles.cardText}>Weekly Membership</Text>
+                    <Text style={styles.cardText}>{currentMembership.title}</Text>
                     <Text style={styles.cardPrice}>
                         {' '}
                         Your Membership is valid until {currentMembership.expiryDate}
