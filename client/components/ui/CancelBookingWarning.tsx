@@ -17,7 +17,7 @@ const CancelBookingWarning: React.FC<CancelBookingWarningsProps> = ({
 }) => {
     const handleConfirmWithToast = () => {
         Toast.success(
-            'Event cancelled successfully. Please check your calendar.'
+            'Event cancelled successfully.'
         );
         handleConfirm();
     };
