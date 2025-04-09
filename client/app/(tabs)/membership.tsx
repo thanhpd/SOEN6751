@@ -124,9 +124,9 @@ export default function MembershipPage() {
         //     console.error('User ID is undefined');
         // }
 
-        const timer = setTimeout(() => {
+        
             router.push('/order-review' as any)
-          }, 1000)
+          
 
         if (selectedMembership) {
             setCurrentMembership({
