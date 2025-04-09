@@ -13,6 +13,7 @@ import LogoVisa from '@/components/payment/images/LogoVisa'
 import { addCalendarEvent } from '../../store/CalendarDb';
 import { setCalendarEvents } from '../../store/CalendarDb';
 import { addDays, format, parseISO, isAfter, isBefore } from "date-fns";
+import {  updateDBMembershipExpiry, updateDBMembershipType } from '@/store/membershipDB'
 
 
 
@@ -44,9 +45,7 @@ const PaymentCompleted = () => {
         while (checkDate <= endDate) {
             let dayName = format(checkDate, "EEEE"); // Get full day name, e.g., "Monday"
             
-            console.log("daysArray",daysArray)
-            console.log("daysArray[0]",daysArray[0])
-            console.log("daysArray[1]",daysArray[1])
+           
             if (daysArray.map(day => day.trim()).includes(dayName)) {
 
                 futureDates.push(format(checkDate, "yyyy-MM-dd")); // Format as needed
@@ -74,6 +73,22 @@ const PaymentCompleted = () => {
         const maxEndDate = new Date("2025-06-30");
     
         let eventDates: string[] = [];
+
+        if(order?.id == "20"){
+
+            console.log("Skipping event creation and navigation for order id 20")
+            if (currentUser?.id) {
+                        dispatch(updateDBMembershipExpiry({ id: currentUser.id, expiryDate: order?.activity?.date || '' }));
+                        dispatch(updateDBMembershipType({ id: currentUser.id, membershipTypeId: order?.product?.name || '' }));
+                    } else {
+                        console.error('User ID is undefined');
+                    }
+setTimeout(() => {
+            router.push('/(tabs)/membership');
+        }, 500);
+return
+
+        }
     
         if (activityType === "InPerson" || activityType === "Online") {
             // Generate future dates based on activity days
@@ -84,10 +99,7 @@ const PaymentCompleted = () => {
         }
     
         // Loop through each date and dispatch events
-        console.log("actvity Type", activityType)
-        console.log("actvity Days", activityDays)
-        console.log("activity Day" , order?.activity?.days)
-        console.log("Event dates", eventDates)
+        
 
         eventDates.forEach((date) => {
             const newEvent = {
@@ -111,7 +123,7 @@ const PaymentCompleted = () => {
             
              dispatch(addCalendarEvent(newEvent));
              setTimeout(() => {
-                console.log("New Event", newEvent.date);
+                
             }, 1500);
         });
     

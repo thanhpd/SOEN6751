@@ -61,12 +61,12 @@ export default function MembershipPage() {
 
     
 
-    
+    console.log(currentUser)
 
     const expiryDate = new Date(currentUser.expiryDate).toDateString()
 
     const getFutureDate = (days: number) => {
-        const expiry = new Date(currentMembership.expiryDate)
+        const expiry = new Date(currentUser.expiryDate)
         expiry.setDate(expiry.getDate() + days)
         return expiry.toDateString()
     }
@@ -77,7 +77,7 @@ export default function MembershipPage() {
 
     const [currentMembership, setCurrentMembership] = useState({
         title: currentUser?.membershipTypeId,
-        expiryDate: expiryDate,
+        expiryDate: getFutureDate(currentUser?.expiryDate),
     })
 
     const [selectedMembership, setSelectedMembership] = useState<{
@@ -98,18 +98,16 @@ export default function MembershipPage() {
 
     const confirmPurchase = () => {
         const customOrder = {
-            id: '2',
+            id: '20',
             product: {
                 id: '4',
-                name: currentMembership?.title,
+                name: selectedMembership?.title,
                 price: selectedMembership?.price,
                 image: 'https://via.placeholder.com/150',
             },
 
             activity: {
-                date: selectedMembership?.duration
-                    ? getFutureDate(selectedMembership.duration)
-                    : 'Invalid duration',
+                date: selectedMembership?.duration ? getFutureDate(selectedMembership.duration) : 'Invalid duration'
             },
 
             quantity: 1,
@@ -119,13 +117,16 @@ export default function MembershipPage() {
         }
 
         dispatch(setCurrentOrder(customOrder))
-        if (currentUser?.id) {
-            dispatch(updateDBMembershipExpiry({ id: currentUser.id, expiryDate: currentMembership.expiryDate || '' }));
-            dispatch(updateDBMembershipType({ id: currentUser.id, membershipTypeId: currentMembership.title || '' }));
-        } else {
-            console.error('User ID is undefined');
-        }
-        router.push('/order-review' as any)
+        // if (currentUser?.id) {
+        //     dispatch(updateDBMembershipExpiry({ id: currentUser.id, expiryDate: currentMembership.expiryDate || '' }));
+        //     dispatch(updateDBMembershipType({ id: currentUser.id, membershipTypeId: currentMembership.title || '' }));
+        // } else {
+        //     console.error('User ID is undefined');
+        // }
+
+        
+            router.push('/order-review' as any)
+          
 
         if (selectedMembership) {
             setCurrentMembership({
@@ -204,10 +205,10 @@ export default function MembershipPage() {
                 <Text style={styles.title}>Current Plan</Text>
 
                 <View style={styles.membership}>
-                    <Text style={styles.cardText}>{currentMembership.title}</Text>
+                    <Text style={styles.cardText}>{currentUser?.membershipTypeId}</Text>
                     <Text style={styles.cardPrice}>
                         {' '}
-                        Your Membership is valid until {currentMembership.expiryDate}
+                        Your Membership is valid until {currentUser?.expiryDate}
                     </Text>
                 </View>
                 <Text style={styles.title}>Membership Packages</Text>
