@@ -121,7 +121,7 @@ const LoginOTPForm = ({ user }: Props) => {
                                 </Text>
                             </View>
                             <View className="flex flex-col gap-4">
-                                <ControlledInputOTP
+                                <ControlledInput
                                     name="otpCode"
                                     control={control}
                                 />

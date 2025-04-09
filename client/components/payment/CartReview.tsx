@@ -35,11 +35,11 @@ const CartReview = () => {
                     {order?.activity.time}
                 </Text>
                 <View className="flex flex-row items-center justify-between gap-[47px]">
-                    <QtySelector
+                    {/* <QtySelector
                         qty={order?.quantity || 1}
                         onIncrease={increaseQuantity}
                         onDecrease={decreaseQuantity}
-                    />
+                    /> */}
                     <Text className="text-white text-xl font-medium">
                         ${Number(order?.product.price).toFixed(2)}
                     </Text>
